@@ -1,0 +1,58 @@
+node_modules
+.env
+
+# Local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Ending with a period are files that you may not want to include
+# in your version control system.
+*.log
+*.pid
+*.pid.lock
+*.vscode
+*.pid.lock
+*.vspscc
+*.vssscc
+.vscode
+*.user
+*.user-secrets
+.template.config.json
+
+# Local History files are never relevant to anyone else
+# so they can stay in your repository.
+*.localhistory
+
+# compiled source code
+*.com
+*.class
+*.dll
+*.exe
+*.exe~
+*.o
+*.so
+*.so.*
+*.swp
+*.i
+
+# macOS metadata files
+*.DS_Store
+
+# compiled python files
+*.pyc
+*.pyo
+
+

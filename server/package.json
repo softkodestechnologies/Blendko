@@ -1,0 +1,30 @@
+{
+  "name": "blendko-server",
+  "version": "1.0.0",
+  "description": "Backend server for Blendko",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production nodemon server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "prod": "cross-env NODE_ENV=production node server.js",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --fix",
+    "lint:watch": "eslint . --ext .js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Fa'ad Abubakar",
+  "repository": "https://github.com/blendko/blendko-server.git",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^9.3.0",
+    "nodemon": "^3.1.0"
+  }
+}
