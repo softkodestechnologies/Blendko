@@ -232,27 +232,14 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   const {
     name,
     email,
-    phoneNumber,
-    address: { street, city, state, country, postalCode },
-    dateOfBirth,
     gender,
     avatar,
   } = req.body;
 
-  console.log(req.body, "REQUEST DOT BODY")
 
   const newUserData = {
     name,
     email,
-    phoneNumber: phoneNumber || '',
-    address: {
-      street: street || '',
-      city: city || '',
-      state: state || '',
-      country: country || '',
-      postalCode: postalCode || '',
-    },
-    dateOfBirth: dateOfBirth || '',
     gender: gender || '',
   };
 
