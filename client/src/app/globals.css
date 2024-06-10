@@ -203,6 +203,7 @@ button {
   max-width: 1440px;
   width: clamp(90vw, 90%, 1440px);
   margin: 0 auto;
+  position: relative;
 }
 
 .not-found {
