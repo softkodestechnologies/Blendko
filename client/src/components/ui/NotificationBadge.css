@@ -1,0 +1,46 @@
+.badge-container {
+    background-color: #000;
+    color: #FFF;
+    position: relative;
+    padding: 1rem;
+}
+
+.badge-container > * {
+    font-size: 18px;
+    line-height: 27px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.close {
+    position: absolute;
+    right: 5em;
+
+}
+
+@media screen and (max-width: 950px){
+    .badge-container > * {
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: 500;
+    }
+
+    .close {
+        right: 3em;
+    }
+}
+
+@media screen and (max-width: 786px) {
+    .badge-container {
+        padding: 0.6rem;
+    }
+
+    .badge-container > * {
+        font-size: 12px;
+        text-wrap: nowrap;
+    }
+
+    .close {
+        right: 1em;
+    }
+}

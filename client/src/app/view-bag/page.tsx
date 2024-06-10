@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './ViewBagPage.module.css';
+import styles from './viewBagPage.module.css';
 
 // Mock data for cart items and recommendation items
 const cartItems = [

@@ -96,15 +96,12 @@ export default function Home() {
 
       {/* Main Banner */}
       <section className="main-banner">
+
         <div className="main-banner-container">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-100 to-transparent"></div>
-          <div className="relative flex flex-col md:flex-row items-center md:items-start">
+          <div className="flex flex-col ">
             <div className="container main-banner-text">
               <h1 className="main-banner-text-main">CAMERO BOOST WINTER <br/> JACKET GREY</h1>
               <button className="main-button">Explore More</button>
-            </div>
-            <div className="md:w-1/2">
-              <div className="image-should-be-here-instead-of-div w-full h-auto"></div>
             </div>
           </div>
         </div>
@@ -118,6 +115,7 @@ export default function Home() {
           </div>
           <div className="main-banner-img2"></div>
         </div>
+        
       </section>
 
 
@@ -142,7 +140,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex highlight-triple-image">
         {nextHighlights.map((highlight, index) => (
           <div
             key={index}

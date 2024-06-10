@@ -1,6 +1,7 @@
 import React from 'react';
 import {FaFacebook, FaTwitter, FaInstagram, FaYoutube} from 'react-icons/fa';
 import Link from "next/link";
+import FooterSVG from "./FooterSVG"
 import './Footer.css';
 
 function Footer() {
@@ -9,7 +10,7 @@ function Footer() {
   <div className="footer-container">
     <div>
       <div className="footer-head flex">
-          <h3 className="footer-title">Blendko</h3>
+          <h3 className="footer-title"><Link href="/"><FooterSVG /></Link></h3>
         <div className="footer-icons">
           <FaFacebook />
           <FaTwitter />

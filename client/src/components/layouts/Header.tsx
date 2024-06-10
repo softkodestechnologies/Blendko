@@ -1,17 +1,19 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import NotificationBadge from '../ui/NotificationBadge';
 
 import { 
   IoPersonOutline, 
   IoHeartOutline, 
   IoCartOutline,
+  IoSearch,
   IoMenu, 
   IoClose 
 } from 'react-icons/io5';
 import './Header.css';
-//import { useRouter } from 'next/router';
 import Cart from '../ui/Cart';
+import LogoSVG from './LogoSVG';
 
 const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -30,19 +32,6 @@ const Header = () => {
     }
   }, [cartOpen]);
 
-  // useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     setNavOpen(false);
-  //     setCartOpen(false);
-  //   };
-
-  //   router.events.on('routeChangeStart', handleRouteChange);
-
-  //   // Clean up the event listener on component unmount
-  //   return () => {
-  //     router.events.off('routeChangeStart', handleRouteChange);
-  //   };
-  // }, [router.events]);
 
   const cartItems = [
     { id: 1, title: 'One Life Graphic T-shirt', category: 'Men\'s Shirts', size: 'Medium', price: 260, image: '/picture.png' },
@@ -63,14 +52,15 @@ const Header = () => {
         <div className="header-container">
           <div className="flex-between">
             <div className="flex-shrink-0">
-              <h1 className="nav-title"><Link href="/">Blendko</Link></h1>
+              <h1 className="nav-title"><Link href="/"><LogoSVG /></Link></h1>
             </div>
             <div className="flex-baseline">
-              {!navOpen && <IoPersonOutline className="nav-icon" size={20} />}
-              {!navOpen && <IoHeartOutline className="nav-icon" size={20} />}
-              {!navOpen && <IoCartOutline className="nav-icon" size={20} onClick={toggleCart} />}
+              {!navOpen && <IoPersonOutline className="nav-icon" size={30} />}
+              {!navOpen && <IoHeartOutline className="nav-icon" size={30} />}
+              {!navOpen && <IoCartOutline className="nav-icon" size={30} onClick={toggleCart} />}
+              {navOpen && <IoSearch className="nav-icon" size={30} />}
               <div className="nav-icon nav-control-icon" onClick={toggleNav}>
-                {navOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+                {navOpen ? <IoClose size={34} /> : <IoMenu size={34} />}
               </div>
             </div>
           </div>
@@ -79,20 +69,22 @@ const Header = () => {
         <div>
           <div className={`navbar-menu ${!navOpen ? 'navbar-hidden' : 'navbar-visible'}`}>
             <div className="navbar-list header-container">
-              <h2>Fashion & Accessories</h2>
-              <Link href="/">Whats New</Link>
+              <h2>Fashion & <br className='nav-break' />Accessories</h2>
+              <Link href="/">What&apos;s New</Link>
               <Link href="/">Gifts & Personalisation</Link>
-              <Link href="/">Womens Fashion</Link>
-              <Link href="/">Mens Fashion</Link>
+              <Link href="/">Women&apos;s Fashion</Link>
+              <Link href="/">Men&apos;s Fashion</Link>
               <Link href="/">Bags Fashion</Link>
               <Link href="/">Jewelry & Timepieces</Link>
-              <Link href="/">Kids & Baby</Link>
+              <Link href="/">Kid&apos;s & Baby</Link>
               <Link href="/">Maison</Link>
               <Link href="/">Customisation</Link>
+              <hr className='navbar-dash'/>
             </div>
           </div>
         </div>
       </nav>
+      <NotificationBadge />
       <Cart cartOpen={cartOpen} toggleCart={toggleCart} cartItems={cartItems} />
     </header>
   );
