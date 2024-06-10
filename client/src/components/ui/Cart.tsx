@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {IoClose} from 'react-icons/io5';
+import {IoClose, IoCheckmarkCircle} from 'react-icons/io5';
 import './Cart.css';
 
 interface CartProps {
@@ -24,7 +24,10 @@ const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
       <div className="container">
         <div className={`cart-modal ${cartOpen ? 'open' : ''}`}>
           <div className="cart-header">
-            <h2>Added to Bag</h2>
+            <div className="flex align-y  11 cart-header-title">
+              <IoCheckmarkCircle style={{color: "green"}} />
+              <h3>Added to Bag</h3>
+            </div>
             <button className="close-button" title="close" onClick={toggleCart}><IoClose /></button>
           </div>
           <div className="cart-items">
@@ -32,10 +35,10 @@ const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
               <div key={item.id} className="cart-item">
                 <Image src={item.image} alt={item.title} width={80} height={80} />
                 <div>
-                  <h3>{item.title}</h3>
+                  <h4>{item.title}</h4>
                   <p>{item.category}</p>
                   <p>Size {item.size}</p>
-                  <p>${item.price}</p>
+                  <h5>${item.price}</h5>
                 </div>
               </div>
             ))}

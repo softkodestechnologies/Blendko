@@ -41,9 +41,9 @@ body {
   font-weight: 400;
 }
 
-body.cart-open {
+/* body.cart-open {
   overflow: hidden;
-}
+} */
 
 #modal.action,
 body.action {
