@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NotificationBadge from '../ui/NotificationBadge';
+import HamburgerMenu from '../ui/HamburgerMenu';
 
 import { 
   IoPersonOutline, 
@@ -54,13 +55,13 @@ const Header = () => {
             <div className="flex-shrink-0">
               <h1 className="nav-title"><Link href="/"><LogoSVG /></Link></h1>
             </div>
-            <div className="flex-baseline">
+            <div className="flex center">
               {!navOpen && <IoPersonOutline className="nav-icon" size={30} />}
               {!navOpen && <IoHeartOutline className="nav-icon" size={30} />}
               {!navOpen && <IoCartOutline className="nav-icon" size={30} onClick={toggleCart} />}
               {navOpen && <IoSearch className="nav-icon" size={30} />}
               <div className="nav-icon nav-control-icon" onClick={toggleNav}>
-                {navOpen ? <IoClose size={34} /> : <IoMenu size={34} />}
+                {navOpen ? <IoClose size={34} /> : <HamburgerMenu />}
               </div>
             </div>
           </div>

@@ -39,11 +39,12 @@
     color: black;
     font-size: 1.25rem; 
     cursor: pointer;
+    margin-left: 15px;
   }
 
-  .nav-control-icon {
+  /* .nav-control-icon {
     margin-left: 10px;
-  }
+  } */
   
   .navbar-menu {
     width: 100%;
@@ -51,7 +52,7 @@
     left: 0;
     z-index: 300;
     background-color: #FFF;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 90px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -63,7 +64,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     text-transform: uppercase;
-    font-size: 1.25rem;
+    font-size: 1rem;
     height: inherit;
     animation: fadeIn 0.5s ease-in-out, slideIn 0.8s ease-in-out;
   }

@@ -1,0 +1,188 @@
+/* Jumbotron.css */
+.sectionContainer {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  .topSection {
+    position: relative;
+    background-color: #FEFFF1; /* Adjust the color as needed */
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .discountText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-35%, -50%);
+    font-size: 25rem; /* Adjust size as needed */
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.1); /* Adjust color and opacity */
+    z-index: 1; /* Make sure it's behind the woman image */
+  }
+
+.discountTextPercentage {
+    font-size: 8rem;
+}
+  .section-image-container {
+    position: absolute; 
+    width: auto;
+  }
+  
+  .womanImage {
+    position: relative;
+    bottom: -10px;
+    max-width: 100%;
+    min-height: 850px;
+    z-index: 8 !important; /* Make sure the woman image is in front of the text */
+  }
+  
+  .annotation {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    font-size: 1rem; /* Adjust as needed */
+    z-index: 3;
+    background-color: transparent;
+    width: auto;
+  }
+  
+  .lineImage {
+    height: 80px; 
+    background-repeat: no-repeat;
+  }
+  
+  .line1 {
+    background-image: url('/right-vector-1300.png');
+    background-position: top right;
+    width: 300px;
+  }
+
+  .line1-parent {
+    top: 18%;
+    left: 40%;
+  }
+  
+  .line2 {
+    background-image: url('/right-vector-9100.png');
+    width: 300px;
+    background-position: center right;
+  }
+
+  .line2-parent {
+    top: 37%;
+    left: 55%;
+  }
+  
+  .line3 {
+    background-image: url('/left-vector-1300.png');
+    width: 300px;
+    background-position: center;
+  }
+
+  .line3-parent {
+    top: 3%;
+    right: 38%;
+    
+  }
+  
+  .line4 {
+    background-image: url('/left-vector-300.png');
+    width: 100px;
+    background-position: center left;
+  }
+
+  .line4-parent {
+    top: 80%;
+    right: 80%;
+  }
+  
+  .line5 {
+    background-image: url('/line-vector-100-french-shoes.png');
+    width: 700px;
+    background-position: center;
+  }
+
+  .line5-parent {
+    top: 22%;
+    left: 62%;
+    transform: translateX(-50%);
+  }
+
+  .discount-now-parent {
+    top: 80%;
+    left: 80%;
+    color: #DDB28B;
+    font-weight: 600;
+    text-wrap: nowrap;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 840px) {
+
+    .line5 {
+        display: none;
+    }
+
+    .section-image-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .womanImage {
+        position: relative;
+        width: 70%;
+        min-height: auto;
+        height: auto;
+        left: 0;
+        transform: none;
+        bottom: auto;
+    }
+
+    .lineImage {
+        max-width: 100%; 
+        height: 40px; 
+    }
+  
+    .exploreContainer {
+      text-align: center;
+    }
+  
+    .discountText {
+      font-size: 11rem; /* Adjust size for mobile view */
+      top: 20%;
+      left: 50%;
+    }
+
+    .main-banner-text {
+        margin-top: 3rem !important;
+      }
+  }
+
+  @media screen and (min-width: 768px) {
+    .main-banner-hidden {
+        display: flex;
+        padding: 2em;
+        text-align: center;
+    }
+
+    /* .main-banner-hidden h2 {
+        font-family: 'Black mango', sans-serif;
+        font-weight: 600;
+    } */
+
+    .main-banner-hidden p {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        margin: 1em 0;
+    }
+
+  }
+
+  

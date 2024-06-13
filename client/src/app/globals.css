@@ -32,13 +32,15 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  outline: 2px solid red;
 }
 
-body {
+body, html {
   color: rgb(var(--foreground-color));
   background: rgb(var(--secondary-color));
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+ /* overflow-x: hidden;*/
 }
 
 /* body.cart-open {
@@ -59,10 +61,6 @@ h5,
 h6 {
   font-weight: 700;
   color: rgb(var(--foreground-color));
-}
-
-span {
-  display: block;
 }
 
 a {
@@ -106,11 +104,13 @@ button {
   background-color: #000;
   color: #FFF;
   padding: 1rem 2rem;
+  margin-bottom: 4em;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   border-radius: 0;
+  border: none;
   box-shadow: 3px 3px 0px white,
   2px 2px 0px black,
   4px 4px 0px black;
@@ -188,7 +188,12 @@ button {
 
 .highlight-context {
   padding: 1rem;
+  margin-right: 2em;
   font-weight: 400;
+}
+
+.highlight-context > * {
+  line-height: 1.5;
 }
 
 .highlight-context button {
@@ -226,23 +231,28 @@ button {
 }
 
 .main-banner-img {
+  background-color: #FEFFF1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 3rem;
 }
 
-.main-banner-img1 {
+.main-banner-img1, 
+.main-banner-img2 {
   width: 100%;
-  height: 300px; 
+  height: 500px;
+  padding: 2em;
+  color: #FFF;
+  text-align: center;
+}
+
+.main-banner-img1 { 
   background-image: url('/make-up.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .main-banner-img2 {
-  width: 100%;
-  height: 300px; 
   background-image: url('/people.png');
   background-size: cover;
   background-position: center;
@@ -252,13 +262,28 @@ button {
   margin-top: 25rem;
 }
 
+.main-banner-text-center > * {
+  margin: 0.5em 0;
+}
+
+.main-banner-text-center > p {
+  text-decoration: underline;
+}
+
 .main-banner-hidden {
-  /*text-shadow: 0px 0px 2px white;*/
   display: none;
+}
+
+.highlight-section {
+  margin-bottom: 7em;
 }
 
 .highlight-header {
   padding: 2rem 0;
+}
+
+.highlight-context-title {
+  text-wrap: wrap;
 }
 
 .highlight-btn {
@@ -270,6 +295,22 @@ button {
 
 .highlight-triple-image {
   overflow-x: hidden;
+}
+
+
+.highlight-image {
+  width:330px; 
+  height:400px;
+}
+
+.highlight-gallery {
+  width: 240px; 
+  height: 360px;
+  margin-right: 1em;
+}
+
+.highlight-gallery:last-child {
+  margin-right: 0;
 }
 
 .grid-4 {
@@ -328,9 +369,8 @@ button {
     width: 30%;
   }
 
-  .main-banner-hidden {
-    text-shadow: 0px 0px 2px white;
-    display: flex;
+  .main-banner-text-center {
+    display: none;
   }
 }
 
@@ -355,6 +395,16 @@ button {
    .main-banner-text {
      margin-top: 3rem !important;
    }
+
+   .highlight-image {
+    width:250px;
+    height:300px;
+  }
+  
+  .highlight-gallery {
+    width: 150px;
+    height: 260px;
+  }
  }
 
 

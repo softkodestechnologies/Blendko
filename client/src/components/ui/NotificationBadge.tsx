@@ -26,9 +26,13 @@ const NotificationBadge = () => {
     }
     return (
         <div>
-        {showNotification && <div className='badge-container flex center'>
-            <h3>{notification[0].message}</h3>
-            <IoClose size={25} className="close" onClick={handleCloseNotification}/>
+        {showNotification && <div className='badge-container '>
+            <div className="container flex space-between">
+                <div className="badge-title flex center">
+                    <h3>{notification[0].message}</h3>
+                </div>
+                <IoClose size={25} className="close" onClick={handleCloseNotification}/>
+            </div>
         </div>}
         </div>
     )

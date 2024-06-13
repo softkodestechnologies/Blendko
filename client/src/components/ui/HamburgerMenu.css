@@ -1,0 +1,21 @@
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  
+.bar {
+    width: 100%;
+    height: 4px; /* Height of the bars */
+    background-color: black; /* Adjust color as needed */
+    margin-bottom: 4px;
+}
+  
+.bar:last-child {
+    margin-bottom: 0;
+}
+  

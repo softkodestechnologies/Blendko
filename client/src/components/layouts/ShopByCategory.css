@@ -1,0 +1,129 @@
+.section {
+    background-color: #f7f3ee;
+    position: relative;
+    padding-top: 2em;
+  }
+
+  .section > * {
+    min-width: 90vw;
+    width: 90%;
+    max-width: 1440px;
+    width: clamp(90vw, 90%, 1440px);
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-top: -5rem;
+    background-color: transparent;
+    padding: 0 1rem;
+    z-index: 10;
+    font-family: 'Black Mango', sans-serif;
+  }
+  
+  .imageContainer {
+    position: relative;
+    height: 800px; /* Adjust as needed */
+    margin-top: 2rem;
+  }
+  
+  .imageWrapper {
+    position: absolute;
+    width: 300px; /* Adjust as needed */
+  }
+
+  .imageWrapper > img {
+    min-width: 100%;
+  }
+  
+  .jeans {
+    left: 5%;
+    bottom: 115px;
+  }
+  
+  .jacket {
+    right: 0;
+    top: -16%;
+  }
+  
+  .trousers {
+    left: 55%;
+    top: 67%;
+  }
+  
+  .label {
+    position: absolute;
+    font-family: 'Black Mango', sans-serif;
+    font-weight: 600;
+    bottom: -6%;
+    left: -6%;
+    right: 0;
+    padding: 0.5rem;
+    color: #000;
+  }
+  
+  .customizeSection {
+    padding: 10rem 10rem 0 10rem;
+    background-color: white;
+    text-align: center;
+    margin-top: 2rem;
+    min-width: 100vw;
+    width: 100%;
+    max-width: 1440px;
+  }
+
+  .customizeSection > h3, 
+  .customizeSection > p {
+    margin: 1em;
+  }
+  
+  .customizeButton {
+    padding: 1rem 2rem;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .imageContainer {
+      height: auto;
+      width: 100%;
+    }
+
+    .imageWrapper > img {
+        width: 100%;
+        height: auto;
+    }
+  
+    .imageWrapper {
+      position: static;
+      width: 100%;
+      margin: 1rem 0;
+    }
+  
+    .label {
+      color: #FFF;
+      padding: 1em;
+      position: relative;
+      top: -60px;
+      left: 0;
+      z-index: 22;
+    }
+  
+    .section {
+      background-color: white;
+    }
+  
+    .title {
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .title-break,  .customizeSection {
+        display: none;
+    }
+  }
+  
+  
