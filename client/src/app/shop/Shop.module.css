@@ -1,15 +1,10 @@
-.container {
-    display: flex;
-  }
-  
+.main {
+  display: flex;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
   .main {
-    display: flex;
-    width: 100%;
+    flex-direction: column;
   }
-  
-  @media (max-width: 768px) {
-    .main {
-      flex-direction: column;
-    }
-  }
-  
+}

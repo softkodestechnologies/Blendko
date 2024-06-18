@@ -32,7 +32,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  outline: 2px solid red;
+  outline: 1px solid red;
 }
 
 body, html {
@@ -40,12 +40,13 @@ body, html {
   background: rgb(var(--secondary-color));
   font-family: 'Inter', sans-serif;
   font-weight: 400;
- /* overflow-x: hidden;*/
+  overflow-x: hidden;
 }
 
-/* body.cart-open {
+
+body.cart-open {
   overflow: hidden;
-} */
+}
 
 #modal.action,
 body.action {
@@ -307,10 +308,6 @@ button {
   width: 240px; 
   height: 360px;
   margin-right: 1em;
-}
-
-.highlight-gallery:last-child {
-  margin-right: 0;
 }
 
 .grid-4 {

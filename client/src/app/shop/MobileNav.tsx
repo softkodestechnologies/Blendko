@@ -13,6 +13,7 @@ export default function MobileNav() {
         <div className={styles.navMenu}>
           <h2>Filters</h2>
           {/* Add mobile navigation controls here */}
+          <h2>This should show now</h2>
         </div>
       )}
     </div>

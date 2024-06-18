@@ -1,9 +1,9 @@
 import styles from './ProductItem.module.css';
-import Image from 'next/image'
+import Image from 'next/image';
 import { ProductItemType } from '@/utils/types';
 
 interface ProductItemProps {
-  product: ProductItemType
+  product: ProductItemType;
 }
 
 export default function ProductItem({ product }: ProductItemProps) {

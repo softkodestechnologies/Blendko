@@ -26,9 +26,9 @@
   .main_content {
     width: 100%;
     padding: 1rem;
-    background-color: #F7F7F5;
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    border-left: 1px solid blue;
   }
 
   .main_content_img {
@@ -80,4 +80,3 @@
       padding-right: 0; 
     }
   }
-  

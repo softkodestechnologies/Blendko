@@ -1,5 +1,3 @@
-
-/* Cart modal styles */
 .overlay {
   position: fixed;
   top: 0;
@@ -8,7 +6,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 50;
-  display: none
+  overflow: hidden;
 }
     
 .cart-modal {
@@ -77,16 +75,18 @@
   border: none;
   border-radius: 0;
   cursor: pointer;
+  text-transform: capitalize;
 }
   
 .view-bag-button {
-  background: white;
+  background: #FFF;
+  color: #000;
   border: 1px solid black;
 }
   
 .checkout-button {
-  background: black;
-  color: white;
+  background: #000;
+  color: #FFF;
 }
   
 .close-button {

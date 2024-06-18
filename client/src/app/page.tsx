@@ -1,6 +1,7 @@
 import Jumbotron from "@/components/layouts/Jumbotron";
 import Highlights from "@/components/layouts/Highlights";
 import ShopByCategory from "@/components/layouts/ShopByCategory";
+import Framer from "@/components/layouts/Framer";
 
 export default function Home() {
   // const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
@@ -40,6 +41,9 @@ export default function Home() {
 
       {/*Shop By Category */}
       <ShopByCategory />
+
+      {/*Framer */}
+      <Framer />
 
     </div>
   );

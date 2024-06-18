@@ -25,13 +25,13 @@ const Header = () => {
 
   const toggleNav = () => setNavOpen(!navOpen);
 
-  useEffect(() => {
-    if (cartOpen) {
-      document.body.classList.add('cart-open');
-    } else {
-      document.body.classList.remove('cart-open');
-    }
-  }, [cartOpen]);
+  // useEffect(() => {
+  //   if (cartOpen) {
+  //     document.body.classList.add('cart-open');
+  //   } else {
+  //     document.body.classList.remove('cart-open');
+  //   }
+  // }, [cartOpen]);
 
 
   const cartItems = [

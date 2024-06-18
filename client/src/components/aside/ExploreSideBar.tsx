@@ -53,7 +53,7 @@ function ExploreSideBar() {
               </Link>
             </li>
           </ul>
-          <h2 className="sidebar-title sidebar-section">LEGAL</h2>
+          <h2 className="sidebar_title">LEGAL</h2>
           <ul>
             <li>
               <Link href="#" className="sidebar_link">
