@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 import { Range } from 'react-range';
@@ -37,39 +37,46 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
   });
 
   const toggleSection = (section: keyof ExpandedSections) => {
-    setExpandedSections((prevSections) =>({
+    setExpandedSections((prevSections) => ({
       ...prevSections,
       [section]: !prevSections[section],
     }));
   };
 
-
-  // Watch for changes in checkboxes and trigger onCheckboxChange
+  // Watch for changes in checkboxes
   const watchColors = watch('colors');
   const watchSizes = watch('sizes');
   const watchDressStyles = watch('dressStyles');
   const watchBrand = watch('brand');
   const watchFashionCollection = watch('fashionCollection');
 
-  useEffect(() => {
-    onCheckboxChange('colors', watchColors || []);
-  }, [watchColors]);
+  // Use useCallback for onCheckboxChange
+  const handleCheckboxChange = useCallback(
+    (key: string, value: string[]) => {
+      onCheckboxChange(key, value);
+    },
+    [onCheckboxChange]
+  );
 
   useEffect(() => {
-    onCheckboxChange('sizes', watchSizes || []);
-  }, [watchSizes]);
+    handleCheckboxChange('colors', watchColors || []);
+  }, [watchColors, handleCheckboxChange]);
 
   useEffect(() => {
-    onCheckboxChange('dress_style', watchDressStyles || []);
-  }, [watchDressStyles]);
+    handleCheckboxChange('sizes', watchSizes || []);
+  }, [watchSizes, handleCheckboxChange]);
 
   useEffect(() => {
-    onCheckboxChange('brand', watchBrand || []);
-  }, [watchBrand]);
+    handleCheckboxChange('dress_style', watchDressStyles || []);
+  }, [watchDressStyles, handleCheckboxChange]);
 
   useEffect(() => {
-    onCheckboxChange('fashion_collection', watchFashionCollection || []);
-  }, [watchFashionCollection]);
+    handleCheckboxChange('brand', watchBrand || []);
+  }, [watchBrand, handleCheckboxChange]);
+
+  useEffect(() => {
+    handleCheckboxChange('fashion_collection', watchFashionCollection || []);
+  }, [watchFashionCollection, handleCheckboxChange]);
 
   return (
     <Box as="form"  className={styles.sidebar}>
@@ -225,7 +232,7 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
                         style={{backgroundColor: field.value?.includes(size) ? 'rgba(0,0,0,0.3)' : 'white'}}
                         onClick={(e) => {
                           e.preventDefault();
-                          const newValue = field.value?.includes(size) ? field.value.filter((v) => v !== size) : [...(field.value || []), size];
+                          const newValue = field.value?.includes(size) ? field.value.filter((v: string) => v !== size) : [...(field.value || []), size];
                           field.onChange(newValue);
                         }}
                       >
@@ -259,7 +266,7 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
                     style={{backgroundColor: field.value?.includes(style) ? 'rgba(0,0,0,0.3)' : 'white'}}
                     onClick={(e) => {
                       e.preventDefault();
-                      const newValue = field.value?.includes(style) ? field.value.filter((v) => v !== style) : [...(field.value || []), style];
+                      const newValue = field.value?.includes(style) ? field.value.filter((v: string) => v !== style) : [...(field.value || []), style];
                       field.onChange(newValue);
                     }}
                   >
@@ -293,7 +300,7 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
                         onChange={(e) => {
                           const newValue = e.target.checked
                             ? [...(field.value || []), brand]
-                            : field.value.filter((v) => v !== brand);
+                            : field.value.filter((v: string) => v !== brand);
                           field.onChange(newValue);
                         }}
                       >
@@ -328,7 +335,7 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
                         onChange={(e) => {
                           const newValue = e.target.checked
                             ? [...(field.value || []), collection]
-                            : field.value.filter((v) => v !== collection);
+                            : field.value.filter((v: string) => v !== collection);
                           field.onChange(newValue);
                         }}
                       >

@@ -18,7 +18,7 @@ function useAddToCart() {
   useEffect(() => {
     if (isLoading) document.body.classList.add('action');
     if (!isLoading || error) document.body.classList.remove('action');
-  }, [isLoading]);
+  }, [isLoading, error]);
 
   const addItemToCart = (product: any) => {
     console.log("Adding item to cart:", product);

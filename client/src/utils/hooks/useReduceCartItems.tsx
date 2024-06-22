@@ -22,7 +22,7 @@ function useReduceCartItems() {
   useEffect(() => {
     if (isLoading) document.body.classList.add('action');
     if (!isLoading || error) document.body.classList.remove('action');
-  }, [isLoading]);
+  }, [isLoading, error]);
 
   const reduceCartItem = (productId: string) => {
     const offLineCartItems = JSON.parse(

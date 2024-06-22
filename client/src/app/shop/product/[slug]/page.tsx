@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGetProductQuery } from '@/services/userService';
-import LoadingSkeleton from '@/components/shop/LoadingSkeleton';
 import ProductLoadingSkeleton from '@/components/shop/ProductLoadingSkeleton';
 import useAddToCart from '@/utils/hooks/useAddToCart';
 import useReduceCartItems from '@/utils/hooks/useReduceCartItems';
@@ -76,7 +75,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
       <div className={styles.productPage}>
         <div className={styles.imageGallery}>
           <div className={styles.mainImage}>
-            <Image src={selectedImage} alt={productData.product.name} width={100} height={100}/>
+            <Image src={selectedImage || '/people.png'} alt={productData.product.name} width={100} height={100}/>
           </div>
           <div className={styles.thumbnailImages}>
             {productData.product.images.map((image: any, index: number) => (
@@ -150,7 +149,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
         <div className={styles.recommendationItems}>
           {recommendationItems.map((item: any, index: number) => (
             <div key={index} className={styles.recommendationItem}>
-              <image src={item.imageSrc} alt={item.altText} width={180} height={180} />
+              <Image src={item.imageSrc || '/picture.png'} alt={item.altText} width={180} height={180} />
               <div className={styles.recommendationDetails}>
                 <h3>{item.title}</h3>
                 <p>{item.price}</p>
