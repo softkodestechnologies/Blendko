@@ -11,13 +11,13 @@ interface UserState {
   };
 }
 
-let baseUrl: string;
+let baseUrl: string = 'https://blendko.onrender.com/api/v1';
 
-if (process.env.NODE_ENV === 'development') {
-  baseUrl = process.env.NEXT_PUBLIC_DEV_URL!;
-} else {
-  baseUrl = process.env.NEXT_PUBLIC_PROD_URL!;
-}
+// if (process.env.NODE_ENV === 'development') {
+//   baseUrl = process.env.NEXT_PUBLIC_DEV_URL!;
+// } else {
+//   baseUrl = process.env.NEXT_PUBLIC_PROD_URL!;
+// }
 
 let user;
 
