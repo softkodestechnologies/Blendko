@@ -58,9 +58,7 @@ const Shop = () => {
             </aside>
     
             <div>
-                <Suspense fallback={<LoadingSkeleton />}>
-                  {isLoading ? <LoadingSkeleton /> : <ProductList products={products?.products || []} />}
-                </Suspense>
+                {isLoading ? <LoadingSkeleton /> : <ProductList products={products?.products || []} />}
                 {isLoading ? '' :<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
                 <RecentlyViewedSection items={viewedItems} />
             </div>
@@ -120,4 +118,10 @@ const viewedItems = [
     );
   };
 
-export default Shop;
+  const SuspendedShop = () => (
+    <Suspense fallback={<LoadingSkeleton />}>
+      <Shop />
+    </Suspense>
+  );
+  
+  export default SuspendedShop;
