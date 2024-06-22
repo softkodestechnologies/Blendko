@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import useFilterOptions from '@/utils/hooks/useFilterOptions';
 import usePagination from '@/utils/hooks/usePagination';
 import CategoryList from '@/components/shop/CategoryList';
@@ -58,7 +58,9 @@ const Shop = () => {
             </aside>
     
             <div>
-                {isLoading ? <LoadingSkeleton /> : <ProductList products={products?.products || []} />}
+                <Suspense fallback={<LoadingSkeleton />}>
+                  {isLoading ? <LoadingSkeleton /> : <ProductList products={products?.products || []} />}
+                </Suspense>
                 {isLoading ? '' :<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
                 <RecentlyViewedSection items={viewedItems} />
             </div>
