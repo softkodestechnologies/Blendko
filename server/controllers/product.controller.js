@@ -21,7 +21,13 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     features,
     measurement,
     user,
-    images,
+    colors,
+    dress_style,
+    gender,
+    sizes,
+    fashion_collection,
+    technology,
+    brand
   } = req.body;
 
   if (!files) return next(new ErrorHandler('Please upload images', 400));
@@ -36,7 +42,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
   for (let i = 0; i < files.length; i++) {
     const result = await cloudinary.v2.uploader.upload(files[i].path, {
-      folder: 'afrobean/products',
+      folder: 'blendko/products',
     });
 
     imagesLinks.push({
@@ -58,6 +64,13 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     measurement,
     user,
     images: imagesLinks,
+    colors,
+    dress_style,
+    gender,
+    sizes, 
+    fashion_collection,
+    technology,
+    brand
   });
 
   product.available_quantity = quantity;
@@ -92,7 +105,11 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProducts = catchAsyncErrors(async (req, res) => {
-  const resPerPage = req.query.pp || 5;
+
+  console.log("Product routes requested")
+
+
+  const resPerPage = req.query.pp || 10;
   let sort;
 
   if (req.query.sort && req.query.sort === '-1') {

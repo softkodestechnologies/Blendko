@@ -86,6 +86,40 @@ const productSchema = new Schema({
       ref: 'User',
       required: true,
     },
+    colors: [
+      {
+        type: String
+      }
+    ],
+    dress_style: [
+      {
+        type: String
+      }
+    ],
+    gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Unisex'],
+      required: true
+    },
+    sizes: [
+      {
+        type: String
+    }
+  ], 
+  fashion_collection: [
+    {
+      type: String
+    }
+  ],
+  technology: [
+    {
+      type: String
+    }
+  ],
+  brand: {
+    type: String,
+    required: [true, 'Please enter product brand']
+  },
     }, {
       timestamps: true,
     });

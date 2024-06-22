@@ -30,8 +30,8 @@ router.post(
 );
 router.put(
   '/admin/:id',
-  authorizeRoles('admin'),
   isAuthenticatedUser,
+  authorizeRoles('admin'),
   updateProduct
 );
 router.delete(
