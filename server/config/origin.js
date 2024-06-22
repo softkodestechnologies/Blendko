@@ -1,18 +1,18 @@
 const allowedOrigins = () => {
-    const origins = {
-      origin: 'http://localhost:5000',
-      credentials: true,
-    };
-  
-    if (process.env.NODE_ENV === 'PRODUCTION') {
-      return {
-        origin: 'vercel-link',
-        credentials: true,
-        https: true,
-      };
-    }
-  
-    return origins;
+  const origins = {
+    origin: 'http://localhost:3000',
+    credentials: true,
   };
-  
-  module.exports = allowedOrigins;
+
+  if (process.env.NODE_ENV === 'PRODUCTION') {
+    return {
+      origin: 'https://blendko.vercel.app',
+      credentials: true,
+      https: true,
+    };
+  }
+
+  return origins;
+};
+
+module.exports = allowedOrigins;
