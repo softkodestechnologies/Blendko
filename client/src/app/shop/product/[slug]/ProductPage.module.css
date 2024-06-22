@@ -1,0 +1,162 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .breadcrumb {
+    margin-bottom: 20px;
+  }
+  
+  .productPage {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .imageGallery {
+    flex: 1;
+  }
+  
+  .mainImage img {
+    width: 100%;
+    height: 400px;
+    display: block;
+    border: 1px solid #ddd;
+  }
+  
+  .thumbnailImages {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .mainImage img,
+  .thumbnailImages img {
+    background-color: #F0EEED;
+  }
+  
+  .thumbnailImages img {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+  }
+  
+  .thumbnailImages img.active {
+    border-color: #000;
+  }
+  
+  .productDetails {
+    flex: 1;
+    margin-left: 40px;
+  }
+  
+  .productDetails h1 {
+    margin-bottom: 10px;
+  }
+  
+  .rating {
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .currentPrice {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .originalPrice {
+    font-size: 18px;
+    color: #999;
+    text-decoration: line-through;
+  }
+  
+  .options {
+    margin-bottom: 20px;
+  }
+  
+  .colors, .sizes {
+    margin-bottom: 20px;
+  }
+  
+  .colorButton {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: none;
+    margin-right: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .sizeButton {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  .quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .quantity button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background: #f0f0f0;
+  }
+  
+  .addToCartButton {
+    padding: 15px 20px;
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .extraDetails {
+    margin-top: 20px;
+  }
+  
+  .extraDetails details {
+    margin-bottom: 10px;
+  }
+  
+  .recommendations {
+    margin-top: 40px;
+  }
+  
+  .recommendationItems {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .recommendationItem {
+    width: 200px;
+  }
+  
+  .recommendationItem img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #ddd;
+  }
+  
+  .recommendationDetails {
+    margin-top: 10px;
+    text-align: center;
+  }
+  

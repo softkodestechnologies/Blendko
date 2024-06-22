@@ -45,7 +45,7 @@ const Jumbotron = () => {
           <div className="main-banner-img1 flex center">
             <div className='main-banner-text-center'>
                 <h2>Fashion & Accessories</h2>
-                <p><Link href="/">Discover</Link></p>
+                <p><Link href="/shop">Discover</Link></p>
             </div>
           </div>
           <div className="flex flex-col center main-banner-hidden">
@@ -56,7 +56,7 @@ const Jumbotron = () => {
           <div className="main-banner-img2 flex center">
             <div className='main-banner-text-center'>
                 <h2>Fashion & Accessories</h2>
-                <p><Link href="/">Discover</Link></p>
+                <p><Link href="/shop">Discover</Link></p>
             </div>
           </div>
         </div>

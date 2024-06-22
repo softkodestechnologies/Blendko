@@ -5,24 +5,31 @@ export interface ProductItemType {
   imgSrc: string;
 }
 
-
 export interface Product {
-    _id: string;
-    name: string;
-    price: number;
-    images: { _id: string; public_id: string; url: string }[];
-    ratings: number;
-    category: string;
-    num_of_reviews: number;
-    reviews: any[];
-    measurement: string;
-    quantity: number;
-    available_quantity: number;
-    discount: number;
-    features: string[];
-    user: string;
-    description: string;
-  }
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  available_quantity: number;
+  brand: string;
+  colors: string[];
+  discount: number;
+  dress_style: string[];
+  fashion_collection: string[];
+  features: string[];
+  gender: string;
+  images: { url: string }[];
+  measurement: string;
+  num_of_reviews: number;
+  ratings: number;
+  reviews: any[];
+  sizes: string[];
+  technology: string[];
+  updatedAt: string;
+  user: string;
+}
+
   
   export interface CartItem {
     _id: string;

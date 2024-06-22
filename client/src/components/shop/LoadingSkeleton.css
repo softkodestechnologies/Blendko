@@ -1,0 +1,62 @@
+/* components/LoadingSkeleton.module.css */
+.skeletonContainer {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .skeletonItem {
+    width: 100%;
+    margin: 1%;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+    border-radius: 8px;
+  }
+  
+  .imageSkeleton,
+  .textSkeleton,
+  .priceSkeleton {
+    background: #e0e0e0;
+    border-radius: 4px;
+    margin: 10px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .imageSkeleton {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .textSkeleton {
+    width: 80%;
+    height: 20px;
+  }
+  
+  .priceSkeleton {
+    width: 50%;
+    height: 20px;
+  }
+  
+  @keyframes loading {
+    0% {
+      background-position: -200px 0;
+    }
+    100% {
+      background-position: calc(200px + 100%) 0;
+    }
+  }
+  
+  .imageSkeleton::after,
+  .textSkeleton::after,
+  .priceSkeleton::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(200, 200, 200, 0) 0%, rgba(200, 200, 200, 0.8) 50%, rgba(200, 200, 200, 0) 100%);
+    animation: loading 1.5s infinite;
+  }
+  

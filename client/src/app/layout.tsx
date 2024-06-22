@@ -3,10 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "../components/layouts/Footer";
 import Header from "../components/layouts/Header";
-//import { Provider } from 'react-redux';
-//import { AppProps } from 'next/app';
-//import { store } from '../services/store';
-//{/*<Provider store={store}></Provider*/}>
 import { Providers } from './providers';
 import { metadata } from './metadata';
 import CookieConsent from "@/components/ui/CookieConsent";
@@ -46,13 +42,15 @@ export default function RootLayout({
         />
       </head>*/}
       <body className={inter.className}>
+      <Providers>
         <Header/>
           <CookieConsent />
           <ShoppingPreferences />
           <div>
-              <Providers>{children}</Providers>
+              <div>{children}</div>
           </div>
         <Footer/>
+        </Providers>
       </body>
     </html>
   );

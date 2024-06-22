@@ -1,0 +1,188 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .breadcrumb {
+    margin-bottom: 20px;
+  }
+  
+  .skeletonBreadcrumb {
+    height: 20px;
+    width: 200px;
+    background-color: #e0e0e0;
+  }
+  
+  .productPage {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .imageGallery {
+    flex: 1;
+  }
+  
+  .mainImage {
+    width: 100%;
+    padding-bottom: 75%;
+    background-color: #e0e0e0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .thumbnailImages {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .skeletonThumbnail {
+    width: 60px;
+    height: 60px;
+    background-color: #e0e0e0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .productDetails {
+    flex: 2;
+  }
+  
+  .skeletonTitle {
+    height: 30px;
+    width: 60%;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+  }
+  
+  .skeletonRating {
+    height: 20px;
+    width: 100px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+  }
+  
+  .skeletonPrice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .skeletonCurrentPrice {
+    height: 24px;
+    width: 80px;
+    background-color: #e0e0e0;
+  }
+  
+  .skeletonOriginalPrice {
+    height: 18px;
+    width: 60px;
+    background-color: #e0e0e0;
+  }
+  
+  .skeletonDescription {
+    height: 18px;
+    width: 80%;
+    background-color: #e0e0e0;
+    margin-bottom: 20px;
+  }
+  
+  .options {
+    margin-bottom: 20px;
+  }
+  
+  .skeletonColors, .skeletonSizes {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .skeletonColorButton, .skeletonSizeButton {
+    height: 30px;
+    width: 30px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+  }
+  
+  .skeletonSizeButton {
+    border-radius: 5px;
+  }
+  
+  .skeletonQuantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .skeletonQuantityButton {
+    height: 30px;
+    width: 30px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+  }
+  
+  .skeletonQuantityNumber {
+    height: 30px;
+    width: 30px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  .skeletonAddToCartButton {
+    height: 50px;
+    width: 150px;
+    background-color: #e0e0e0;
+    margin-bottom: 20px;
+  }
+  
+  .extraDetails {
+    margin-top: 20px;
+  }
+  
+  .skeletonExtraDetail {
+    height: 20px;
+    width: 100%;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+  }
+  
+  .recommendations {
+    margin-top: 40px;
+  }
+  
+  .skeletonRecommendationTitle {
+    height: 30px;
+    width: 200px;
+    background-color: #e0e0e0;
+    margin-bottom: 20px;
+  }
+  
+  .recommendationItems {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .skeletonRecommendationItem {
+    width: 200px;
+  }
+  
+  .skeletonRecommendationImage {
+    width: 100%;
+    padding-bottom: 75%;
+    background-color: #e0e0e0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .skeletonRecommendationDetails {
+    height: 20px;
+    width: 80%;
+    background-color: #e0e0e0;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
