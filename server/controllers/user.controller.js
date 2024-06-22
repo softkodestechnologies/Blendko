@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Product = require('../models/product.model');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const { createHash } = require('node:crypto');
@@ -320,7 +321,7 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
-    roles: req.body.roles,
+    role: req.body.role,
   };
   const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
     new: true,
