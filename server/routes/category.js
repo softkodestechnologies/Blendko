@@ -6,3 +6,5 @@ const router = Router();
 
 router.get('/', getCategories);
 router.get('/:name', getCategoryByName);
+
+module.exports = router;
