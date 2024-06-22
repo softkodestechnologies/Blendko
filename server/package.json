@@ -6,8 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "dev": "SET NODE_ENV=DEVELOPMENT&&nodemon server.js",
-    "prod": "SET NODE_ENV=PRODUCTION&&nodemon server.js",
+    "dev": "nodemon server.js",
+    "prod": "nodemon server.js",
     "lint": "eslint . --config eslint.config.js",
     "lint:fix": "eslint . --config eslint.config.js --fix",
     "lint:watch": "eslint . --config eslint.config.js --watch",
