@@ -1,8 +1,9 @@
 .sidebar {
     width: 250px;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-right: 1px solid #ddd;
+    background-color: #FFF;
+    border: 1px solid #ddd;
+    border-radius: 8px;
   }
   
   .filterSection {
@@ -21,6 +22,10 @@
   
   .colorCircle {
     position: relative;
+  }
+
+  .priceLabels {
+    font-weight: 700;
   }
 
   .filterButton {
