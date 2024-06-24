@@ -223,6 +223,7 @@ select {
   width: clamp(90vw, 90%, 1440px);
   margin: 0 auto;
   position: relative;
+  background: yellow;
 }
 
 .not-found {
@@ -392,6 +393,11 @@ select {
 
 .pagination-label {
   font-weight: 600;
+}
+
+.login-page {
+  width: 100vw;
+  height: 100vh;
 }
 
 

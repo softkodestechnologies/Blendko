@@ -13,27 +13,21 @@ const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<any[]>([]);
 
-  const toggleCart = () => setCartOpen(!cartOpen);
+  const toggleCart = () => {
+    handleStorageChange()
+    setCartOpen(!cartOpen);
+  }
   const toggleNav = () => setNavOpen(!navOpen);
 
+
   useEffect(() => {
+    handleStorageChange()
+  }, []);
+
+  const handleStorageChange = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
     setCartItems(storedCartItems);
-  }, []);
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-      console.log('HANDLESTORAGECHANGE CALLED', storedCartItems)
-      setCartItems(storedCartItems);
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
+  };
 
   return (
     <header>
@@ -58,15 +52,15 @@ const Header = () => {
           <div className={`navbar-menu ${!navOpen ? 'navbar-hidden' : 'navbar-visible'}`}>
             <div className="navbar-list header-container">
               <h2>Fashion & <br className='nav-break' />Accessories</h2>
-              <Link href="/shop">What&apos;s New</Link>
-              <Link href="/shop">Gifts & Personalisation</Link>
-              <Link href="/shop">Women&apos;s Fashion</Link>
-              <Link href="/shop">Men&apos;s Fashion</Link>
-              <Link href="/shop">Bags Fashion</Link>
-              <Link href="/shop">Jewelry & Timepieces</Link>
-              <Link href="/shop">Kid&apos;s & Baby</Link>
-              <Link href="/shop">Maison</Link>
-              <Link href="/shop">Customisation</Link>
+              <Link href="/shop" onClick={toggleNav}>What&apos;s New</Link>
+              <Link href="/shop" onClick={toggleNav}>Gifts & Personalisation</Link>
+              <Link href="/shop" onClick={toggleNav}>Women&apos;s Fashion</Link>
+              <Link href="/shop" onClick={toggleNav}>Men&apos;s Fashion</Link>
+              <Link href="/shop" onClick={toggleNav}>Bags Fashion</Link>
+              <Link href="/shop" onClick={toggleNav}>Jewelry & Timepieces</Link>
+              <Link href="/shop" onClick={toggleNav}>Kid&apos;s & Baby</Link>
+              <Link href="/shop" onClick={toggleNav}>Maison</Link>
+              <Link href="/shop" onClick={toggleNav}>Customisation</Link>
               <hr className='navbar-dash'/>
             </div>
           </div>

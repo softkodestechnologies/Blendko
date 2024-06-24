@@ -12,8 +12,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export default function RootLayout({
+  auth,
   children,
 }: Readonly<{
+  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -47,6 +49,7 @@ export default function RootLayout({
           <CookieConsent />
           <ShoppingPreferences />
           <div>
+              <div>{auth}</div>
               <div>{children}</div>
           </div>
         <Footer/>

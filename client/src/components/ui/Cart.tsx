@@ -50,7 +50,7 @@ const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
             ))}
           </div>
           <div className="cart-actions">
-            <button className="view-bag-button"><Link href="/view-bag">View Bag ({cartItems.length})</Link></button>
+            <button className="view-bag-button" onClick={toggleCart}><Link href="/view-bag">View Bag ({cartItems.length})</Link></button>
             <button className="checkout-button">Checkout</button>
           </div>
         </div>
