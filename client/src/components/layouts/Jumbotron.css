@@ -1,5 +1,4 @@
-/* Jumbotron.css */
-.sectionContainer {
+  .sectionContainer {
     position: relative;
     overflow-x: hidden;
     width: 100%;
@@ -7,8 +6,7 @@
   
   .topSection {
     position: relative;
-    background-color: #FEFFF1; /* Adjust the color as needed */
-   
+    background-color: #FEFFF1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,15 +17,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-35%, -50%);
-    font-size: 25rem; /* Adjust size as needed */
+    font-size: 25rem; 
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.1); /* Adjust color and opacity */
-    z-index: 1; /* Make sure it's behind the woman image */
+    color: rgba(0, 0, 0, 0.1); 
+    z-index: 1; 
   }
 
-.discountTextPercentage {
-    font-size: 8rem;
-}
+  .discountTextPercentage {
+      font-size: 8rem;
+  }
+
   .section-image-container {
     position: absolute; 
     width: auto;
@@ -38,14 +37,14 @@
     bottom: -10px;
     max-width: 100%;
     min-height: 850px;
-    z-index: 8 !important; /* Make sure the woman image is in front of the text */
+    z-index: 8 !important; 
   }
   
   .annotation {
     position: absolute;
     display: flex;
     align-items: center;
-    font-size: 1rem; /* Adjust as needed */
+    font-size: 1rem; 
     z-index: 3;
     background-color: transparent;
     width: auto;
@@ -155,7 +154,7 @@
     }
   
     .discountText {
-      font-size: 11rem; /* Adjust size for mobile view */
+      font-size: 11rem; 
       top: 20%;
       left: 50%;
     }

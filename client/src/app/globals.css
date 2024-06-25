@@ -104,8 +104,6 @@ select {
   padding: 8px;
 }
 
-
-
 .main-button {
   background-color: #000;
   color: #FFF;
@@ -221,6 +219,7 @@ select {
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
+  /*background-color: yellow;*/
 }
 
 .not-found {
@@ -239,6 +238,8 @@ select {
 
 
 .main-banner-container {
+  align-self: flex-start;
+  margin-left: 5%;
   padding-top: 8rem;
 }
 

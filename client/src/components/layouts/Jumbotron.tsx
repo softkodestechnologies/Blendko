@@ -31,8 +31,8 @@ const Jumbotron = () => {
         </div>
 
         <div className="main-banner-container">
-          <div className="flex flex-col ">
-            <div className="container main-banner-text">
+          <div className="flex flex-col">
+            <div className="main-banner-text">
               <h1 className="main-banner-text-main">CAMERO BOOST WINTER <br/> JACKET GREY</h1>
               <button className="main-button">Explore More</button>
             </div>
