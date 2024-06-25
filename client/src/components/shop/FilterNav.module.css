@@ -1,0 +1,51 @@
+.navContainer {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .navItem {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s;
+    text-wrap: nowrap;
+    position: relative;
+  }
+  
+  .navItem:hover {
+    color: #000;
+  }
+  
+  .active {
+    font-weight: 600;
+    position: relative;
+  }
+  
+  .active > .underline {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background-color: #000;
+    transition: transform 0.5s;
+    pointer-events: none;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .navItem {
+      flex-wrap: wrap;
+      font-size: 0.5em;
+    }
+  }
+
+  @media only screen and (max-width: 980px) {
+    .navItem {
+      font-size: 0.8em;
+      padding: 2px 4px;
+    }
+  }

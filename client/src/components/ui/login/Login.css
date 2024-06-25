@@ -56,7 +56,7 @@
     margin-right: 10px;
   }
 
-  .register,
+  .register-tag,
   .forgot {
     font-weight: 500;
   }
@@ -73,6 +73,10 @@
     margin-bottom: 5px;
     position: relative;
   }
+
+  .error {
+    color: tomato;
+  }
     
   .show-password {
     position: absolute;
@@ -82,5 +86,11 @@
     cursor: pointer;
   }
   
+  @media only screen and (max-width: 768px) {
+    .login-form {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
  
   

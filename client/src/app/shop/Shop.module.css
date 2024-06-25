@@ -8,6 +8,9 @@
     padding: 20px 20px 0 0;
   }
 
+  .products {
+    width: calc(100% - 250px);
+  }
 
   
   .filterSection {
@@ -52,11 +55,24 @@
     font-size: 0.875rem;
     color: #555;
   }
+
+  .filter-con {
+    gap: 30px;
+    text-wrap: nowrap;
+    cursor: pointer;
+  }
   
+  .sort {
+    margin-left: 10px;
+  }
   
   @media (max-width: 768px) {
     .main {
       flex-direction: column;
+    }
+
+    .products {
+      width: 100%;
     }
 
     .sidebar {

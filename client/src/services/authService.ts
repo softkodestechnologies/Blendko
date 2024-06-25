@@ -11,7 +11,7 @@ const authService = blendkoApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (credentials: Credentials) => ({
-        url: 'user/register',
+        url: '/register',
         method: 'POST',
         body: credentials,
       }),
@@ -19,7 +19,7 @@ const authService = blendkoApi.injectEndpoints({
     }),
     oAuthRegister: builder.mutation({
       query: (credentials: Credentials) => ({
-        url: 'user/googleregister',
+        url: '/googleregister',
         method: 'POST',
         body: { googleAccessToken: credentials },
       }),
@@ -27,15 +27,24 @@ const authService = blendkoApi.injectEndpoints({
     }),
     logIn: builder.mutation({
       query: (credentials: Credentials) => ({
-        url: 'user/login',
+        url: '/login',
         method: 'POST',
         body: credentials,
       }),
       invalidatesTags: ['LogIn'],
+      async onQueryStarted(args, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          localStorage.setItem('token', data.token); // Store token in localStorage
+          console.log('User data:', data.user); // Optional: Log user data
+        } catch (error) {
+          console.error('Login failed:', error);
+        }
+      },
     }),
     oAuthLogIn: builder.mutation({
       query: (credentials: Credentials) => ({
-        url: 'user/googlelogin',
+        url: '/googlelogin',
         method: 'POST',
         body: { googleAccessToken: credentials },
       }),

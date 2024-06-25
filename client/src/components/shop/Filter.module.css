@@ -22,6 +22,7 @@
   
   .colorCircle {
     position: relative;
+    border: 1px solid black !important;
   }
 
   .priceLabels {

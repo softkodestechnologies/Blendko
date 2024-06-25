@@ -14,9 +14,10 @@ const generateSlug = (name: string, id: string) => {
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <div className="product-list">
-      {products.length === 0? <div className="no-products flex center">
-        <h2>No Product Fits Your Filter Preferences</h2>
-      </div>: ''}
+      {products.length === 0? 
+        <div className="no-products flex center">
+          <h2>No Product Fits Your Filter Preferences</h2>
+        </div>: ''}
       {products.map((product) => (
         <div key={product._id} className="product-item">
           <Link href={`/shop/product/${generateSlug(product.name, product._id)}`}>

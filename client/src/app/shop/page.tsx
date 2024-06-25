@@ -8,22 +8,32 @@ import ProductList from '@/components/shop/ProductList';
 import Filter from '@/components/shop/Filter';
 import Pagination from '@/components/shop/Pagination';
 import LoadingSkeleton from '@/components/shop/LoadingSkeleton';
+import FilterNav from '@/components/shop/FilterNav';
 import styles from './Shop.module.css';
 import Image from 'next/image';
+import { FaSlidersH } from 'react-icons/fa';
 
 const Shop = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { data: products, isLoading, handlePriceRange, handleSearch, handleSort, handleDropdownSelect, handleCheckboxChange, } = useFilterOptions();
   const { totalPages, currentPage, handlePageChange } = usePagination({ productCount: products?.productsCount || 0 });
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const menuItems = [
+    'All Sale',
+    'Shoes',
+    'Clothing',
+    'Accessories',
+    '40% or More Off',
+  ];
+
+  const setIndex = (index: React.SetStateAction<number>) => {
+    setActiveIndex(index);
+  }
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  useEffect(() => {
-    console.log('Products:', products);
-    console.log('Is Loading:', isLoading);
-  }, [products, isLoading]);
 
   if (!isMounted) {
     return(
@@ -37,10 +47,9 @@ const Shop = () => {
                   onCheckboxChange={handleCheckboxChange}
               />
           </aside>
-  
-          <LoadingSkeleton />
+          
+            <LoadingSkeleton />
       </main>
-    
   </div>
     );
   }
@@ -57,8 +66,23 @@ const Shop = () => {
                 />
             </aside>
     
-            <div>
-                {isLoading ? <LoadingSkeleton /> : <ProductList products={products?.products || []} />}
+            <div className={styles.products}>
+                {isLoading ? 
+                <div>
+                  <FilterNav onSearch={handleSearch} menuItems={menuItems} activeIndex={activeIndex} setIndex={setIndex}/>
+                  <LoadingSkeleton />
+                </div> : 
+                <div>
+                  <div className="flex space-between">
+                    <FilterNav onSearch={handleSearch} menuItems={menuItems} activeIndex={activeIndex} setIndex={setIndex}/>
+                    <div className="flex center filter-con">
+                      <div>Hide Filter <FaSlidersH /></div> 
+                      <div className="sort">Sort by</div>
+                    </div>
+                  </div>
+                  <ProductList products={products?.products || []} />
+                </div>
+                }
                 {isLoading ? '' :<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
                 <RecentlyViewedSection items={viewedItems} />
             </div>

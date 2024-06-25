@@ -66,7 +66,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <NotificationBadge />
+      {/**<NotificationBadge />**/}
       <Cart cartOpen={cartOpen} toggleCart={toggleCart} cartItems={cartItems} />
     </header>
   );

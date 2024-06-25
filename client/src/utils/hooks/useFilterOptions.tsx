@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { fetchProducts } from '@/services/userSlice';
@@ -28,7 +28,7 @@ function useFilterOptions() {
   const sizes = searchParams.get('sizes');
   const dressStyle = searchParams.get('dress_style');
 
-  const searchArgs = [
+  const searchArgs = useMemo(() => [
     { key: 'page', value: pageNum },
     { key: 'pp', value: pp },
     { key: 'keyword', value: keyword },
@@ -44,13 +44,13 @@ function useFilterOptions() {
     { key: 'fashion_collection', value: fashionCollection },
     { key: 'sizes', value: sizes },
     { key: 'dress_style', value: dressStyle },
-  ];
+  ], [pageNum, pp, keyword, category, priceGTE, priceLTE, rating, sort, gender, colors, brand, technology, fashionCollection, sizes, dressStyle]);
 
   useEffect(() => {
     const { url, hash } = checkURL(searchArgs);
     router.push(url);
     dispatch(fetchProducts(hash) as any);
-  }, [searchParams, router, dispatch]);
+  }, [searchArgs, router, dispatch]);
 
   const handleDropdownSelect = useCallback((value: string) => {
     const { url } = checkURL([...searchArgs, { key: 'category', value }]);
@@ -95,4 +95,3 @@ function useFilterOptions() {
 }
 
 export default useFilterOptions;
-

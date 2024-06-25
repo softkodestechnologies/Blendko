@@ -16,6 +16,7 @@ type QueryType = {
 };
 const getToken = () => {
   if (typeof localStorage !== 'undefined') {
+    console.log('TOKEN', localStorage.getItem('token'))
     return localStorage.getItem('token');
   }
   return null;
@@ -57,7 +58,7 @@ export const adminService = blendkoApi.injectEndpoints({
 
     getUsers: builder.query({
       query: (params: QueryType) => ({
-        url: `user/admin/users?${new URLSearchParams(
+        url: `/admin/users?${new URLSearchParams(
           params as Record<string, string>
         ).toString()}`,
         method: 'GET',
@@ -91,7 +92,7 @@ export const adminService = blendkoApi.injectEndpoints({
 
     getCart: builder.query({
       query: () => ({
-        url: `user/cart/`,
+        url: `/cart/`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -101,7 +102,7 @@ export const adminService = blendkoApi.injectEndpoints({
     }),
     addToCart: builder.mutation({
       query: (items: string[]) => ({
-        url: `user/cart/`,
+        url: `/cart/`,
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -112,7 +113,7 @@ export const adminService = blendkoApi.injectEndpoints({
     }),
     removeFromCart: builder.mutation({
       query: (productId: string) => ({
-        url: `user/cart/${productId}`,
+        url: `/cart/${productId}`,
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -122,7 +123,7 @@ export const adminService = blendkoApi.injectEndpoints({
     }),
     reduceCartItem: builder.mutation({
       query: (productId: string) => ({
-        url: `user/cart/${productId}`,
+        url: `/cart/${productId}`,
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${getToken()}`,
