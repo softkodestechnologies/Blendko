@@ -1,8 +1,12 @@
 import React from 'react';
-import { SketchPicker } from 'react-color';
+import { ColorChangeHandler, SketchPicker } from 'react-color';
 import styles from './customize.module.css';
 
-const ColorPalette = ({ onChange }) => {
+interface ColorPaletteProps {
+  onChange: ColorChangeHandler;
+}
+
+const ColorPalette: React.FC<ColorPaletteProps> = ({ onChange }) => {
   const generatePalette = () => {
     const colors = [
       { name: 'red', rgb: [255, 0, 0] },

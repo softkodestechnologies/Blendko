@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './customize.module.css';
-import ColorPalette from './ColorPalette'
+import ColorPalette from './ColorPalette';
+import { ColorChangeHandler } from 'react-color';
 
 interface SlidingPanelProps {
   activePanel: string;
@@ -8,6 +9,11 @@ interface SlidingPanelProps {
 }
 
 const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose }) => {
+  const handleColorChange: ColorChangeHandler = (color) => {
+    // Handle color change here
+    console.log(color);
+  };
+
   const renderPanelContent = () => {
     switch (activePanel) {
       case 'product':
@@ -19,7 +25,7 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose }) => 
       case 'sizes':
         return <div>Sizes Content</div>;
       case 'colour':
-        return <ColorPalette onChange={() => {return}} />;
+        return <ColorPalette onChange={handleColorChange} />;
       case 'savedTemplate':
         return <div>Saved Templates Content</div>;
       default:
@@ -36,6 +42,5 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose }) => 
 };
 
 export default SlidingPanel;
-
 
 
