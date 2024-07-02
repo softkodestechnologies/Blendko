@@ -5,7 +5,7 @@
   }
   
   .reg-form h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   input[type="email"],
@@ -13,7 +13,7 @@
   input[type="text"] {
     width: 100%;
     padding: 15px;
-    margin: 5px 0 20px 0;
+    margin: 5px 0 10px 0;
     border: none;
     background: #eee;
   }
@@ -27,7 +27,7 @@
 
   .password-label {
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
   
   .submit-btn {
@@ -49,7 +49,7 @@
   }
   
   .benefits {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
   
   .benefits ul {
@@ -61,7 +61,7 @@
   .benefits li {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
   .benefits li svg {
@@ -86,7 +86,7 @@
   }
   
   .login-tag {
-    margin-top: 30px;
+    margin-top: 15px;
   }
  
   @media only screen and (max-width: 768px) {

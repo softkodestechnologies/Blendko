@@ -2,20 +2,31 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px; /* Adjust width as needed */
-    height: 24px; /* Adjust height as needed */
+    width: 30px;
+    height: 24px;
     cursor: pointer;
     margin-left: 0.5rem;
   }
   
 .bar {
     width: 100%;
-    height: 4px; /* Height of the bars */
-    background-color: black; /* Adjust color as needed */
+    height: 4px;
+    background-color: black;
     margin-bottom: 4px;
 }
   
 .bar:last-child {
     margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+      width: 24px;
+      height: 18px;
+    }
+
+    .bar {
+        height: 2px;
+    }
 }
   

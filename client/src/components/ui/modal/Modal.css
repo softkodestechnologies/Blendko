@@ -51,10 +51,11 @@
     padding: 0.2rem 0.5rem;
     border: none;
     color: #000;
-    font-weight: 900;
+    font-weight: 600;
+    font-size: 25px;
     cursor: pointer;
     position: absolute;
-    top: 0;
+    top: 40px;
     right: 10px;
   }
 

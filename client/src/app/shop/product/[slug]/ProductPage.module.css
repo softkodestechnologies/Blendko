@@ -14,14 +14,14 @@
   }
   
   .imageGallery {
-    flex: 1;
+    flex: 0.9;
   }
   
   .mainImage img {
     width: 100%;
     height: 400px;
     display: block;
-    border: 1px solid #ddd;
+    object-fit: contain;
   }
   
   .thumbnailImages {
@@ -47,7 +47,7 @@
   }
   
   .productDetails {
-    flex: 1;
+    flex: 1.1;
     margin-left: 40px;
   }
   
@@ -79,10 +79,14 @@
   }
   
   .options {
-    margin-bottom: 20px;
+    margin: 20px 0;
+  }
+
+  .rule {
+    margin-bottom: 10px;
   }
   
-  .colors, .sizes {
+  .colors, .sizes, .sizes h3 {
     margin-bottom: 20px;
   }
   
@@ -107,12 +111,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    background: #f0f0f0;
   }
   
   .quantity button {
-    width: 30px;
-    height: 30px;
+    padding: 15px;
     cursor: pointer;
     border: 1px solid #ddd;
     background: #f0f0f0;
@@ -120,6 +123,7 @@
   
   .addToCartButton {
     padding: 15px 20px;
+    width: 75%;
     background: #000;
     color: #fff;
     border: none;
@@ -158,5 +162,15 @@
   .recommendationDetails {
     margin-top: 10px;
     text-align: center;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .productPage {
+      flex-direction: column;
+    }
+
+    .productDetails {
+      margin: 0 20px;
+    }
   }
   

@@ -37,7 +37,25 @@
     bottom: -10px;
     max-width: 100%;
     min-height: 850px;
-    z-index: 8 !important; 
+    z-index: 8 !important;
+    object-fit: contain;
+  }
+  
+  .womanImage::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient(to bottom, #FEFFF1, transparent);
+    z-index: 7;
+  }
+  
+  .bottomSection {
+    position: relative;
+    z-index: 6;
+    margin-top: -10px; 
   }
   
   .annotation {
@@ -84,7 +102,7 @@
   }
 
   .line3-parent {
-    top: 3%;
+    top: 8%;
     right: 38%;
     
   }
@@ -119,8 +137,49 @@
     font-weight: 600;
     text-wrap: nowrap;
   }
+    /* start */
+  .button-container {
+    display: inline-block;
+    position: relative;
+    padding: 3px;
+    background-color: white;
+  }
   
-  /* Responsive design */
+  .explore-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .arrow {
+    margin-left: 20px;
+    font-size: 24px;
+  }
+  
+  .button-container::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: -5px;
+    bottom: -5px;
+    background-color: black;
+    z-index: -1;
+  }
+  
+  .explore-button:hover {
+    background-color: #333;
+  }
+   /* end */
   @media (max-width: 840px) {
 
     .line5 {
@@ -143,6 +202,15 @@
         transform: none;
         bottom: auto;
     }
+    .womanImage::after {
+      bottom: 0; 
+      height: 1px;
+    }
+  
+    .bottomSection {
+      margin-top: 0;
+    }
+
 
     .lineImage {
         max-width: 100%; 
@@ -170,11 +238,6 @@
         padding: 2em;
         text-align: center;
     }
-
-    /* .main-banner-hidden h2 {
-        font-family: 'Black mango', sans-serif;
-        font-weight: 600;
-    } */
 
     .main-banner-hidden p {
         font-family: 'Poppins', sans-serif;

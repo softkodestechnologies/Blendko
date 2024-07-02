@@ -70,7 +70,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   return (
     <div className={styles.container}>
       <nav className={styles.breadcrumb}>
-        Home &gt; Shop &gt; Men &gt; T-shirts
+        {/**Home &gt; Shop &gt; Men &gt; T-shirts**/}
       </nav>
       <div className={styles.productPage}>
         <div className={styles.imageGallery}>
@@ -101,44 +101,59 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
             <span className={styles.originalPrice}>${productData.product.price}</span>
           </div>
           <p>{productData.product.description}</p>
+
           <div className={styles.options}>
+
+            <hr className={styles.rule} />
+
             <div className={styles.colors}>
               <h3>Select Colors</h3>
               {productData.product.colors.map((color: string, index: number) => (
                 <div key={index} className={styles.colorButton} style={{ backgroundColor: color }}></div>
               ))}
             </div>
+
+            <hr className={styles.rule} />
+
             <div className={styles.sizes}>
               <h3>Choose Size</h3>
               {productData.product.sizes.map((size: string, index: number) => (
                 <button key={index} className={styles.sizeButton}>{size}</button>
               ))}
             </div>
+
             <div className="flex space-between">
-                <div className={styles.quantity}>
-                  <button onClick={handleDecrementQuantity}>-</button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrementQuantity}>+</button>
-                </div>
+              <div className="flex space-between">
+                  <div className={styles.quantity}>
+                    <button onClick={handleDecrementQuantity}>-</button>
+                    <span>{quantity}</span>
+                    <button onClick={handleIncrementQuantity}>+</button>
+                  </div>
               </div>
-              <button className={styles.addToCartButton} onClick={handleAddToCart}>Add to Cart</button>
+                <button className={styles.addToCartButton} onClick={handleAddToCart}>Add to Cart</button>
             </div>
+          </div>
           <div className={styles.extraDetails}>
             <details>
+              <hr className={styles.rule} />
               <summary>Free Delivery and Returns</summary>
               <p>Get free delivery and returns on all orders.</p>
             </details>
             <details>
+              <hr className={styles.rule} />
               <summary>How This Was Made</summary>
               <p>Information about the product&apos;s manufacturing process.</p>
             </details>
             <details>
+              <hr className={styles.rule} />
               <summary>Reviews (12)</summary>
               <p>Customer reviews go here.</p>
             </details>
             <details>
+              <hr className={styles.rule} />
               <summary>Shipping & Return</summary>
               <p>Shipping and return policy details.</p>
+              <hr className={styles.rule} />
             </details>
           </div>
         </div>

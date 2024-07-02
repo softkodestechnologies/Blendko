@@ -10,7 +10,8 @@ const ShoppingPreferences: React.FC = () => {
 
   useEffect(() => {
     const cookieConsent = getCookie('cookieConsent');
-    if (cookieConsent) {
+    const userPreference = localStorage.getItem('shoppingPreference')
+    if (cookieConsent && !userPreference) {
       setIsOpen(true);
     }
   }, []);
@@ -19,6 +20,10 @@ const ShoppingPreferences: React.FC = () => {
     setIsOpen(false);
   };
 
+  const handlePreference = (data: string) => {
+    localStorage.setItem('shoppingPreference', data)
+  }
+
   return (
     <Modal isOpen={isOpen} onRequestClose={handleClose} title="Visiting from International?">
       <p>
@@ -26,8 +31,8 @@ const ShoppingPreferences: React.FC = () => {
         location.
       </p>
       <div className="flex align-y align-x button-group">
-        <button className="flex align-y modal-button btn-shopping-primary" onClick={handleClose}><GiShoppingBag size={25}/>Continue to United States</button>
-        <button className="modal-button" onClick={handleClose}>Switch to International</button>
+        <button className="flex align-y modal-button btn-shopping-primary" onClick={()=> handlePreference('US')}><GiShoppingBag size={25}/>Continue to United States</button>
+        <button className="modal-button" onClick={() => handlePreference('International')}>Switch to International</button>
       </div>
       <button className="modal-button close" onClick={handleClose}>&times;</button>
     </Modal>

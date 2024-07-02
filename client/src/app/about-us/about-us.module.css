@@ -21,8 +21,11 @@
     display: flex;
     flex-direction: column; 
   }
-  
-  
+
+  .sidebar {
+    display: none;
+  }
+
   .main_content {
     width: 100%;
     padding: 1rem;
@@ -32,6 +35,9 @@
   }
 
   .main_content_img {
+    width: auto;
+    height: auto;
+    object-fit: contain;
     margin-bottom: 20px;
   }
   
@@ -39,6 +45,7 @@
     font-size: 1.5rem; 
     font-weight: bold;
     margin-bottom: 1rem;
+    background-color: blue;
   }
 
   .main_content_text_container {
@@ -50,11 +57,13 @@
     font-size: 20px; 
     font-weight: 200;
     margin-top: 20px;
+    background-color: yellow;
   }
 
   .main_content_texts {
     font-weight: 400;
     margin: 20px 0;
+    background-color: red;
   }
 
   .main_content_text,
@@ -73,9 +82,14 @@
       padding-left: 0;
       padding-top: 0;
     }
+
+    .main_content_img {
+      width: 561px;
+      height: 698px;
+    }
     
     .main_content {
-      width: 66.6667%; 
+      width: 70%; 
       padding: 1.5rem; 
       padding-right: 0; 
     }

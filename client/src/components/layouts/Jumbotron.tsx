@@ -40,7 +40,6 @@ const Jumbotron = () => {
         </div>
       </div>
       <div className="bottomSection">
-        {/* Add the bottom section content here */}
         <div className="main-banner-img">
           <div className="main-banner-img1 flex center">
             <div className='main-banner-text-center'>

@@ -37,14 +37,11 @@
   
   .nav-icon {
     color: black;
-    font-size: 1.25rem; 
+    font-size: 30px; 
     cursor: pointer;
     margin-left: 15px;
   }
 
-  /* .nav-control-icon {
-    margin-left: 10px;
-  } */
   
   .navbar-menu {
     width: 100%;
@@ -115,13 +112,6 @@
       display: none;
     }
   
-    /* .navbar-dash {
-      display: block;
-      position: absolute;
-      bottom: 1.5em;
-      z-index: 10;
-      width: 100%;
-    } */
 
     .navbar-dash {
       margin-top: 1rem;

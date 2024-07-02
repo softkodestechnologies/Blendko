@@ -106,7 +106,7 @@ const ViewBagPage: React.FC = () => {
             <p>Estimated delivery & Handling: Free</p>
             <h3>Total: ${(cartItems.reduce((acc: number, item: any) => acc + (item.price - (item.price * item.discount || 0) / 100) * item.quantity, 0)).toFixed(2)}</h3>
           </div>
-          <button className={styles.checkoutButton}>Checkout</button>
+          <Link href="/checkout"><button className={styles.checkoutButton}>Checkout</button></Link>
           <button className={styles.paypalButton}>PayPal</button>
         </section>
       </div>

@@ -17,13 +17,14 @@ export default function About() {
 
             <div className={styles.main_content}>
               <Image 
-              src="/Lady-in-trad.png" 
-              alt="Blendko lady sitting on a chair" 
-              width={561} 
-              height={698}
-              className={styles.main_content_img}
+                src="/Lady-in-trad.png" 
+                alt="Blendko lady sitting on a chair" 
+                width={561} 
+                height={698}
+                layout="intrinsic"
+                className={styles.main_content_img}
               />
-
+              
               <BigLogoSVG />
 
               <div className={styles.main_content_text_container}>

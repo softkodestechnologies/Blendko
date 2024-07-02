@@ -30,13 +30,11 @@
   }
 
   .filterButton {
-    /* Style for each filter button */
     padding: 8px 16px;
     margin: 4px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    /* Add other styling as needed */
   }
   
   @media (max-width: 768px) {
