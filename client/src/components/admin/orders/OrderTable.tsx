@@ -1,9 +1,20 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { useTable, Column } from 'react-table';
 import styles from '../Admin.module.css';
 import { FaEllipsisV } from 'react-icons/fa';
 
-const dummyData = [
+// Define the interface for our data structure
+interface Order {
+  id: string;
+  created: string;
+  customer: string;
+  total: string;
+  profit: string;
+  status: string;
+}
+
+// Sample data
+const dummyData: Order[] = [
   {
     id: '#6548',
     created: '2 min ago',
@@ -15,14 +26,15 @@ const dummyData = [
   // Add more dummy data here
 ];
 
-const columns = [
+// Define columns
+const columns: Column<Order>[] = [
   { Header: 'Order id', accessor: 'id' },
   { Header: 'Created', accessor: 'created' },
   { Header: 'Customer', accessor: 'customer' },
   { Header: 'Total', accessor: 'total' },
   { Header: 'Profit', accessor: 'profit' },
-  { 
-    Header: 'Status', 
+  {
+    Header: 'Status',
     accessor: 'status',
     Cell: ({ value }: { value: string }) => (
       <span className={`${styles.status} ${styles[value.toLowerCase()]}`}>
@@ -34,7 +46,7 @@ const columns = [
     Header: '',
     id: 'actions',
     Cell: () => (
-      <button className={styles.actionButton}>
+      <button type="button" title="button" className={styles.actionButton}>
         <FaEllipsisV />
       </button>
     )
@@ -48,7 +60,7 @@ const OrderTable: React.FC = () => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data: dummyData });
+  } = useTable<Order>({ columns, data: dummyData });
 
   return (
     <div className={styles.tableContainer}>
