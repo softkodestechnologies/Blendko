@@ -49,7 +49,7 @@
     left: 0;
     z-index: 300;
     background-color: #FFF;
-    height: auto;
+    height: 100vh;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -107,6 +107,10 @@
   }
 
   @media only screen and (min-width: 768px) {
+
+    .navbar-menu {
+      height: auto;
+    }
 
     .nav-break {
       display: none;

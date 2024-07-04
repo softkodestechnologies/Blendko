@@ -2,6 +2,8 @@ import Jumbotron from "@/components/layouts/Jumbotron";
 import Highlights from "@/components/layouts/Highlights";
 import ShopByCategory from "@/components/layouts/ShopByCategory";
 import Framer from "@/components/layouts/Framer";
+import SpaoOuterWeek from "@/components/layouts/SpaoOuterWeek/SpaoOuterWeek";
+import CollectionSection from "@/components/layouts/CollectionSection";
 
 export default function Home() {
   // const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
@@ -44,6 +46,12 @@ export default function Home() {
 
       {/*Framer */}
       <Framer />
+
+      {/*SpaoOuterWeek */}
+      <SpaoOuterWeek />
+
+       {/*CollectionSection */}
+       <CollectionSection />
 
     </div>
   );

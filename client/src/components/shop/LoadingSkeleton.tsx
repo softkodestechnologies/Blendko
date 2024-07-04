@@ -4,12 +4,12 @@ import  './LoadingSkeleton.css';
 
 const LoadingSkeleton = () => {
   return (
-    <div className="skeletonContainer">
+    <div className="skeleton-container">
       {[...Array(10)].map((_, index) => (
-        <div key={index} className="skeletonItem">
-          <div className="imageSkeleton"></div>
-          <div className="textSkeleton"></div>
-          <div className="priceSkeleton"></div>
+        <div key={index} className="skeleton-item">
+          <div className="image-skeleton"></div>
+          <div className="text-skeleton"></div>
+          <div className="price-skeleton"></div>
         </div>
       ))}
     </div>

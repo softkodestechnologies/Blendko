@@ -21,8 +21,8 @@
 
 @media (max-width: 768px) {
     .hamburger-menu {
-      width: 24px;
-      height: 18px;
+        width: 24px;
+        height: 18px;
     }
 
     .bar {

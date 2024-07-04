@@ -5,59 +5,59 @@ const ProductLoadingSkeleton: React.FC = () => {
   return (
     <div className="container">
       <nav className="breadcrumb">
-        <div className="skeletonBreadcrumb"></div>
+        <div className="skeleton-breadcrumb"></div>
       </nav>
-      <div className="productPage">
-        <div className="imageGallery">
-          <div className="mainImage">
-            <div className="skeletonImage"></div>
+      <div className="product-page">
+        <div className="image-gallery">
+          <div className="main-image">
+            <div className="skeleton-image"></div>
           </div>
           <div className="thumbnailImages">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="skeletonThumbnail"></div>
+              <div key={index} className="skeleton-thumbnail"></div>
             ))}
           </div>
         </div>
-        <div className="productDetails">
-          <div className="skeletonTitle"></div>
-          <div className="skeletonRating"></div>
-          <div className="skeletonPrice">
-            <div className="skeletonCurrentPrice"></div>
-            <div className="skeletonOriginalPrice"></div>
+        <div className="product-details">
+          <div className="skeleton-title"></div>
+          <div className="skeleton-rating"></div>
+          <div className="skeleton-price">
+            <div className="skeleton-current-price"></div>
+            <div className="skeleton-original-price"></div>
           </div>
-          <div className="skeletonDescription"></div>
+          <div className="skeleton-description"></div>
           <div className="options">
-            <div className="skeletonColors">
+            <div className="skeleton-colors">
               {[1, 2, 3].map((_, index) => (
-                <div key={index} className="skeletonColorButton"></div>
+                <div key={index} className="skeleton-color-button"></div>
               ))}
             </div>
-            <div className="skeletonSizes">
+            <div className="skeleton-sizes">
               {[1, 2, 3, 4].map((_, index) => (
-                <div key={index} className="skeletonSizeButton"></div>
+                <div key={index} className="skeleton-size-button"></div>
               ))}
             </div>
-            <div className="skeletonQuantity">
-              <div className="skeletonQuantityButton"></div>
-              <div className="skeletonQuantityNumber"></div>
-              <div className="skeletonQuantityButton"></div>
+            <div className="skeleton-quantity">
+              <div className="skeleton-quantity-button"></div>
+              <div className="skeleton-quantity-number"></div>
+              <div className="skeleton-quantity-button"></div>
             </div>
           </div>
-          <div className="skeletonAddToCartButton"></div>
-          <div className="extraDetails">
+          <div className="skeleton-add-to-cart-button"></div>
+          <div className="extra-details">
             {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="skeletonExtraDetail"></div>
+              <div key={index} className="skeleton-extra-detail"></div>
             ))}
           </div>
         </div>
       </div>
       <div className="recommendations">
-        <div className="skeletonRecommendationTitle"></div>
-        <div className="recommendationItems">
+        <div className="skeleton-recommendation-title"></div>
+        <div className="recommendation-items">
           {[1, 2, 3, 4].map((_, index) => (
-            <div key={index} className="skeletonRecommendationItem">
-              <div className="skeletonRecommendationImage"></div>
-              <div className="skeletonRecommendationDetails"></div>
+            <div key={index} className="skeleton-recommendation-item">
+              <div className="skeleton-recommendation-image"></div>
+              <div className="skeleton-recommendation-details"></div>
             </div>
           ))}
         </div>

@@ -18,7 +18,7 @@ const ShopByCategory: React.FC = () => {
               layout="responsive" 
               className="image" 
             />
-            <div className="overlay"></div>
+            <div className="image-overlay"></div>
           </div>
           <h3 className="label">Jeans</h3>
         </div>
@@ -32,7 +32,7 @@ const ShopByCategory: React.FC = () => {
               layout="responsive" 
               className="image" 
             />
-            <div className="overlay"></div>
+            <div className="image-overlay"></div>
           </div>
           <h3 className="label">Jacket</h3>
         </div>
@@ -46,7 +46,7 @@ const ShopByCategory: React.FC = () => {
               layout="responsive" 
               className="image" 
             />
-            <div className="overlay"></div>
+            <div className="image-overlay"></div>
           </div>
           <h3 className="label">Trousers</h3>
         </div>

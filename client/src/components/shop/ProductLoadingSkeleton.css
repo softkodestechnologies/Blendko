@@ -8,22 +8,22 @@
     margin-bottom: 20px;
   }
   
-  .skeletonBreadcrumb {
+  .skeleton-breadcrumb {
     height: 20px;
     width: 200px;
     background-color: #e0e0e0;
   }
   
-  .productPage {
+  .product-page {
     display: flex;
     gap: 20px;
   }
   
-  .imageGallery {
+  .image-gallery {
     flex: 1;
   }
   
-  .mainImage {
+  .main-image {
     width: 100%;
     padding-bottom: 75%;
     background-color: #e0e0e0;
@@ -31,13 +31,13 @@
     border-radius: 8px;
   }
   
-  .thumbnailImages {
+  .thumbnail-images {
     display: flex;
     gap: 10px;
     margin-top: 10px;
   }
   
-  .skeletonThumbnail {
+  .skeleton-thumbnail {
     width: 60px;
     height: 60px;
     background-color: #e0e0e0;
@@ -45,44 +45,44 @@
     border-radius: 8px;
   }
   
-  .productDetails {
+  .product-details {
     flex: 2;
   }
   
-  .skeletonTitle {
+  .skeleton-title {
     height: 30px;
     width: 60%;
     background-color: #e0e0e0;
     margin-bottom: 10px;
   }
   
-  .skeletonRating {
+  .skeleton-rating {
     height: 20px;
     width: 100px;
     background-color: #e0e0e0;
     margin-bottom: 10px;
   }
   
-  .skeletonPrice {
+  .skeleton-price {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .skeletonCurrentPrice {
+  .skeleton-current-price {
     height: 24px;
     width: 80px;
     background-color: #e0e0e0;
   }
   
-  .skeletonOriginalPrice {
+  .skeleton-original-price {
     height: 18px;
     width: 60px;
     background-color: #e0e0e0;
   }
   
-  .skeletonDescription {
+  .skeleton-description {
     height: 18px;
     width: 80%;
     background-color: #e0e0e0;
@@ -93,56 +93,56 @@
     margin-bottom: 20px;
   }
   
-  .skeletonColors, .skeletonSizes {
+  .skeleton-colors, .skeleton-sizes {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .skeletonColorButton, .skeletonSizeButton {
+  .skeleton-color-button, .skeleton-size-button {
     height: 30px;
     width: 30px;
     background-color: #e0e0e0;
     border-radius: 50%;
   }
   
-  .skeletonSizeButton {
+  .skeleton-size-button {
     border-radius: 5px;
   }
   
-  .skeletonQuantity {
+  .skeleton-quantity {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .skeletonQuantityButton {
+  .skeleton-quantity-button {
     height: 30px;
     width: 30px;
     background-color: #e0e0e0;
     border-radius: 50%;
   }
   
-  .skeletonQuantityNumber {
+  .skeleton-quantity-number {
     height: 30px;
     width: 30px;
     background-color: #e0e0e0;
     border-radius: 5px;
   }
   
-  .skeletonAddToCartButton {
+  .skeleton-add-to-cart-button {
     height: 50px;
     width: 150px;
     background-color: #e0e0e0;
     margin-bottom: 20px;
   }
   
-  .extraDetails {
+  .extra-details {
     margin-top: 20px;
   }
   
-  .skeletonExtraDetail {
+  .skeleton-extra-detail {
     height: 20px;
     width: 100%;
     background-color: #e0e0e0;
@@ -153,23 +153,23 @@
     margin-top: 40px;
   }
   
-  .skeletonRecommendationTitle {
+  .skeleton-recommendation-title {
     height: 30px;
     width: 200px;
     background-color: #e0e0e0;
     margin-bottom: 20px;
   }
   
-  .recommendationItems {
+  .recommendation-items {
     display: flex;
     gap: 20px;
   }
   
-  .skeletonRecommendationItem {
+  .skeleton-recommendation-item {
     width: 200px;
   }
   
-  .skeletonRecommendationImage {
+  .skeleton-recommendation-image {
     width: 100%;
     padding-bottom: 75%;
     background-color: #e0e0e0;
@@ -177,7 +177,7 @@
     border-radius: 8px;
   }
   
-  .skeletonRecommendationDetails {
+  .skeleton-recommendation-details {
     height: 20px;
     width: 80%;
     background-color: #e0e0e0;

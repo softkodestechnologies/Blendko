@@ -1,5 +1,5 @@
 "use client";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from 'next/font/google'
 import "./globals.css";
 import Footer from "../components/layouts/Footer";
 import Header from "../components/layouts/Header";
@@ -8,14 +8,24 @@ import { metadata } from './metadata';
 import CookieConsent from "@/components/ui/CookieConsent";
 import ShoppingPreferences from "@/components/ui/ShoppingPreferences";
 
-const inter = Inter({ subsets: ["latin"] });
+
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '200', '400', '500', '600', '700', '900']
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '200', '400', '500', '600', '700', '900']
+})
 
 
 export default function RootLayout({
-  auth,
   children,
 }: Readonly<{
-  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -25,6 +35,15 @@ export default function RootLayout({
         {metadata.description && (
           <meta name="description" content={String(metadata.description)} />
         )}
+        <style jsx global>{`
+          :root {
+            --font-inter: ${inter.style.fontFamily};
+            --font-poppins: ${poppins.style.fontFamily};
+          }
+          html {
+            font-family: var(--font-inter);
+          }
+        `}</style>
       </head>
       {/*<head>
         <script
@@ -43,13 +62,12 @@ export default function RootLayout({
           }}
         />
       </head>*/}
-      <body className={inter.className}>
+      <body>
       <Providers>
         <Header/>
           <CookieConsent />
           <ShoppingPreferences />
           <div>
-              <div>{auth}</div>
               <div>{children}</div>
           </div>
         <Footer/>

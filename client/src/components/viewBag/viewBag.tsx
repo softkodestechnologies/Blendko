@@ -41,7 +41,7 @@ const ViewBag: React.FC<ViewBagProps> = ({ items, total, promoCode }) => {
       </div>
       <div className="recommendations">
         <h2>You might also like</h2>
-        {/* Add code to render recommended products */}
+        {/*PEMINDER: Add code later to render recommended products */}
       </div>
     </div>
   );

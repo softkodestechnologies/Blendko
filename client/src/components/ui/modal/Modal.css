@@ -1,4 +1,4 @@
-.modal-overlay {
+  .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -63,7 +63,7 @@
     background-color: #FFF;
     gap: 3px;
     color: #000;
-}
+  }
   
   @media screen and (max-width: 530px) {
     .button-group {

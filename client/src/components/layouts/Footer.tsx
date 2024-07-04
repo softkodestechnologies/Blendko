@@ -1,7 +1,8 @@
 import React from 'react';
 import {FaFacebook, FaTwitter, FaInstagram, FaYoutube} from 'react-icons/fa';
 import Link from "next/link";
-import FooterSVG from "./FooterSVG"
+import FooterSVG from "./FooterSVG";
+import { CgChevronRight } from 'react-icons/cg';
 import './Footer.css';
 
 function Footer() {
@@ -12,10 +13,13 @@ function Footer() {
       <div className="footer-head flex">
           <h3 className="footer-title"><Link href="/"><FooterSVG /></Link></h3>
         <div className="footer-icons">
-          <FaFacebook />
-          <FaTwitter />
-          <FaYoutube />
-          <FaInstagram />
+          <a target="_blank" rel="noopener noreferrer" href="https://facebook.com/blendkoShop" aria-label="follow us on Facebook"><FaFacebook /></a>
+
+          <a target="_blank" rel="noopener noreferrer" href="https://x.com/blendkoShop" aria-label="follow us on X"><FaTwitter /></a>
+
+          <a target="_blank" rel="noopener noreferrer" href="https://youtube.com/blendkoShop" aria-label="follow us on Youtube"><FaYoutube /></a>
+
+          <a target="_blank" rel="noopener noreferrer" href="https://instagram.com/blendkoShop" aria-label="follow us on Instagram"><FaInstagram /></a>
         </div>
       </div>
     </div>
@@ -48,8 +52,10 @@ function Footer() {
       <div>
         <h4 className="footer-heading">STAY CONNECTED</h4>
         <ul className="footer-links">
-          <li><a href="mailto:blendkoshop@gmail.com" aria-label="blendkoshop@gmail.com mail adress">
-            Email</a></li>
+            <li>
+              <input className="email-input" type="text" placeholder="Email"/>
+              <span className="arrow"><CgChevronRight /></span>
+            </li>
             <li><a target="_blank" rel="noopener noreferrer" href="https://facebook.com/blendkoShop" aria-label="follow us on Facebook">Facebook</a></li>
           <li><a target="_blank" rel="noopener noreferrer" href="https://x.com/blendkoShop" aria-label="follow us on X">X (Formerly Twitter)</a></li>
 

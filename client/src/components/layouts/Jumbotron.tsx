@@ -4,30 +4,30 @@ import './Jumbotron.css';
 
 const Jumbotron = () => {
   return (
-    <div className="sectionContainer">
-      <div className="topSection">
-        <div className="discountText">50<span className="discountTextPercentage">%</span></div>
+    <div className="section-container">
+      <div className="top-section">
+        <div className="discount-text">50<span className="discount-text-percentage">%</span></div>
         <div className="section-image-container">
             {/* Line and Annotations */}
             <div className="annotation line1-parent">
-                <div className="lineImage line1"></div>
+                <div className="line-image line1"></div>
             </div>
             <div className="annotation line2-parent">
-                <div className="lineImage line2"></div>
+                <div className="line-image line2"></div>
             </div>
             <div className="annotation line3-parent">
-                <div className="lineImage line3"></div>
+                <div className="line-image line3"></div>
             </div>
             <div className="annotation line4-parent">
-                <div className="lineImage line4"></div>
+                <div className="line-image line4"></div>
             </div>
             <div className="annotation line5-parent">
-                <div className="lineImage line5"></div>
+                <div className="line-image line5"></div>
             </div>
             <div className="annotation discount-now-parent">
                 <p>Discount Now</p>
             </div>
-            <Image src="/blendko-lady.png" alt="Woman" width={500} height={800} className="womanImage" />
+            <Image src="/blendko-lady.png" alt="Woman" width={500} height={800} className="woman-image" />
         </div>
 
         <div className="main-banner-container">
@@ -39,7 +39,7 @@ const Jumbotron = () => {
           </div>
         </div>
       </div>
-      <div className="bottomSection">
+      <div className="bottom-section">
         <div className="main-banner-img">
           <div className="main-banner-img1 flex center">
             <div className='main-banner-text-center'>

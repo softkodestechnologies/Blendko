@@ -20,7 +20,6 @@
 .close {
     position: absolute;
     right: 5em;
-
 }
 
 @media screen and (max-width: 950px){
