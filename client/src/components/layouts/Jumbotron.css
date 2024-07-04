@@ -211,7 +211,6 @@
 
     .section-image-container {
         position: relative;
-        border: 2px solid green;
         margin: 0 10px;
         padding: 0;
     }
@@ -219,7 +218,6 @@
     .woman-image {
         position: relative;
         width: 100%;
-        border: 2px solid blue;
         object-fit: contain;
         height: auto;
         left: 0;
@@ -256,7 +254,6 @@
 
     .discount-text-percentage {
       font-size: 3rem;
-      border: 2px solid tomato;
       position: relative;
       left: -5%;
     }

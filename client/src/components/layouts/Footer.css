@@ -36,16 +36,22 @@
     grid-template-columns: repeat(2, 1fr); 
   }
 
+  .email-input-container {
+    position: relative;
+    width: 250px;
+  }
+
   .email-input, .email-input:focus {
-    background: #000;
+    background: #000 !important;
+    padding: 0 !important;
     border: 0;
     outline: 0;
     border-bottom: 1px solid #767677;
   }
 
   .arrow {
-      position: relative;
-      right: 18px;
+      position: absolute;
+      right: 15%;
       font-size: 20px;
       cursor: pointer;
   }

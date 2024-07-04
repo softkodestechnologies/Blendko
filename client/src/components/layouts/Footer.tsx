@@ -52,11 +52,13 @@ function Footer() {
       <div>
         <h4 className="footer-heading">STAY CONNECTED</h4>
         <ul className="footer-links">
-            <li>
+            <li className="email-input-container">
               <input className="email-input" type="text" placeholder="Email"/>
               <span className="arrow"><CgChevronRight /></span>
             </li>
+
             <li><a target="_blank" rel="noopener noreferrer" href="https://facebook.com/blendkoShop" aria-label="follow us on Facebook">Facebook</a></li>
+            
           <li><a target="_blank" rel="noopener noreferrer" href="https://x.com/blendkoShop" aria-label="follow us on X">X (Formerly Twitter)</a></li>
 
           <li><a target="_blank" rel="noopener noreferrer" href="https://instagram.com/blendkoShop" aria-label="follow us on Instagram">Instagram</a></li>
