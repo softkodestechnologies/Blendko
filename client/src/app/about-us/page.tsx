@@ -1,8 +1,19 @@
+"use client";
+import { useState } from 'react';
 import styles from './about-us.module.css';
 import ExploreSideBar from '@/components/aside/ExploreSideBar';
+import ExploreMobileSideBar from '@/components/aside/ExploreMobileSideBar';
 import BigLogoSVG from '@/components/layouts/BigLogoSVG';
 import Image from 'next/image';
+import Link from 'next/link';
 export default function About() {
+
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+    const toggleMobileSidebar = () => {
+      setIsMobileSidebarOpen(!isMobileSidebarOpen);
+    };
+
     return (
       <main>
         <header className={styles.header}>
@@ -10,7 +21,18 @@ export default function About() {
           <hr className={styles.header_hr} />
         </header>
 
+
         <div className="container">
+
+          <ExploreMobileSideBar isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
+
+          <nav className="flex space-between align-y">
+            <button onClick={toggleMobileSidebar} className={styles.explore_nav}>
+              Explore
+            </button>
+            <Link className={styles.explore_nav} href="/about-us">About Us</Link>
+          </nav>
+
           <div className={styles.content_container}>
           
             <ExploreSideBar />
@@ -28,10 +50,9 @@ export default function About() {
               <BigLogoSVG />
 
               <div className={styles.main_content_text_container}>
-                <p className={styles.main_content_text}>The name suggests a connection between the world-renowned 
-                  fashion brand and the vibrant and diverse fashion styles of Africa. 
-                  (African culture and western world fashion).
-                </p>
+                <p className={styles.main_content_text}>The name suggests a connection between the world-renowned </p>
+                 <p className={styles.main_content_text}> fashion brand and the vibrant and diverse fashion styles of Africa. </p>
+                 <p className={styles.main_content_text}> (African culture and western world fashion).</p>
               </div>
               <p className={styles.main_content_texts}>
               Founded in Florence, Italy, in 1921, Gucci is one of the world&apos;s leading luxury brands. Following the House&apos;s centenary, Gucci forges ahead continuing to redefine luxury while celebrating creativity, Italian craftsmanship, and innovation.</p>

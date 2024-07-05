@@ -13,13 +13,13 @@ import ShoppingPreferences from "@/components/ui/ShoppingPreferences";
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '400', '500', '600', '700', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '900']
 })
 
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '400', '500', '600', '700', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '900']
 })
 
 
