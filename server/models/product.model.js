@@ -120,6 +120,22 @@ const productSchema = new Schema({
     type: String,
     required: [true, 'Please enter product brand']
   },
+  isCustomizable: {
+    type: Boolean,
+    default: true,
+  },
+  weight: {
+    type: Number,
+    required: true,
+  },
+  width: {
+    type: Number,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
     }, {
       timestamps: true,
     });

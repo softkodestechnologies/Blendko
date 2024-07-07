@@ -22,6 +22,12 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     password,
   });
 
+  await sendEmail({
+    email: user.email,
+    subject: 'Welcome to the World of Blendko',
+    message: `Dear ${user.name},\n\nWelcome to our store! We're excited to have you as a new member.`,
+  });
+
   const token = user.getJwtToken();
   res.status(201).json({
     success: true, 

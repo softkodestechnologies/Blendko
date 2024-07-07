@@ -27,7 +27,11 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     sizes,
     fashion_collection,
     technology,
-    brand
+    brand,
+    isCustomizable,
+    weight,
+    width,
+    height
   } = req.body;
 
   if (!files) return next(new ErrorHandler('Please upload images', 400));
@@ -70,7 +74,11 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     sizes, 
     fashion_collection,
     technology,
-    brand
+    brand,
+    isCustomizable,
+    weight,
+    width,
+    height
   });
 
   product.available_quantity = quantity;

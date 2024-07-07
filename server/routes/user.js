@@ -22,6 +22,8 @@ const {
   googleRegister,
 } = require('../controllers/user.controller');
 
+const { getUserMessages, createMessage, deleteMessage } = require('../controllers/message.controller');
+
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.route('/register').post(registerUser);
@@ -40,6 +42,12 @@ router.route('/cart').post(isAuthenticatedUser, addToCart)
 router.route('/cart').get(isAuthenticatedUser, getCartItems)
 router.route('/cart/:id').patch(isAuthenticatedUser, removeFromCart)
 router.route('/cart/:id').delete(isAuthenticatedUser, deleteCartItem)
+
+
+
+router.get('/messages', isAuthenticatedUser, getUserMessages);
+router.post('/messages', isAuthenticatedUser, createMessage);
+router.delete('/messages/:id', isAuthenticatedUser, deleteMessage);
 
 
 router

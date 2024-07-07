@@ -47,6 +47,8 @@ const userSchema = new Schema({
         type: Number,
         default: 1,
       },
+      color: String,
+      size: String,
     },
   ],
   orders: [
