@@ -4,6 +4,7 @@ const categoryRoutes = require('./category');
 const orderRoutes = require('./order');
 const productRoutes = require('./product');
 const userRoutes = require('./user');
+const discountRoutes = require('./discount');
 const dashboardRoutes = require('./dashboard');
 const router = Router();
 
