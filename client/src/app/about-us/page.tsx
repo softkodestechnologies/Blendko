@@ -6,6 +6,8 @@ import ExploreMobileSideBar from '@/components/aside/ExploreMobileSideBar';
 import BigLogoSVG from '@/components/layouts/BigLogoSVG';
 import Image from 'next/image';
 import Link from 'next/link';
+
+
 export default function About() {
 
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);

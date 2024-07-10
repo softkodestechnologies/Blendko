@@ -43,7 +43,23 @@ export default function RootLayout({
           html {
             font-family: var(--font-inter);
           }
-        `}</style>
+        `}
+        </style>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const originalConsoleError = console.error;
+                console.error = function(...args) {
+                  if (args[0] && args[0].includes('Warning: Extra attributes from the server')) {
+                    return;
+                  }
+                  originalConsoleError.apply(console, args);
+                };
+              })();
+            `,
+          }}
+        />
       </head>
       {/*<head>
         <script

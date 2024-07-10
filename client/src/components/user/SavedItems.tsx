@@ -3,22 +3,62 @@ import styles from './User.module.css';
 import Image from 'next/image';
 
 const SavedItems: React.FC = () => {
+  const savedItems = [
+    {
+      src: '/people.png',
+      alt: 'Polo with Contrast Trims',
+      name: 'Polo with Contrast Trims',
+      rating: '★★★★☆ 4.0/5',
+      salePrice: '$212',
+      originalPrice: '$242',
+      discount: '-12%',
+    },
+    {
+      src: '/people.png',
+      alt: 'Polo with Contrast Trims',
+      name: 'Polo with Contrast Trims',
+      rating: '★★★★☆ 4.0/5',
+      salePrice: '$212',
+      originalPrice: '$242',
+      discount: '-12%',
+    },
+    {
+      src: '/people.png',
+      alt: 'Polo with Contrast Trims',
+      name: 'Polo with Contrast Trims',
+      rating: '★★★★☆ 4.0/5',
+      salePrice: '$212',
+      originalPrice: '$242',
+      discount: '-12%',
+    },
+    {
+      src: '/people.png',
+      alt: 'Polo with Contrast Trims',
+      name: 'Polo with Contrast Trims',
+      rating: '★★★★☆ 4.0/5',
+      salePrice: '$212',
+      originalPrice: '$242',
+      discount: '-12%',
+    },
+  ];
+
   return (
     <section className={styles.savedItems}>
       <h2>Saved Items</h2>
       <div className={styles.editLink}>Edit</div>
       <div className={styles.itemsGrid}>
-        <div className={styles.item}>
-          <Image src="/people.png" alt="Polo with Contrast Trims" width={200} height={200} />
-          <h3>Polo with Contrast Trims</h3>
-          <div className={styles.rating}>★★★★☆ 4.0/5</div>
-          <p className={styles.price}>
-            <span className={styles.salePrice}>$212</span>
-            <span className={styles.originalPrice}>$242</span>
-            <span className={styles.discount}>-12%</span>
-          </p>
-        </div>
-        {/* Repeat the above item div for the other 3 items */}
+        {savedItems.map((item, index) => (
+          <div key={index} className={styles.item}>
+            <Image src={item.src} alt={item.alt} width={200} height={200} />
+            <h3>{item.name}</h3>
+            <div className={styles.rating}>{item.rating}</div>
+            <p className={styles.price}>
+              <span className={styles.salePrice}>{item.salePrice}</span>
+              <span className={styles.originalPrice}>{item.originalPrice}</span>
+              <span className={styles.discount}>{item.discount}</span>
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

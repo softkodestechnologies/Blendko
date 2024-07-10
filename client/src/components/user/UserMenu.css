@@ -1,14 +1,19 @@
 .user-menu {
-    position: absolute;
-    top: 90px;
-    right: 16%;
-    width: 250px;
-    height: auto;
-    font-family: 'Poppins', sans-serif;
-    background: blue;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    transition: right 0.3s;
-    z-index: 60;
-    display: flex;
-    flex-direction: column;
-  }
+  position: absolute;
+  top: 70px;
+  right: 10%;
+  width: 250px;
+  height: auto;
+  font-family: var(--font-poppins), sans-serif;
+  background: #fff;
+  padding: 10px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: right 0.3s;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-menu span {
+  cursor: pointer;
+}

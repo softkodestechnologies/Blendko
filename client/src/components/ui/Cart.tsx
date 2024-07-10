@@ -21,7 +21,7 @@ const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
   return (
     <div className='cart-over'>
       {cartOpen && <div className="overlay" onClick={toggleCart}></div>}
-      <div className="container">
+      <div className="cart-container">
         <div className={`cart-modal ${cartOpen ? 'open' : ''}`}>
           <div className="cart-header">
             <div className="flex align-y cart-header-title">

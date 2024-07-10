@@ -87,6 +87,14 @@
     transform: translateY(0);
     animation: fadeIn 0.8s ease-in;
   }
+
+  .user-menu-container {
+    position: relative;
+  }
+
+  .user-menu-container:hover .user-menu {
+    display: flex;
+  }
   
   @keyframes fadeIn {
     from {

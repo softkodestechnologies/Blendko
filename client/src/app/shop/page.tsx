@@ -37,25 +37,25 @@ const Shop = () => {
 
   if (!isMounted) {
     return(
-      <div className='container flex'>
-      <main className={styles.main}>
-          <aside className={styles.sidebar}>
-              <Filter
-                  onSearch={handleSearch}
-                  onPriceRangeChange={handlePriceRange}
-                  onSortChange={handleSort}
-                  onCheckboxChange={handleCheckboxChange}
-              />
-          </aside>
-          
-            <LoadingSkeleton />
-      </main>
-  </div>
+      <div className="container">
+        <main className={styles.main}>
+            <aside className={styles.sidebar}>
+                <Filter
+                    onSearch={handleSearch}
+                    onPriceRangeChange={handlePriceRange}
+                    onSortChange={handleSort}
+                    onCheckboxChange={handleCheckboxChange}
+                />
+            </aside>
+            
+              <LoadingSkeleton />
+        </main>
+      </div>
     );
   }
 
   return (
-    <div className='container flex'>
+    <div className="container">
         <main className={styles.main}>
             <aside className={styles.sidebar}>
                 <Filter
@@ -73,10 +73,10 @@ const Shop = () => {
                   <LoadingSkeleton />
                 </div> : 
                 <div>
-                  <div className="flex space-between">
+                  <div className={styles.filterParent}>
                     <FilterNav onSearch={handleSearch} menuItems={menuItems} activeIndex={activeIndex} setIndex={setIndex}/>
-                    <div className="flex center filter-con">
-                      <div>Hide Filter <FaSlidersH /></div> 
+                    <div className={styles.filterCon}>
+                      <div className={styles.hideFilter}><span>Hide Filter</span> <FaSlidersH /></div> 
                       <div className="sort">Sort by</div>
                     </div>
                   </div>

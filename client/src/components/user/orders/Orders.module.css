@@ -1,0 +1,401 @@
+/* OrdersView styles */
+  .ordersView {
+    padding: 2rem;
+  }
+  
+  .tabsContainer {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+  
+  .tab {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #888;
+  }
+  
+  .activeTab {
+    color: #000;
+    border-bottom: 2px solid #000;
+  }
+  
+  .orderItem, .orderItemDetails {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid #000;
+    margin-bottom: 1rem;
+  }
+
+  .orderItemDetails {
+    border: none; 
+  }
+  
+  .orderImage {
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    margin-right: 1rem;
+  }
+  
+  .orderInfo {
+    flex-grow: 1;
+  }
+  
+  .orderStatus {
+    margin-top: 0.5rem;
+  }
+
+  .orderStatus > * {
+    margin-top: 10px;
+  }
+
+  .orderItemsContainer {
+    border: 1px solid #000;
+    padding: 20px;
+  }
+  
+  .delivered, .cancelled {
+    padding: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .delivered {
+    background-color: #81BA45;
+    color: #FFF;
+  }
+  
+  .cancelled {
+    background-color: #ffeaea;
+    color: #dc3545;
+  }
+  
+  .seeDetails {
+    text-decoration: none;
+  }
+  
+  .seeDetails span {
+    color: #000;
+    margin-right: 0.5rem;
+  }
+
+  .trackOrder {
+    text-decoration: underline;
+  }
+
+  button.trackOrder {
+    text-decoration: none;
+  }
+
+  .trackOrder span {
+    color: #767677;
+  }
+  
+  /* OrderDetails styles */
+  .orderDetails {
+    padding: 2rem;
+    padding-right: 0;
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    color: #767677;
+    font-weight: 500;
+  }
+  
+  .backLink {
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    margin-bottom: 2rem;
+  }
+  
+  .backLink span {
+    margin-left: 0.5rem;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .orderInfo {
+    margin-bottom: 2rem;
+  }
+
+  .orderInfo h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .orderItems {
+    margin-bottom: 2rem;
+  }
+
+  .orderItemsTitle {
+    margin-bottom: 1.5rem;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .itemImage {
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    margin-right: 1rem;
+  }
+  
+  .itemInfo {
+    flex-grow: 1;
+  }
+  
+  .itemPrice {
+    display: flex;
+    align-items: center;
+  }
+  
+  .salePrice {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+  
+  .originalPrice {
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  .paymentShippingContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .paymentInfo, .shippingInfo {
+    margin-bottom: 2rem;
+    border: 1px solid #000;
+    width: 100%; 
+    max-width: 480px;
+    min-height: 376px;
+    padding: 0 20px;
+  }
+
+  .paymentInfo h3, .shippingInfo h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin: 20px 0 10px 
+  }
+
+  .paymentInfo p, .shippingInfo p {
+    margin-bottom: 10px;
+  }
+  
+  .buyAgain, .trackOrder {
+    border: none;
+    color: #fff;
+    padding: 0.8rem 1.3rem;
+    cursor: pointer;
+  }
+
+  .buyAgain {
+    background-color: #000;
+    margin-right: 20px;
+  }
+
+
+  
+  /* OrderReturn styles */
+  .orderReturn {
+    padding: 0 0 2rem 2rem;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .orderReturn .backLink {
+    font-size: 20px;
+  }
+
+  .orderReturn h2 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .returnItem {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 1rem;
+  }
+  
+  .checkbox {
+    position: relative;
+    cursor: pointer;
+    padding-left: 25px;
+  }
+  
+  .checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+  }
+  
+  .checkbox input:checked ~ .checkmark:after {
+    content: "";
+    position: absolute;
+    display: block;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  .returnReason {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .reasonSelect {
+    width: 100%;
+    padding: 0.5rem;
+    appearance: none;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+  }
+  
+  .selectArrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  .descriptionInput {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+    resize: vertical;
+  }
+  
+  .returnMethod {
+    margin-bottom: 2rem;
+  }
+  
+  .returnOptions {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .returnOption {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .returnOption input {
+    margin-right: 0.5rem;
+  }
+  
+  .returnOption label {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .refundSummary {
+    margin-bottom: 2rem;
+  }
+  
+  .mastercard {
+    width: 50px;
+    height: 30px;
+    background-color: #f0f0f0;
+    margin-bottom: 1rem;
+  }
+  
+  .continueButton {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  /* Formik-specific styles */
+  .returnForm {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .errorMessage {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .continueButton:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .ordersView, .orderDetails, .orderReturn {
+      padding: 1rem;
+    }
+
+    .orderDetails { 
+      font-size: 12px;
+    }
+  
+    .tabsContainer {
+     display: none;
+    }
+  
+    .tab {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 0;
+    }
+
+    .paymentShippingContainer {
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .paymentInfo, .shippingInfo {
+      max-width: 100%; 
+      padding: 0 10px;
+    }
+
+    .backLink, .orderItemsTitle, .orderBtnGroup,
+    .seeDetails, .trackOrder {
+      display: none;
+    }
+
+    .backLink span, .orderInfo h2,
+    .paymentInfo h3, .shippingInfo h3 {
+      font-size: 13px;
+    }
+
+    .returnForm {
+      flex-direction: column;
+    }
+  }

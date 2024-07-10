@@ -17,6 +17,29 @@
     margin-bottom: 20px;
   }
 
+  .filterParent {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+  }
+
+  .filterCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    text-wrap: nowrap;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .hideFilter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
   .recommendations {
     background-color: #fff;
     padding: 1rem;
@@ -31,12 +54,12 @@
   .recommendationItems {
     display: flex;
     overflow-x: auto;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
   }
   
   .recommendationItems::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, and Opera */
+    display: none; 
   }
   
   .recommendationItem {
@@ -55,12 +78,6 @@
     font-size: 0.875rem;
     color: #555;
   }
-
-  .filter-con {
-    gap: 30px;
-    text-wrap: nowrap;
-    cursor: pointer;
-  }
   
   .sort {
     margin-left: 10px;
@@ -77,6 +94,10 @@
 
     .sidebar {
         display: none;
+    }
+
+    .filterCon {
+      display: none;
     }
 
     .recommendationItem {

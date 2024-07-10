@@ -1,164 +1,179 @@
 .sidebar {
-    width: 250px;
-    background-color: #f5f5f5;
-    padding: 2rem 1rem;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .sidebar li svg {
-    margin-right: 0.5rem;
-  }
-  
-  .sidebar li.active {
-    background-color: #e0e0e0;
-    border-radius: 4px;
-  }
+  width: 281px;
+  font-size: 1em;
+  text-wrap: nowrap;
+  padding: 20px 10px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sidebar li svg {
+  margin-right: 0.5rem;
+}
+
+.sidebar li.active {
+  background-color: #e0e0e0;
+}
 
 .inboxPage {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  .mainContent {
-    flex-grow: 1;
-    padding: 2rem;
+  display: flex;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 2rem;
+  padding-right: 0;
+}
+
+.mobileNav {
+  display: none;
+}
+
+.inboxMessages {
+  margin-bottom: 2rem;
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 400;
+}
+
+.inboxMessages h2 {
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.message {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 14px
+}
+
+.message h3 {
+  margin: 0.5rem 0;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  border: 1px dotted #000;
+  padding: 8px 9px;
+}
+
+.productInfo img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.productInfo p {
+  font-size: 12px;
+}
+
+.savedItems {
+  position: relative;
+}
+
+.editLink {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #000;
+  text-decoration: underline;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.item {
+  background-color: #fff;
+  font-family: var(--font-poppins), sans-serif;
+  padding: 1rem;
+}
+
+.item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.rating {
+  color: #ffc107;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.salePrice {
+  font-weight: bold;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.discount {
+  color: #28a745;
+}
+
+@media (max-width: 768px) {
+  .inboxPage {
+    flex-direction: column;
   }
 
-  .mobileNav {
+  .mainContent {
+    padding: 1rem;
+  }
+
+  .sidebar {
     display: none;
   }
 
-  .inboxMessages {
-    margin-bottom: 2rem;
-  }
-  
-  .message {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .message h3 {
-    margin: 0.5rem 0;
-  }
-  
-  .productInfo {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .productInfo img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 1rem;
+  .mobileNav {
+    display: block;
+    padding: 0.5rem;
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    text-wrap: nowrap;
   }
 
-  .savedItems {
-    position: relative;
+  .mobileNav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
   }
-  
-  .editLink {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #007bff;
+
+  .mobileNav li {
+    padding: 0.5rem;
     cursor: pointer;
   }
-  
-  .itemsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  
-  .item {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 1rem;
-  }
-  
-  .item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-  }
-  
-  .rating {
-    color: #ffc107;
-  }
-  
-  .price {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .salePrice {
-    font-weight: bold;
-  }
-  
-  .originalPrice {
-    text-decoration: line-through;
-    color: #888;
-  }
-  
-  .discount {
-    color: #28a745;
-  }
-  
-  @media (max-width: 768px) {
-    .inboxPage {
-      flex-direction: column;
-    }
-  
-    .mainContent {
-      padding: 1rem;
-    }
 
-    .sidebar {
-        display: none;
-    }
-
-    .mobileNav {
-        display: block;
-        background-color: #f5f5f5;
-        padding: 0.5rem;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-    
-      .mobileNav ul {
-        list-style-type: none;
-        padding: 0;
-        display: flex;
-        justify-content: space-around;
-      }
-    
-      .mobileNav li {
-        padding: 0.5rem;
-        font-size: 1.5rem;
-      }
-    
-      .mobileNav li.active {
-        color: #007bff;
-      }
+  .mobileNav li.active {
+    color: #767677;
   }
+}

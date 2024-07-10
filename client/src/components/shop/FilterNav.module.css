@@ -3,14 +3,16 @@
     align-items: center;
     border-top: 1px solid #ccc;
     padding: 10px;
+    padding-bottom: 0;
     position: relative;
     overflow: hidden;
+    font-family: var(--font-poppins);
+    font-size: 18px;
   }
   
   .navItem {
     padding: 10px 20px;
     cursor: pointer;
-    font-size: 1rem;
     transition: color 0.3s;
     text-wrap: nowrap;
     position: relative;
@@ -29,7 +31,7 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    height: 5px;
+    height: 3px;
     width: 100%;
     background-color: #000;
     transition: transform 0.5s;
@@ -37,15 +39,20 @@
   }
   
   @media only screen and (max-width: 768px) {
+    .navContainer {
+      width: 100%;
+      justify-content: space-between;
+    }
+
     .navItem {
       flex-wrap: wrap;
-      font-size: 0.5em;
+      font-size: 12px;
     }
   }
 
   @media only screen and (max-width: 980px) {
     .navItem {
-      font-size: 0.8em;
+      font-size: 12px;
       padding: 2px 4px;
     }
   }

@@ -7,6 +7,7 @@ import useAddToCart from '@/utils/hooks/useAddToCart';
 import useReduceCartItems from '@/utils/hooks/useReduceCartItems';
 import styles from './ProductPage.module.css';
 import Image from 'next/image';
+import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 
 interface ProductPageProps {
   params: {
@@ -20,11 +21,17 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState(1);
+  const [isFreeDeliveryOpen, setIsFreeDeliveryOpen] = useState(false);
+  const [isHowThisWasMadeOpen, setIsHowThisWasMadeOpen] = useState(false);
+  const [isReviewsOpen, setIsReviewsOpen] = useState(false);
+  const [isShippingReturnOpen, setIsShippingReturnOpen] = useState(false);
 
   // Conditionally fetch the product by ID only if productId is defined
   const { data: productData, isLoading: isLoadingProduct } = useGetProductQuery(productId!, { skip: !productId });
   const { addItemToCart } = useAddToCart(); 
   const { reduceCartItem } = useReduceCartItems();
+
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -42,7 +49,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   }
 
   if (!productData) {
-    return <p>Product not found</p>;
+    return <div className='flex center not-found'><h1>Product not found</h1></div>;
   }
 
   const handleAddToCart = () => {
@@ -71,6 +78,15 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
     <div className={styles.container}>
       <nav className={styles.breadcrumb}>
         {/**Home &gt; Shop &gt; Men &gt; T-shirts**/}
+        <div className={styles.mobileHeader}>
+          <h1>{productData.product.name}</h1>
+            <div className={styles.mobilePrice}>
+              <span className={styles.currentPrice}>
+                ${((productData.product.price - productData.product.price * productData.product.discount / 100)).toFixed(2)}
+              </span>
+              <span className={styles.originalPrice}>${productData.product.price}</span>
+            </div>
+          </div>
       </nav>
       <div className={styles.productPage}>
         <div className={styles.imageGallery}>
@@ -91,13 +107,16 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
             ))}
           </div>
         </div>
+        
         <div className={styles.productDetails}>
           <h1>{productData.product.name}</h1>
           <div className={styles.rating}>
             <span>⭐️⭐️⭐️⭐️⭐️</span> 4.5/5
           </div>
           <div className={styles.price}>
-            <span className={styles.currentPrice}>${productData.product.price - productData.product.price * productData.product.discount / 100}</span>
+            <span className={styles.currentPrice}>
+              ${((productData.product.price - productData.product.price * productData.product.discount / 100)).toFixed(2)}
+            </span>
             <span className={styles.originalPrice}>${productData.product.price}</span>
           </div>
           <p>{productData.product.description}</p>
@@ -122,7 +141,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
               ))}
             </div>
 
-            <div className="flex space-between">
+            <div className={`flex space-between ${styles.btnGroup}`}>
               <div className="flex space-between">
                   <div className={styles.quantity}>
                     <button onClick={handleDecrementQuantity}>-</button>
@@ -134,27 +153,90 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
             </div>
           </div>
           <div className={styles.extraDetails}>
-            <details>
-              <hr className={styles.rule} />
-              <summary>Free Delivery and Returns</summary>
-              <p>Get free delivery and returns on all orders.</p>
-            </details>
-            <details>
-              <hr className={styles.rule} />
-              <summary>How This Was Made</summary>
-              <p>Information about the product&apos;s manufacturing process.</p>
-            </details>
-            <details>
-              <hr className={styles.rule} />
-              <summary>Reviews (12)</summary>
-              <p>Customer reviews go here.</p>
-            </details>
-            <details>
-              <hr className={styles.rule} />
-              <summary>Shipping & Return</summary>
-              <p>Shipping and return policy details.</p>
-              <hr className={styles.rule} />
-            </details>
+          <hr />
+
+          <div className={styles.detailsContainer}>
+            <h3
+              onClick={() => setIsFreeDeliveryOpen(!isFreeDeliveryOpen)}
+              className={styles.detailsTitle}
+            >
+              Free Delivery and Returns
+              {isFreeDeliveryOpen ? (
+                <AiOutlineUp className={styles.detailsIcon} />
+              ) : (
+                <AiOutlineDown className={styles.detailsIcon} />
+              )}
+            </h3>
+            {isFreeDeliveryOpen && (
+              <p className={styles.detailsContent}>
+                Get free delivery and returns on all orders.
+              </p>
+            )}
+          </div>
+
+          <hr />
+
+          <div className={styles.detailsContainer}>
+            <h3
+              onClick={() => setIsHowThisWasMadeOpen(!isHowThisWasMadeOpen)}
+              className={styles.detailsTitle}
+            >
+              How This Was Made
+              {isHowThisWasMadeOpen ? (
+                <AiOutlineUp className={styles.detailsIcon} />
+              ) : (
+                <AiOutlineDown className={styles.detailsIcon} />
+              )}
+            </h3>
+            {isHowThisWasMadeOpen && (
+              <p className={styles.detailsContent}>
+                Information about the product&apos;s manufacturing process.
+              </p>
+            )}
+          </div>
+
+          <hr />
+
+          <div className={styles.detailsContainer}>
+            <h3
+              onClick={() => setIsReviewsOpen(!isReviewsOpen)}
+              className={styles.detailsTitle}
+            >
+              Reviews (12)
+              {isReviewsOpen ? (
+                <AiOutlineUp className={styles.detailsIcon} />
+              ) : (
+                <AiOutlineDown className={styles.detailsIcon} />
+              )}
+            </h3>
+            {isReviewsOpen && (
+              <p className={styles.detailsContent}>Customer reviews go here.</p>
+            )}
+          </div>
+
+          <hr />
+
+          <div className={styles.detailsContainer}>
+            <h3
+              onClick={() => setIsShippingReturnOpen(!isShippingReturnOpen)}
+              className={styles.detailsTitle}
+            >
+              Shipping & Return
+              {isShippingReturnOpen ? (
+                <AiOutlineUp className={styles.detailsIcon} />
+              ) : (
+                <AiOutlineDown className={styles.detailsIcon} />
+              )}
+            </h3>
+            {isShippingReturnOpen && (
+              <p className={styles.detailsContent}>
+                Shipping and return policy details.
+              </p>
+            )}
+          </div>
+
+          <hr />
+
           </div>
         </div>
       </div>

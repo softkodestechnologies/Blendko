@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { IoPersonOutline, IoHeartOutline, IoCartOutline, IoSearch, IoMenu, IoClose } from 'react-icons/io5';
-import NotificationBadge from '../ui/NotificationBadge';
+import { IoPersonOutline, IoHeartOutline, IoCartOutline, IoSearch, IoClose } from 'react-icons/io5';
 import HamburgerMenu from '../ui/HamburgerMenu';
 import { useSelector } from 'react-redux';
 import Cart from '../ui/Cart';
@@ -17,25 +16,34 @@ const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
   const [isClient, setIsClient] = useState(false);
 
   const toggleCart = () => {
-    handleStorageChange()
+    handleStorageChange();
     setCartOpen(!cartOpen);
   }
   const toggleNav = () => setNavOpen(!navOpen);
-  const toggleUserMenu = () => setUserMenuOpen(!userMenuOpen);
 
   useEffect(() => {
-    handleStorageChange()
-  }, []);
-
-  useEffect(() => {
+    handleStorageChange();
     setIsClient(true);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -58,7 +66,9 @@ const Header = () => {
     }
   };
 
-
+  const handleUserIconHover = () => {
+    setUserMenuOpen(true);
+  };
 
   return (
     <header>
@@ -69,7 +79,16 @@ const Header = () => {
               <h1 className="nav-title"><Link href="/"><LogoSVG /></Link></h1>
             </div>
             <div className="flex center">
-              {!navOpen && <IoPersonOutline className="nav-icon mobile-icon" size={iconSize} onClick={toggleUserMenu} />}
+              {!navOpen && (
+                <div 
+                  ref={userMenuRef}
+                  onMouseEnter={handleUserIconHover}
+                  className="user-menu-container"
+                >
+                <IoPersonOutline className="nav-icon mobile-icon" size={iconSize} />
+                {userMenuOpen && isClient && <UserMenu />}
+              </div>
+              )}
               {!navOpen && <IoHeartOutline className="nav-icon mobile-icon" size={iconSize} />}
               {!navOpen && <IoCartOutline className="nav-icon mobile-icon" size={iconSize} onClick={toggleCart} />}
               {navOpen && <IoSearch className="nav-icon mobile-icon" size={iconSize} />}
@@ -79,6 +98,7 @@ const Header = () => {
             </div>
           </div>
         </div>
+
         <div>
           <div className={`navbar-menu ${!navOpen ? 'navbar-hidden' : 'navbar-visible'}`}>
             <div className="navbar-list header-container">
@@ -97,22 +117,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      {/**<NotificationBadge />**/}
       <Cart cartOpen={cartOpen} toggleCart={toggleCart} cartItems={cartItems} />
-      {/**<div className="menuContainer">
-          {user ? (
-            <>
-              <div className="userIconContainer">
-                {userMenuOpen && <UserMenu />}
-              </div>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="authLink">Login</Link>
-              <Link href="/signup" className="authLink">Sign Up</Link>
-            </>
-          )}
-      </div>**/}
     </header>
   );
 };

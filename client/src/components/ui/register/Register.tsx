@@ -1,6 +1,5 @@
 "use client";
 import { useState } from 'react';
-import { BiGift } from 'react-icons/bi';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { FaShoppingCart, FaExchangeAlt, FaUndoAlt } from 'react-icons/fa';
 import Link from 'next/link';
@@ -60,7 +59,7 @@ const Register = () => {
             .required('Required'),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await handleSubmission(values, resetForm, '/');
+          await handleSubmission(values, resetForm, '/user/account');
           console.log('Values should be submitted', values);
           setSubmitting(false);
         }}>

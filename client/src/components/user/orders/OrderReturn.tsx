@@ -1,0 +1,188 @@
+'use client';
+import React, { useState } from 'react';
+import styles from './Orders.module.css';
+import { FaArrowLeft, FaChevronDown } from 'react-icons/fa';
+import Link from 'next/link';
+
+const OrderReturn: React.FC = () => {
+  const order = {
+    id: '124524533',
+    name: 'Shirt Vintage Extra Thick Cotton Material',
+    date: '12-03-24',
+  };
+
+  const returnReasons = [
+    'Item not as described',
+    'Wrong size',
+    'Defective item',
+    'Changed my mind',
+  ];
+
+  const returnMethods = [
+    { id: 'store-return', label: 'Return to Blendko store', description: 'Free No Return Label or Shipping Box Needed' },
+    { id: 'ups-dropoff', label: 'UPS Dropoff', description: 'Free for Blendko Members' },
+    { id: 'ups-pickup', label: 'Schedule UPS Pickup', description: 'From $6' },
+  ];
+
+  const [formData, setFormData] = useState({
+    itemToReturn: false,
+    returnReason: '',
+    description: '',
+    returnMethod: '',
+  });
+
+  const [errors, setErrors] = useState({
+    itemToReturn: '',
+    returnReason: '',
+    description: '',
+    returnMethod: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+    }));
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { itemToReturn: '', returnReason: '', description: '', returnMethod: '' };
+
+    if (!formData.itemToReturn) {
+      newErrors.itemToReturn = 'Please select an item to return';
+      isValid = false;
+    }
+    if (!formData.returnReason) {
+      newErrors.returnReason = 'Please select a reason for return';
+      isValid = false;
+    }
+    if (!formData.description) {
+      newErrors.description = 'Please describe what you experienced';
+      isValid = false;
+    }
+    if (!formData.returnMethod) {
+      newErrors.returnMethod = 'Please select a return method';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log(formData);
+      // Handle form submission
+    }
+  };
+
+  return (
+    <div className={styles.orderReturn}>
+      <Link href="/user/orders" className={styles.backLink}>
+        <FaArrowLeft />
+        <span>Orders / Return</span>
+      </Link>
+      <h2>Choose the items you&apos;d like to return.</h2>
+      <form onSubmit={handleSubmit} className={styles.returnForm}>
+        <div>
+          <div className={styles.returnItem}>
+            <div className={styles.itemImage}></div>
+            <div className={styles.itemInfo}>
+              <h3>{order.name}</h3>
+              <p>Order #{order.id}</p>
+              <div className={styles.itemStatus}>
+                <span className={styles.delivered}>DELIVERED</span>
+                <span>On {order.date}</span>
+              </div>
+            </div>
+            <label className={styles.checkbox} htmlFor="itemToReturn">
+              <input
+                type="checkbox"
+                name="itemToReturn"
+                id="itemToReturn"
+                checked={formData.itemToReturn}
+                onChange={handleChange}
+                title="Select the item to return"
+              />
+              <span className={styles.checkmark}></span>
+            </label>
+          </div>
+          {errors.itemToReturn && <div className={styles.errorMessage}>{errors.itemToReturn}</div>}
+
+          <div className={styles.returnReason}>
+            <select
+              name="returnReason"
+              value={formData.returnReason}
+              onChange={handleChange}
+              className={styles.reasonSelect}
+              // title="Reason for Return"
+            >
+              <option value="">Reason for Return</option>
+              {returnReasons.map((reason) => (
+                <option key={reason} value={reason}>
+                  {reason}
+                </option>
+              ))}
+            </select>
+            <FaChevronDown className={styles.selectArrow} />
+          </div>
+          {errors.returnReason && <div className={styles.errorMessage}>{errors.returnReason}</div>}
+
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className={styles.descriptionInput}
+            placeholder="Describe what you experienced"
+          />
+          {errors.description && <div className={styles.errorMessage}>{errors.description}</div>}
+
+          <div className={styles.returnMethod}>
+            <h3>Select how you&apos;d like to return your items.</h3>
+            <div className={styles.returnOptions}>
+              {returnMethods.map((method) => (
+                <div key={method.id} className={styles.returnOption}>
+                  <input
+                    type="radio"
+                    id={method.id}
+                    name="returnMethod"
+                    value={method.id}
+                    checked={formData.returnMethod === method.id}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor={method.id}>
+                    <span>{method.description}</span>
+                    <span>{method.label}</span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+          {errors.returnMethod && <div className={styles.errorMessage}>{errors.returnMethod}
+          </div>}
+        </div>
+
+        <div className={styles.refundSummary}>
+          <button type="submit" className={styles.continueButton}>
+            Continue
+          </button>
+          <hr />
+          <div className="flex space-between gap-20">
+            <h3>Refund Method</h3>
+            <div className={styles.mastercard}></div>
+          </div>
+          <hr />
+          <h3>Summary</h3>
+          <p>Subtotal: $69.97</p>
+          <p>Estimated Tax: $6.47</p>
+          <p>Refund Total: $76.44</p>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default OrderReturn;
