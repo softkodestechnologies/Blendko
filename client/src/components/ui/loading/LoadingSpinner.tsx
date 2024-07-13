@@ -1,5 +1,5 @@
 import { FaSpinner } from 'react-icons/fa';
-import './LoadingSpinner.css'; // Import the CSS file for the animation
+import './LoadingSpinner.css'; // 
 
 const LoadingSpinner = () => {
   return (

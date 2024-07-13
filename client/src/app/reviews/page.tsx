@@ -3,7 +3,7 @@ import ExploreSideBar from '@/components/aside/ExploreSideBar';
 
 export default function Reviews() {
     return (
-    <main>
+    <main className={styles.reviewsContainer}>
         <header className={styles.header}>
           <h1 className={styles.header_title}>Ratings and Reviews</h1>
           <hr className={styles.header_hr} />

@@ -7,7 +7,15 @@ import { Providers } from './providers';
 import { metadata } from './metadata';
 import CookieConsent from "@/components/ui/CookieConsent";
 import ShoppingPreferences from "@/components/ui/ShoppingPreferences";
-
+// import '@/components/layouts/Footer.css';
+// import '../components/layouts/Header.css';
+// import '../components/layouts/LogoSVG.css';
+// import '../components/ui/Cart.css';
+// import '../components/ui/CookieConsent.css';
+// import '../components/ui/HamburgerMenu.css';
+// import '../components/ui/loading/LoadingSpinner';
+// import '../components/ui/modal/Modal.css';
+// import '../components/user/UserMenu.css';
 
 
 const inter = Inter({

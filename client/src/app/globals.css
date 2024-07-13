@@ -1,22 +1,4 @@
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 0, 0, 0;
-  }
-}
-
-
-::selection {
-  background: rgb(var(--background-color));
-  color: rgb(var(--foreground-color));
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -27,8 +9,8 @@
 }
 
 body, html {
-  color: rgb(var(--foreground-color));
-  background: rgb(var(--secondary-color));
+  color: #000;
+  background:#FFF;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
@@ -52,7 +34,7 @@ h4,
 h5,
 h6 {
   font-weight: 700;
-  color: rgb(var(--foreground-color));
+  color: #000;
 }
 
 a {
@@ -133,15 +115,15 @@ select {
 
 
 .button-fill {
-  background: rgb(var(--background-color)) !important;
-  color: rgb(var(--foreground-color));
+  background: #000 !important;
+  color: #FFF;
   border: none !important;
 }
 
 .button-outline {
   background: transparent !important;
-  border: 1px solid rgb(var(--background-color)) !important;
-  color: rgb(var(--background-color));
+  border: 1px solid #000 !important;
+  color: #000;
 }
 
 .full-width {
@@ -197,6 +179,14 @@ select {
 
 .pb-10 {
   padding-bottom: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.pt-10 {
+  padding-top: 10px;
 }
 
 .relative {
@@ -527,41 +517,6 @@ select {
     margin-left: 5%;
   }
  }
-
-
-
-/* Width of the scrollbar */
-::-webkit-scrollbar {
-  width: 16px; 
-  height: 50px;
-}
-
-/* Track of the scrollbar */
-::-webkit-scrollbar-track {
-  background: rgb(var(--background-end-rgb));
-}
-
-/* Thumb (draggable part) of the scrollbar */
-::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--foreground-rgb)); 
-  border: 4px solid rgb(var(--foreground-rgb)); 
-}
-
-/* Thumb hover effect */
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(var(--foreground-rgb)); 
-}
-
-/* Optional: Style the buttons on the scrollbar */
-::-webkit-scrollbar-button {
-  background-color: rgb(var(--background-end-rgb)); 
-  display: block; 
-}
-
-/* Optional: Style the corner where horizontal and vertical scrollbars meet */
-::-webkit-scrollbar-corner {
-  background-color: rgb(var(--background-end-rgb)); 
-}
 
 
 @keyframes slideDown {

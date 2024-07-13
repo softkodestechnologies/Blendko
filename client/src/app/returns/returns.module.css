@@ -1,80 +1,160 @@
-/* styles.css */
-
 .header {
-    text-align: center;
+  text-align: center;
+  background-image: url('/return-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerTitleContainer {
+  background-color:rgba(0,0,0, 0.5) ;
+  width: 335px;
+  height: 121px;
+  padding: 10px;
+  text-align: center;
+}
+
+.headerTitle {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 37px;
+  font-weight: 700;
+  padding: 2rem;
+  color: #FFF;
+  text-transform: uppercase;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #767677;
+}
+
+.sidebar {
+  display: block;
+  width: 33%;
+  padding-left: 5%; 
+  text-wrap: nowrap;
+  color: #000;
+}
+
+.button.btn {
+background-color: #FFF;
+color: #000;
+}
+
+.mainContent {
+  width: 67%; 
+  border-left: 1px solid #000;
+  padding-right: 0; 
+}
+
+
+
+.hr {
+  display: block;
+}
+
+.sectionSub {
+  padding: 3rem;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sectionSub h2 {
+  color: #000;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.sectionSub strong {
+  color: #000;
+}
+
+.section:first-of-type .sectionSub{
+  font-weight: 700;
+  color: #000;
+}
+
+.section:first-of-type .sectionSub h1 {
+  font-size: 30px;
+}
+
+.sidebarTitle, .mainContentTitle {
+  font-size: 1.5rem; 
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.sidebarLink, .mainContentText {
+  font-size: 1.125rem; 
+}
+
+.button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.3rem;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  border-radius: 0;
+  border: 1px solid #000;
+  transition: background-color 0.3s;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  background-color: #4a5568;
+}
+
+.textUnderline {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .contentContainer {
+    flex-direction: column;
+    font-size: 10px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .sidebar { 
+    display: none;
   }
   
-  .header_title {
-    font-size: 1.875rem; /* text-3xl */
-    font-weight: bold;
-    padding: 2rem;
-  }
-  
-  .header_hr {
-    border-width: 1px; /* border-1px */
-    border-color: #e5e7eb; /* border-gray-200 */
+  .mainContent {
     width: 100%;
   }
-  
-  .content_container {
-    display: flex;
-    flex-direction: column;
+
+  .section:first-of-type .sectionSub h1 {
+    font-size: 18px;
   }
-  
-  .sidebar, .main_content {
-    padding: 1rem; /* p-4 */
-    padding-left: 0;
+
+  .sectionSub {
+    width: 100%;
+  }
+
+  .sectionSub h2,
+  .sectionSub strong  {
+    font-size: 14px;
   }
 
   .hr {
     margin-top: 1.5rem;
+    width: 130%;
+    display: none;
   }
 
-  .section {
-    padding: 0 0 2rem;
-  }
-  
-  .sidebar_title, .main_content_title {
-    font-size: 1.5rem; /* text-2xl */
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .sidebar_link, .main_content_text {
-    font-size: 1.125rem; /* text-lg */
-  }
-  
   .button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: black;
-    color: white;
-    font-weight: 600;
-    border-radius: 0;
-    transition: background-color 0.3s;
+    padding: 0.3rem 0.6rem;
   }
-  
-  .button:hover {
-    background-color: #4a5568;
-  }
-  
-  .text_underline {
-    text-decoration: underline;
-  }
-  
-  @media (min-width: 768px) {
-    .content_container {
-      flex-direction: row;
-    }
-    .sidebar {
-      display: block;
-      width: 33.3333%;
-      padding-left: 0; /* md:p-7 */
-      padding-right: 1.75rem;
-    }
-    .main_content {
-      width: 66.6667%; /* md:w-2/3 */
-      padding-right: 0; /* md:p-6 */
-    }
-  }
-  
+}

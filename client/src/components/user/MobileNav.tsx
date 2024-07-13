@@ -13,7 +13,7 @@ const MobileNav: React.FC = () => {
     { text: 'Orders', path: '/user/orders' },
     { text: 'Favourites', path: '/user/favourites' },
     { text: 'Customise templates', path: '/user/templates' },
-    { text: 'Settings', path: '/user/settings' },
+    { text: 'Settings', path: '/user/settings/account' },
   ];
 
   return (

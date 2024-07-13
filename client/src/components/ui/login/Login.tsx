@@ -31,7 +31,7 @@ const Login: React.FC = () => {
             .required('Required'),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await handleSubmission(values, resetForm, '/user/account');
+          await handleSubmission(values, resetForm, '/');
           setSubmitting(false);
         }}
       >

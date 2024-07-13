@@ -59,7 +59,7 @@ const Register = () => {
             .required('Required'),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await handleSubmission(values, resetForm, '/user/account');
+          await handleSubmission(values, resetForm, '/');
           console.log('Values should be submitted', values);
           setSubmitting(false);
         }}>

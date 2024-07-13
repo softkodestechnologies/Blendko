@@ -11,14 +11,14 @@
   
   .sidebar_title {
     font-size: 1.5rem; 
-    font-weight: 600;
+    font-weight: 600 !important;
     margin-bottom: 1rem;
     margin-top: 2rem;
   }
   
   .sidebar_link {
     font-size: 1.125rem; 
-    font-weight: 400;
+    font-weight: 400 !important;
     display: block;
     margin-bottom: 0.5rem;
   }

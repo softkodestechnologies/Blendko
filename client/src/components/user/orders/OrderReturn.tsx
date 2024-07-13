@@ -118,7 +118,7 @@ const OrderReturn: React.FC = () => {
               value={formData.returnReason}
               onChange={handleChange}
               className={styles.reasonSelect}
-              // title="Reason for Return"
+              title="Reason for Return"
             >
               <option value="">Reason for Return</option>
               {returnReasons.map((reason) => (
@@ -139,7 +139,7 @@ const OrderReturn: React.FC = () => {
             placeholder="Describe what you experienced"
           />
           {errors.description && <div className={styles.errorMessage}>{errors.description}</div>}
-
+{/* 
           <div className={styles.returnMethod}>
             <h3>Select how you&apos;d like to return your items.</h3>
             <div className={styles.returnOptions}>
@@ -162,7 +162,7 @@ const OrderReturn: React.FC = () => {
             </div>
           </div>
           {errors.returnMethod && <div className={styles.errorMessage}>{errors.returnMethod}
-          </div>}
+          </div>} */}
         </div>
 
         <div className={styles.refundSummary}>
@@ -176,9 +176,9 @@ const OrderReturn: React.FC = () => {
           </div>
           <hr />
           <h3>Summary</h3>
-          <p>Subtotal: $69.97</p>
-          <p>Estimated Tax: $6.47</p>
-          <p>Refund Total: $76.44</p>
+          <p className={styles.grayText}><span>Subtotal:</span> $69.97</p>
+          <p className={styles.grayText}><span>Estimated Tax:</span> $6.47</p>
+          <p><span>Refund Total:</span> $76.44</p>
         </div>
       </form>
     </div>

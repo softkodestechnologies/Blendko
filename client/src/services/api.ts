@@ -1,4 +1,3 @@
-// services/api.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // let baseUrl = 'https://blendko.onrender.com/api/v1';

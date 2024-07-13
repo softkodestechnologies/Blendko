@@ -1,4 +1,3 @@
-// services/authService.ts
 import { blendkoApi } from './api';
 
 type Credentials = {

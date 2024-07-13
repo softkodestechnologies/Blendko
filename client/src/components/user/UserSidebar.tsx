@@ -21,7 +21,7 @@ const UserSidebar: React.FC = () => {
     { icon: <MdInbox />, text: 'Orders', path: '/user/orders' },
     { icon: <IoHeartOutline />, text: 'Favourites', path: '/user/favourites' },
     { icon: <BsLayoutTextWindow />, text: 'Customise templates', path: '/user/templates' },
-    { icon: <IoSettingsOutline />, text: 'Settings', path: '/user/settings' },
+    { icon: <IoSettingsOutline />, text: 'Settings', path: '/user/settings/account' },
   ];
 
   return (
