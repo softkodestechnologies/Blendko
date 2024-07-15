@@ -10,8 +10,8 @@ function Footer() {
   <footer className="footer">
   <div className="footer-container">
     <div>
-      <div className="footer-head flex">
-          <h3 className="footer-title"><Link href="/"><FooterSVG /></Link></h3>
+      <div className="footer-head">
+        <h3 className="footer-title"><Link href="/"><FooterSVG /></Link></h3>
         <div className="footer-icons">
           <a target="_blank" rel="noopener noreferrer" href="https://facebook.com/blendkoShop" aria-label="follow us on Facebook"><FaFacebook /></a>
 

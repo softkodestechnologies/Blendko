@@ -63,7 +63,7 @@ const Highlights = () => {
     <div className="container highlight-section">
       <h1 className="highlight-header">HIGHLIGHTS</h1>
       <button className="highlight-btn">SHOP NOW</button>
-      <div className="flex space-between align-y flex">
+      <div className="flex space-between flex">
         <div className="">
           <div className="flex space-between align-y">
             <div className="highlight-image-container">

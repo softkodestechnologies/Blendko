@@ -2,19 +2,16 @@
 
 import React, { useState } from 'react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import OrderTable from '@/components/admin/orders/OrderTable';
+import CustomerTable from '@/components/admin/customers/CustomerTable';
 import styles from '@/components/admin/Admin.module.css';
 import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 
-const OrdersPage: React.FC = () => {
+const CustomersPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Pending');
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
-  const tabs = ['Pending', 'Confirmed', 'Processing', 'Picked', 'Shipped', 'Delivered', 'Cancelled', 'View All'];
 
   return (
     <div className={styles.container}>
@@ -31,33 +28,22 @@ const OrdersPage: React.FC = () => {
           </div>
         </header>
         <main className={styles.main}>
-          <h1 className={styles.title}>Order Management</h1>
-          <div className={styles.tabContainer}>
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                className={`${styles.tabButton} ${activeTab === tab ? styles.activeTab : ''}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+          <h1 className={styles.title}>Customers</h1>
           <div className={styles.searchContainer}>
             <input
               type="text"
-              placeholder="Search by order id"
+              placeholder="Search..."
               className={styles.searchInput}
             />
-            <button  title="search" className={styles.searchButton}>
+            <button title="search" className={styles.searchButton}>
               <FaSearch />
             </button>
           </div>
-          <OrderTable />
+          <CustomerTable />
         </main>
       </div>
     </div>
   );
 };
 
-export default OrdersPage;
+export default CustomersPage;

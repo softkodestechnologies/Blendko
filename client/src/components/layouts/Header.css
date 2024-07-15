@@ -66,6 +66,11 @@
     animation: fadeIn 0.5s ease-in-out, slideIn 0.8s ease-in-out;
   }
 
+  .navbar-list h2 {
+    font-family: 'Black Mango', sans-serif;
+    font-weight: 600;
+  }
+
   .nav-break {
     display: block;
   }
@@ -76,7 +81,7 @@
 
   
   .navbar-list > * {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   .navbar-hidden {
