@@ -14,6 +14,11 @@
   flex-direction: column;
 }
 
+.menu-icons:hover,
+.user-menu span:hover {
+  color: #767677;
+}
+
 .user-menu span {
   cursor: pointer;
 }

@@ -81,7 +81,7 @@
 
   
   .navbar-list > * {
-    margin-bottom: 1rem;
+    margin-bottom: 1.3rem;
   }
 
   .navbar-hidden {
@@ -139,6 +139,7 @@
 
     .navbar-list > * {
       margin-bottom: 1.5rem;
+      color: green
     }
   }
 
@@ -146,5 +147,9 @@
     .navbar-dash {
       margin-top: 1rem;
       margin-bottom: 1rem;
+    }
+
+    .navbar-list > * {
+      color: red;
     }
   }
