@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useLogInMutation } from '@/services/authService';
 import asyncSubmission from '@/utils/hooks/asyncSubmission';
 import handlePropagation from '@/utils/helpers/handlePropagation';
+import Alert from '@/components/ui/alert/Alert';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +15,26 @@ const Login: React.FC = () => {
   const { isError, handleSubmission } = asyncSubmission({
     callback: login,
   });
+  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+    show: false,
+    type: 'success',
+    message: '',
+  });
+
+  const handleFormSubmission = async (values: any, resetForm: () => void) => {
+    await handleSubmission(
+      values,
+      resetForm,
+      '/',
+      () => {
+        setAlert({ show: true, type: 'success', message: 'Login successful!' });
+      }
+    );
+
+    if (isError.error) {
+      setAlert({ show: true, type: 'error', message: isError.message });
+    }
+  };
 
   return (
     <div className="login-form">
@@ -31,7 +52,7 @@ const Login: React.FC = () => {
             .required('Required'),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await handleSubmission(values, resetForm, '/');
+          await handleFormSubmission(values, resetForm);
           setSubmitting(false);
         }}
       >
@@ -74,6 +95,14 @@ const Login: React.FC = () => {
           </form>
         )}
       </Formik>
+      {alert.show && (
+        <Alert
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert({ ...alert, show: false })}
+          duration={5000}
+        />
+      )}
     </div>
   );
 };
