@@ -1,26 +1,47 @@
 const nodeMailer = require('nodemailer');
+const { google } = require('googleapis');
+require('dotenv').config();
+
+const oauth2Client = new google.auth.OAuth2(
+  process.env.OAUTH_CLIENTID,
+  process.env.OAUTH_CLIENT_SECRET,
+  'https://developers.google.com/oauthplayground'
+);
+
+oauth2Client.setCredentials({
+  refresh_token: process.env.OAUTH_REFRESH_TOKEN,
+});
+
+console.log('Refresh Token:', process.env.OAUTH_REFRESH_TOKEN ? 'Set' : 'Not Set');
 
 const sendEmail = async (options) => {
-  const transporter = nodeMailer.createTransport({
-    service: 'gmail',
-    auth: {
-      type: 'OAuth2',
-      user: process.env.MAIL_USERNAME,
-      pass: process.env.MAIL_PASSWORD,
-      clientId: process.env.OAUTH_CLIENTID,
-      clientSecret: process.env.OAUTH_CLIENT_SECRET,
-      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-    },
-  });
+  try {
+    const { token } = await oauth2Client.getAccessToken();
 
-       const mailOptions = {
-    from: `${process.env.OAUTH_FROM_EMAIL} <${process.env.OAUTH_FROM_EMAIL}>`,
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-  };
+    const transporter = nodeMailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.MAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENTID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        accessToken: token,
+      },
+    });
 
-  await transporter.sendMail(mailOptions);
+    const mailOptions = {
+      from: `${process.env.OAUTH_FROM_NAME} <${process.env.OAUTH_FROM_EMAIL}>`,
+      to: options.email,
+      subject: options.subject,
+      text: options.message,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
 };
 
 module.exports = sendEmail;
