@@ -17,16 +17,10 @@ connectDatabase();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())//corsOptions()
+app.use(cors(corsOptions()))
 
 app.use('/api/v1', api);
 app.use(errorMiddleware);
-
-console.log('MAIL_USERNAME:', process.env.MAIL_USERNAME);
-console.log('OAUTH_CLIENTID:', process.env.OAUTH_CLIENTID);
-console.log('OAUTH_CLIENT_SECRET:', process.env.OAUTH_CLIENT_SECRET);
-console.log('OAUTH_REFRESH_TOKEN:', process.env.OAUTH_REFRESH_TOKEN);
-
 
 
 process.on('uncaughtException', (err) => {
