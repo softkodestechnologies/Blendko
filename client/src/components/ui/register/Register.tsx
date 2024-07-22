@@ -19,9 +19,11 @@ const Register = () => {
     callback: register,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState<'success' | 'error'>('success');
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+    show: false,
+    type: 'success',
+    message: '',
+  });
 
 
   const handleFormSubmission = async (values: any, resetForm: () => void) => {
@@ -30,16 +32,12 @@ const Register = () => {
       resetForm,
       '/',
       () => {
-        setAlertType('success');
-        setAlertMessage('Registration successful!');
-        setShowAlert(true);
+        setAlert({ show: true, type: 'success', message: 'Registration successful!' });
       }
     );
 
     if (isError.error) {
-      setAlertType('error');
-      setAlertMessage(isError.message);
-      setShowAlert(true);
+      setAlert({ show: true, type: 'error', message: isError.message });
     }
   };
 
@@ -120,11 +118,12 @@ const Register = () => {
           </form>
         )}
       </Formik>
-      {showAlert && (
+      {alert.show && (
         <Alert
-          type={alertType}
-          message={alertMessage}
-          onClose={() => setShowAlert(false)}
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert({ ...alert, show: false })}
+          duration={5000}
         />
       )}
     </div>
