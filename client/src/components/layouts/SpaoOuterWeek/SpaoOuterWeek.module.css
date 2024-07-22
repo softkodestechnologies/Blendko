@@ -37,6 +37,7 @@
   font-weight: 600;
   font-size: clamp(24px, 3vw, 43px);
   line-height: 1;
+  transform: translateY(-12%);
 }
 
 .number {

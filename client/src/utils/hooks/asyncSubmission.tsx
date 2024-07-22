@@ -40,7 +40,7 @@ function useAsyncSubmission({ callback }: { callback: any }) {
       
       setIsError({
         error: true,
-        message: err?.data?.error?.name || 'An unexpected error occurred',
+        message: err?.data?.error?.message || err?.data?.message || 'An unexpected error occurred',
       });
     }
   };

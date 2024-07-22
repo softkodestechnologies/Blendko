@@ -1,0 +1,32 @@
+/* components/Alert.module.css */
+.alert {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+    z-index: 1000;
+  }
+  
+  .success {
+    background-color: #4caf50;
+  }
+  
+  .error {
+    background-color: #ff6347;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }

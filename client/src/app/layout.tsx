@@ -1,5 +1,5 @@
 "use client";
-import { Inter, Poppins, Babylonica } from 'next/font/google';
+import { Inter, Poppins, Babylonica, Public_Sans } from 'next/font/google';
 import "./globals.css";
 import Footer from "../components/layouts/Footer";
 import Header from "../components/layouts/Header";
@@ -26,6 +26,12 @@ const babylonica = Babylonica({
   weight: '400'
 })
 
+const publicSans = Public_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+})
+
 export default function RootLayout({
   children,
 }: {
@@ -43,6 +49,7 @@ export default function RootLayout({
             --font-inter: ${inter.style.fontFamily};
             --font-poppins: ${poppins.style.fontFamily};
             --font-babylonica: ${babylonica.style.fontFamily};
+            --font-public-sans: ${publicSans.style.fontFamily};
           }
           html {
             font-family: var(--font-inter);

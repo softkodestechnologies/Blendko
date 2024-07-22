@@ -102,15 +102,13 @@ const Header = () => {
         <div>
           <div className={`navbar-menu ${!navOpen ? 'navbar-hidden' : 'navbar-visible'}`}>
             <div className="navbar-list header-container">
-              <h2>Fashion & <br className='nav-break' />Accessories</h2>
+              {/* <h2>Fashion & <br className='nav-break' />Accessories</h2> */}
               <Link href="/shop" onClick={toggleNav}>What&apos;s New</Link>
-              <Link href="/shop" onClick={toggleNav}>Gifts & Personalisation</Link>
               <Link href="/shop" onClick={toggleNav}>Women&apos;s Fashion</Link>
               <Link href="/shop" onClick={toggleNav}>Men&apos;s Fashion</Link>
               <Link href="/shop" onClick={toggleNav}>Bags Fashion</Link>
               <Link href="/shop" onClick={toggleNav}>Jewelry & Timepieces</Link>
               <Link href="/shop" onClick={toggleNav}>Kid&apos;s & Baby</Link>
-              <Link href="/shop" onClick={toggleNav}>Maison</Link>
               <Link href="/shop" onClick={toggleNav}>Customisation</Link>
               <hr className='navbar-dash'/>
             </div>

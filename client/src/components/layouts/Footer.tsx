@@ -43,20 +43,15 @@ function Footer() {
           <li><Link href="/faq">FAQs</Link></li>
         </ul>
       </div>
-      <div>
+      {/* <div>
         <h4 className="footer-heading">CUSTOMISATION</h4>
         <ul className="footer-links">
           <li><Link href="/customize">Design Your Own</Link></li>
         </ul>
-      </div>
+      </div> */}
       <div>
         <h4 className="footer-heading">STAY CONNECTED</h4>
         <ul className="footer-links">
-            {/* <li className="email-input-container">
-              <input className="email-input" type="text" placeholder="Email"/>
-              <span className="arrow"><CgChevronRight /></span>
-            </li> */}
-
             <li><a target="_blank" rel="noopener noreferrer" href="https://facebook.com/blendkoShop" aria-label="follow us on Facebook">Facebook</a></li>
             
           <li><a target="_blank" rel="noopener noreferrer" href="https://x.com/blendkoShop" aria-label="follow us on X">X (Formerly Twitter)</a></li>

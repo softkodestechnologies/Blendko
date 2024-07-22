@@ -1,0 +1,59 @@
+.adminManagement {
+    margin-top: 30px;
+  }
+  
+  .adminTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #667085;
+  }
+  
+  .adminTable th,
+  .adminTable td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  .adminTable th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .adminTable tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .status {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+  }
+
+  .status::before {
+    position: absolute;
+    content: '·';
+    font-size: 30px;
+    border-radius: 50%;
+    font-weight: bold;
+    top: -10%;
+    left: 4px;
+  }
+  
+  .active {
+    background-color: #ECFDF3;
+    color: #037847;
+  }
+  
+  .inactive {
+    background-color: #F2F4F7;
+    color: #364254;
+  }
+

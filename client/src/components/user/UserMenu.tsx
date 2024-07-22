@@ -20,7 +20,7 @@ const UserMenu = () => {
     return (
       <div className="user-menu">
         <Link className="menu-icons" href="/login">Login</Link>
-        <Link className="menu-icons" href="/signup">Sign Up</Link>
+        <Link className="menu-icons" href="/register">Sign Up</Link>
       </div>
     );
   }

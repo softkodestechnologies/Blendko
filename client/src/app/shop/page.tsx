@@ -84,7 +84,7 @@ const Shop = () => {
                 </div>
                 }
                 {isLoading ? '' :<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
-                <RecentlyViewedSection items={viewedItems} />
+                {/* <RecentlyViewedSection items={viewedItems} /> */}
             </div>
         </main>
       

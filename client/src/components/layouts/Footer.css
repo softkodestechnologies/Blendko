@@ -2,7 +2,6 @@
   background-color: #000;
   color: #fff;
   padding: 1.5rem;
-  margin-top: 2rem;
 }
 
 .footer-container {
@@ -66,7 +65,7 @@
 
 @media (min-width: 1024px) {
   .footer-grid {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
   }
 }
 

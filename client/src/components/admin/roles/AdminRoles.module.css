@@ -1,0 +1,91 @@
+.container {
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .table {
+    min-width: 500px;
+    overflow: scroll !important;
+  }
+
+  .roleRow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+    align-items: center;
+  }
+  
+  .roleInfo h2 {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+  }
+  
+  .roleInfo p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .userAvatars {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .userAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .assignButton {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .assignIcon {
+    margin-right: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    /* .header, .roleRow {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .userAvatars {
+      justify-content: flex-start;
+    }
+    
+    .assignButton {
+      width: 100%;
+    } */
+  }

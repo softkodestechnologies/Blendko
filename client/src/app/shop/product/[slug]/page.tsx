@@ -241,7 +241,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
         </div>
       </div>
 
-      <div className={styles.recommendations}>
+      {/* <div className={styles.recommendations}>
         <h2>You might also like</h2>
         <div className={styles.recommendationItems}>
           {recommendationItems.map((item: any, index: number) => (
@@ -254,7 +254,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

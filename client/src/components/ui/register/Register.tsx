@@ -8,6 +8,7 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRegisterMutation } from '@/services/authService';
 import asyncSubmission from '@/utils/hooks/asyncSubmission';
+import Alert from '@/components/ui/alert/Alert';
 import handlePropagation from '@/utils/helpers/handlePropagation';
 import BlendkoIcon from './BlendkoIcon';
 import FaCheckout from './FaCheckout';
@@ -18,6 +19,29 @@ const Register = () => {
     callback: register,
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState<'success' | 'error'>('success');
+  const [alertMessage, setAlertMessage] = useState('');
+
+
+  const handleFormSubmission = async (values: any, resetForm: () => void) => {
+    await handleSubmission(
+      values,
+      resetForm,
+      '/',
+      () => {
+        setAlertType('success');
+        setAlertMessage('Registration successful!');
+        setShowAlert(true);
+      }
+    );
+
+    if (isError.error) {
+      setAlertType('error');
+      setAlertMessage(isError.message);
+      setShowAlert(true);
+    }
+  };
 
   return (
     <div className="reg-form">
@@ -59,8 +83,7 @@ const Register = () => {
             .required('Required'),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await handleSubmission(values, resetForm, '/');
-          console.log('Values should be submitted', values);
+          await handleFormSubmission(values, resetForm);
           setSubmitting(false);
         }}>
         {({ handleSubmit }) => (
@@ -97,6 +120,13 @@ const Register = () => {
           </form>
         )}
       </Formik>
+      {showAlert && (
+        <Alert
+          type={alertType}
+          message={alertMessage}
+          onClose={() => setShowAlert(false)}
+        />
+      )}
     </div>
   );
 };
