@@ -4,9 +4,10 @@ import styles from './customize.module.css';
 
 interface ColorPaletteProps {
   onChange: ColorChangeHandler;
+  setActivePanel: (panel: string | null) => void;
 }
 
-const ColorPalette: React.FC<ColorPaletteProps> = ({ onChange }) => {
+const ColorPalette: React.FC<ColorPaletteProps> = ({ onChange, setActivePanel }) => {
   const generatePalette = () => {
     const colors = [
       { name: 'red', rgb: [255, 0, 0] },
@@ -34,6 +35,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ onChange }) => {
 
   return (
     <div className={styles.colorPalette}>
+      <button onClick={() => setActivePanel('files')}>Files</button>
       <h3 className={styles.paletteTitle}>Pick from palette</h3>
       <div className={styles.palette}>
         {palette.map((item, index) => (
@@ -50,5 +52,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ onChange }) => {
 };
 
 export default ColorPalette;
+
 
 

@@ -40,7 +40,7 @@ const AdminRoles: React.FC = () => {
         <span>Users</span>
         <span>Created Date</span>
       </div>
-      <div class={styles.table}>
+      <div className={styles.table}>
         {roles.map((role, index) => (
             <div key={index} className={styles.roleRow}>
             <div className={styles.roleInfo}>

@@ -3,16 +3,18 @@ import styles from './customize.module.css';
 import ColorPalette from './ColorPalette';
 import { ColorChangeHandler } from 'react-color';
 import FileInputComponent from './Files';
-interface SlidingPanelProps {
+
+
+interface MobileSlidingPanelProps {
   activePanel: string;
   onClose: () => void;
   setActivePanel: (panel: string | null) => void;
   onFileUpload: (file: File) => void;
 }
 
-const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload  }) => {
+const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload }) => {
   const handleColorChange: ColorChangeHandler = (color) => {
-    //Remember: Handle color change here
+    // Handle color change here
     console.log(color);
   };
 
@@ -21,28 +23,24 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setAc
       case 'product':
         return <div>Product Content</div>;
       case 'files':
-        return <FileInputComponent onFileUpload={onFileUpload} />;
+        return <FileInputComponent onFileUpload={onFileUpload}/>;
+      case 'design':
+        return <div>Design Content</div>;
       case 'styles':
         return <div>Styles Content</div>;
-      case 'sizes':
-        return <div>Sizes Content</div>;
       case 'colour':
         return <ColorPalette onChange={handleColorChange} setActivePanel={setActivePanel} />;
-      case 'savedTemplate':
-        return <div>Saved Templates Content</div>;
       default:
         return null;
     }
   };
 
   return (
-    <div className={`${styles.slidingPanel}`} style={{ left: activePanel ? '30%' : '-300px' }}>
+    <div className={styles.mobileSlidingPanel}>
       <button className={styles.closeButton} onClick={onClose}>X</button>
       {renderPanelContent()}
     </div>
   );
 };
 
-export default SlidingPanel;
-
-
+export default MobileSlidingPanel;

@@ -55,7 +55,7 @@ const ShopByCategory: React.FC = () => {
         <h3>Tailor Your Style, Your Way</h3>
         <h5>Discover Limitless Possibilities with Our Customization Options</h5>
         <p>Transform your wardrobe into a personalized masterpiece with our intuitive customization tools. From selecting fabrics to adding personal touches, embark on a journey of self-expression and style refinement. Get started now and craft the outfit of your dreams!</p>
-        <Link href="/customize"><button className="main-button">Start Customising</button></Link>
+        <Link href="/customize"><button className="main-button"><span>Start Customising</span></button></Link>
       </div>
     </section>
   );

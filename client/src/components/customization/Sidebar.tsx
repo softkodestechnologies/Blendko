@@ -1,11 +1,27 @@
-"use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './customize.module.css';
 import SlidingPanel from './SlidingPanel';
-import { FaShoppingBag, FaFile, FaPalette, FaRuler, FaPaintBrush, FaSave } from 'react-icons/fa';
+import MobileSlidingPanel from './MobileSlidingPanel';
+import { FaTshirt, FaPalette, FaRuler, FaPaintBrush, FaChevronRight } from 'react-icons/fa';
 
-const Sidebar = ({ onToggleCanvasWidth }: { onToggleCanvasWidth: () => void }) => {
+interface SidebarProps {
+  onToggleCanvasWidth: () => void;
+  onFileUpload: (file: File) => void;  // Add this prop
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth,setActivePanel, onFileUpload }) => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTogglePanel = (panel: string) => {
     if (activePanel === panel) {
@@ -15,21 +31,48 @@ const Sidebar = ({ onToggleCanvasWidth }: { onToggleCanvasWidth: () => void }) =
     }
   };
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  if (isMobile) {
+    return (
+      <>
+        <div className={styles.mobileSidebar}>
+          {isExpanded && (
+            <div className={styles.mobileExpandedMenu}>
+              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><FaRuler /> Styles</div>
+              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><FaPaintBrush /> Colour</div>
+            </div>
+          )}
+          <div className={styles.mobileBottomBar}>
+            <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><FaTshirt /> Product</div>
+            <div className={styles.sidebarItem} onClick={() => handleTogglePanel('design')}><FaPalette /> Design</div>
+            <button title="right-arrow" className={styles.expandButton} onClick={toggleExpand}>
+              <FaChevronRight />
+            </button>
+          </div>
+        </div>
+        {activePanel && (
+          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload}/>
+        )}
+      </>
+    );
+  }
+
   return (
     <div className={styles.sidebar}>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><FaShoppingBag /> Product</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('files')}><FaFile /> Files</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><FaPalette /> Styles</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('sizes')}><FaRuler /> Sizes</div>
+      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><FaTshirt /> Product</div>
+      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('files')}>Files</div>
+      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><FaRuler /> Styles</div>
+      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('sizes')}>Sizes</div>
       <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><FaPaintBrush /> Colour</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('savedTemplate')}><FaSave /> Saved Template</div>
+      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('savedTemplate')}>Saved Template</div>
       {activePanel && (
-        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} />
+        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload}/>
       )}
-      {/**<button className={styles.toggleCanvasButton} onClick={onToggleCanvasWidth}>Toggle Canvas Width</button>**/}
     </div>
   );
 };
 
 export default Sidebar;
-

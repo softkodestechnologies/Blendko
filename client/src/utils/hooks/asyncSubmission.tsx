@@ -20,13 +20,13 @@ function useAsyncSubmission({ callback }: { callback: any }) {
     data: any,
     formAction: () => void,
     type?: string,
-    onSuccess?: () => void
+    onSuccess?: (response: any) => void
   ) => {
     try {
       const response = await callback(data).unwrap();
       formAction();
 
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(response);
 
       if (type === '/') {
         dispatch(setUser(response.user));

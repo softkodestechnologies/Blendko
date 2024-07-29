@@ -1,11 +1,10 @@
 
 'use client';
 import React from 'react';
-import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { FaUser, FaHeart, FaShoppingBag } from 'react-icons/fa';
+import Image from 'next/image';
 import styles from './CheckoutAuth.module.css';
 
 const LoginModal = dynamic(() => import('@/components/ui/modal/LoginModal'), { ssr: false });
@@ -58,11 +57,11 @@ const CheckoutAuthPage: React.FC = () => {
       <div className={styles.socialLogin}>
         <h3>Sign in with your google / Apple account</h3>
         <button className={styles.googleButton}>
-          <img src="/google-icon.png" alt="Google" />
+          <Image src="/google-icon.png" alt="Google" layout="fill" />
           Continue with Google
         </button>
         <button className={styles.appleButton}>
-          <img src="/apple-icon.png" alt="Apple" />
+          <Image src="/apple-icon.png" alt="Apple" layout="fill"/>
           Continue with Apple
         </button>
       </div>

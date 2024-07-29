@@ -26,5 +26,3 @@ export const blendkoApi = createApi({
   ],
   endpoints: () => ({}),
 });
-
-

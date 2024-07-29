@@ -68,6 +68,18 @@ export const adminService = blendkoApi.injectEndpoints({
       providesTags: ['Users'],
     }),
 
+    updateUserDetails: builder.mutation({
+      query: (userData) => ({
+        url: '/me/update',
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: userData,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
     getCategory: builder.query({
       query: () => 'categories',
       providesTags: ['Categories'],
@@ -183,6 +195,7 @@ export const {
   useGetProductsQuery,
   useDeleteProductMutation,
   useGetUsersQuery,
+  useUpdateUserDetailsMutation,
   useGetCategoryQuery,
   useGetCategoryByNameQuery,
   useGetCategoriesQuery,

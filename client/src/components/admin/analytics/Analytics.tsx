@@ -1,9 +1,9 @@
 "use client";
-
 import React, { useState } from 'react';
 import { Line, Bar, Bubble } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, ChartOptions, TooltipItem } from 'chart.js';
 import styles from './Analytics.module.css';
+import Image from 'next/image';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend);
 
@@ -119,7 +119,7 @@ const AnalyticsReports: React.FC = () => {
     ],
   };
 
-  const bubbleOptions = {
+  const bubbleOptions: ChartOptions<'bubble'> = {
     scales: {
       x: { display: false },
       y: { display: false },
@@ -130,7 +130,7 @@ const AnalyticsReports: React.FC = () => {
       },
       tooltip: {
         callbacks: {
-          label: (context) => {
+          label: (context: TooltipItem<'bubble'>) => {
             const label = context.dataset.label || '';
             const value = ['4,567', '3,167', '1,845'][context.dataIndex];
             return `${label}: ${value} Per Day`;
@@ -360,7 +360,7 @@ const AnalyticsReports: React.FC = () => {
           <ul className={styles.trendingList}>
             {[...Array(4)].map((_, index) => (
               <li key={index}>
-                <img src="/path-to-image.jpg" alt="Black Dress - Lupin" />
+                <Image src="/people.png" alt="Black Dress - Lupin" width="50" height="50"  />
                 <div>
                   <h3>Black Dress - Lupin</h3>
                   <p>Item: #FXZ-4567</p>

@@ -73,11 +73,18 @@ const userSlice = createSlice({
       state.user = action.payload;
       localStorage.setItem('user', JSON.stringify(action.payload));
     },
+
+    updateUser: (state, action: PayloadAction<any>) => {
+      state.user = { ...state.user, ...action.payload };
+      localStorage.setItem('user', JSON.stringify(state.user));
+    },
+
     logOut: (state: UserState) => {
       state.user = null;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     },
+
     addToCart: (state: UserState, action: PayloadAction<any>) => {
       const productExists = state.cart.find(
         (x) => x._id === action.payload._id
@@ -138,6 +145,7 @@ const userSlice = createSlice({
 
 export const {
   setUser,
+  updateUser,
   logOut,
   addToCart,
   incrementQuantity,

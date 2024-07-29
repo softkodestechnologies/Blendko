@@ -42,7 +42,7 @@
     object-fit: contain;
   }
   
-  /* .woman-image::after {
+  .woman-image::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -52,7 +52,7 @@
     background-image: linear-gradient(to bottom, #FEFFF1, transparent);
     z-index: 7;
   }
-   */
+  
   .bottom-section {
     position: relative;
     z-index: 6;
@@ -151,26 +151,6 @@
     background-color: white;
   }
   
-  /* .explore-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  } */
-  
-  /* .arrow {
-    margin-left: 20px;
-    font-size: 24px;
-  } */
-  
   .button-container::after {
     content: '';
     position: absolute;
@@ -209,11 +189,6 @@
       top: 34%;
       left: 37%;
     }
-
-    /* .line4-parent {
-      top: 75%;
-      left: 5%;
-    } */
 
     .section-image-container {
         position: relative;
@@ -289,4 +264,35 @@
 
   }
 
-  
+@media (max-width: 480px) {
+  .discount-text {
+    font-size: 12rem;
+  }
+
+  .line1-parent {
+    top: 29%;
+    left: 47%;
+  }
+
+  .line1, .line2, .line3 {
+    width: 160px;
+  }
+
+  .line2-parent {
+    left: 50%;
+  }
+
+  .line3-parent {
+    top: 26%;
+    left: 0;
+  }
+
+  .line3 {
+    background-position: center left;
+  }
+
+  .line4-parent {
+    top: 70%;
+    right: 75%;
+  }
+}

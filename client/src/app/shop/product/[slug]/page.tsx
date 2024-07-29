@@ -8,6 +8,7 @@ import useReduceCartItems from '@/utils/hooks/useReduceCartItems';
 import styles from './ProductPage.module.css';
 import Image from 'next/image';
 import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
+import { FiEdit } from 'react-icons/fi';
 
 interface ProductPageProps {
   params: {
@@ -25,6 +26,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const [isHowThisWasMadeOpen, setIsHowThisWasMadeOpen] = useState(false);
   const [isReviewsOpen, setIsReviewsOpen] = useState(false);
   const [isShippingReturnOpen, setIsShippingReturnOpen] = useState(false);
+  const router = useRouter();
 
   // Conditionally fetch the product by ID only if productId is defined
   const { data: productData, isLoading: isLoadingProduct } = useGetProductQuery(productId!, { skip: !productId });
@@ -72,6 +74,19 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
 
   const handleImageClick = (url: string) => {
     setSelectedImage(url);
+  };
+
+  const handleCustomize = () => {
+    if (productData) {
+      const productToSave = {
+        id: productData.product.id,
+        name: productData.product.name,
+        image: productData.product.images[0]?.url,
+        
+      };
+      localStorage.setItem('productData', JSON.stringify(productToSave));
+      router.push('/customize');
+    }
   };
 
   return (
@@ -141,6 +156,8 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
               ))}
             </div>
 
+            <button className={styles.customizeBtn} onClick={handleCustomize}>Customize  <FiEdit size={24} /></button>
+
             <div className={`flex space-between ${styles.btnGroup}`}>
               <div className="flex space-between">
                   <div className={styles.quantity}>
@@ -202,7 +219,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
               onClick={() => setIsReviewsOpen(!isReviewsOpen)}
               className={styles.detailsTitle}
             >
-              Reviews (12)
+              Reviews (1)
               {isReviewsOpen ? (
                 <AiOutlineUp className={styles.detailsIcon} />
               ) : (
