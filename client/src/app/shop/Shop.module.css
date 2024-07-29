@@ -1,107 +1,107 @@
 .main {
-    display: flex;
-    width: 100%;
-    margin-bottom: 40px;
-  }
+  display: flex;
+  width: 100%;
+  margin-bottom: 40px;
+}
 
-  .sidebar {
-    width: 250px;
-    padding: 20px 20px 0 0;
+.sidebar {
+  width: 250px;
+  padding: 20px 20px 0 0;
+}
+
+.products {
+  width: calc(100% - 250px);
+}
+
+
+.filterSection {
+  margin-bottom: 20px;
+}
+
+.filterParent {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+}
+
+.filterCon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  text-wrap: nowrap;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.hideFilter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.recommendations {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.recommendations_title {
+  padding-bottom: 2rem;
+}
+
+.recommendationItems {
+  display: flex;
+  overflow-x: auto;
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+.recommendationItems::-webkit-scrollbar {
+  display: none; 
+}
+
+.recommendationItem {
+  flex: 0 0 auto;
+  width: calc(25% - 1rem); 
+  margin: 0 0.5rem;
+  text-align: center;
+}
+
+.recommendationDetails h3 {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.recommendationDetails p {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.sort {
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
   }
 
   .products {
-    width: calc(100% - 250px);
+    width: 100%;
   }
 
-  
-  .filterSection {
-    margin-bottom: 20px;
-  }
-
-  .filterParent {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #000;
+  .sidebar {
+      display: none;
   }
 
   .filterCon {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-    text-wrap: nowrap;
-    cursor: pointer;
-    font-size: 16px;
+    display: none;
   }
 
-  .hideFilter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 5px;
-  }
-
-  .recommendations {
-    background-color: #fff;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-  }
-
-  .recommendations_title {
-    padding-bottom: 2rem;
-  }
-  
-  .recommendationItems {
-    display: flex;
-    overflow-x: auto;
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
-  }
-  
-  .recommendationItems::-webkit-scrollbar {
-    display: none; 
-  }
-  
   .recommendationItem {
-    flex: 0 0 auto;
-    width: calc(25% - 1rem); 
-    margin: 0 0.5rem;
-    text-align: center;
+      width: calc(50% - 1rem); 
   }
-  
-  .recommendationDetails h3 {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  .recommendationDetails p {
-    font-size: 0.875rem;
-    color: #555;
-  }
-  
-  .sort {
-    margin-left: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    .main {
-      flex-direction: column;
-    }
-
-    .products {
-      width: 100%;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
-    .filterCon {
-      display: none;
-    }
-
-    .recommendationItem {
-        width: calc(50% - 1rem); 
-    }
-  }
+}

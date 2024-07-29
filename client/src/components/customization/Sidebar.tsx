@@ -6,10 +6,10 @@ import { FaTshirt, FaPalette, FaRuler, FaPaintBrush, FaChevronRight } from 'reac
 
 interface SidebarProps {
   onToggleCanvasWidth: () => void;
-  onFileUpload: (file: File) => void;  // Add this prop
+  onFileUpload: (file: File) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth,setActivePanel, onFileUpload }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);

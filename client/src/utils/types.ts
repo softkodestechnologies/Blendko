@@ -1,4 +1,3 @@
-// types.ts
 export interface ProductItemType {
   title: string;
   price: string;

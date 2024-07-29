@@ -16,7 +16,7 @@ const CookieConsent: React.FC = () => {
   }, []);
 
   const handleAccept = () => {
-    setCookie('cookieConsent', 'accepted', 365); // Valid for 1 year
+    setCookie('cookieConsent', 'accepted', 365);
     setIsOpen(false);
   };
 

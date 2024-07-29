@@ -82,7 +82,6 @@ const AddNewProduct: React.FC = () => {
               <Field as="select" name="category" className={styles.select}>
                 <option value="">Select Category</option>
                 <option value="shorts">Shorts</option>
-                {/* Add more categories as needed */}
               </Field>
               {errors.category && touched.category && <div className={styles.error}>{errors.category}</div>}
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import  './ProductLoadingSkeleton.css'; // Import the CSS module
+import  './ProductLoadingSkeleton.css';
 
 const ProductLoadingSkeleton: React.FC = () => {
   return (

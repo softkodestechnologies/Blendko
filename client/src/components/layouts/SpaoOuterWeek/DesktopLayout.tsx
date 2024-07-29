@@ -61,7 +61,6 @@ const DesktopLayout = () => {
             objectFit="cover"
           />
           <Link href="/shop">
-            {/* <button className={styles.shopNowButton}>SHOP NOW</button> */}
               <div className={styles.button}>
                 <div className={styles.buttonWrapper}>
                   <div className={styles.text}>Shop Now</div>

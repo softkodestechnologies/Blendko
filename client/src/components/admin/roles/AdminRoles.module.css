@@ -75,17 +75,3 @@
     margin-right: 5px;
   }
   
-  @media (max-width: 600px) {
-    /* .header, .roleRow {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    
-    .userAvatars {
-      justify-content: flex-start;
-    }
-    
-    .assignButton {
-      width: 100%;
-    } */
-  }

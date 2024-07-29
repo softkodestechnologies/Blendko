@@ -341,7 +341,6 @@ select {
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
-  /* background-color: yellow; */
 }
 
 .not-found {
@@ -635,9 +634,6 @@ select {
   
 }
 
-
-
-/* Mobile devices (max-width: 768px) */
 @media only screen and (max-width: 768px) {
   .main-banner {
      background-size: 100% auto;
@@ -678,8 +674,6 @@ select {
   }
 
  }
-
-
 
 /* Width of the scrollbar */
 ::-webkit-scrollbar {

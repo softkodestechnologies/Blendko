@@ -43,12 +43,6 @@ function Footer() {
           <li><Link href="/faq">FAQs</Link></li>
         </ul>
       </div>
-      {/* <div>
-        <h4 className="footer-heading">CUSTOMISATION</h4>
-        <ul className="footer-links">
-          <li><Link href="/customize">Design Your Own</Link></li>
-        </ul>
-      </div> */}
       <div>
         <h4 className="footer-heading">STAY CONNECTED</h4>
         <ul className="footer-links">

@@ -53,7 +53,6 @@ const Categories: React.FC = () => {
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    // Implement search logic here
   };
 
   return (

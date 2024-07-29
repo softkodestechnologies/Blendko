@@ -64,7 +64,6 @@ function useAddToCart() {
           return;
         }
 
-        //  do something with the error
         return;
       }
     } else {

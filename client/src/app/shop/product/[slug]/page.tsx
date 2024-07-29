@@ -18,7 +18,7 @@ interface ProductPageProps {
 
 const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const { slug } = params;
-  const productId = slug?.split('-').pop(); // Extract ID from the slug
+  const productId = slug?.split('-').pop();
   const [isMounted, setIsMounted] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +28,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const [isShippingReturnOpen, setIsShippingReturnOpen] = useState(false);
   const router = useRouter();
 
-  // Conditionally fetch the product by ID only if productId is defined
+
   const { data: productData, isLoading: isLoadingProduct } = useGetProductQuery(productId!, { skip: !productId });
   const { addItemToCart } = useAddToCart(); 
   const { reduceCartItem } = useReduceCartItems();
@@ -257,54 +257,8 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
           </div>
         </div>
       </div>
-
-      {/* <div className={styles.recommendations}>
-        <h2>You might also like</h2>
-        <div className={styles.recommendationItems}>
-          {recommendationItems.map((item: any, index: number) => (
-            <div key={index} className={styles.recommendationItem}>
-              <Image src={item.imageSrc || '/picture.png'} alt={item.altText} width={180} height={180} />
-              <div className={styles.recommendationDetails}>
-                <h3>{item.title}</h3>
-                <p>{item.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };
-
-const recommendationItems = [
-  {
-    id: 1,
-    imageSrc: '/picture.png',
-    altText: 'Polo with Contrast Trims',
-    title: 'Polo with Contrast Trims',
-    price: '$212'
-  },
-  {
-    id: 2,
-    imageSrc: '/picture.png',
-    altText: 'Gradient Graphic T-shirt',
-    title: 'Gradient Graphic T-shirt',
-    price: '$145'
-  },
-  {
-    id: 3,
-    imageSrc: '/picture.png',
-    altText: 'Gradient Graphic T-shirt',
-    title: 'Gradient Graphic T-shirt',
-    price: '$145'
-  },
-  {
-    id: 4,
-    imageSrc: '/picture.png',
-    altText: 'Gradient Graphic T-shirt',
-    title: 'Gradient Graphic T-shirt',
-    price: '$145'
-  },
-];
 
 export default ProductPage;

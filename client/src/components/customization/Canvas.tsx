@@ -46,7 +46,6 @@ const Canvas = forwardRef(({ canvasWidth, productImage }: CanvasProps, ref) => {
       window.addEventListener('resize', handleResize);
       handleResize();
 
-      // Save initial state
       saveState(canvasInstance);
 
       return () => {

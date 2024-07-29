@@ -7,7 +7,7 @@ import styles from '@/components/admin/Admin.module.css';
 import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 
 
-const OrdersPage: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Pending');
 
@@ -28,4 +28,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default DashboardPage;

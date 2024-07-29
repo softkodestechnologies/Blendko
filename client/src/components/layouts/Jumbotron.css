@@ -1,268 +1,268 @@
-  .section-container {
-    position: relative;
-    overflow-x: hidden;
-    width: 100%;
-  }
-  
-  .top-section {
-    position: relative;
-    background-color: #FEFFF1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .discount-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%);
-    font-size: 25rem; 
-    font-family: 'Black Mango', sans-serif;
-    font-weight: 900;
-    color: rgba(0, 0, 0, 0.1); 
-    z-index: 1; 
-  }
+.section-container {
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+}
 
-  .discount-text-percentage {
-      font-size: 8rem;
-  }
+.top-section {
+  position: relative;
+  background-color: #FEFFF1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .section-image-container {
-    position: absolute; 
-    width: auto;
-  }
-  
-  .woman-image {
-    position: relative;
-    bottom: -10px;
-    max-width: 100%;
-    min-height: 850px;
-    z-index: 8 !important;
-    object-fit: contain;
-  }
-  
-  .woman-image::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-image: linear-gradient(to bottom, #FEFFF1, transparent);
-    z-index: 7;
-  }
-  
-  .bottom-section {
-    position: relative;
-    z-index: 6;
-    margin-top: -10px; 
-  }
-  
-  .annotation {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    font-size: 1rem; 
-    z-index: 3;
-    background-color: transparent;
-    width: auto;
-  }
-  
-  .line-image {
-    height: 80px; 
-    background-repeat: no-repeat;
-  }
-  
-  .line1 {
-    background-image: url('/right-vector-1300.png');
-    background-position: top right;
-    width: 300px;
-  }
+.discount-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  font-size: 25rem; 
+  font-family: 'Black Mango', sans-serif;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.1); 
+  z-index: 1; 
+}
 
-  .line1-parent {
-    top: 18%;
-    left: 40%;
-  }
-  
-  .line2 {
-    background-image: url('/right-vector-9100.png');
-    width: 300px;
-    background-position: center right;
-  }
+.discount-text-percentage {
+    font-size: 8rem;
+}
 
-  .line2-parent {
-    top: 37%;
-    left: 55%;
-  }
+.section-image-container {
+  position: absolute; 
+  width: auto;
+}
+
+.woman-image {
+  position: relative;
+  bottom: -10px;
+  max-width: 100%;
+  min-height: 850px;
+  z-index: 8 !important;
+  object-fit: contain;
+}
+
+.woman-image::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: linear-gradient(to bottom, #FEFFF1, transparent);
+  z-index: 7;
+}
+
+.bottom-section {
+  position: relative;
+  z-index: 6;
+  margin-top: -10px; 
+}
+
+.annotation {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 1rem; 
+  z-index: 3;
+  background-color: transparent;
+  width: auto;
+}
+
+.line-image {
+  height: 80px; 
+  background-repeat: no-repeat;
+}
+
+.line1 {
+  background-image: url('/right-vector-1300.png');
+  background-position: top right;
+  width: 300px;
+}
+
+.line1-parent {
+  top: 18%;
+  left: 40%;
+}
+
+.line2 {
+  background-image: url('/right-vector-9100.png');
+  width: 300px;
+  background-position: center right;
+}
+
+.line2-parent {
+  top: 37%;
+  left: 55%;
+}
+
+.line3 {
+  background-image: url('/left-vector-1300.png');
+  width: 300px;
+  background-position: center;
+}
+
+.line3-parent {
+  top: 8%;
+  right: 38%;
   
-  .line3 {
-    background-image: url('/left-vector-1300.png');
-    width: 300px;
-    background-position: center;
+}
+
+.line4 {
+  background-image: url('/left-vector-300.png');
+  width: 100px;
+  background-position: center left;
+}
+
+.line4-parent {
+  top: 80%;
+  right: 80%;
+}
+
+.line5 {
+  background-image: url('/line-vector-100-french-shoes.png');
+  width: 700px;
+  background-position: center;
+}
+
+.line5-parent {
+  top: 20%;
+  left: 62%;
+  transform: translateX(-50%);
+}
+
+.discount-now-parent {
+  top: 80%;
+  left: 80%;
+  color: #DDB28B;
+  font-weight: 600;
+  text-wrap: nowrap;
+}
+
+.main-banner-text-main {
+  font-family: 'Black Mango', sans-serif;
+  font-weight: 700
+}
+  
+.button-container {
+  display: inline-block;
+  position: relative;
+  padding: 3px;
+  background-color: white;
+}
+
+.button-container::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: -5px;
+  bottom: -5px;
+  background-color: black;
+  z-index: -1;
+}
+
+.explore-button:hover {
+  background-color: #333;
+}
+  
+@media (max-width: 840px) {
+
+  .line5 {
+      display: none;
   }
 
   .line3-parent {
-    top: 8%;
-    right: 38%;
-    
-  }
-  
-  .line4 {
-    background-image: url('/left-vector-300.png');
-    width: 100px;
-    background-position: center left;
+    top: 15%;
   }
 
-  .line4-parent {
-    top: 80%;
-    right: 80%;
-  }
-  
-  .line5 {
-    background-image: url('/line-vector-100-french-shoes.png');
-    width: 700px;
-    background-position: center;
-  }
-
-  .line5-parent {
+  .line1-parent {
     top: 20%;
-    left: 62%;
-    transform: translateX(-50%);
+    left: 38%;
+  }
+
+  .line2 {
+    background-position: top right;
+  }
+
+  .line2-parent {
+    top: 34%;
+    left: 37%;
+  }
+
+  .section-image-container {
+      position: relative;
+      margin: 0 10px;
+      padding: 0;
+  }
+
+  .woman-image {
+      position: relative;
+      width: 100%;
+      object-fit: contain;
+      height: auto;
+      left: 0;
+      transform: none;
+      bottom: auto;
+  }
+  .woman-image::after {
+    bottom: 0; 
+    height: 1px;
+  }
+
+  .bottom-section {
+    margin-top: 0;
+  }
+
+  .line-image {
+      max-width: 100%; 
+      height: 40px; 
   }
 
   .discount-now-parent {
-    top: 80%;
-    left: 80%;
-    color: #DDB28B;
-    font-weight: 600;
-    text-wrap: nowrap;
+    left: 65%;
   }
 
-  .main-banner-text-main {
-    font-family: 'Black Mango', sans-serif;
-    font-weight: 700
+  .explore-container {
+    text-align: center;
   }
-   
-  .button-container {
-    display: inline-block;
+
+    .discount-text {
+    top: 40%;
+    left: 42%;
+    font-size: 18rem;
+  } 
+
+  .discount-text-percentage {
+    font-size: 3rem;
     position: relative;
-    padding: 3px;
-    background-color: white;
+    left: -5%;
   }
-  
-  .button-container::after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: -5px;
-    bottom: -5px;
-    background-color: black;
-    z-index: -1;
-  }
-  
-  .explore-button:hover {
-    background-color: #333;
-  }
-   
-  @media (max-width: 840px) {
 
-    .line5 {
-        display: none;
+  .main-banner-text {
+      margin-top: -8rem !important;
     }
+}
 
-    .line3-parent {
-      top: 15%;
-    }
-
-    .line1-parent {
-      top: 20%;
-      left: 38%;
-    }
-
-    .line2 {
-      background-position: top right;
-    }
-
-    .line2-parent {
-      top: 34%;
-      left: 37%;
-    }
-
-    .section-image-container {
-        position: relative;
-        margin: 0 10px;
-        padding: 0;
-    }
-
-    .woman-image {
-        position: relative;
-        width: 100%;
-        object-fit: contain;
-        height: auto;
-        left: 0;
-        transform: none;
-        bottom: auto;
-    }
-    .woman-image::after {
-      bottom: 0; 
-      height: 1px;
-    }
-  
-    .bottom-section {
-      margin-top: 0;
-    }
-
-    .line-image {
-        max-width: 100%; 
-        height: 40px; 
-    }
-
-    .discount-now-parent {
-      left: 65%;
-    }
-  
-    .explore-container {
+@media screen and (min-width: 768px) {
+  .main-banner-hidden {
+      display: flex;
+      padding: 2em;
       text-align: center;
-    }
-  
-     .discount-text {
-      top: 40%;
-      left: 42%;
-      font-size: 18rem;
-    } 
-
-    .discount-text-percentage {
-      font-size: 3rem;
-      position: relative;
-      left: -5%;
-    }
-
-    .main-banner-text {
-        margin-top: -8rem !important;
-      }
+      font-weight: 600;
   }
 
-  @media screen and (min-width: 768px) {
-    .main-banner-hidden {
-        display: flex;
-        padding: 2em;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    .main-banner-hidden {
-      font-family: 'Black Mango', sans-serif;
-      font-size: 20px;
-    }
-
-    .main-banner-hidden p {
-        font-family: 'Poppins', sans-serif;
-        margin: 1em 0;
-    }
-
+  .main-banner-hidden {
+    font-family: 'Black Mango', sans-serif;
+    font-size: 20px;
   }
+
+  .main-banner-hidden p {
+      font-family: 'Poppins', sans-serif;
+      margin: 1em 0;
+  }
+
+}
 
 @media (max-width: 480px) {
   .discount-text {

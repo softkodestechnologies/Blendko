@@ -1,5 +1,3 @@
-// src/utils/hooks/useDeleteCartItem.ts
-
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';

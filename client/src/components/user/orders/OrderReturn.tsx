@@ -139,30 +139,6 @@ const OrderReturn: React.FC = () => {
             placeholder="Describe what you experienced"
           />
           {errors.description && <div className={styles.errorMessage}>{errors.description}</div>}
-{/* 
-          <div className={styles.returnMethod}>
-            <h3>Select how you&apos;d like to return your items.</h3>
-            <div className={styles.returnOptions}>
-              {returnMethods.map((method) => (
-                <div key={method.id} className={styles.returnOption}>
-                  <input
-                    type="radio"
-                    id={method.id}
-                    name="returnMethod"
-                    value={method.id}
-                    checked={formData.returnMethod === method.id}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={method.id}>
-                    <span>{method.description}</span>
-                    <span>{method.label}</span>
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-          {errors.returnMethod && <div className={styles.errorMessage}>{errors.returnMethod}
-          </div>} */}
         </div>
 
         <div className={styles.refundSummary}>

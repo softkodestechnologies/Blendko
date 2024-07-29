@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/services/store'; 
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'; // Make sure to import your LoadingSpinner component
+import LoadingSpinner from '@/components/ui/loading/LoadingSpinner'; 
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
   const WithAuthComponent = (props: any) => {
@@ -27,13 +27,11 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     return <WrappedComponent {...props} />;
   };
 
-  // Set the display name for better debugging and development experience
   WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
 
   return WithAuthComponent;
 };
 
-// Helper function to get the display name of the wrapped component
 const getDisplayName = (WrappedComponent: React.ComponentType) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };

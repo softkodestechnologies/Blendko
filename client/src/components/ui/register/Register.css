@@ -1,97 +1,97 @@
 .reg-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .reg-form h2 {
-    margin-bottom: 0.5rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-  input[type="email"],
-  input[type="password"],
-  input[type="text"] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 10px 0;
-    border: none;
-    background: #eee;
-  }
-  
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  input[type="text"]:focus {
-    background: #e8e8e8;
-    outline: none;
-  }
+.reg-form h2 {
+  margin-bottom: 0.5rem;
+}
 
-  .password-label {
-    position: relative;
-    margin-bottom: 3px;
-  }
-  
-  .submit-btn {
-    background-color: #000;
-    color: #fff;
-    padding: 15px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 10px 0;
+  border: none;
+  background: #eee;
+}
 
-  .submit-btn:hover {
-    background-color: rgba(0,0,0, 0.8);
-  }
-  
-  button:hover {
-    opacity: 1;
-  }
-  
-  .benefits {
-    margin-bottom: 3px;
-  }
-  
-  .benefits ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .benefits li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .benefits li svg {
-    margin-right: 10px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  background: #e8e8e8;
+  outline: none;
+}
 
-  .error {
-    color: tomato;
+.password-label {
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.submit-btn {
+  background-color: #000;
+  color: #fff;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.submit-btn:hover {
+  background-color: rgba(0,0,0, 0.8);
+}
+
+button:hover {
+  opacity: 1;
+}
+
+.benefits {
+  margin-bottom: 3px;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefits li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.benefits li svg {
+  margin-right: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: tomato;
+}
+
+.show-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.login-tag {
+  margin-top: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .reg-form {
+    width: 90%;
+    margin: 0 auto;
   }
-  
-  .show-password {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-  
-  .login-tag {
-    margin-top: 15px;
-  }
- 
-  @media only screen and (max-width: 768px) {
-    .reg-form {
-      width: 90%;
-      margin: 0 auto;
-    }
-  }
+}

@@ -84,7 +84,6 @@ const Shop = () => {
                 </div>
                 }
                 {isLoading ? '' :<Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />}
-                {/* <RecentlyViewedSection items={viewedItems} /> */}
             </div>
         </main>
       
@@ -92,55 +91,7 @@ const Shop = () => {
   );
 };
 
-const viewedItems = [
-    {
-      id: 1,
-      imageSrc: '/picture.png',
-      altText: 'Polo with Contrast Trims',
-      title: 'Polo with Contrast Trims',
-      price: '$212'
-    },
-    {
-      id: 2,
-      imageSrc: '/picture.png',
-      altText: 'Gradient Graphic T-shirt',
-      title: 'Gradient Graphic T-shirt',
-      price: '$145'
-    },
-    {
-      id: 3,
-      imageSrc: '/picture.png',
-      altText: 'Gradient Graphic T-shirt',
-      title: 'Gradient Graphic T-shirt',
-      price: '$145'
-    },
-    {
-      id: 4,
-      imageSrc: '/picture.png',
-      altText: 'Gradient Graphic T-shirt',
-      title: 'Gradient Graphic T-shirt',
-      price: '$145'
-    },
-  ];
   
-  const RecentlyViewedSection: React.FC<{ items: typeof viewedItems }> = ({ items }) => {
-    return (
-      <section className={styles.recommendations}>
-        <h2 className={styles.recommendations_title}>Recently Viewed Items</h2>
-        <div className={styles.recommendationItems}>
-          {items.map(item => (
-            <div key={item.id} className={styles.recommendationItem}>
-              <Image src={item.imageSrc} alt={item.altText} width={180} height={180} />
-              <div className={styles.recommendationDetails}>
-                <h3>{item.title}</h3>
-                <p>{item.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  };
 
   const SuspendedShop = () => (
     <Suspense fallback={<LoadingSkeleton />}>

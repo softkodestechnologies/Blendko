@@ -1,5 +1,3 @@
-// components/NavBar.js
-
 import React, { useState } from 'react';
 import styles from './FilterNav.module.css';
 

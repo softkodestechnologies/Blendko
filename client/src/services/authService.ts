@@ -34,8 +34,8 @@ const authService = blendkoApi.injectEndpoints({
       async onQueryStarted(args, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          localStorage.setItem('token', data.token); // Store token in localStorage
-          console.log('User data:', data.user); // Optional: Log user data
+          localStorage.setItem('token', data.token);
+          console.log('User data:', data.user); 
         } catch (error) {
           console.error('Login failed:', error);
         }

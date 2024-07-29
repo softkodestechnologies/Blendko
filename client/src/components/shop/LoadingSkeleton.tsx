@@ -1,4 +1,3 @@
-// components/LoadingSkeleton.tsx
 import React from 'react';
 import  './LoadingSkeleton.css';
 

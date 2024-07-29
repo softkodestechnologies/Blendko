@@ -21,12 +21,12 @@ const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
   const { gender, category } = params;
   const [isMounted, setIsMounted] = useState(false);
 
-  // Fetch the category by name to get the ID
+
   const { data: categoryData, isLoading: isLoadingCategory } = useGetCategoryByNameQuery(category);
 
   const categoryId = categoryData?.category?._id;
 
-  // Fetch products using category ID and gender
+
   const { data: productsData, isLoading: isLoadingProducts } = useGetProductsByCategoryGenderQuery(
     { categoryId, gender },
     { skip: !categoryId } 

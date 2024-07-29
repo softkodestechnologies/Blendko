@@ -1,45 +1,45 @@
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  background-color: #FFF;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.filterSection {
+  margin-bottom: 20px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.colorCircle {
+  position: relative;
+  border: 1px solid black !important;
+}
+
+.priceLabels {
+  font-weight: 700;
+}
+
+.filterButton {
+  padding: 8px 16px;
+  margin: 4px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
   .sidebar {
-    width: 250px;
-    padding: 20px;
-    background-color: #FFF;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    display: none;
   }
-  
-  .filterSection {
-    margin-bottom: 20px;
-  }
-
-  .checkboxGroup {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .checkbox {
-    margin-right: 8px;
-    margin-bottom: 8px;
-  }
-  
-  .colorCircle {
-    position: relative;
-    border: 1px solid black !important;
-  }
-
-  .priceLabels {
-    font-weight: 700;
-  }
-
-  .filterButton {
-    padding: 8px 16px;
-    margin: 4px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      display: none;
-    }
-  }
+}
   

@@ -1,4 +1,3 @@
-// components/CategoryList.tsx
 import React from 'react';
 
 interface CategoryListProps {
@@ -6,7 +5,7 @@ interface CategoryListProps {
   onCategorySelect: (category: string) => void;
 }
 
-const categories = ['Men', 'Women', 'Unisex', 'T-shirts', 'Dresses', 'Polo', 'Hand bags']; // Add more categories as needed
+const categories = ['Men', 'Women', 'Unisex', 'T-shirts', 'Dresses', 'Polo', 'Hand bags']; 
 
 const CategoryList: React.FC<CategoryListProps> = ({ selectedCategory, onCategorySelect }) => {
   return (

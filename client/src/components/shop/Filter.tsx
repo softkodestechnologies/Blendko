@@ -44,14 +44,12 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onPriceRangeChange, onSortCha
     }));
   };
 
-  // Watch for changes in checkboxes
   const watchColors = watch('colors');
   const watchSizes = watch('sizes');
   const watchDressStyles = watch('dressStyles');
   const watchBrand = watch('brand');
   const watchFashionCollection = watch('fashionCollection');
 
-  // Use useCallback for onCheckboxChange
   const handleCheckboxChange = useCallback(
     (key: string, value: string[]) => {
       onCheckboxChange(key, value);

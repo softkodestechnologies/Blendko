@@ -282,7 +282,6 @@
   cursor: not-allowed;
 }
 
-
 /* ... (DT styles) ... */
 
 .avatarPlaceholder {
@@ -345,37 +344,37 @@
   background-color: #f8d7da;
   color: #721c24;
 }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      transform: translateX(-100%);
-      z-index: 1000;
-    }
-  
-    .sidebar.open {
-      transform: translateX(0);
-    }
-  
-    .closeButton {
-      display: block;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-    }
 
-    .menuButton {
-        display: block;
-    }
-
-    .tableContainer {
-      margin: 0 -20px;
-    }
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    z-index: 1000;
   }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .closeButton {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  .menuButton {
+      display: block;
+  }
+
+  .tableContainer {
+    margin: 0 -20px;
+  }
+}
