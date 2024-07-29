@@ -5,6 +5,7 @@ const sendEmail = require('../utils/sendEmail');
 const { createHash } = require('node:crypto');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const cloudinary = require('cloudinary');
 
 
 // Register a user => /api/v1/register
@@ -79,21 +80,17 @@ exports.googleRegister = catchAsyncErrors(async (req, res, next) => {
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Checks if email and password is entered by user
   if (!email || !password) {
     return next(new ErrorHandler('Please enter email & password', 400));
   }
 
-  // Finding user in database
   const user = await User.findOne({ email }).select('+password');
-  console.log(user, 'user found')
 
   if (!user) {
     return next(new ErrorHandler('Invalid Email or Password', 401));
   }
 
 
-  // Checks if password is correct or not
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
@@ -150,12 +147,12 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('User not found with this email', 404));
   }
 
-  // Get reset token
+
   const resetToken = user.getResetPasswordToken();
 
   await user.save({ validateBeforeSave: false });
 
-  // Create reset password url
+
   const resetUrl = `${req.protocol}://${req.get(
     'host'
   )}/api/v1/password/reset/${resetToken}`;
@@ -241,41 +238,72 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     email,
     gender,
     avatar,
+    phone,
+    dateOfBirth,
+    country,
+    province,
+    city,
+    postcode,
   } = req.body;
 
+  // Find the current user
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    return next(new ErrorHandler('User not found', 404));
+  }
 
   const newUserData = {
-    name,
-    email,
-    gender: gender || '',
+    name: name || user.name,
+    email: email || user.email,
+    gender: gender || user.gender || '',
+    phone: phone || user.phone,
+    dateOfBirth: dateOfBirth || user.dateOfBirth,
+    country: country || user.country,
+    province: province || user.province,
+    city: city || user.city,
+    postcode: postcode || user.postcode,
   };
 
-  // Update avatar
-  if (avatar !== '') {
-    const user = await User.findById(req.user.id);
-    const imageId = user.avatar.public_id;
+  // Update avatar only if a new one is provided
+  if (avatar && avatar !== '') {
+    // Check if user has an existing avatar
+    if (user.avatar && user.avatar.public_id) {
+      try {
+        await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+      } catch (error) {
+        console.error('Error deleting old avatar:', error);
+        // Continue with the update even if there's an error deleting the old avatar
+      }
+    }
 
-    // Delete previous image
-    await cloudinary.v2.uploader.destroy(imageId);
+    try {
+      const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: 'scale',
+      });
 
-    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-      folder: 'avatars',
-      width: 150,
-      crop: 'scale',
-    });
-
-    newUserData.avatar = {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    };
+      newUserData.avatar = {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
+    } catch (error) {
+      console.error('Error uploading new avatar:', error);
+      return next(new ErrorHandler('Error uploading new avatar', 500));
+    }
   }
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+
+  // Update the user
+  const updatedUser = await User.findByIdAndUpdate(user._id, newUserData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+
   res.status(200).json({
     success: true,
+    user: updatedUser,
   });
 });
 

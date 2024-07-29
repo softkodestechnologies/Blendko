@@ -1,10 +1,9 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { randomBytes, createHash } = require('node:crypto');
 
-// Define the user schema
 const userSchema = new Schema({
   name: {
     type: String,
@@ -35,7 +34,18 @@ const userSchema = new Schema({
     },
   },
   gender: String,
-  lastLogin: Date,
+  phone: String,
+  dateOfBirth: Date,
+  country: String,
+  province: String,
+  city: String,
+  postcode: String,
+  orders: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Order',
+    },
+  ],
   cart: [
     {
       product: {
@@ -51,17 +61,6 @@ const userSchema = new Schema({
       size: String,
     },
   ],
-  orders: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Order',
-    },
-  ],
-  referralLink: String,
-  loyaltyProgram: {
-    points: Number,
-    level: String,
-  },
   activityLog: [
     {
       action: String,

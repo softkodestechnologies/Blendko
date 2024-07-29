@@ -12,7 +12,6 @@ oauth2Client.setCredentials({
   refresh_token: process.env.OAUTH_REFRESH_TOKEN,
 });
 
-console.log('Refresh Token:', process.env.OAUTH_REFRESH_TOKEN ? 'Set' : 'Not Set');
 
 const sendEmail = async (options) => {
   try {
