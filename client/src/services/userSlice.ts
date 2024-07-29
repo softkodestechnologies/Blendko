@@ -10,9 +10,6 @@ interface UserState {
   };
 }
 
-// let baseUrl: string = 'https://blendko.onrender.com/api/v1';
-
-
 let baseUrl: string;
 
 if (process.env.NODE_ENV === 'development') {
