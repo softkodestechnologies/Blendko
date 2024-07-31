@@ -1,11 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Line, Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart } from "react-google-charts";
 import styles from './Dashboard.module.css';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend);
 
 enum ReportType {
   Customers = 'customers',
@@ -16,92 +13,72 @@ enum ReportType {
 }
 
 const Dashboard: React.FC = () => {
-  // Sample data for charts
-  const salesData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Sales',
-        data: [300, 320, 310, 350, 330, 360, 350],
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.5,
-      },
-      {
-        label: 'Cost',
-        data: [200, 210, 200, 230, 220, 240, 235],
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.5,
-      },
-    ],
-  };
+  const salesData = [
+    ['Day', 'Sales', 'Cost'],
+    ['Mon', 300, 200],
+    ['Tue', 320, 210],
+    ['Wed', 310, 200],
+    ['Thu', 350, 230],
+    ['Fri', 330, 220],
+    ['Sat', 360, 240],
+    ['Sun', 350, 235],
+  ];
 
-  const sessionsData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Sessions',
-        data: [15, 16, 14, 18, 17, 19, 16.5],
-        borderColor: 'rgb(255, 64, 64)',
-        tension: 0.5,
-      },
-    ],
-  };
+  const sessionsData = [
+    ['Day', 'Sessions'],
+    ['Mon', 15],
+    ['Tue', 16],
+    ['Wed', 14],
+    ['Thu', 18],
+    ['Fri', 17],
+    ['Sat', 19],
+    ['Sun', 16.5],
+  ];
 
-  const ordersData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Orders',
-        data: [20, 22, 21, 25, 23, 26, 25],
-        borderColor: 'rgb(54, 162, 235)',
-        tension: 0.5,
-      },
-    ],
-  };
+  const ordersData = [
+    ['Day', 'Orders'],
+    ['Mon', 20],
+    ['Tue', 22],
+    ['Wed', 21],
+    ['Thu', 25],
+    ['Fri', 23],
+    ['Sat', 26],
+    ['Sun', 25],
+  ];
 
-  const totalProfitData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Profit',
-        data: [50, 55, 52, 58, 53, 60, 57],
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.5,
-      },
-    ],
-  };
+  const totalProfitData = [
+    ['Day', 'Profit'],
+    ['Mon', 50],
+    ['Tue', 55],
+    ['Wed', 52],
+    ['Thu', 58],
+    ['Fri', 53],
+    ['Sat', 60],
+    ['Sun', 57],
+  ];
 
-  const discountedAmountData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Discounted Amount',
-        data: [12, 14, 13, 15, 14, 16, 15],
-        borderColor: 'rgb(153, 102, 255)',
-        tension: 0.5,
-      },
-    ],
-  };
+  const discountedAmountData = [
+    ['Day', 'Discounted Amount'],
+    ['Mon', 12],
+    ['Tue', 14],
+    ['Wed', 13],
+    ['Thu', 15],
+    ['Fri', 14],
+    ['Sat', 16],
+    ['Sun', 15],
+  ];
 
-  const salesByCountry = {
-    labels: ['United States', 'Brazil', 'India', 'Australia'],
-    datasets: [
-      {
-        label: 'Sales by Country',
-        data: [30, 26, 22, 17],
-        backgroundColor: [
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(255, 159, 64, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-        ],
-      },
-    ],
-  };
+  const salesByCountry = [
+    ['Country', 'Sales'],
+    ['United States', 30],
+    ['Brazil', 26],
+    ['India', 22],
+    ['Australia', 17],
+  ];
 
   const [activeReport, setActiveReport] = useState<ReportType>(ReportType.Customers);
 
-  const reportData: Record<ReportType, any> = {
+  const reportData: Record<ReportType, any[]> = {
     customers: salesData,
     totalProducts: sessionsData,
     stockProducts: ordersData,
@@ -119,7 +96,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <div className={styles.statsGrid}>
+     <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <h2>Total Sales & Costs</h2>
           <div className={styles.statValue}>
@@ -127,7 +104,26 @@ const Dashboard: React.FC = () => {
             <span className={styles.subValue}>$235K</span>
           </div>
           <span className={styles.statChange}>↑ 8.56K vs last 7 days</span>
-          <Line data={salesData} />
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="200px"
+            data={salesData}
+            options={{
+              legend: { position: 'bottom' },
+              curveType: 'function',
+              hAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 }, 
+              },
+              vAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 },
+                textPosition: 'none',
+              },
+              colors: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)'],
+            }}
+          />
         </div>
 
         <div className={styles.statCard}>
@@ -136,7 +132,27 @@ const Dashboard: React.FC = () => {
             <span className={styles.mainValue}>16.5K</span>
           </div>
           <span className={styles.statChange}>↓ 3% vs last 7 days</span>
-          <Line data={sessionsData} />
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="200px"
+            data={sessionsData}
+            options={{
+              legend: { position: 'bottom' },
+              curveType: 'function',
+              hAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 }, 
+                textPosition: 'none',
+              },
+              vAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 },
+                textPosition: 'none',
+              },
+              colors: ['rgb(255, 64, 64)'],
+            }}
+          />
         </div>
       </div>
 
@@ -147,7 +163,27 @@ const Dashboard: React.FC = () => {
             <span className={styles.mainValue}>25.7K</span>
           </div>
           <span className={styles.statChange}>↑ 6% vs last 7 days</span>
-          <Line data={ordersData} />
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="200px"
+            data={ordersData}
+            options={{
+              legend: { position: 'bottom' },
+              curveType: 'function',
+              hAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 }, 
+                textPosition: 'none',
+              },
+              vAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 },
+                textPosition: 'none',
+              },
+              colors: ['rgb(54, 162, 235)'],
+            }}
+          />
         </div>
 
         <div className={styles.statCard}>
@@ -156,7 +192,27 @@ const Dashboard: React.FC = () => {
             <span className={styles.mainValue}>50K</span>
           </div>
           <span className={styles.statChange}>↑ 12% vs last 7 days</span>
-          <Line data={totalProfitData} />
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="200px"
+            data={totalProfitData}
+            options={{
+              legend: { position: 'bottom' },
+              curveType: 'function',
+              hAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 }, 
+                textPosition: 'none',
+              },
+              vAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 },
+                textPosition: 'none',
+              },
+              colors: ['rgb(75, 192, 192)'],
+            }}
+          />
         </div>
 
         <div className={styles.statCard}>
@@ -165,7 +221,27 @@ const Dashboard: React.FC = () => {
             <span className={styles.mainValue}>12K</span>
           </div>
           <span className={styles.statChange}>↑ 2% vs last 7 days</span>
-          <Line data={discountedAmountData} />
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="200px"
+            data={discountedAmountData}
+            options={{
+              legend: { position: 'bottom' },
+              curveType: 'function',
+              hAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 }, 
+                textPosition: 'none',
+              },
+              vAxis: {
+                baselineColor: 'transparent', 
+                gridlines: { count: 0 },
+                textPosition: 'none',
+              },
+              colors: ['rgb(255, 64, 64)'],
+            }}
+          />
         </div>
       </div>
 
@@ -185,7 +261,24 @@ const Dashboard: React.FC = () => {
             ))}
           </div>
           <div className={styles.chartContainer}>
-            <Line data={reportData[activeReport]} />
+            <Chart
+              chartType="LineChart"
+              width="100%"
+              height="300px"
+              data={reportData[activeReport]}
+              options={{
+                legend: { position: 'bottom' },
+                hAxis: {
+                  baselineColor: 'transparent', 
+                  gridlines: { count: 0 }, 
+                },
+                vAxis: {
+                  baselineColor: 'transparent', 
+                  gridlines: { count: 0 },
+                },
+                curveType: 'function',
+              }}
+            />
           </div>
         </div>
 
@@ -195,27 +288,56 @@ const Dashboard: React.FC = () => {
             <div className={styles.usersValue}>16.5K</div>
             <p>Users per minute</p>
             <div className={styles.userChart}>
-              <Bar
-                data={{
-                  labels: Array(30).fill(''),
-                  datasets: [{
-                    data: Array(30).fill(10).map(() => Math.random() * 20),
-                    backgroundColor: '#0F60FF'
-                  }]
+              <Chart
+                chartType="ColumnChart"
+                width="100%"
+                height="200px"
+                data={[
+                  ['Minute', 'Users'],
+                  ...Array(30).fill(0).map((_, i) => [`${i + 1}`, Math.random() * 20]),
+                ]}
+                options={{
+                  legend: { position: 'none' },
+                  bar: { groupWidth: '95%' },
+                  hAxis: {
+                    baselineColor: 'transparent', 
+                    gridlines: { count: 0 }, 
+                    textPosition: 'none',
+                  },
+                  vAxis: {
+                    baselineColor: 'transparent', 
+                    gridlines: { count: 0 },
+                    textPosition: 'none',
+                  },
+                  colors: ['#0F60FF'],
                 }}
-                options={{ scales: { y: { beginAtZero: true } } }}
-                width={500}
               />
             </div>
           </div>
 
           <div className={styles.salesByCountry}>
             <h2>Sales by Country</h2>
-            <Bar data={salesByCountry} />
+            <Chart
+              chartType="BarChart"
+              width="100%"
+              height="300px"
+              data={salesByCountry}
+              options={{
+                legend: { position: 'none' },
+                hAxis: {
+                  baselineColor: 'transparent', 
+                  gridlines: { count: 0 }, 
+                  textPosition: 'none',
+                },
+                vAxis: {
+                  baselineColor: 'transparent', 
+                  gridlines: { count: 0 },
+                },
+                colors: ['rgb(70, 178, 178)', 'rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(54, 162, 235)'],
+              }}
+            />
           </div>
-
         </div>
-        
       </div>
     </div>
   );
