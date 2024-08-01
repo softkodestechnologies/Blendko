@@ -1,13 +1,17 @@
 import React from 'react';
 import './HamburgerMenu.css';
 
-const HamburgerMenu = () => {
+const HamburgerMenu = ({ onClick }: { onClick: () => void }) => {
   return (
-    <div className="hamburger-menu">
+    <button
+    onClick={onClick}
+      className="hamburger-menu"
+      aria-label="Toggle Navigation"
+    >
       <div className="bar"></div>
       <div className="bar"></div>
       <div className="bar"></div>
-    </div>
+    </button>
   );
 };
 
