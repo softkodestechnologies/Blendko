@@ -5,9 +5,12 @@ import Framer from '@/components/layouts/Framer';
 import SpaoOuterWeek from '@/components/layouts/SpaoOuterWeek/SpaoOuterWeek';
 import CollectionSection from '@/components/layouts/CollectionSection';
 
+import Hero from '@/components/home/hero/Hero';
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <Hero />
       {/* <Jumbotron />
 
       <Highlights />
@@ -19,6 +22,6 @@ export default function Home() {
       <SpaoOuterWeek />
 
       <CollectionSection /> */}
-    </div>
+    </>
   );
 }

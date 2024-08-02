@@ -29,6 +29,7 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
+  --font-header: 'Black Mango', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
