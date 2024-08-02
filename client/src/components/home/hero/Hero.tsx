@@ -18,7 +18,9 @@ function Hero() {
           />
         </div>
 
-        <div className={`full-height flex flex-col center ${styles.hero_content}`}>
+        <div
+          className={`full-height flex flex-col center ${styles.hero_content}`}
+        >
           <h1>Style it the way you like it</h1>
 
           <p>
@@ -26,7 +28,9 @@ function Hero() {
             Select fabrics and add personal touches to craft your dream outfit!
           </p>
 
-          <Link href="/shop" className='flex center'>Start Customising</Link>
+          <Link href="/shop" className="flex center">
+            Start Customising
+          </Link>
         </div>
       </div>
     </section>

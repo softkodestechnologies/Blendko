@@ -41,3 +41,25 @@ export const navLinks = [
     subMenu: [],
   },
 ];
+
+import jeans from '../../../public/Jeans.png';
+import jacket from '../../../public/Jacket.png';
+import trousers from '../../../public/Trousers.png';
+
+export const categories = [
+  {
+    image: jeans,
+    title: 'Jeans',
+    url: '/shop?category=Jeans',
+  },
+  {
+    image: jacket,
+    title: 'Jacket',
+    url: '/shop?category=Jacket',
+  },
+  {
+    image: trousers,
+    title: 'Trousers',
+    url: '/shop?category=Trousers',
+  },
+];

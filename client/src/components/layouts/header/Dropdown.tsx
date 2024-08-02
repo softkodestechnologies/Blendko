@@ -12,10 +12,10 @@ function Dropdown({ isOpen, data }: { isOpen: boolean; data: navLink[] }) {
   return (
     <motion.div
       aria-hidden={!isOpen}
+      exit={{ opacity: 0, height: 0 }}
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+      transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
       className={`full-width flex center ${styles.dropdown}`}
     >
       {data.map((link, index) => (

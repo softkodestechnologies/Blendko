@@ -73,4 +73,23 @@
   .hero_wrapper {
     height: calc(100vh - 148px);
   }
+
+  .hero_content h1 {
+    font-size: 45px;
+    letter-spacing: 5%;
+    line-height: 68.4px;
+  }
+
+  .hero_content p {
+    font-size: 16px;
+    max-width: 60ch;
+    line-height: 24px;
+  }
+
+  .hero_content a {
+    width: 192px;
+    height: 48px;
+    font-size: 14px;
+    line-height: 21px;
+  }
 }

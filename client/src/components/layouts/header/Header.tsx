@@ -15,6 +15,7 @@ import { RootState } from '@/services/store';
 
 import NavMenu from './NavMenu';
 import Dropdown from './Dropdown';
+import TopBanner from './TopBanner';
 import BackDrop from '@/components/ui/BackDrop';
 import {
   Logo,
@@ -90,100 +91,104 @@ const Header = () => {
   };
 
   return (
-    <header className={`${styles.header}`}>
-      <nav className={`flex space-between align-y ${styles.navWrapper}`}>
-        <Link href="/">
-          <Logo />
-        </Link>
+    <>
+      <TopBanner />
+      
+      <header className={`${styles.header}`}>
+        <nav className={`flex space-between align-y ${styles.navWrapper}`}>
+          <Link href="/">
+            <Logo />
+          </Link>
 
-        <ul className={`flex align-y ${styles.link_items}`}>
-          {navLinks.map((link, index) => (
-            <li key={index}>
-              {link.title === 'Categories' && (
-                <button
-                  className={`flex align-y`}
-                  onClick={() => setShowSubMenu(!showSubMenu)}
-                >
-                  {link.title}
+          <ul className={`flex align-y ${styles.link_items}`}>
+            {navLinks.map((link, index) => (
+              <li key={index}>
+                {link.title === 'Categories' && (
+                  <button
+                    className={`flex align-y`}
+                    onClick={() => setShowSubMenu(!showSubMenu)}
+                  >
+                    {link.title}
 
-                  <ChevronIcon
-                    style={{
-                      marginLeft: '7px',
-                      transform: showSubMenu
-                        ? 'rotate(-90deg)'
-                        : 'rotate(90deg)',
-                    }}
-                  />
+                    <ChevronIcon
+                      style={{
+                        marginLeft: '7px',
+                        transform: showSubMenu
+                          ? 'rotate(-90deg)'
+                          : 'rotate(90deg)',
+                      }}
+                    />
 
-                  <AnimatePresence mode="wait">
-                    {showSubMenu && (
-                      <Dropdown
-                        isOpen={showSubMenu}
-                        data={navLinks[2].subMenu}
-                      />
-                    )}
-                  </AnimatePresence>
-                </button>
-              )}
+                    <AnimatePresence mode="wait">
+                      {showSubMenu && (
+                        <Dropdown
+                          isOpen={showSubMenu}
+                          data={navLinks[2].subMenu}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </button>
+                )}
 
-              {link.title !== 'Categories' && (
-                <Link href={`${link.url}`} className={`flex align-y`}>
-                  {link.title}
-                </Link>
-              )}
+                {link.title !== 'Categories' && (
+                  <Link href={`${link.url}`} className={`flex align-y`}>
+                    {link.title}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          <ul className={`flex ${styles.actions}`}>
+            <li className={`flex align-y`}>
+              <button>
+                <SearchIcon />
+              </button>
             </li>
-          ))}
-        </ul>
 
-        <ul className={`flex ${styles.actions}`}>
-          <li className={`flex align-y`}>
-            <button>
-              <SearchIcon />
-            </button>
-          </li>
+            <li className={`flex align-y`}>
+              <button>
+                <UserIcon />
+              </button>
+            </li>
 
-          <li className={`flex align-y`}>
-            <button>
-              <UserIcon />
-            </button>
-          </li>
+            <li className={`flex align-y`}>
+              <button>
+                <WishlistIcon />
+              </button>
+            </li>
 
-          <li className={`flex align-y`}>
-            <button>
-              <WishlistIcon />
-            </button>
-          </li>
+            <li className={`flex align-y`}>
+              <button onClick={toggleCart}>
+                <CartIcon />
+                {cartItems.length > 0 && (
+                  <span className={`cart-badge`}>{cartItems.length}</span>
+                )}
+              </button>
+            </li>
 
-          <li className={`flex align-y`}>
-            <button onClick={toggleCart}>
-              <CartIcon />
-              {cartItems.length > 0 && (
-                <span className={`cart-badge`}>{cartItems.length}</span>
-              )}
-            </button>
-          </li>
+            <li className={`flex align-y ${styles.hamburger}`}>
+              <HamburgerMenu onClick={() => setNavOpen(!navOpen)} />
+            </li>
+          </ul>
+        </nav>
 
-          <li className={`flex align-y ${styles.hamburger}`}>
-            <HamburgerMenu onClick={() => setNavOpen(!navOpen)} />
-          </li>
-        </ul>
-      </nav>
+        <AnimatePresence mode="wait">
+          {navOpen && (
+            <NavMenu onClose={() => setNavOpen(false)} navOpen={navOpen} />
+          )}
+        </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        {navOpen && (
-          <NavMenu onClose={() => setNavOpen(false)} navOpen={navOpen} />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-        {navOpen && (
-          <BackDrop
-            onClick={() => setNavOpen(false)}
-            style={{ height: 'calc(100% - 84px)' }}
-          />
-        )}
-      </AnimatePresence>
-    </header>
+        <AnimatePresence mode="wait">
+          {navOpen && (
+            <BackDrop
+              onClick={() => setNavOpen(false)}
+              style={{ height: 'calc(100% - 84px)' }}
+            />
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 };
 
