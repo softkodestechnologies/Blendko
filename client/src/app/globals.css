@@ -40,8 +40,8 @@
 }
 
 ::selection {
-  background: rgb(var(--background-color));
-  color: rgb(var(--foreground-color));
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
 }
 
 * {
