@@ -1,10 +1,13 @@
 'use client';
-import { Inter, Poppins, Babylonica, Public_Sans } from 'next/font/google';
-import './globals.css';
-import Footer from '../components/layouts/Footer';
-import Header from '../components/layouts/header/Header';
-import { Providers } from './providers';
+
 import { metadata } from './metadata';
+import { Inter, Poppins, Babylonica, Public_Sans } from 'next/font/google';
+
+import './globals.css';
+
+import { Providers } from './providers';
+import Footer from '@/components/layouts/footer/Footer';
+import Header from '../components/layouts/header/Header';
 import CookieConsent from '@/components/ui/CookieConsent';
 import ShoppingPreferences from '@/components/ui/ShoppingPreferences';
 
@@ -79,7 +82,7 @@ export default function RootLayout({
           <div>
             <div>{children}</div>
           </div>
-          {/* <Footer /> */}
+          <Footer />
         </Providers>
       </body>
     </html>

@@ -93,7 +93,7 @@ const Header = () => {
   return (
     <>
       <TopBanner />
-      
+
       <header className={`${styles.header}`}>
         <nav className={`flex space-between align-y ${styles.navWrapper}`}>
           <Link href="/">
