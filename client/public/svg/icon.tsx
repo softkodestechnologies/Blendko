@@ -186,3 +186,42 @@ export const LinkArrow = ({ ...props }) => (
     />
   </svg>
 );
+
+export const PlayIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="15"
+    viewBox="0 0 12 15"
+    fill="none"
+  >
+    <path
+      d="M0.333252 0.354248V14.9376L11.7916 7.64592L0.333252 0.354248Z"
+      fill="white"
+    />
+  </svg>
+);
+
+export const SlideController = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="33"
+    height="28"
+    viewBox="0 0 33 28"
+    fill="none"
+  >
+    <rect
+      width="32"
+      height="28"
+      transform="translate(32.5 28) rotate(-180)"
+      fill="white"
+    />
+    <path
+      d="M18.5 18L22.5 14M22.5 14L18.5 10M22.5 14L10.5 14"
+      stroke="#28303F"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
