@@ -19,8 +19,6 @@ function Highlights() {
       if (currentSlide === slides.length - 1) {
         const newSlides = [...slides.slice(1), slides[0]];
 
-        console.log(newSlides.map((slide) => slide.id));
-
         setSlides(newSlides);
         setCurrentSlide(0);
       } else {
@@ -30,6 +28,7 @@ function Highlights() {
         setCurrentSlide(currentSlide + 1);
       }
     }, 6000);
+
     return () => clearInterval(transistionNextId);
   }, [currentSlide]);
 
