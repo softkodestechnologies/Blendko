@@ -95,3 +95,37 @@ export const slides = [
     title: 'Croc-Effect Medusa ‘98 small tote bag',
   },
 ];
+
+export const footerLinks = {
+  explore_blenko: [
+    { title: 'About Us', url: '/about' },
+    { title: 'Careers', url: '/careers' },
+    { title: 'News', url: '/news' },
+    { title: 'Reviews', url: '/reviews' },
+  ],
+  customer_services: [
+    { title: 'Contact Us', url: '/contact' },
+    { title: 'Returns', url: '/returns' },
+    { title: 'FAQs', url: '/faq' },
+  ],
+  customisation: [{ title: 'Design Your Own', url: '/customize' }],
+  stay_connected: [
+    { title: 'Facebook', url: 'https://facebook.com' },
+    { title: 'X(Formerly Twitter)', url: 'https://twitter.com' },
+    { title: 'Instagram', url: 'https://instagram.com' },
+    { title: 'LinkedIn', url: 'https://linkedin.com' },
+  ],
+  help: [
+    { title: 'Get Help', url: '/help' },
+    { title: 'Shipping and Delivery', url: '/shipping' },
+    { title: 'Returns', url: '/returns' },
+    { title: 'Payment Options', url: '/payment' },
+  ],
+  bottom: [
+    { title: 'Legal', url: '/legal' },
+    { title: 'Terms of Service', url: '/terms' },
+    { title: 'Privacy Policy', url: '/privacy' },
+    { title: 'Cookie Policy', url: '/' },
+    { title: 'Accessibility Statement', url: '/accessibility' },
+  ],
+};
