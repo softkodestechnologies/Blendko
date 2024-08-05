@@ -1,36 +1,39 @@
-"use client";
-import { Inter, Poppins, Babylonica, Public_Sans } from 'next/font/google';
-import "./globals.css";
-import Footer from "../components/layouts/Footer";
-import Header from "../components/layouts/Header";
-import { Providers } from './providers';
+'use client';
+
 import { metadata } from './metadata';
-import CookieConsent from "@/components/ui/CookieConsent";
-import ShoppingPreferences from "@/components/ui/ShoppingPreferences";
+import { Inter, Poppins, Babylonica, Public_Sans } from 'next/font/google';
+
+import './globals.css';
+
+import { Providers } from './providers';
+import Footer from '@/components/layouts/footer/Footer';
+import Header from '../components/layouts/header/Header';
+import CookieConsent from '@/components/ui/CookieConsent';
+import ShoppingPreferences from '@/components/ui/ShoppingPreferences';
 
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '900'],
 });
 
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '900'],
 });
 
 const babylonica = Babylonica({
   subsets: ['latin'],
   display: 'swap',
-  weight: '400'
-})
+  weight: '400',
+});
 
 const publicSans = Public_Sans({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
 
 export default function RootLayout({
   children,

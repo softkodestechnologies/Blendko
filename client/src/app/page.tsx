@@ -1,32 +1,31 @@
-import Jumbotron from "@/components/layouts/Jumbotron";
-import Highlights from "@/components/layouts/Highlights";
-import ShopByCategory from "@/components/layouts/ShopByCategory";
-import Framer from "@/components/layouts/Framer";
-import SpaoOuterWeek from "@/components/layouts/SpaoOuterWeek/SpaoOuterWeek";
-import CollectionSection from "@/components/layouts/CollectionSection";
+import Jumbotron from '@/components/layouts/Jumbotron';
+import Framer from '@/components/layouts/Framer';
+import SpaoOuterWeek from '@/components/layouts/SpaoOuterWeek/SpaoOuterWeek';
+import CollectionSection from '@/components/layouts/CollectionSection';
+
+import Hero from '@/components/home/hero/Hero';
+import ShopByCategory from '@/components/home/shop-by-category/ShopByCategory';
+import CustomizeSection from '@/components/home/customize/CustomizeSection';
+import Highlights from '@/components/home/highlight/Highlights';
 
 export default function Home() {
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* JUMBOTRON TEST*/}
-      <Jumbotron />
+    <>
+      <Hero />
+      <ShopByCategory />
+      <CustomizeSection />
+      <Highlights />
+      {/* <Jumbotron />
 
-      {/*HIGHLIGHTS */}
       <Highlights />
 
-      {/*Shop By Category */}
       <ShopByCategory />
 
-      {/*Framer */}
       <Framer />
 
-      {/*SpaoOuterWeek */}
       <SpaoOuterWeek />
 
-       {/*CollectionSection */}
-       <CollectionSection />
-
-    </div>
+      <CollectionSection /> */}
+    </>
   );
-};
+}
