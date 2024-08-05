@@ -63,3 +63,35 @@ export const categories = [
     url: '/shop?category=Trousers',
   },
 ];
+
+import slide1 from '../../../public/slide1.jpeg';
+import slide2 from '../../../public/slide2.png';
+import slide3 from '../../../public/slide3.png';
+import slide4 from '../../../public/slide4.png';
+
+export const slides = [
+  {
+    id: 0,
+    image: slide1,
+    price: '2,304',
+    title: 'Croc-Effect Medusa ‘98 small tote bag',
+  },
+  {
+    id: 1,
+    image: slide2,
+    price: '921',
+    title: 'Medusa ‘98 small Tote Bag',
+  },
+  {
+    id: 2,
+    image: slide3,
+    price: '2,304',
+    title: 'Croc-Effect Medusa ‘98 small tote bag',
+  },
+  {
+    id: 3,
+    image: slide4,
+    price: '2,304',
+    title: 'Croc-Effect Medusa ‘98 small tote bag',
+  },
+];
