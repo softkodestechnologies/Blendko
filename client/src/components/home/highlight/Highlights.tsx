@@ -69,7 +69,7 @@ function Highlights() {
           </button>
 
           <ul className={`grid ${styles.slide_wrapper}`}>
-            {slides.map((slide, index) => (
+            {slides.map((slide) => (
               <Highlight
                 slide={slide}
                 key={slide.id}
