@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const http = require('http');
+const socketIo = require('socket.io');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -17,7 +19,40 @@ connectDatabase();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsOptions()))
+app.use(cors());//corsOptions()
+
+const server = http.createServer(app);
+
+
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+    methods: ["GET", "POST"], 
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  socket.on('join chat', (chatId) => {
+    socket.join(chatId);
+    console.log(`Client joined chat: ${chatId}`);
+  });
+
+  socket.on('leave chat', (chatId) => {
+    socket.leave(chatId);
+    console.log(`Client left chat: ${chatId}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 app.use('/api/v1', api);
 app.use(errorMiddleware);
@@ -36,7 +71,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const server = app.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log(`Server listening on PORT ${process.env.PORT || 3000}`);
 });
 
