@@ -14,8 +14,8 @@ function ShopByCategory() {
         <h2>SHOP BY CATEGORY</h2>
 
         <ul className={`grid ${styles.category_cards}`}>
-          {categories.map((category) => (
-            <li className={`flex flex-col`}>
+          {categories.map((category, id) => (
+            <li key={id} className={`flex flex-col`}>
               <Image
                 src={category.image}
                 alt={category.title}
