@@ -1,15 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const chatSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  admin: {
+  participants: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
-  },
+  }],
   status: {
     type: String,
     enum: ['open', 'in_progress', 'closed'],
@@ -29,15 +24,7 @@ const chatSchema = new Schema({
       type: Date,
       default: Date.now
     }
-  }],
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
+  }]
 }, {
   timestamps: true
 });

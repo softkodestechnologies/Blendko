@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const socketIo = require('socket.io');
+const jwt = require('jsonwebtoken');
+const Chat = require('./models/chat.model');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,7 +21,7 @@ connectDatabase();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());//corsOptions()
+app.use(cors(corsOptions()));
 
 const server = http.createServer(app);
 
@@ -27,11 +29,25 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: '*',
-    methods: ["GET", "POST"], 
+    methods: ["GET", "POST", "PATCH"], 
+    allowedHeaders: ['Content-Type', 'Authorization']
   }
 });
 
-io.on('connection', (socket) => {
+io.use((socket, next) => {
+    const token = socket.handshake.auth.token;
+    if (!token) {
+        return next(new Error('Authentication error'));
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return next(new Error('Authentication error'));
+        }
+        socket.decoded = decoded;
+        next();
+    });
+}).on('connection', (socket) => {
   console.log('New client connected');
 
   socket.on('join chat', (chatId) => {
@@ -43,6 +59,24 @@ io.on('connection', (socket) => {
     socket.leave(chatId);
     console.log(`Client left chat: ${chatId}`);
   });
+
+  socket.on('sendMessage', async ({ chatId, message }) => {
+    try {
+        const chat = await Chat.findById(chatId);
+        if (!chat) {
+            console.error('Chat not found:', chatId);
+            socket.emit('error', { message: 'Chat not found' });
+            return;
+        }
+        const newMessage = { sender: socket.decoded.id, content: message };
+        chat.messages.push(newMessage);
+        await chat.save();
+        io.to(chatId).emit('newMessage', { chatId, message: newMessage });
+    } catch (error) {
+        console.error('Error saving message:', error);
+        socket.emit('error', { message: 'Failed to save message' });
+    }
+});
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');

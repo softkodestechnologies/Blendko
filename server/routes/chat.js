@@ -7,7 +7,8 @@ const {
   getUserChats,
   getChat,
   addMessage,
-  updateChatStatus
+  updateChatStatus,
+  closeChat
 } = require('../controllers/chat.controller');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
@@ -19,5 +20,6 @@ router.route('/:id')
   .get(isAuthenticatedUser, getChat)
   .post(isAuthenticatedUser, addMessage)
   .patch(isAuthenticatedUser, authorizeRoles('admin'), updateChatStatus);
+router.patch('/:id/close', isAuthenticatedUser, authorizeRoles('admin'), closeChat);
 
 module.exports = router;

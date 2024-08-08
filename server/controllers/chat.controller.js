@@ -8,23 +8,34 @@ exports.createChat = catchAsyncErrors(async (req, res, next) => {
   const { message } = req.body;
   const userId = req.user._id;
 
-  const chat = await Chat.create({
-    user: userId,
-    messages: [{ sender: userId, content: message }]
+  let chat = await Chat.findOne({
+    participants: { $all: [userId] },
+    status: 'open'
   });
 
-  // Emit event for new chat
-  req.io.emit('new chat', chat);
+  if (!chat) {
+    chat = await Chat.create({
+      participants: [userId],
+      messages: [{ sender: userId, content: message }]
+    });
+    
+    req.io.emit('newChat', chat);
+  } else {
+    chat.messages.push({ sender: userId, content: message });
+    await chat.save();
+  }
+
+  req.io.to(chat._id.toString()).emit('newMessage', { chatId: chat._id, message: { sender: userId, content: message } });
 
   res.status(201).json({
-    success: true,
+    success: true, 
     chat
   });
 });
 
 // Get all chats for admin
 exports.getAllChats = catchAsyncErrors(async (req, res, next) => {
-  const chats = await Chat.find().populate('user', 'name email').sort('-updatedAt');
+  const chats = await Chat.find().populate('participants', 'name email').sort('-updatedAt');
 
   res.status(200).json({
     success: true,
@@ -34,7 +45,7 @@ exports.getAllChats = catchAsyncErrors(async (req, res, next) => {
 
 // Get user's chats
 exports.getUserChats = catchAsyncErrors(async (req, res, next) => {
-  const chats = await Chat.find({ user: req.user._id }).sort('-updatedAt');
+  const chats = await Chat.find({ participants: req.user._id }).sort('-updatedAt');
 
   res.status(200).json({
     success: true,
@@ -44,7 +55,9 @@ exports.getUserChats = catchAsyncErrors(async (req, res, next) => {
 
 // Get a single chat
 exports.getChat = catchAsyncErrors(async (req, res, next) => {
-  const chat = await Chat.findById(req.params.id).populate('user', 'name email').populate('admin', 'name email');
+  const chat = await Chat.findById(req.params.id)
+    .populate('participants', 'name email')
+    .populate('messages.sender', 'name email');
 
   if (!chat) {
     return next(new ErrorHandler('Chat not found', 404));
@@ -62,26 +75,24 @@ exports.addMessage = catchAsyncErrors(async (req, res, next) => {
   const chat = await Chat.findById(req.params.id);
 
   if (!chat) {
-    return next(new ErrorHandler('Chat not found', 404));
+      return next(new ErrorHandler('Chat not found', 404));
   }
 
   const newMessage = { sender: req.user._id, content: message };
   chat.messages.push(newMessage);
   chat.updatedAt = Date.now();
 
-  if (req.user.role.includes('admin') && chat.status === 'open') {
-    chat.status = 'in_progress';
-    chat.admin = req.user._id;
+  if (req.user.role.includes('admin') && !chat.participants.includes(req.user._id)) {
+      chat.participants.push(req.user._id);
   }
 
   await chat.save();
 
-
-  req.io.to(req.params.id).emit('new message', { chatId: req.params.id, message: newMessage });
+  req.io.to(chat._id.toString()).emit('newMessage', { chatId: chat._id, message: newMessage });
 
   res.status(200).json({
-    success: true,
-    chat
+      success: true,
+      chat
   });
 });
 
@@ -97,11 +108,29 @@ exports.updateChatStatus = catchAsyncErrors(async (req, res, next) => {
   chat.status = status;
   await chat.save();
 
-
   req.io.to(req.params.id).emit('chat status', { chatId: req.params.id, status });
 
   res.status(200).json({
     success: true,
     chat
+  });
+});
+
+// Close chat
+exports.closeChat = catchAsyncErrors(async (req, res, next) => {
+  const chat = await Chat.findById(req.params.id);
+
+  if (!chat) {
+    return next(new ErrorHandler('Chat not found', 404));
+  }
+
+  chat.status = 'closed';
+  await chat.save();
+
+  req.io.to(chat._id.toString()).emit('chatClosed', chat._id);
+
+  res.status(200).json({
+    success: true,
+    message: 'Chat closed successfully'
   });
 });
