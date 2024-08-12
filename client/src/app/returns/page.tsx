@@ -27,7 +27,7 @@ export default function Returns() {
           <ReturnStep1
             aria={activeSection.aria_attr}
             onStepChange={(step) =>
-              setActiveSection((prev) => ({ ...prev, step }))
+              setActiveSection(() => ({ aria_attr: 'Return Step 1', step }))
             }
           />
         )}
@@ -36,7 +36,7 @@ export default function Returns() {
           <ReturnStep2
             aria={activeSection.aria_attr}
             onStepChange={(step) =>
-              setActiveSection((prev) => ({ ...prev, step }))
+              setActiveSection(() => ({ aria_attr: 'Return Step 2', step }))
             }
           />
         )}
@@ -45,7 +45,7 @@ export default function Returns() {
           <ReturnStep3
             aria={activeSection.aria_attr}
             onStepChange={(step) =>
-              setActiveSection((prev) => ({ ...prev, step }))
+              setActiveSection(() => ({ aria_attr: 'Return Step 2', step }))
             }
           />
         )}
