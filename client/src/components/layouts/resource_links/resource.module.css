@@ -29,6 +29,11 @@
   display: none;
 }
 
+.active {
+  color: #000;
+  font-weight: 600;
+}
+
 @media (width < 1024px) {
   .sidebar {
     top: 0;
@@ -40,12 +45,13 @@
     background: #fff;
   }
 
-  .sidebar_header {
+  .sidebar_header,
+  .link_item input {
     display: flex;
   }
 
-  .sidebar_header {
-    display: flex;
+  .link_item input {
+    accent-color: #000;
   }
 }
 

@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import HeroStepOne from './HeroStepOne';
 import ReturnStep1 from './ReturnStep1';
+import ReturnStep2 from './ReturnStep2';
+import ReturnStep3 from './ReturnStep3';
 import Resource from '@/components/layouts/resource_links/Resource';
 
 export default function Returns() {
@@ -21,12 +23,32 @@ export default function Returns() {
       }
     >
       <section>
-        <ReturnStep1
-          aria={activeSection.aria_attr}
-          onStepChange={(step) =>
-            setActiveSection((prev) => ({ ...prev, step }))
-          }
-        />
+        {activeSection.step === 1 && (
+          <ReturnStep1
+            aria={activeSection.aria_attr}
+            onStepChange={(step) =>
+              setActiveSection((prev) => ({ ...prev, step }))
+            }
+          />
+        )}
+
+        {activeSection.step === 2 && (
+          <ReturnStep2
+            aria={activeSection.aria_attr}
+            onStepChange={(step) =>
+              setActiveSection((prev) => ({ ...prev, step }))
+            }
+          />
+        )}
+
+        {activeSection.step === 3 && (
+          <ReturnStep3
+            aria={activeSection.aria_attr}
+            onStepChange={(step) =>
+              setActiveSection((prev) => ({ ...prev, step }))
+            }
+          />
+        )}
       </section>
     </Resource>
   );

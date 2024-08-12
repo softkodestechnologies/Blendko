@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 import styles from './resource.module.css';
 
@@ -16,6 +17,8 @@ const ResourceLink = ({
   isSidebarOpen?: boolean;
   setIsSidebarOpen?: () => void;
 }) => {
+  const pathname = usePathname().split('/')[1];
+
   return (
     <>
       <div className={`flex space-between align-y ${styles.sidebar_header}`}>
@@ -37,9 +40,20 @@ const ResourceLink = ({
           <ul className={`flex flex-col`}>
             {section.links.map((link, index) => (
               <li key={index} className={`flex align-y ${styles.link_item}`}>
-                <input type="checkbox" id={link.title} />
+                <input
+                  type="checkbox"
+                  id={link.title}
+                  checked={pathname === link.title.toLowerCase()}
+                />
 
-                <Link href={link.url}>{link.title}</Link>
+                <Link
+                  href={link.url}
+                  className={`${
+                    pathname === link.title.toLowerCase() ? styles.active : ''
+                  }`}
+                >
+                  {link.title}
+                </Link>
               </li>
             ))}
           </ul>
