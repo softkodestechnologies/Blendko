@@ -346,3 +346,87 @@ export const InstagramIcon = () => (
     />
   </svg>
 );
+
+export const ButtonArrow = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+  >
+    <g clip-path="url(#clip0_2642_12987)">
+      <path
+        d="M13.0474 0.613281H0.274902V13.3858H13.0474V0.613281Z"
+        fill="white"
+        fill-opacity="0.01"
+      />
+      <path
+        d="M11.451 7H1.87158"
+        stroke="white"
+        stroke-width="1.06438"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8.25781 3.80664L11.4509 6.99977L8.25781 10.1929"
+        stroke="white"
+        stroke-width="1.06438"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_2642_12987">
+        <rect
+          width="12.7725"
+          height="12.7725"
+          fill="white"
+          transform="translate(0.274902 0.613281)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const ButtonArrowDark = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="11"
+    height="12"
+    viewBox="0 0 11 12"
+    fill="none"
+  >
+    <g clip-path="url(#clip0_2642_13009)">
+      <path
+        d="M10.8259 0.823242H0.483398V11.1658H10.8259V0.823242Z"
+        fill="white"
+        fill-opacity="0.01"
+      />
+      <path
+        d="M9.53327 5.99414H1.77637"
+        stroke="black"
+        stroke-width="0.861878"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M6.94727 3.40918L9.5329 5.99482L6.94727 8.58045"
+        stroke="black"
+        stroke-width="0.861878"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_2642_13009">
+        <rect
+          width="10.3425"
+          height="10.3425"
+          fill="white"
+          transform="translate(0.483398 0.823242)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
