@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import layoutStyles from '../home.module.css';
 import styles from './shop-by-category.module.css';
 
 import { categories } from '@/utils/data/dummy';
@@ -9,7 +8,7 @@ import { LinkArrow } from '../../../../public/svg/icon';
 
 function ShopByCategory() {
   return (
-    <section className={`${layoutStyles.container}`}>
+    <section className={`section_container`}>
       <div className={`${styles.category_wrapper}`}>
         <h2>SHOP BY CATEGORY</h2>
 
