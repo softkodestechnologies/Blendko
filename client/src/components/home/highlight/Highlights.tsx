@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 
 import styles from './highlight.module.css';
-import layoutStyles from '../home.module.css';
 
 import Highlight from './Highlight';
 import MobileSlider from './MobileSlider';
@@ -54,7 +53,7 @@ function Highlights() {
   };
 
   return (
-    <section className={`${layoutStyles.container}`}>
+    <section className={`section_container`}>
       <div className={`${styles.customize_wrapper}`}>
         <h2>Highlights</h2>
 
