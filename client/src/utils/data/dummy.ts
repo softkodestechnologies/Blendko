@@ -98,7 +98,7 @@ export const slides = [
 
 export const footerLinks = {
   explore_blenko: [
-    { title: 'About Us', url: '/about' },
+    { title: 'About Us', url: '/about-us' },
     { title: 'Careers', url: '/careers' },
     { title: 'News', url: '/news' },
     { title: 'Reviews', url: '/reviews' },
@@ -129,3 +129,35 @@ export const footerLinks = {
     { title: 'Accessibility Statement', url: '/accessibility' },
   ],
 };
+
+export const resourceSidebarLinks = [
+  {
+    header: 'EXPLORE BLENDKO',
+    links: [
+      { title: 'About Us', url: '/about-us' },
+      { title: 'Careers', url: '/careers' },
+      { title: 'Authenticity', url: '/authenticity' },
+      { title: 'Reviews', url: '/reviews' },
+    ],
+  },
+  {
+    header: 'CUSTOMER SERVICE',
+    links: [
+      { title: 'Contact Us', url: '/contact' },
+      { title: 'Returns', url: '/returns' },
+      { title: 'FAQs', url: '/faq' },
+    ],
+  },
+  {
+    header: 'CUSTOMIZATION',
+    links: [{ title: 'Design Your Own', url: '/customize' }],
+  },
+  {
+    header: 'LEGAL',
+    links: [
+      { title: 'Terms of Service', url: '/terms' },
+      { title: 'Privacy Policy', url: '/privacy' },
+      { title: 'Accessibility Statement', url: '/accessibility' },
+    ],
+  },
+];
