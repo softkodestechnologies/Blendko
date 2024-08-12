@@ -61,6 +61,18 @@ const userSchema = new Schema({
       size: String,
     },
   ],
+  referralCode: {
+    type: String,
+    unique: true,
+  },
+  referredBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  referrals: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   activityLog: [
     {
       action: String,
@@ -74,26 +86,24 @@ const userSchema = new Schema({
   timestamps: true,
 });
 
-// Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Compare password method
+
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Generate JWT token
 userSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_TIME,
   });
 };
 
-// Generate reset password token
+
 userSchema.methods.getResetPasswordToken = function () {
   const resetToken = randomBytes(20).toString('hex');
   this.resetPasswordToken = createHash('sha256')
@@ -104,7 +114,6 @@ userSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
-// Create the user model
 const User = model('User', userSchema);
 
 module.exports = User;

@@ -107,6 +107,14 @@ const orderSchema = new Schema({
       message: 'Please select correct order status',
     },
   },
+  discountApplied: {
+    type: Number,
+    default: 0
+  },
+  discountPercentage: {
+    type: Number,
+    default: 0
+  },
   deliveredAt: Date,
   paidAt: Date,
 }, {

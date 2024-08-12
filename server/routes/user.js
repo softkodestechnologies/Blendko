@@ -24,6 +24,13 @@ const {
 
 const { getUserMessages, createMessage, deleteMessage } = require('../controllers/message.controller');
 
+const {
+  generateReferralCode,
+  applyReferralCode,
+  getReferralDiscount,
+} = require('../controllers/loyalty.controller');
+
+
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.route('/register').post(registerUser);
@@ -49,6 +56,10 @@ router.get('/messages', isAuthenticatedUser, getUserMessages);
 router.post('/messages', isAuthenticatedUser, createMessage);
 router.delete('/messages/:id', isAuthenticatedUser, deleteMessage);
 
+
+router.get('/referral/generate', isAuthenticatedUser, generateReferralCode);
+router.post('/referral/apply', isAuthenticatedUser, applyReferralCode);
+router.get('/referral/discount', isAuthenticatedUser, getReferralDiscount);
 
 router
   .route('/admin/users')

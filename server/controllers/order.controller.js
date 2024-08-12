@@ -20,6 +20,20 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
 
   const foundUser = await User.findById(req.user.id).populate('cart.product');
 
+  // Calculate loyalty discount
+  const baseDiscountPercentage = 0.1; // 10% per referral
+  const maxDiscountPercentage = 0.5; // Maximum 50% discount
+  const referralCount = foundUser.referrals.length;
+  const isReferred = foundUser.referredBy ? 1 : 0;
+  
+  let discountPercentage = Math.min(
+    (referralCount + isReferred) * baseDiscountPercentage,
+    maxDiscountPercentage
+  );
+
+  const discountAmount = totalPrice * discountPercentage;
+  const discountedTotalPrice = totalPrice - discountAmount;
+
   const order = new Order({
     type,
     pickupInfo,
@@ -28,7 +42,9 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
     itemsPrice,
     taxPrice,
     shippingPrice,
-    totalPrice,
+    totalPrice: discountedTotalPrice,
+    discountApplied: discountAmount,
+    discountPercentage: discountPercentage * 100, // Store as a percentage
     user: req.user.id,
     paidAt: Date.now(),
   });
