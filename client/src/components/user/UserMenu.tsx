@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '@/services/userSlice';
@@ -19,8 +19,16 @@ const UserMenu = () => {
   if (!user) {
     return (
       <div className="user-menu">
-        <Link className="menu-icons" href="/login">Login</Link>
-        <Link className="menu-icons" href="/register">Sign Up</Link>
+        <Link
+          className="menu-icons"
+          href="/login"
+          onClick={() => console.log('i am good')}
+        >
+          Login
+        </Link>
+        <Link className="menu-icons" href="/register">
+          Sign Up
+        </Link>
       </div>
     );
   }
@@ -28,11 +36,21 @@ const UserMenu = () => {
   return (
     <div className="user-menu">
       <h2>Account</h2>
-      <Link className="menu-icons" href="/user/account">Profile</Link>
-      <Link className="menu-icons" href="/user/orders">Orders</Link>
-      <Link className="menu-icons" href="/user/favorites">Favorites</Link>
-      <Link className="menu-icons" href="/user/favorites">Account Settings</Link>
-      <Link className="menu-icons" href="/user/favorites">Customize Templates</Link>
+      <Link className="menu-icons" href="/user/account">
+        Profile
+      </Link>
+      <Link className="menu-icons" href="/user/orders">
+        Orders
+      </Link>
+      <Link className="menu-icons" href="/user/favorites">
+        Favorites
+      </Link>
+      <Link className="menu-icons" href="/user/favorites">
+        Account Settings
+      </Link>
+      <Link className="menu-icons" href="/user/favorites">
+        Customize Templates
+      </Link>
       <span onClick={handleLogout}>Log Out</span>
     </div>
   );
