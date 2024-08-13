@@ -17,7 +17,7 @@ const ResourceLink = ({
   isSidebarOpen?: boolean;
   setIsSidebarOpen?: () => void;
 }) => {
-  const pathname = usePathname().split('/')[1];
+  const pathname = usePathname().split('/')[1].split('-').join(' ');
 
   return (
     <>

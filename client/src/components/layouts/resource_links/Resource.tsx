@@ -19,6 +19,10 @@ function Resource({
   const pathname = usePathname().split('/')[1];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const strings = pathname
+    .split('-')
+    .map((str) => str[0].toUpperCase() + str.slice(1));
+
   return (
     <div>
       {hero && hero}
@@ -50,9 +54,7 @@ function Resource({
               Explore
             </button>
 
-            <span>
-              {pathname.slice(0, 1).toUpperCase() + pathname.slice(1)}
-            </span>
+            <span>{strings.join(' ')}</span>
           </header>
 
           {children}
