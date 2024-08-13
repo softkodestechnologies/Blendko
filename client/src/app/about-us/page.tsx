@@ -1,26 +1,15 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
 
 import styles from './about-us.module.css';
 
 import { Logo } from '../../../public/svg/icon';
 import ladyImg from '../../../public/Lady-in-trad.png';
-import BigLogoSVG from '@/components/layouts/BigLogoSVG';
 import Resource from '@/components/layouts/resource_links/Resource';
+import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
 
 export default function About() {
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-
   return (
-    <Resource
-      hero={
-        <section className={`flex center ${styles.hero}`}>
-          <h1 className={styles.header_title}>ABOUT BLENDKO</h1>
-        </section>
-      }
-    >
+    <Resource hero={<ResourceHero caption="ABOUT BLENDKO" />}>
       <div
         className={`flex flex-col align-y full-width ${styles.main_content}`}
       >
