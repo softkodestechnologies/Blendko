@@ -143,7 +143,7 @@ export const resourceSidebarLinks = [
   {
     header: 'CUSTOMER SERVICE',
     links: [
-      { title: 'Contact Us', url: '/contact' },
+      { title: 'Contact Us', url: '/contact-us' },
       { title: 'Returns', url: '/returns' },
       { title: 'FAQs', url: '/faq' },
     ],
@@ -156,7 +156,7 @@ export const resourceSidebarLinks = [
     header: 'LEGAL',
     links: [
       { title: 'Terms of Service', url: '/terms' },
-      { title: 'Privacy Policy', url: '/privacy' },
+      { title: 'Privacy Policy', url: '/privacy-policy' },
       { title: 'Accessibility Statement', url: '/accessibility' },
     ],
   },
@@ -214,5 +214,95 @@ export const reviews = [
     bold: '',
     text: `By submitting your email address in connection with your rating and review, you agree that Blendko and its third-party service providers may use your email address to contact you about the status of your review and other administrative purposes.`,
     list: [],
+  },
+];
+
+export const policy = [
+  {
+    heading: `Scope of this Privacy Policy`,
+    content: [
+      `This Privacy Policy (“Policy”) applies to the personal information that Nike, Inc. collects and processes when you interact with us as a customer, including when you interact with our websites, digital experiences, mobile apps, stores, online or offline events, promotions, or one of our other products or services, all of which are part of Nike’s “Platform” and direct to this Privacy Policy. This Policy also applies to the personal information that Nike processes when you subscribe to receive marketing communications from us, communicate with us or engage with us via our Platform, or participate in contests, sweepstakes, and surveys.`,
+      `Nike may provide you with additional privacy notices that will apply to certain personal information collected and processed by us. For example, we may provide additional notice to provide more specific information if you choose to take advantage of a particular partner promotion.  This Policy does not apply to your personal information if you work for us as an employee or independent contractor, apply for a job at Nike, or interact with third party partners or websites that are linked to or accessible from Nike’s Platform.`,
+    ],
+    subcontent: [],
+  },
+  {
+    heading: `Personal Information We Collect`,
+    content: [
+      `Blendko collects personal information directly from you, automatically when you use our Platform or interact with us, and from third parties. The definition of “personal information” depends on the applicable law of where you reside. For purposes of this policy, “personal information” means information that identifies, relates to, describes, is reasonably capable of being associated with, or could reasonably be linked, directly or indirectly, to an individual or household.  This does not include aggregated or de-identified information that is maintained in a form that cannot reasonably be used to infer information about, or otherwise be linked to, a particular individual or household.`,
+    ],
+    subcontent: [
+      {
+        heading: `Personal Information Collected Directly from You.`,
+        content: `We ask you for certain personal information to provide you with the products or services you request. The personal information we collect from you depends on how you interact with us or use our Platform. This personal information includes your`,
+        list: [
+          `Identifiers. We collect certain personal information from you, such as your name, telephone number, email address, date of birth, password, and other identifiers, as well as any personal and demographic information that you share with us, such as gender, hometown, photos, and images you provide to us or post to your profile, or product preferences. When you make a purchase, we collect your payment or credit card information and shipping and billing address.`,
+          `Commercial Information. We collect information about your purchases, favorites, and items that you view or add to your cart.`,
+          `Communications. When you communicate with us, we collect your contact details and keep a record of the communications, as well as our responses. We also maintain records of information that you post on our social media channels, and information you provide to us related to any customer support requests.`,
+          `Physical Characteristics. We collect information on your physical characteristics, including weight, height, and body measurements (such as estimated stride and shoe/foot measurements or apparel size).`,
+          `Fitness and Activity Information. We may collect fitness activity information provided by you or generated through your use of our Platform, such as time, duration, distance, location, calorie count, resting heart rate and pace/stride. We may also collect information from your device’s health and fitness repository (such as Apple’s HealthKit or Android’s Google Fit).`,
+          `Sweepstakes, Contests and Promotions. If you participate in sweepstakes, contests, and promotions that we offer, we may collect your personal information and other registration information related to contests, sweepstakes, and promotions`,
+          `Events Information. We also collect personal information related to your participation in our events. For example, if you register for or attend an event that we host or sponsor, we may collect information related to your registration for and participation in such event`,
+        ],
+      },
+      {
+        heading: `Personal Information We Derive or Collect Automatically.`,
+        content: `We and our third-party service providers automatically collect personal information related to your use of our Platform and interactions with us and others, including when you enable certain features within our Platform. This information includes:`,
+        list: [
+          `Location information. We may collect or derive approximate or precise location information about you. How we collect this information depends on how you use and interact with our Platform and your device settings. For example, we may derive your general location through your IP address.  We may collect your precise geolocation (GPS) information from your device or browser, including with your permission available via your device or browser. You may turn off precise location information sharing through your device settings.`,
+          `Device information. When you interact with our Platform, we collect technical information about your device including your IP address; unique identifiers; unique device identifier and device type; domain, browser type, version, and language; operating system and system settings; general location information and time zone; and similar device and usage information.`,
+          `Online Activity and Browsing Information. We use cookies, log files, pixel tags, software development kits (“SDKs”) and other tracking technologies to automatically collect information about your interaction with our websites and apps and communications you receive from us. This information includes links clicked, page views, purchases, searches, features used, items viewed, time spent within the Platform, information uploaded, items you add to your cart and your interactions with others within the Platform. For more information, see About Cookies and Similar Technologies below.`,
+          `Audio, visual and other electronic data. We may collect audio, visual, and other electronic data, such as through CCTV footage from our stores, offices or premises, and call recordings.`,
+          `Sensor and Movement Data. When you grant us access, we may collect information about you from your device’s sensors, including heart rate, and information about your movement and travel patterns from your device’s accelerometer.`,
+          `Photos, Contacts, and Calendar information. When you grant us access, we may collect your photos, contacts and calendar information stored on your device.`,
+          `Inferences. To personalize your experience on the Platform, we may draw inferences using your personal information, to create a profile reflecting your interests, preferences, and characteristics.`,
+        ],
+      },
+    ],
+  },
+];
+
+import {
+  ContactIcon1,
+  ContactIcon2,
+  ContactIcon3,
+  ContactIcon4,
+} from '../../../public/svg/icon';
+
+export const contactCards = [
+  {
+    icon: ContactIcon1(),
+    title: 'Products & Orders',
+    description: ['8 am - 11 pm PT', '7 days a week'],
+  },
+  {
+    icon: ContactIcon2(),
+    title: 'Products & Orders',
+    description: ['1-903-938-2343', '7 days a week', '8 am - 11 pm PT'],
+  },
+  {
+    icon: ContactIcon3(),
+    title: 'NRC, NTC & SWOOSH',
+    description: [
+      '1-903-938-2343',
+      '7 days a week',
+      '8 am - 11 pm PT',
+      'Mon - Fri',
+    ],
+  },
+  {
+    icon: ContactIcon3(),
+    title: 'NRC, NTC & SWOOSH',
+    description: [
+      '1-903-938-2343',
+      '7 days a week',
+      '8 am - 11 pm PT',
+      'Mon - Fri',
+    ],
+  },
+  {
+    icon: ContactIcon4(),
+    title: 'Find a Store',
+    description: [],
   },
 ];
