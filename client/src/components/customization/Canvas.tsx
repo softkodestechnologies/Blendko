@@ -5,6 +5,7 @@ import styles from './customize.module.css';
 interface CanvasProps {
   canvasWidth: string;
   productImage?: string;
+  isLoading: boolean;
 }
 
 interface CanvasState {
@@ -12,7 +13,7 @@ interface CanvasState {
   backgroundImage?: fabric.Image;
 }
 
-const Canvas = forwardRef(({ canvasWidth, productImage }: CanvasProps, ref) => {
+const Canvas = forwardRef(({ canvasWidth, productImage, isLoading }: CanvasProps, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
@@ -57,7 +58,12 @@ const Canvas = forwardRef(({ canvasWidth, productImage }: CanvasProps, ref) => {
 
   useEffect(() => {
     if (canvas && productImage) {
-      fabric.Image.fromURL(productImage, (img) => {
+      const imageUrl = productImage.startsWith('<img') 
+        ? productImage.match(/src='([^']*)'/) || productImage.match(/src="([^"]*)"/)
+        : null;
+      const finalImageUrl = imageUrl ? imageUrl[1] : productImage;
+
+      fabric.Image.fromURL(finalImageUrl, (img) => {
         img.scaleToWidth(300);
         img.scaleToHeight(300);
         img.set({
@@ -68,7 +74,7 @@ const Canvas = forwardRef(({ canvasWidth, productImage }: CanvasProps, ref) => {
         saveState(canvas);
       });
     }
-  }, [canvas, productImage]);
+  }, [canvas, productImage])
 
   const saveState = useCallback((canvas: fabric.Canvas) => {
     const newState: CanvasState = {
@@ -139,6 +145,11 @@ const Canvas = forwardRef(({ canvasWidth, productImage }: CanvasProps, ref) => {
   return (
     <div className={styles.canvasContainer} ref={containerRef}>
       <canvas ref={canvasRef} className={styles.canvasElement} />
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
       <div className={styles.zoomControls}>
         <button onClick={() => handleZoom(true)}>Zoom In</button>
         <button onClick={() => handleZoom(false)}>Zoom Out</button>

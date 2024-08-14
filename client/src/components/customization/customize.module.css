@@ -200,6 +200,10 @@
   border-radius: 50%;
 }
 
+.colorBox:hover {
+  border: 1px solid black;
+}
+
 .mobileSidebar {
   position: fixed;
   bottom: 0;
@@ -261,6 +265,8 @@
   transform: translateY(0);
 }
 
+
+
 /* Files */
 .filesComponent {
   padding: 5px;
@@ -317,4 +323,9 @@
     width: 100% !important;
   }
 
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

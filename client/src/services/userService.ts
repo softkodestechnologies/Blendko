@@ -100,7 +100,13 @@ export const adminService = blendkoApi.injectEndpoints({
       query: () => 'categories',
       providesTags: ['Categories'],
     }),
-
+    transformImageColor: builder.mutation({
+      query: ({ imageUrl, color }) => ({
+        url: '/image/transform',
+        method: 'POST',
+        body: { imageUrl, color },
+      }),
+    }),
     getCart: builder.query({
       query: () => ({
         url: `/cart/`,
@@ -201,6 +207,7 @@ export const {
   useGetCategoriesQuery,
   useGetProductsByCategoryIdQuery,
   useGetProductsByCategoryGenderQuery,
+  useTransformImageColorMutation,
   useAddToCartMutation,
   useGetCartQuery,
   useRemoveFromCartMutation,
