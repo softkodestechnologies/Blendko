@@ -1,75 +1,29 @@
 import styles from './contact-us.module.css';
-import ExploreSideBar from '@/components/aside/ExploreSideBar';
-import {
-  IoCreateOutline,
-  IoCallOutline,
-  IoStorefrontOutline,
-  IoLocationOutline,
-} from 'react-icons/io5';
+
+import { contactCards } from '@/utils/data/dummy';
+import Resource from '@/components/layouts/resource_links/Resource';
+import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
+import ResourceContent from '@/components/layouts/resource_links/ResourceContent';
 
 export default function ContactUs() {
   return (
-    <main>
-      <header className={styles.header}>
-        <h1 className={styles.header_title}>contact us</h1>
-        <hr className={styles.header_hr} />
-      </header>
+    <Resource hero={<ResourceHero caption="CONTACT US" />}>
+      <ResourceContent className={`grid ${styles.contact_list}`}>
+        {contactCards.map((card, index) => (
+          <div
+            key={index}
+            className={`flex flex-col align-y ${styles.contact_card}`}
+          >
+            {card.icon}
 
-      <div className="container">
-        <div className={styles.content_container}>
-          <ExploreSideBar />
+            <h3>{card.title}</h3>
 
-          <div className={styles.main_content}>
-            <div className={styles.contactList}>
-              <div className={styles.contactItems}>
-                <IoCreateOutline size={30} />
-                <h3>Products & Orders</h3>
-                <p>
-                  4 am - 11 pm PT
-                  <br />7 days a week
-                </p>
-              </div>
-
-              <div className={styles.contactItems}>
-                <IoCallOutline size={30} />
-                <h3>Products & Orders</h3>
-                <p>
-                  1-903-938-2343
-                  <br />7 days a week
-                  <br />4 am - 11 pm PT
-                </p>
-              </div>
-
-              <div className={styles.contactItems}>
-                <IoStorefrontOutline size={30} />
-                <h3>NRC, NTC & SWOOSH</h3>
-                <p>
-                  1-903-938-2343
-                  <br />4 am - 11 pm PT
-                  <br />
-                  Mon - Fri
-                </p>
-              </div>
-
-              <div className={styles.contactItems}>
-                <IoStorefrontOutline size={30} />
-                <h3>NRC, NTC & SWOOSH</h3>
-                <p>
-                  1-903-938-2343
-                  <br />4 am - 11 pm PT
-                  <br />
-                  Mon - Fri
-                </p>
-              </div>
-
-              <div className={styles.contactItems}>
-                <IoLocationOutline size={30} />
-                <h3>Find a Store</h3>
-              </div>
-            </div>
+            {card.description.map((desc, index) => (
+              <p key={index}>{desc}</p>
+            ))}
           </div>
-        </div>
-      </div>
-    </main>
+        ))}
+      </ResourceContent>
+    </Resource>
   );
 }
