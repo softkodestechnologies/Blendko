@@ -1,7 +1,13 @@
 import styles from './resource.module.css';
 
-function ResourceContent({ children }: { children: React.ReactNode }) {
-  return <div className={`${styles.content}`}>{children}</div>;
+function ResourceContent({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={`${styles.content} ${className}`}>{children}</div>;
 }
 
 export default ResourceContent;
