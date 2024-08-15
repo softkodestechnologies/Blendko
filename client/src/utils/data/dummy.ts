@@ -306,3 +306,22 @@ export const contactCards = [
     description: [],
   },
 ];
+
+export const careerNavLinks = [
+  {
+    title: 'Brand',
+    children: ['Brand 1', 'Brand 2', 'Brand 3'],
+  },
+  {
+    title: 'Position Type',
+    children: ['Position 1', 'Position 2', 'Position 3'],
+  },
+  {
+    title: 'Career Area',
+    children: ['Career 1', 'Career 2', 'Career 3'],
+  },
+  {
+    title: 'Location',
+    children: ['Location 1', 'Location 2', 'Location 3'],
+  },
+];

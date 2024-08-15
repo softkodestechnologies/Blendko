@@ -364,16 +364,16 @@ export const ButtonArrow = () => (
       <path
         d="M11.451 7H1.87158"
         stroke="white"
-        stroke-width="1.06438"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.06438"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.25781 3.80664L11.4509 6.99977L8.25781 10.1929"
         stroke="white"
-        stroke-width="1.06438"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.06438"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </g>
     <defs>
@@ -406,16 +406,16 @@ export const ButtonArrowDark = () => (
       <path
         d="M9.53327 5.99414H1.77637"
         stroke="black"
-        stroke-width="0.861878"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.861878"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6.94727 3.40918L9.5329 5.99482L6.94727 8.58045"
         stroke="black"
-        stroke-width="0.861878"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.861878"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </g>
     <defs>
@@ -498,16 +498,94 @@ export const ContactIcon4 = () => (
     <path
       d="M25.5 4.6875C17.7363 4.6875 11.4375 10.6826 11.4375 18.0664C11.4375 26.5625 20.8125 40.0264 24.2549 44.6768C24.3978 44.8731 24.5851 45.0328 24.8014 45.1429C25.0178 45.2531 25.2572 45.3105 25.5 45.3105C25.7428 45.3105 25.9822 45.2531 26.1986 45.1429C26.4149 45.0328 26.6022 44.8731 26.7451 44.6768C30.1875 40.0283 39.5625 26.5693 39.5625 18.0664C39.5625 10.6826 33.2637 4.6875 25.5 4.6875Z"
       stroke="black"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M25.5 23.4375C28.0888 23.4375 30.1875 21.3388 30.1875 18.75C30.1875 16.1612 28.0888 14.0625 25.5 14.0625C22.9112 14.0625 20.8125 16.1612 20.8125 18.75C20.8125 21.3388 22.9112 23.4375 25.5 23.4375Z"
       stroke="black"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const ChevronDown = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="8"
+    viewBox="0 0 14 8"
+    fill="none"
+    {...props}
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M7.7071 7.70734C7.51957 7.89481 7.26526 8.00013 7.0001 8.00013C6.73493 8.00013 6.48063 7.89481 6.2931 7.70734L0.636099 2.05034C0.540589 1.9581 0.464406 1.84775 0.411997 1.72575C0.359588 1.60374 0.332002 1.47252 0.330848 1.33974C0.329694 1.20696 0.354996 1.07529 0.405277 0.952389C0.455558 0.829493 0.529811 0.71784 0.623704 0.623948C0.717597 0.530055 0.829248 0.455802 0.952145 0.405521C1.07504 0.35524 1.20672 0.329939 1.3395 0.331092C1.47228 0.332246 1.6035 0.359833 1.7255 0.412242C1.84751 0.464651 1.95785 0.540832 2.0501 0.636343L7.0001 5.58634L11.9501 0.636343C12.1387 0.454185 12.3913 0.35339 12.6535 0.355669C12.9157 0.357947 13.1665 0.463116 13.3519 0.648524C13.5373 0.833932 13.6425 1.08474 13.6448 1.34694C13.6471 1.60914 13.5463 1.86174 13.3641 2.05034L7.7071 7.70734Z"
+      fill="black"
+    />
+  </svg>
+);
+
+export const MailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="14"
+    viewBox="0 0 18 14"
+    fill="none"
+  >
+    <path
+      d="M1.615 14C1.155 14 0.771 13.846 0.463 13.538C0.155 13.23 0.000666667 12.8457 0 12.385V1.615C0 1.155 0.154333 0.771 0.463 0.463C0.771667 0.155 1.15567 0.000666667 1.615 0H16.385C16.845 0 17.229 0.154333 17.537 0.463C17.845 0.771667 17.9993 1.15567 18 1.615V12.385C18 12.845 17.846 13.229 17.538 13.537C17.23 13.845 16.8457 13.9993 16.385 14H1.615ZM9 7.115L1 1.885V12.385C1 12.5643 1.05767 12.7117 1.173 12.827C1.28833 12.9423 1.43567 13 1.615 13H16.385C16.5643 13 16.7117 12.9423 16.827 12.827C16.9423 12.7117 17 12.5643 17 12.385V1.885L9 7.115ZM9 6L16.692 1H1.308L9 6ZM1 1.885V1V12.385C1 12.5643 1.05767 12.7117 1.173 12.827C1.28833 12.9423 1.43567 13 1.615 13H1V1.885Z"
+      fill="#767677"
+    />
+  </svg>
+);
+
+export const SearchBarIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <circle
+      cx="8"
+      cy="8"
+      r="7"
+      stroke="white"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle
+      cx="8"
+      cy="8"
+      r="7"
+      stroke="white"
+      strokeOpacity="0.2"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M19 19L13 13"
+      stroke="white"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M19 19L13 13"
+      stroke="white"
+      strokeOpacity="0.2"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
