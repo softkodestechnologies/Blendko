@@ -9,7 +9,8 @@ import SearchBar from './SearchBar';
 import BackDrop from '@/components/ui/BackDrop';
 import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
 
-function page() {
+
+function Page() {
   const [openSidebar, setOpenSidebar] = useState(false);
 
   return (
@@ -45,9 +46,11 @@ function page() {
             </div>
           </section>
         </div>
+
       </section>
     </>
   );
 }
 
-export default page;
+Page.displayName = 'CareerPage';
+export default Page;
