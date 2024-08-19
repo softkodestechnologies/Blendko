@@ -36,8 +36,8 @@ export default function About() {
         </div>
 
         <p>
-          Founded in Florence, Italy, in 1921, Gucci is one of the world's
-          leading luxury brands. Following the House's centenary, Gucci forges
+          Founded in Florence, Italy, in 1921, Gucci is one of the world&apos;s
+          leading luxury brands. Following the House&apos;s centenary, Gucci forges
           ahead continuing to redefine luxury while celebrating creativity,
           Italian craftsmanship, and innovation.
         </p>
