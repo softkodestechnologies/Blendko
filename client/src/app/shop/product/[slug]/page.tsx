@@ -82,6 +82,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
         id: productData.product.id,
         name: productData.product.name,
         image: productData.product.images[0]?.url,
+        color: productData.product.colors[0]
         
       };
       localStorage.setItem('productData', JSON.stringify(productToSave));

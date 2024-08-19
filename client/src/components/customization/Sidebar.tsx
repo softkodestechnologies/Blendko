@@ -7,9 +7,10 @@ import { FaTshirt, FaPalette, FaRuler, FaPaintBrush, FaChevronRight } from 'reac
 interface SidebarProps {
   onToggleCanvasWidth: () => void;
   onFileUpload: (file: File) => void;
+  onColorChange: (color: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, onColorChange }) => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -54,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) 
           </div>
         </div>
         {activePanel && (
-          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload}/>
+          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload} onColorChange={onColorChange}/>
         )}
       </>
     );
@@ -69,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) 
       <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><FaPaintBrush /> Colour</div>
       <div className={styles.sidebarItem} onClick={() => handleTogglePanel('savedTemplate')}>Saved Template</div>
       {activePanel && (
-        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload}/>
+        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload} onColorChange={onColorChange}/>
       )}
     </div>
   );
