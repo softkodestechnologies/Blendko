@@ -16,7 +16,8 @@ export const blendkoApi = createApi({
     'Categories',
     'GetCategoriesByName',
     'Cart',
-    'Order'
+    'Order',
+    'News',
   ],
   endpoints: () => ({}),
 });
