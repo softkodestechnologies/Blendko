@@ -1,0 +1,186 @@
+.sidebar {
+  padding-inline: 24px;
+  padding-block: 48px;
+}
+
+.sidebar_header {
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar_header h2 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.mobileNav button,
+.sidebar_header button {
+  border: none;
+  background: none;
+}
+
+.sidebar_header path {
+  stroke: #000;
+}
+
+.sidebar_header,
+.link_item input {
+  display: none;
+}
+
+.active {
+  color: #000;
+  font-weight: 600;
+}
+
+@media (width < 1024px) {
+  .sidebar {
+    top: 0;
+    left: 0;
+    width: 80%;
+    z-index: 60;
+    height: 100%;
+    position: fixed;
+    background: #fff;
+  }
+
+  .sidebar_header,
+  .link_item input {
+    display: flex;
+  }
+
+  .link_item input {
+    accent-color: #000;
+  }
+}
+
+.items {
+  position: relative;
+}
+
+.items:not(:last-of-type) {
+  margin-bottom: 32px;
+}
+
+.items h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  margin-bottom: 10px;
+  font-family: var(--font-poppins);
+}
+
+.items ul {
+  gap: 10.4px;
+}
+
+.link_item {
+  gap: 10px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+@media (width < 1024px) {
+  .sidebar {
+    padding-block: 24px;
+  }
+
+  .items:not(:last-of-type):after {
+    left: 0;
+    width: 70%;
+    height: 1px;
+    content: '';
+    bottom: -23.5px;
+    position: absolute;
+    background: #ccc;
+  }
+}
+
+.mobileNav {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.mobileNav span,
+.mobileNav button {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.mobileNav span {
+  color: #767677;
+}
+
+@media (width >= 1024px) {
+  .wrapper {
+    grid-template-columns: 0.3fr 1fr;
+  }
+
+  .sidebar {
+    position: relative;
+    border-right: 1px solid #767677;
+  }
+
+  .mobileNav {
+    display: none;
+  }
+}
+
+.hero {
+  display: none;
+}
+
+.content {
+  font-size: 14px;
+  padding-block: 0 48px;
+  font-family: var(--font-poppins);
+}
+
+.content p,
+.content li {
+  line-height: 18px;
+}
+
+.content p:not(:last-of-type),
+.content li:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+.content ul,
+.content ol {
+  padding-left: 16px;
+  margin-block: 12px 24px;
+}
+
+@media (width >= 1024px) {
+  .hero {
+    height: 128px;
+    display: flex;
+    border-bottom: 0.5px solid #767677;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 60px;
+    font-family: var(--font-poppins);
+  }
+
+  .content {
+    font-size: 16px;
+    padding-inline: 48px;
+    padding-block: 48px 64px;
+  }
+
+  .content p,
+  .content li {
+    line-height: 24px;
+  }
+
+  .content p:not(:last-of-type),
+  .content li:not(:last-of-type) {
+    margin-bottom: 14px;
+  }
+}

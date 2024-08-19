@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState } from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { FaShoppingCart, FaExchangeAlt, FaUndoAlt } from 'react-icons/fa';
@@ -19,22 +19,24 @@ const Register = () => {
     callback: register,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: 'success' | 'error';
+    message: string;
+  }>({
     show: false,
     type: 'success',
     message: '',
   });
 
-
   const handleFormSubmission = async (values: any, resetForm: () => void) => {
-    await handleSubmission(
-      values,
-      resetForm,
-      '/',
-      () => {
-        setAlert({ show: true, type: 'success', message: 'Registration successful!' });
-      }
-    );
+    await handleSubmission(values, resetForm, '/', () => {
+      setAlert({
+        show: true,
+        type: 'success',
+        message: 'Registration successful!',
+      });
+    });
 
     if (isError.error) {
       setAlert({ show: true, type: 'error', message: isError.message });
@@ -49,7 +51,8 @@ const Register = () => {
         <ul>
           <li>
             <BlendkoIcon />
-            Become a loyalty member to earn points and get exclusive offers and rewards
+            Become a loyalty member to earn points and get exclusive offers and
+            rewards
           </li>
           <li>
             <FaShoppingCart />
@@ -83,17 +86,24 @@ const Register = () => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await handleFormSubmission(values, resetForm);
           setSubmitting(false);
-        }}>
+        }}
+      >
         {({ handleSubmit }) => (
           <form
             onSubmit={(e) => handlePropagation(e, handleSubmit)}
-            className="full-width">
+            className="full-width"
+          >
             <div className="form-group">
               <Field type="text" id="name" name="name" placeholder="Name*" />
               <ErrorMessage name="name" component="div" className="error" />
             </div>
             <div className="form-group">
-              <Field type="email" id="email" name="email" placeholder="Email Address*" />
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email Address*"
+              />
               <ErrorMessage name="email" component="div" className="error" />
             </div>
             <div className="form-group">
@@ -104,16 +114,26 @@ const Register = () => {
                   name="password"
                   placeholder="Password*"
                 />
-                <span className="show-password" onClick={() => setShowPassword(!showPassword)}>
+                <span
+                  className="show-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
                   {showPassword ? <MdVisibility /> : <MdVisibilityOff />}
                 </span>
               </label>
               <ErrorMessage name="password" component="div" className="error" />
             </div>
-            <button className="submit-btn mb-10" type="submit">Create Account</button>
+            <button className="submit-btn mb-10" type="submit">
+              Create Account
+            </button>
             <div className="flex flex-col center">
-              <p className="mb-10">By logging in, you agree to the Terms & Conditions and Privacy Policy</p>
-              <p className="login-tag">Already have an Account? <Link href="/login">Login</Link></p>
+              <p className="mb-10">
+                By logging in, you agree to the Terms & Conditions and Privacy
+                Policy
+              </p>
+              <p className="login-tag">
+                Already have an Account? <Link href="/login">Login</Link>
+              </p>
             </div>
           </form>
         )}

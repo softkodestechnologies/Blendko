@@ -35,7 +35,7 @@ const Header = () => {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLButtonElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
   const [isClient, setIsClient] = useState(false);
@@ -94,7 +94,7 @@ const Header = () => {
     <>
       <TopBanner />
 
-      <header className={`${styles.header}`}>
+      <header className={`${styles.header}`} ref={userMenuRef}>
         <nav className={`flex space-between align-y ${styles.navWrapper}`}>
           <Link href="/">
             <Logo />
@@ -147,7 +147,7 @@ const Header = () => {
             </li>
 
             <li className={`flex align-y`}>
-              <button>
+              <button onMouseEnter={handleUserIconHover}>
                 <UserIcon />
               </button>
             </li>
@@ -183,10 +183,18 @@ const Header = () => {
           {navOpen && (
             <BackDrop
               onClick={() => setNavOpen(false)}
-              style={{ height: 'calc(100% - 84px)' }}
+              style={{ height: 'calc(100% - 84px)', zIndex: '100' }}
             />
           )}
         </AnimatePresence>
+
+        <Cart
+          cartOpen={cartOpen}
+          cartItems={cartItems}
+          toggleCart={toggleCart}
+        />
+
+        {userMenuOpen && isClient && <UserMenu />}
       </header>
     </>
   );

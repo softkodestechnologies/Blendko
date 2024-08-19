@@ -1,0 +1,26 @@
+.accordion:not(:last-of-type) {
+  border-bottom: 1px solid #0000004d;
+}
+
+.accordion button {
+  border: none;
+  background: none;
+}
+
+.accordion:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+.accordion button {
+  padding-block: 12px;
+}
+
+.accordionBody p {
+  text-align: left !important;
+}
+
+@media (width >= 768px) {
+  .accordion button {
+    padding-block: 16px 20px;
+  }
+}

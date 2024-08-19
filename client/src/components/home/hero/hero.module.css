@@ -71,6 +71,7 @@
   }
 
   .hero_wrapper {
+    max-height: 485px;
     height: calc(100vh - 148px);
   }
 

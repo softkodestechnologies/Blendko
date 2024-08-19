@@ -716,3 +716,15 @@ select {
 .slide-down {
   animation: slideDown 0.7s ease-in-out forwards;
 }
+
+.section_container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding-inline: 16px;
+}
+
+@media (width > 1024px) {
+  .section_container {
+    padding-inline: 80px;
+  }
+}

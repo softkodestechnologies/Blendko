@@ -1,0 +1,44 @@
+.policy_header {
+  margin-bottom: 14px;
+}
+
+.policy_header h2,
+.policy_header time {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  font-family: var(--font-poppins);
+}
+
+.policy_header time {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.policy_header p {
+  font-size: 14px;
+  color: #767677;
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.section h3 {
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.section ul {
+  list-style-type: disc;
+}
+
+@media (width >= 768px) {
+  .policy_header h2 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}

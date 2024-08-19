@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 
 import styles from './customize.module.css';
@@ -29,7 +28,7 @@ function Customize() {
       />
 
       {!playVideo && (
-        <motion.div
+        <div
           className={`flex center full-width full-height ${styles.play_button}`}
         >
           <button onClick={handlePlay} className={`flex flex-col  center`}>
@@ -37,7 +36,7 @@ function Customize() {
 
             <span>Play</span>
           </button>
-        </motion.div>
+        </div>
       )}
     </div>
   );

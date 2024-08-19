@@ -1,13 +1,12 @@
 import Link from 'next/link';
 
 import styles from './customize.module.css';
-import layoutStyles from '../home.module.css';
 
 import Customize from './Customize';
 
 function CustomizeSection() {
   return (
-    <section className={`${layoutStyles.container}`}>
+    <section className={`section_container`}>
       <div className={`${styles.customize_wrapper}`}>
         <div className={`flex flex-col center ${styles.mobile_customize}`}>
           <h2>Customize Your Style</h2>
