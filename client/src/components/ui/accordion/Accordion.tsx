@@ -9,13 +9,25 @@ function Accordion({
   head,
   body,
   className,
+  toggleOpen,
+  setToggleOpen,
   ...props
 }: {
+  className?: string;
+  toggleOpen?: boolean;
   head: React.ReactNode;
   body: React.ReactNode;
-  className?: string;
+  setToggleOpen?: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+
+  const handleToggle = () => {
+    if (setToggleOpen) {
+      setToggleOpen();
+    } else {
+      setExpanded(!expanded);
+    }
+  };
 
   return (
     <div
@@ -27,26 +39,26 @@ function Accordion({
         {...props}
         type="button"
         aria-label="accordion"
+        onClick={handleToggle}
         aria-expanded={expanded}
         aria-controls="accordion"
-        className="full-width flex space-between"
-        onClick={() => setExpanded(!expanded)}
+        className="full-width flex align-y space-between"
       >
         {head}
       </button>
 
       <AnimatePresence mode="wait">
-        {expanded && (
+        {((toggleOpen && toggleOpen) || expanded) && (
           <motion.div
             className={styles.accordionBody}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{
-              duration: 0.3,
+              duration: 0.5,
               type: 'spring',
-              stiffness: 500,
-              damping: 30,
+              stiffness: 450,
+              damping: 60,
             }}
           >
             {body}
