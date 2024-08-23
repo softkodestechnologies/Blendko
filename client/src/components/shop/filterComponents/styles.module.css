@@ -1,0 +1,116 @@
+.filter_section {
+  padding-block: 16px;
+  transition: all 0.9s;
+  font-family: var(--font-poppins);
+  border-bottom: 1px solid #0000001a;
+}
+
+.accordion,
+.sidebar_filter {
+  border: none !important;
+}
+
+.accordion > button {
+  font-size: 16px;
+  font-weight: 400;
+  color: #00000099;
+  font-size: inherit;
+  padding: 2px 0 !important;
+}
+
+.price_filter {
+  padding-block: 16px 32px;
+}
+
+.sidebar_filter {
+  border-bottom: 1px solid #0000001a !important;
+}
+
+.sidebar_filter > span {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(--font-poppins);
+}
+
+.options {
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-block: 16px 8px;
+}
+
+.list_option {
+  padding-block: 0 18px;
+}
+
+.options li button {
+  font-size: 14px;
+  padding: 10px 20px;
+  color: #00000099;
+  border-radius: 62px;
+  background-color: #f0f0f0;
+  transition: all 0.9s;
+}
+
+.options li button.selected {
+  color: white;
+  background-color: #000;
+}
+
+.applied_filters {
+  padding-bottom: 16px;
+}
+
+.applied_filters h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.selected_items {
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+}
+
+.selected_items li {
+  gap: 8px;
+  padding: 4px;
+  height: 24px;
+  color: #000;
+  font-size: 14px;
+  background: #ccc;
+}
+
+.selected_items li button {
+  border: none;
+  background: none;
+}
+
+.slider {
+  width: 100%;
+  height: 2px;
+}
+
+.color_pallete {
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+}
+
+.color_pallete button {
+  width: 37px;
+  height: 37px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 50%;
+  border: 1px solid #00000033 !important;
+}
+
+.pallete_white path {
+  fill: #000;
+}
+
+.animation {
+  inset: 0;
+  position: absolute;
+}
