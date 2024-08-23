@@ -1,3 +1,7 @@
+.accordion {
+  overflow: hidden;
+}
+
 .accordion:not(:last-of-type) {
   border-bottom: 1px solid #0000004d;
 }
