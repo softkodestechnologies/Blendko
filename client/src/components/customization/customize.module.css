@@ -1,39 +1,76 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 120vh;
 }
 
 .toolbar {
   width: 100%;
-  height: 50px;
   background: #f0f0f0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
 }
 
-.toolbarLeft, .toolbarRight {
+.toolbarTop, .toolbarBottom {
   display: flex;
   gap: 10px;
 }
 
-.toolbarButton, .toolbarIcons {
+.toolbarTop {
+  border-bottom: 2px solid #CCCCCC;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbarTopRight {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.toolbarPrice {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.toolbarBottom {
+  padding: 10px 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toolbarIcons,
+.addToCartBtn, .saveAsTemplateBtn {
   background: none;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: #F7F7F7;
+  background-color: transparent;
   padding: 10px;
 }
 
-.toolbarIcons {
-  transform: rotateX(180deg)
+.addNew {
+  background-color: #FEFFF1;
+  border: 1px solid #000;
+  padding: 5px 10px;
 }
 
+.addNew > span {
+  margin-right: 5px;
+  font-size: 17px;
+}
+
+.saveAsTemplateBtn {
+  border: 1px solid #000;
+}
+
+.addToCartBtn {
+  background: #000;
+  color: #fff;
+}
 
 .canvasElement {
   width: 100%;
@@ -47,51 +84,80 @@
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
   padding: 5px;
+  border: 2px solid #ccc;
   border-radius: 5px;
 }
 
 .zoomControls button {
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 3px;
+  background-color: #fff;
+  border: none;
   padding: 5px 10px;
   margin: 0 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .zoomControls span {
   margin: 0 5px;
+  padding: 8px;
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
 }
 
 .customizePage {
   display: flex;
   flex: 1;
   position: relative;
+  height: 300px;
 }
 
 .sidebar {
-  width: 66px;
-  padding-left:  15px;
+  width: 86px;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 50;
   background: #fff;
-  box-shadow: 0 4px 2px 0 #000;
+  box-shadow: 0 2px 1px 0 #ccc;
+  height: 100%;
+}
+
+.sidebarItem, .sidebarItemContainer {
+  cursor: pointer;
+  padding: 8px 15px;
+  margin-left: 8px;
+  width: 100%;
+  font-size: 12px;
+  background: #fff;
+  position: relative;
+  z-index: 30;
+}
+
+.sidebarItemContainer {
+  margin-left: 0;
+  background: #fff;
+  height: 100vh;
 }
 
 .sidebarItem {
-  cursor: pointer;
-  padding: 20px;
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-direction: column;
+  gap: 8px;
+  flex-direction: column; 
   text-align: center;
-  background: #fff;
-  z-index: 30;
+  margin-bottom: 5px;
+}
+
+.sidebarItem.activePanel {
+  border-bottom: 2px solid rgba(0, 0, 0,  0.4);
+}
+
+.sketchPicker {
+  outline: 2px solid #ccc;
+  width: 100%;
+  min-width: 300px;
 }
 
 .moreBtn {
@@ -103,7 +169,7 @@
 .canvasWrapper {
   position: relative;
   transition: width 0.3s ease;
-  height: calc(100vh - 50px);
+  height: calc(120vh - 143px);
   overflow: hidden;
   margin-left: auto;
 }
@@ -143,14 +209,14 @@
   width: 350px;
   position: absolute;
   top: 0;
-  left: 120px;
+  left: 89px;
   height: 100%;
   overflow-y: auto;
   background-color: #fff;
   border-right: 1px solid #e0e0e0;
   transform: translateX(-350px);
   transition: transform 0.3s ease-in-out;
-  z-index: 10;
+  z-index: 5;
 }
 
 .slidingPanel.active {
@@ -167,14 +233,24 @@
   right: 5px;
 }
 
+.filesBtn {
+  background-color: #EFEFEF;
+  border: 1px solid #000;
+  border-radius: none;
+  padding: 10px;
+  display: none;
+}
+
 .colorPalette {
   padding: 5px;
   background: #fff;
 }
 
 .paletteTitle, .customTitle {
-  font-size: 1.2em;
-  margin-bottom: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #767677
 }
 
 .palette {
@@ -207,8 +283,8 @@
 }
 
 .colorBox {
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   border: 1px solid #cccccc;
   border-radius: 50%;
@@ -317,6 +393,15 @@
     gap: 3px;
   }
 
+  .filesBtn {
+    background-color: #EFEFEF;
+    border: 1px solid #000;
+    border-radius: none;
+    padding: 10px;
+    display: block;
+  }
+  
+
   .mobileExpandedMenu {
     padding-left: 14%;
   }
@@ -326,7 +411,6 @@
     margin: 5px;
   }
   
-
   .canvasWrapper {
     width: 100% !important;
   }

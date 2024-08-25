@@ -12,10 +12,7 @@ interface SlidingPanelProps {
 }
 
 const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange  }) => {
-  const handleColorChange: ColorChangeHandler = (color) => {
-    //Remember: Handle color change here
-    console.log(color);
-  };
+  
 
   const renderPanelContent = () => {
     switch (activePanel) {
@@ -28,7 +25,7 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setAc
       case 'sizes':
         return <div>Sizes Content</div>;
       case 'colour':
-        return <ColorPalette onChange={handleColorChange} setActivePanel={setActivePanel} onColorSelect={onColorChange} />;
+        return <ColorPalette setActivePanel={setActivePanel} onColorSelect={onColorChange} />;
       case 'savedTemplate':
         return <div>Saved Templates Content</div>;
       default:
