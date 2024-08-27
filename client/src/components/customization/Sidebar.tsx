@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, on
         <div 
         className={`${styles.sidebarItem} ${activePanel === 'styles' ? styles.activePanel : ''}`}
         onClick={() => handleTogglePanel('styles')}>
-          <StylesIcon /> Styles</div>
+          <StylesIcon /> Fabric</div>
 
         <div 
       className={`${styles.sidebarItem} ${activePanel === 'sizes' ? styles.activePanel : ''}`}
@@ -95,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, on
         <div 
         className={`${styles.sidebarItem} ${activePanel === 'colour' ? styles.activePanel : ''}`}
         onClick={() => handleTogglePanel('colour')}>
-          <BackgroundColorIcon /> Background Colour</div>
+          <BackgroundColorIcon /> Colour</div>
       <div 
       className={`${styles.sidebarItem} ${activePanel === 'savedTemplate' ? styles.activePanel : ''}`} 
       onClick={() => handleTogglePanel('savedTemplate')}><SavedTemplateIcon /> Saved Template</div>

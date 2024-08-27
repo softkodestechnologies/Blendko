@@ -30,7 +30,7 @@ const ProductLabel: React.FC<ProductLabelProps> = ({ text, position }) => (
           position: 'absolute',
           top: '100%',
           left: '50%',
-          transform: 'translateX(-50%)', // Center the SVG horizontally
+          transform: 'translateX(-50%)',
         }}
       >
         <line x1="0" y1="0" x2="25" y2="50" style={{ stroke: 'black', strokeWidth: 1 }} />

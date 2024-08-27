@@ -18,6 +18,8 @@ const CustomizePage: React.FC = () => {
     reset: () => void;
     changeColor: (color: string) => void;
     addImageToMesh: (file: File) => void;
+    addImageOverlay: (file: File) => void;
+    getCanvasSnapshot: () => Promise<string[]>;
   } | null>(null);
   useEffect(() => {
     setLoading(true);
@@ -62,12 +64,32 @@ const CustomizePage: React.FC = () => {
     }
   }, []);
 
+  const handleGetCanvasSnapshot = useCallback(async () => {
+    if (canvasRef.current) {
+      return await canvasRef.current.getCanvasSnapshot();
+    }
+    return [];
+  }, []);
+
   const handleSaveAsTemplate = useCallback(() => {
     // Implement save as template logic
   }, []);
 
   const handleAddToCart = useCallback(() => {
     // Implement add to cart logic
+  }, []);
+
+  const handleAddNew = useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+        canvasRef.current?.addImageOverlay(target.files[0]);
+      }
+    };
+    input.click();
   }, []);
 
   if (loading) {
@@ -82,6 +104,8 @@ const CustomizePage: React.FC = () => {
         reset={handleReset}
         saveAsTemplate={handleSaveAsTemplate} 
         addToCart={handleAddToCart}
+        getCanvasSnapshot={handleGetCanvasSnapshot}
+        onAddNew={handleAddNew}
       />
       <div className={styles.customizePage}>
         <Sidebar 

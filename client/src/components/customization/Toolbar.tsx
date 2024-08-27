@@ -1,6 +1,8 @@
-import React from 'react';
+"use client";
+import React, {useState} from 'react';
 import styles from './customize.module.css';
-import CustomizeSection from '../home/customize/CustomizeSection';
+import PreviewModal from './PreviewModal';
+
 import {
   UndoIcon,
   RedoIcon,
@@ -14,17 +16,20 @@ interface ToolbarProps {
   reset: () => void;
   saveAsTemplate: () => void;
   addToCart: () => void;
+  getCanvasSnapshot: () => Promise<string[]>;
+  onAddNew: () => void;
 }
 
-function preview() {
-  //just temp function to remove error in preview
-}
+const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, addToCart, getCanvasSnapshot, onAddNew }) => {
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-function addNew() {
-  //this function should connect to customize page and import designs onto the 3d model
-}
+  const handlePreview = async () => {
+    const snapshots = await getCanvasSnapshot();
+    setPreviewImages(snapshots);
+    setIsPreviewModalOpen(true);
+  };
 
-const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, addToCart }) => {
   return (
     <div className={styles.toolbar}>
       <div className={styles.toolbarTop}>
@@ -43,11 +48,14 @@ const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, ad
         <div className="flex space-between gap-10">
           <button title="undo" className={styles.toolbarIcons} onClick={undo}><UndoIcon /></button>
           <button title="redo" className={styles.toolbarIcons} onClick={redo}><RedoIcon /></button>
-          <button title="reset" className={styles.toolbarIcons} onClick={reset}><ResetIcon /></button>
+          <button title="reset" className={`${styles.toolbarIcons} ${styles.resetBtn}`} onClick={reset}><ResetIcon /></button>
         </div>
-        <button className={`${styles.toolbarIcons} ${styles.previewIcons}`} onClick={preview}><PreviewIcon />Preview</button>
-        <button className={styles.addNew} onClick={addNew}><span>+</span>Add New</button>
+        <button title="preview" className={`${styles.toolbarIcons} ${styles.previewIcons}`} onClick={handlePreview}><PreviewIcon />Preview</button>
+        <button className={styles.addNew} onClick={onAddNew}><span>+</span>Add New</button>
       </div>
+      {isPreviewModalOpen && (
+        <PreviewModal onClose={() => setIsPreviewModalOpen(false)} getCanvasSnapshot={getCanvasSnapshot} />
+      )}
     </div>
   );
 };

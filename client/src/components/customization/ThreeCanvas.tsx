@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, forwardRef, useImperativeHandle, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import styles from './customize.module.css';
 import ProductLabel from './ProductLabel';
@@ -23,8 +24,12 @@ interface ThreeCanvasRef {
   reset: () => void;
   changeColor: (color: string) => void;
   addImageToMesh: (file: File) => void;
+  addImageOverlay: (file: File) => void;
   zoomIn: () => void;
   zoomOut: () => void;
+  getCanvasSnapshot: () => Promise<string[]>;
+  rotateLeft: () => void;
+  rotateRight: () => void;
 }
 
 const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName, initialColor }, ref) => {
@@ -38,12 +43,17 @@ const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName,
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [zoom, setZoom] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [labels, setLabels] = useState([
+  const [currentRotation, setCurrentRotation] = useState(0);
+  const [labels] = useState([
     { id: 1, text: 'Neckline', position: { x: 0, y: 0 } },
-    { id: 2, text: 'Sleeve', position: { x: 0, y: 0 } },
+    { id: 2, text: 'Length', position: { x: 0, y: 0 } },
   ]);
 
   useImperativeHandle(ref, () => ({
+    rotateLeft: () => rotateView('left'),
+    rotateRight: () => rotateView('right'),
+    getCanvasSnapshot,
+    addImageOverlay,
     undo: () => {
       if (historyIndex > 0) {
         setHistoryIndex(historyIndex - 1);
@@ -59,7 +69,7 @@ const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName,
     reset: () => {
       if (modelRef.current) {
         applyColorToModel(initialColor);
-        removeTextureFromModel();
+        removeDecals();
         setZoom(1);
         if (cameraRef.current) {
           cameraRef.current.position.set(0, 0, 3);
@@ -115,7 +125,7 @@ const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName,
       if (state.designTexture) {
         applyTextureToModel(state.designTexture, state.designPosition);
       } else {
-        removeTextureFromModel();
+        removeDecals();
       }
       setZoom(state.zoom);
       updateCameraZoom(state.zoom);
@@ -125,6 +135,53 @@ const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName,
   const saveState = (state: CanvasState) => {
     setHistory(prevHistory => [...prevHistory.slice(0, historyIndex + 1), state]);
     setHistoryIndex(prevIndex => prevIndex + 1);
+  };
+
+  const getCanvasSnapshot = async (): Promise<string[]> => {
+    if (!sceneRef.current || !cameraRef.current || !rendererRef.current || !modelRef.current) {
+      return [];
+    }
+
+    const scene = sceneRef.current;
+    const camera = cameraRef.current;
+    const renderer = rendererRef.current;
+    const model = modelRef.current;
+
+    const originalRotation = model.rotation.y;
+    const snapshots: string[] = [];
+
+    for (let i = 0; i < 4; i++) {
+      model.rotation.y = Math.PI * 0.5 * i;
+      renderer.render(scene, camera);
+      snapshots.push(renderer.domElement.toDataURL('image/png'));
+    }
+
+    model.rotation.y = originalRotation;
+    renderer.render(scene, camera);
+
+    return snapshots;
+  };
+
+  const rotateView = (direction: 'left' | 'right') => {
+    setCurrentRotation((prev) => {
+      const newRotation = direction === 'left' ? (prev - 1 + 4) % 4 : (prev + 1) % 4;
+      if (modelRef.current) {
+        modelRef.current.rotation.y = Math.PI * 0.5 * newRotation;
+      }
+      return newRotation;
+    });
+  };
+
+  const addImageOverlay = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        const texture = new THREE.TextureLoader().load(e.target.result as string);
+        applyPrintToModel(texture);
+        saveState({ color: getCurrentColor(), designTexture: texture, designPosition: getCurrentDesignPosition(), zoom });
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const getCurrentColor = (): string => {
@@ -188,51 +245,77 @@ const ThreeCanvas = forwardRef<ThreeCanvasRef, ThreeCanvasProps>(({ productName,
           const material = child.material as THREE.MeshStandardMaterial;
           material.map = texture;
           material.map.offset.copy(position);
-          material.map.repeat.set(0.5, 0.5); 
+          material.map.repeat.set(0.5, 0.5);
           material.needsUpdate = true;
         }
       });
     }
   };
 
-  const removeTextureFromModel = () => {
-    if (modelRef.current) {
+  const removeDecals = () => {
+    if (sceneRef.current) {
+      const decalsToRemove = sceneRef.current.children.filter(child => child.userData.isDecal);
+      decalsToRemove.forEach(decal => sceneRef.current?.remove(decal));
+    }
+  };
+
+  const applyPrintToModel = (texture: THREE.Texture) => {
+    if (modelRef.current && sceneRef.current) {
+      const decalMaterial = new THREE.MeshPhongMaterial({
+        map: texture,
+        transparent: true,
+        depthTest: true,
+        depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -4,
+      });
+
+      let targetMesh: THREE.Mesh | null = null;
       modelRef.current.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          const material = child.material as THREE.MeshStandardMaterial;
-          material.map = null;
-          material.needsUpdate = true;
+        if (child instanceof THREE.Mesh && child.geometry) {
+          targetMesh = child;
         }
       });
+
+      if (targetMesh) {
+        const position = new THREE.Vector3(0, 0, 0.01);
+        const normal = new THREE.Vector3(0, 0, 1);
+        const orientation = new THREE.Euler();
+        const size = new THREE.Vector3(0.2, 0.2, 0.1);
+
+        const decalGeometry = new DecalGeometry(targetMesh, position, orientation, size);
+        const decalMesh = new THREE.Mesh(decalGeometry, decalMaterial);
+        decalMesh.userData.isDecal = true;
+
+        sceneRef.current.add(decalMesh);
+      } else {
+        console.error('No suitable mesh found for applying decal');
+      }
     }
   };
 
-  // Function to get a point on the model based on a label ID
-const getPointOnModel = (labelId: number): THREE.Vector3 => {
-  if (!modelRef.current) {
-    throw new Error('Model reference is not set');
-  }
+  const getPointOnModel = (labelId: number): THREE.Vector3 => {
+    if (!modelRef.current) {
+      throw new Error('Model reference is not set');
+    }
 
-  let point3D = new THREE.Vector3();
+    let point3D = new THREE.Vector3();
 
+    switch (labelId) {
+      case 1: // Neckline
+        point3D.set(0, 1.9, 0);
+        break;
+      case 2: // Length
+        point3D.set(0, -1.9, 0);
+        break;
+      default:
+        point3D.set(0, 0, 0);
+    }
 
-  switch (labelId) {
-    //These coordinates should be updating as he 3d canvas pans through
-    case 1: // Neckline
-      point3D.set(0, 1.9, 0); 
-      break;
-    case 2: // Sleeve
-      point3D.set(-0.35, 1.9, 0); 
-      break;
-    default:
-      point3D.set(0, 0, 0); 
-  }
+    modelRef.current.localToWorld(point3D);
 
-  modelRef.current.localToWorld(point3D);
-
-  return point3D;
-};
-
+    return point3D;
+  };
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -273,10 +356,14 @@ const getPointOnModel = (labelId: number): THREE.Vector3 => {
       '/models/tshirt/T_shirt_gltf.zip.gltf',
       (gltf) => {
         const model = gltf.scene;
-        model.scale.set(2.5, 1.5, 2.5);
-        model.position.set(0, -1.5, 0);
+        model.scale.set(3.5, 2.1, 3.5);
+        model.position.set(0, 0, 0);
         scene.add(model);
         modelRef.current = model;
+
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
 
         applyColorToModel(initialColor);
         saveState({ color: initialColor, designTexture: null, designPosition: new THREE.Vector2(0, 0), zoom: 1 });
@@ -296,18 +383,14 @@ const getPointOnModel = (labelId: number): THREE.Vector3 => {
       if (modelRef.current && cameraRef.current && canvasRef.current) {
         const canvas = canvasRef.current;
         const camera = cameraRef.current;
-        const newLabels = labels.map(label => {
+        labels.forEach(label => {
           const point3D = getPointOnModel(label.id);
           const vector = point3D.project(camera);
-          const x = (vector.x * 0.5 + 0.5) * canvas.clientWidth;
-          const y = (vector.y * -0.5 + 0.5) * canvas.clientHeight;
-          return { ...label, position: { x, y } };
+          label.position.x = (vector.x * 0.5 + 0.5) * canvas.clientWidth;
+          label.position.y = (vector.y * -0.5 + 0.5) * canvas.clientHeight;
         });
-        setLabels(newLabels);
       }
     };
-    
-    
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -332,7 +415,36 @@ const getPointOnModel = (labelId: number): THREE.Vector3 => {
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
-  }, [initialColor]);
+  }, [initialColor, labels]);
+
+  useEffect(() => {
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const handleDrop = (e: DragEvent) => {
+      e.preventDefault();
+      if (e.dataTransfer && e.dataTransfer.files) {
+        const file = e.dataTransfer.files[0];
+        if (file.type.startsWith('image/')) {
+          addImageOverlay(file);
+        }
+      }
+    };
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.addEventListener('dragover', handleDragOver);
+      canvas.addEventListener('drop', handleDrop);
+    }
+
+    return () => {
+      if (canvas) {
+        canvas.removeEventListener('dragover', handleDragOver);
+        canvas.removeEventListener('drop', handleDrop);
+      }
+    };
+  }, []);
 
   return (
     <div className={styles.canvasContainer}>
@@ -342,25 +454,27 @@ const getPointOnModel = (labelId: number): THREE.Vector3 => {
         </div>
       )}
       <canvas ref={canvasRef} className={styles.canvasElement} />
+      <button className={styles.rotateButtonL} onClick={() => rotateView('left')}>←</button>
+      <button className={styles.rotateButtonR} onClick={() => rotateView('right')}>→</button>
       {labels.map(label => (
-      <ProductLabel key={label.id} text={label.text} position={label.position} />
-    ))}
+        <ProductLabel key={label.id} text={label.text} position={label.position} />
+      ))}
       <div className={styles.zoomControls}>
-          <button onClick={() => {
-                if (ref && 'current' in ref) {
-                  ref.current?.zoomOut();
-                }
-              }}>
-                -
-          </button>
-          <span>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => {
-            if (ref && 'current' in ref) {
-              ref.current?.zoomIn();
-            }
-          }}>
-            +
-          </button>
+        <button onClick={() => {
+          if (ref && 'current' in ref && ref.current) {
+            ref.current.zoomOut();
+          }
+        }}>
+          -
+        </button>
+        <span>{Math.round(zoom * 100)}%</span>
+        <button onClick={() => {
+          if (ref && 'current' in ref && ref.current) {
+            ref.current.zoomIn();
+          }
+        }}>
+          +
+        </button>
       </div>
     </div>
   );
@@ -369,4 +483,3 @@ const getPointOnModel = (labelId: number): THREE.Vector3 => {
 ThreeCanvas.displayName = 'ThreeCanvas';
 
 export default ThreeCanvas;
-

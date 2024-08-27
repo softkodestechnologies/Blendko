@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './customize.module.css';
 
+import {
+    PreviewIcon
+   } from './../../../public/svg/icon';
+
 interface PreviewModalProps {
   onClose: () => void;
   getCanvasSnapshot: () => Promise<string[]>;
@@ -23,9 +27,13 @@ const PreviewModal: React.FC<PreviewModalProps> = ({ onClose, getCanvasSnapshot 
   return (
     <div className={styles.previewModalOverlay}>
       <div className={styles.previewModal}>
-        <button className={styles.closeButton} onClick={onClose}>×</button>
+        <div className={styles.previewTitle}>
+            <div className={`${styles.toolbarIcons} ${styles.previewIcons}`} ><PreviewIcon />Preview</div>
+            <button className={styles.previewClose} onClick={onClose}>×</button>
+        </div>
+        <hr />
         <div className={styles.previewImage}>
-          <Image src={snapshots[selectedView]} alt={`View ${selectedView + 1}`} layout="fill"/>
+          <Image src={snapshots[selectedView]} alt={`View ${selectedView + 1}`} width="500" height="500"/>
         </div>
         <div className={styles.previewGallery}>
           {snapshots.map((snapshot, index) => (
@@ -35,7 +43,8 @@ const PreviewModal: React.FC<PreviewModalProps> = ({ onClose, getCanvasSnapshot 
               alt={`View ${index + 1}`}
               className={selectedView === index ? styles.selectedView : ''}
               onClick={() => setSelectedView(index)}
-              layout="fill"
+              width="60"
+              height="60"
             />
           ))}
         </div>

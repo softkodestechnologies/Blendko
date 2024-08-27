@@ -14,11 +14,7 @@ interface MobileSlidingPanelProps {
 }
 
 const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange }) => {
-  const handleColorChange: ColorChangeHandler = (color) => {
-    // Handle color change here
-    console.log(color);
-  };
-
+ 
   const renderPanelContent = () => {
     switch (activePanel) {
       case 'product':
@@ -31,7 +27,6 @@ const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, on
         return <div>Styles Content</div>;
       case 'colour':
         return <ColorPalette 
-        onChange={handleColorChange} 
         setActivePanel={setActivePanel}
         onColorSelect={onColorChange} />;
       default:

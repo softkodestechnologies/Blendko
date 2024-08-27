@@ -6,7 +6,7 @@
 
 .toolbar {
   width: 100%;
-  background: #f0f0f0;
+  background: #fff;
 }
 
 .toolbarTop, .toolbarBottom {
@@ -22,6 +22,15 @@
   align-items: center;
 }
 
+.toolbarTop p {
+  color: rgba(0,0,0, 0.6);
+
+}
+
+.toolbarTop p b {
+  color: #000;
+}
+
 .toolbarTopRight {
   display: flex;
   justify-content: space-between;
@@ -32,6 +41,11 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.toolbarPrice p {
+  font-weight: bold;
+  color: #767677;
 }
 
 .toolbarBottom {
@@ -50,6 +64,12 @@
   gap: 5px;
   background-color: transparent;
   padding: 10px;
+}
+
+.resetBtn {
+  padding: 0 10px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; 
 }
 
 .addNew {
@@ -186,6 +206,27 @@
   left: 20px;
 }
 
+.rotateButtonL,
+.rotateButtonR {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #000;
+  font-weight: bold;
+  color: #000;
+  background: transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 100;
+}
+
+.rotateButtonL {
+  left: 50px;
+}
+
+.rotateButtonR {
+  right: 50px;
+}
 
 @keyframes slideIn {
   from {
@@ -382,6 +423,81 @@
   background-color: #333;
 }
 
+
+
+/*PreviewModal */
+.previewModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.previewModal {
+  background-color: white;
+  width: 80%;
+  height: 90%;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  position: relative;
+}
+
+.previewModal hr {
+  border: 1px solid #ccc;
+}
+
+.previewTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.previewClose {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.previewImage {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.previewImage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.previewGallery {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.previewGallery img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.selectedView {
+  border-color: #000 !important;
+}
 
 @media (max-width: 768px) {
   .sidebar {
