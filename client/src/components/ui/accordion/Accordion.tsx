@@ -42,7 +42,9 @@ function Accordion({
         onClick={handleToggle}
         aria-expanded={expanded}
         aria-controls="accordion"
-        className="full-width flex align-y space-between"
+        className={`full-width flex align-y space-between ${
+          (toggleOpen && toggleOpen) || expanded ? styles.active : ''
+        }`}
       >
         {head}
       </button>

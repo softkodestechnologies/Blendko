@@ -9,14 +9,16 @@
 .accordion button {
   border: none;
   background: none;
+  padding-block: 12px;
+  padding-inline: 8px;
+}
+
+.active svg {
+  transform: rotate(-90deg);
 }
 
 .accordion:not(:last-of-type) {
   margin-bottom: 10px;
-}
-
-.accordion button {
-  padding-block: 12px;
 }
 
 .accordionBody p {
