@@ -22,6 +22,7 @@ const colors = [
 ];
 
 function ColorSelection() {
+  const [expanded, setExpanded] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string[]>([]);
 
   const handleSelect = (color: string) => {
@@ -35,6 +36,8 @@ function ColorSelection() {
 
   return (
     <Accordion
+      toggleOpen={expanded}
+      setToggleOpen={() => setExpanded(!expanded)}
       className={styles.sidebar_filter}
       head={
         <>
@@ -44,7 +47,7 @@ function ColorSelection() {
         </>
       }
       body={
-        <ul className={`flex ${styles.color_pallete}`}>
+        <ul className={`flex center ${styles.color_pallete}`}>
           {colors.map((color, index) => (
             <li key={index}>
               <button
