@@ -1,58 +1,70 @@
 .navContainer {
-  display: flex;
-  align-items: center;
-  border-top: 1px solid #ccc;
-  padding: 10px;
-  padding-bottom: 0;
+  margin-bottom: 32px;
+}
+
+.action,
+.nav_list {
+  gap: 16px;
+}
+
+.nav_list li {
   position: relative;
-  overflow: hidden;
+}
+
+.toggle_sidebar,
+.nav_list button {
+  border: none;
+  background: transparent;
+}
+
+.nav_list button {
+  font-size: 16px;
+  color: #767677;
+  font-weight: 400;
   font-family: var(--font-poppins);
-  font-size: 18px;
-}
-
-.navItem {
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: color 0.3s;
-  text-wrap: nowrap;
-  position: relative;
-}
-
-.navItem:hover {
-  color: #000;
 }
 
 .active {
-  font-weight: 600;
-  position: relative;
+  color: #000 !important;
+  font-weight: 500 !important;
 }
 
-.active > .underline {
+.underline {
+  height: 2px;
+  display: block;
+  bottom: -6px;
   position: absolute;
-  bottom: -1px;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  background-color: #000;
-  transition: transform 0.5s;
-  pointer-events: none;
+  background: #000;
 }
 
-@media only screen and (max-width: 768px) {
+.toggle_sidebar {
+  gap: 8px;
+  font-weight: 500;
+  color: #000000cc;
+  white-space: nowrap;
+}
+
+.dropdown {
+  width: 120px !important;
+}
+
+@media (max-width: 1024px) {
   .navContainer {
-    width: 100%;
-    justify-content: space-between;
+    gap: 32px;
+    overflow-x: auto;
+    margin-bottom: 10px;
+    padding-block: 12px;
   }
 
-  .navItem {
-    flex-wrap: wrap;
-    font-size: 12px;
+  .navContainer::-webkit-scrollbar {
+    display: none;
   }
-}
 
-@media only screen and (max-width: 980px) {
-  .navItem {
-    font-size: 12px;
-    padding: 2px 4px;
+  .nav_list li {
+    white-space: nowrap;
+  }
+
+  .toggle_sidebar {
+    display: none;
   }
 }
