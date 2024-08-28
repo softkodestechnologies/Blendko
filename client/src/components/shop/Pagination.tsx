@@ -1,4 +1,6 @@
-import React from 'react';
+import styles from './pagination.module.css';
+
+import Dropdown from '../ui/dropdown/Dropdown';
 
 interface PaginationProps {
   currentPage: number;
@@ -6,27 +8,27 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onPageChange(Number(event.target.value));
-  };
-
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   return (
-    <div className='flex align-x'>
-      {totalPages === 0? '':
-      <label htmlFor="page-select" className='pagination-label'>Page  
-        <select id="page-select" value={currentPage} onChange={handleChange}>
-            {Array.from({ length: totalPages }, (_, index) => (
-            <option key={index + 1} value={index + 1}>
-                {index + 1}
-            </option>
-            ))}
-        </select>
-      of {totalPages}</label>
-  }
+    <div className={`flex align-y align-x ${styles.pagination}`}>
+      <p>Page</p>
+
+      <Dropdown
+        value={currentPage.toString()}
+        className={`${styles.dropdown}`}
+        onSelect={(value: string) => onPageChange(+value)}
+        optionsList={Array.from({ length: totalPages }, (_, index) =>
+          (index + 1).toString()
+        )}
+      />
+
+      <p>of {totalPages || 0}</p>
     </div>
   );
 };
 
 export default Pagination;
-
