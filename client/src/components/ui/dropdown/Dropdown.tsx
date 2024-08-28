@@ -13,7 +13,6 @@ function Dropdown({
   optionsList,
   caption,
   className,
-
 }: {
   onSelect: (value: string) => void;
   value: string;
@@ -69,8 +68,8 @@ function Dropdown({
       <AnimatePresence mode="wait">
         {isOptionsOpen && (
           <motion.ul
-            className={`full-width ${styles.options}`}
             role="listbox"
+            className={`full-width ${styles.options}`}
             aria-activedescendant={`${optionsList.indexOf(value)}`}
             tabIndex={-1}
             initial={{ height: 0 }}
