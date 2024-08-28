@@ -1,9 +1,11 @@
 'use client';
 
-import styles from './Filter.module.css';
-import { FaSlidersH } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { useState, useCallback } from 'react';
 
+import styles from './Filter.module.css';
+
+import { FilterIcon } from '../../../public/svg/icon';
 import PriceSlider from './filterComponents/PriceSlider';
 import SelectedList from './filterComponents/SelectedList';
 import ColorSelection from './filterComponents/ColorSelection';
@@ -11,28 +13,20 @@ import SizeFilter from './filterComponents/SizeFilter';
 import CollectionFilter from './filterComponents/CollectionFilter';
 
 interface FilterProps {
+  className?: string;
   onSearch: (key: string, value: string) => void;
   onPriceRangeChange: (value: [number, number]) => void;
   onSortChange: (value: string) => void;
   onCheckboxChange: (key: string, value: string[]) => void;
 }
 
-type ExpandedSections = {
-  categories: boolean;
-  price: boolean;
-  colors: boolean;
-  sizes: boolean;
-  dressStyles: boolean;
-  brand: boolean;
-  fashionCollection: boolean;
-};
-
-const Filter: React.FC<FilterProps> = ({
+function Filter({
   onSearch,
+  className,
   onPriceRangeChange,
   onSortChange,
   onCheckboxChange,
-}) => {
+}: FilterProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
 
   const handleCheckboxChange = useCallback(
@@ -43,13 +37,17 @@ const Filter: React.FC<FilterProps> = ({
   );
 
   return (
-    <aside className={styles.sidebar}>
-      <div className="flex space-between">
+    <motion.aside
+      animate={{ x: 0, opacity: 1 }}
+      initial={{ x: '-100%', opacity: 0 }}
+      className={`${styles.sidebar} ${className}`}
+      transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+      exit={{ x: '-100%', opacity: 0, transition: { duration: 0.3, delay: 0.2 } }}
+    >
+      <div className={`flex space-between align-y ${styles.header}`}>
         <h2>Filters</h2>
-        <FaSlidersH
-          size={25}
-          style={{ transform: 'rotate(90deg)', color: 'gray' }}
-        />
+
+        <FilterIcon />
       </div>
 
       <SelectedList />
@@ -57,8 +55,8 @@ const Filter: React.FC<FilterProps> = ({
       <ColorSelection />
       <SizeFilter />
       <CollectionFilter />
-    </aside>
+    </motion.aside>
   );
-};
+}
 
 export default Filter;
