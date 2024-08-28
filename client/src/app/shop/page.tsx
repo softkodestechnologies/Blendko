@@ -1,19 +1,31 @@
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState, Suspense } from 'react';
+
 import useFilterOptions from '@/utils/hooks/useFilterOptions';
 import usePagination from '@/utils/hooks/usePagination';
-import CategoryList from '@/components/shop/CategoryList';
 import ProductList from '@/components/shop/ProductList';
 import Filter from '@/components/shop/Filter';
 import Pagination from '@/components/shop/Pagination';
 import LoadingSkeleton from '@/components/shop/LoadingSkeleton';
 import FilterNav from '@/components/shop/FilterNav';
 import styles from './Shop.module.css';
-import Image from 'next/image';
-import { FaSlidersH } from 'react-icons/fa';
+import BackDrop from '@/components/ui/BackDrop';
+import useDimension from '@/utils/hooks/useDimension';
+import { NavFilterIcon } from '../../../public/svg/icon';
+
+const variants = {
+  visible: {
+    gridTemplateColumns: '295px 1fr',
+  },
+  hidden: {
+    gridTemplateColumns: '1fr',
+  },
+};
 
 const Shop = () => {
+  const { width } = useDimension();
   const [isMounted, setIsMounted] = useState(false);
   const {
     data: products,
@@ -24,10 +36,12 @@ const Shop = () => {
     handleDropdownSelect,
     handleCheckboxChange,
   } = useFilterOptions();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebarXl, setOpenSidebarXl] = useState(true);
   const { totalPages, currentPage, handlePageChange } = usePagination({
     productCount: products?.productsCount || 0,
   });
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const menuItems = [
     'All Sale',
@@ -42,72 +56,105 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    setIsMounted(true);
+    // setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
-    return (
-      <div className="container">
-        <main className={styles.main}>
-          <aside className={styles.sidebar}>
-            <Filter
-              onSearch={handleSearch}
-              onPriceRangeChange={handlePriceRange}
-              onSortChange={handleSort}
-              onCheckboxChange={handleCheckboxChange}
-            />
-          </aside>
+  // if (!isMounted) {
+  //   return (
+  //     <section>
+  //       <div className={`grid section_container ${styles.main}`}>
+  //         <Filter
+  //           onSearch={handleSearch}
+  //           onPriceRangeChange={handlePriceRange}
+  //           onSortChange={handleSort}
+  //           onCheckboxChange={handleCheckboxChange}
+  //         />
 
-          <LoadingSkeleton />
-        </main>
-      </div>
-    );
-  }
+  //         <LoadingSkeleton />
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
-    <div className="container">
-      <main className={styles.main}>
-        <aside className={styles.sidebar}>
-          <Filter
-            onSearch={handleSearch}
-            onPriceRangeChange={handlePriceRange}
-            onSortChange={handleSort}
-            onCheckboxChange={handleCheckboxChange}
-          />
-        </aside>
-
-        <div className={styles.products}>
-          {isLoading ? (
-            <div>
-              <FilterNav
-                onSearch={handleSearch}
-                menuItems={menuItems}
-                activeIndex={activeIndex}
-                setIndex={setIndex}
-              />
-              <LoadingSkeleton />
-            </div>
-          ) : (
-            <div>
-              <div className={styles.filterParent}>
-                <FilterNav
-                  onSearch={handleSearch}
-                  menuItems={menuItems}
-                  activeIndex={activeIndex}
-                  setIndex={setIndex}
-                />
-                <div className={styles.filterCon}>
-                  <div className={styles.hideFilter}>
-                    <span>Hide Filter</span> <FaSlidersH />
-                  </div>
-                  <div className="sort">Sort by</div>
-                </div>
-              </div>
-              <ProductList products={products?.products || []} />
-            </div>
+    <section>
+      <motion.div
+        variants={variants}
+        transition={{ duration: 0, type: 'tween' }}
+        animate={openSidebarXl ? 'visible' : 'hidden'}
+        className={`grid full-width section_container ${styles.main}`}
+      >
+        <AnimatePresence mode="wait">
+          {width && width < 1024 && openSidebar && (
+            <Filter
+              onSearch={handleSearch}
+              onSortChange={handleSort}
+              className={`${styles.mobile_filter}`}
+              onPriceRangeChange={handlePriceRange}
+              onCheckboxChange={handleCheckboxChange}
+            />
           )}
-          
-          {isLoading ? (
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          {width && width < 1024 && openSidebar && (
+            <BackDrop
+              onClick={() => setOpenSidebar(!openSidebar)}
+              style={{
+                zIndex: 59,
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          {openSidebarXl && (
+            <Filter
+              onSearch={handleSearch}
+              onSortChange={handleSort}
+              onPriceRangeChange={handlePriceRange}
+              className={`${styles.desktop_filter}`}
+              onCheckboxChange={handleCheckboxChange}
+            />
+          )}
+        </AnimatePresence>
+
+        <section className={`full-width ${styles.main_pane}`}>
+          <FilterNav
+            setIndex={setIndex}
+            menuItems={menuItems}
+            onSearch={handleSearch}
+            activeIndex={activeIndex}
+            onOpenSidebar={() => setOpenSidebarXl(!openSidebarXl)}
+          />
+
+          <div
+            className={`flex space-between align-y ${styles.mobile_sub_nav}`}
+          >
+            <h2>{products?.productsCount || 0} Results </h2>
+
+            <button
+              className={`flex center`}
+              onClick={() => setOpenSidebar(!openSidebar)}
+            >
+              Filter
+              <NavFilterIcon
+                style={{
+                  transform: 'rotate(90deg)',
+                }}
+              />
+            </button>
+          </div>
+
+          <ProductList
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            isSideBarVisible={openSidebarXl}
+            products={products?.products || []}
+          />
+
+          {/* {isLoading ? (
             ''
           ) : (
             <Pagination
@@ -115,10 +162,10 @@ const Shop = () => {
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
-          )}
-        </div>
-      </main>
-    </div>
+          )} */}
+        </section>
+      </motion.div>
+    </section>
   );
 };
 
