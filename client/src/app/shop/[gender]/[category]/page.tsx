@@ -20,6 +20,7 @@ interface ShopCategoryProps {
 const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
   const { gender, category } = params;
   const [isMounted, setIsMounted] = useState(false);
+  const [openSidebarXl, setOpenSidebarXl] = useState(true);
 
 
   const { data: categoryData, isLoading: isLoadingCategory } = useGetCategoryByNameQuery(category);
@@ -57,7 +58,10 @@ const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
         onSortChange={handleSort}
         onCheckboxChange={handleCheckboxChange}
       />
-      {isLoadingProducts ? <LoadingSkeleton /> : <ProductList products={productsData?.products || []} />}
+      {isLoadingProducts ? <LoadingSkeleton /> : <ProductList  totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            isSideBarVisible={openSidebarXl} products={productsData?.products || []} />}
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
