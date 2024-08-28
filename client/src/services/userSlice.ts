@@ -10,7 +10,13 @@ interface UserState {
   };
 }
 
-let baseUrl = 'https://blendko.onrender.com/api/v1';
+let baseUrl;
+
+if (process.env.NODE_ENV === 'development') {
+  baseUrl = 'http://localhost:8080/api/v1';
+} else {
+  baseUrl = 'https://blendko.onrender.com/api/v1';
+}
 
 
 

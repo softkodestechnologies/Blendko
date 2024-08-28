@@ -1,107 +1,54 @@
 .main {
-  display: flex;
-  width: 100%;
-  margin-bottom: 40px;
+  grid-template-columns: 295px 1fr;
 }
 
-.sidebar {
-  width: 250px;
-  padding: 20px 20px 0 0;
+.main_pane {
+  padding-left: 30px;
+  padding-bottom: 64px;
 }
 
-.products {
-  width: calc(100% - 250px);
+.mobile_filter,
+.mobile_sub_nav {
+  display: none;
 }
 
-
-.filterSection {
-  margin-bottom: 20px;
-}
-
-.filterParent {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #000;
-}
-
-.filterCon {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-  text-wrap: nowrap;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.hideFilter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-}
-
-.recommendations {
-  background-color: #fff;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.recommendations_title {
-  padding-bottom: 2rem;
-}
-
-.recommendationItems {
-  display: flex;
-  overflow-x: auto;
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
-}
-
-.recommendationItems::-webkit-scrollbar {
-  display: none; 
-}
-
-.recommendationItem {
-  flex: 0 0 auto;
-  width: calc(25% - 1rem); 
-  margin: 0 0.5rem;
-  text-align: center;
-}
-
-.recommendationDetails h3 {
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-
-.recommendationDetails p {
-  font-size: 0.875rem;
-  color: #555;
-}
-
-.sort {
-  margin-left: 10px;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .main {
-    flex-direction: column;
+    display: block;
   }
 
-  .products {
-    width: 100%;
+  .main_pane {
+    padding-left: 0;
   }
 
-  .sidebar {
-      display: none;
-  }
-
-  .filterCon {
+  .sidebar,
+  .desktop_filter {
     display: none;
   }
 
-  .recommendationItem {
-      width: calc(50% - 1rem); 
+  .mobile_filter {
+    display: block;
+  }
+
+  .mobile_sub_nav {
+    display: flex;
+    margin-bottom: 24px;
+  }
+
+  .mobile_sub_nav h2 {
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    color: #00000080;
+    font-family: var(--font-poppins);
+  }
+
+  .mobile_sub_nav button {
+    gap: 8px;
+    width: 109px;
+    padding: 10px;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid #0000001a;
   }
 }

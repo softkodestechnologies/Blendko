@@ -28,23 +28,42 @@ function useFilterOptions() {
   const sizes = searchParams.get('sizes');
   const dressStyle = searchParams.get('dress_style');
 
-  const searchArgs = useMemo(() => [
-    { key: 'page', value: pageNum },
-    { key: 'pp', value: pp },
-    { key: 'keyword', value: keyword },
-    { key: 'category', value: category },
-    { key: 'price[gte]', value: priceGTE },
-    { key: 'price[lte]', value: priceLTE },
-    { key: 'rating', value: rating },
-    { key: 'sort', value: sort },
-    { key: 'gender', value: gender },
-    { key: 'colors', value: colors },
-    { key: 'brand', value: brand },
-    { key: 'technology', value: technology },
-    { key: 'fashion_collection', value: fashionCollection },
-    { key: 'sizes', value: sizes },
-    { key: 'dress_style', value: dressStyle },
-  ], [pageNum, pp, keyword, category, priceGTE, priceLTE, rating, sort, gender, colors, brand, technology, fashionCollection, sizes, dressStyle]);
+  const searchArgs = useMemo(
+    () => [
+      { key: 'page', value: pageNum },
+      { key: 'pp', value: pp },
+      { key: 'keyword', value: keyword },
+      { key: 'category', value: category },
+      { key: 'price[gte]', value: priceGTE },
+      { key: 'price[lte]', value: priceLTE },
+      { key: 'rating', value: rating },
+      { key: 'sort', value: sort },
+      { key: 'gender', value: gender },
+      { key: 'colors', value: colors },
+      { key: 'brand', value: brand },
+      { key: 'technology', value: technology },
+      { key: 'fashion_collection', value: fashionCollection },
+      { key: 'sizes', value: sizes },
+      { key: 'dress_style', value: dressStyle },
+    ],
+    [
+      pageNum,
+      pp,
+      keyword,
+      category,
+      priceGTE,
+      priceLTE,
+      rating,
+      sort,
+      gender,
+      colors,
+      brand,
+      technology,
+      fashionCollection,
+      sizes,
+      dressStyle,
+    ]
+  );
 
   useEffect(() => {
     const { url, hash } = checkURL(searchArgs);
@@ -52,36 +71,54 @@ function useFilterOptions() {
     dispatch(fetchProducts(hash) as any);
   }, [searchArgs, router, dispatch]);
 
-  const handleDropdownSelect = useCallback((value: string) => {
-    const { url } = checkURL([...searchArgs, { key: 'category', value }]);
-    router.push(url);
-  }, [searchArgs, router]);
+  const handleDropdownSelect = useCallback(
+    (value: string) => {
+      const { url } = checkURL([...searchArgs, { key: 'category', value }]);
+      router.push(url);
+    },
+    [searchArgs, router]
+  );
 
-  const handleSearch = useCallback((key: string, value: string) => {
-    const { url } = checkURL([...searchArgs, { key, value }]);
-    router.push(url);
-  }, [searchArgs, router]);
+  const handleSearch = useCallback(
+    (key: string, value: string) => {
+      const { url } = checkURL([...searchArgs, { key, value }]);
+      router.push(url);
+    },
+    [searchArgs, router]
+  );
 
-  const handlePriceRange = useCallback((value: [number, number]) => {
-    const { url } = checkURL([
-      ...searchArgs,
-      { key: 'price[gte]', value: value[0].toString() },
-      { key: 'price[lte]', value: value[1].toString() },
-    ]);
-    router.push(url);
-  }, [searchArgs, router]);
+  const handlePriceRange = useCallback(
+    (value: [number, number]) => {
+      const { url } = checkURL([
+        ...searchArgs,
+        { key: 'price[gte]', value: value[0].toString() },
+        { key: 'price[lte]', value: value[1].toString() },
+      ]);
+      router.push(url);
+    },
+    [searchArgs, router]
+  );
 
-  const handleSort = useCallback((value: string) => {
-    const { url } = checkURL([...searchArgs, { key: 'sort', value }]);
-    router.push(url);
-  }, [searchArgs, router]);
+  const handleSort = useCallback(
+    (value: string) => {
+      const { url } = checkURL([...searchArgs, { key: 'sort', value }]);
+      router.push(url);
+    },
+    [searchArgs, router]
+  );
 
-  const handleCheckboxChange = useCallback((key: string, value: string[]) => {
-    if (!Array.isArray(value)) return;
-    const filteredValue = value.filter(v => v);
-    const { url } = checkURL([...searchArgs, { key, value: filteredValue.join(',') }]);
-    router.push(url);
-  }, [searchArgs, router]);
+  const handleCheckboxChange = useCallback(
+    (key: string, value: string[]) => {
+      if (!Array.isArray(value)) return;
+      const filteredValue = value.filter((v) => v);
+      const { url } = checkURL([
+        ...searchArgs,
+        { key, value: filteredValue.join(',') },
+      ]);
+      router.push(url);
+    },
+    [searchArgs, router]
+  );
 
   return {
     data,

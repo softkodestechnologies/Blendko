@@ -1,43 +1,56 @@
-import React from 'react';
-import Link from 'next/link';
-import { Product } from '@/utils/types';
-import Image from 'next/image';
+import styles from './product.module.css';
+
+import Product from './Product';
+import Pagination from './Pagination';
+import { Product as P } from '@/utils/types';
 
 interface ProductListProps {
-  products: Product[];
+  products: P[];
+  totalPages: number;
+  currentPage: number;
+  isSideBarVisible: boolean;
+  onPageChange: (page: number) => void;
 }
 
 const generateSlug = (name: string, id: string) => {
-    return `${name.replace(/\s+/g, '-').toLowerCase()}-${id}`;
+  return `${name.replace(/\s+/g, '-').toLowerCase()}-${id}`;
 };
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const ProductList: React.FC<ProductListProps> = ({
+  products,
+  isSideBarVisible,
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
   return (
-    <div className="product-list">
-      {products.length === 0? 
-        <div className="no-products flex center">
+    <>
+      {products.length === 0 ? (
+        <div className="flex center">
           <h2>No Product Fits Your Filter Preferences</h2>
-        </div>: ''}
-      {products.map((product) => (
-        <div key={product._id} className="product-item">
-          <Link href={`/shop/product/${generateSlug(product.name, product._id)}`}>
-            <div className="image-container">
-              <Image 
-                src={product.images[0].url} 
-                alt={product.description} 
-                width={180} 
-                height={180} 
-
-              />
-            </div>
-            <h5>{product.name}</h5>
-            <p>{product.description}</p>
-            <p>{`${product.colors.length} colour${product.colors.length > 1? 's' : ''}`}</p>
-            <h5>Price: ${product.price}</h5>
-          </Link>
         </div>
-      ))}
-    </div>
+      ) : null}
+
+      <div
+        className={`grid full-width ${styles.product_list} ${
+          isSideBarVisible ? styles.with_sidebar : styles.without_sidebar
+        }`}
+      >
+        {products.map((product) => (
+          <Product
+            key={product._id}
+            product={product}
+            slug={`/shop/product/${generateSlug(product.name, product._id)}`}
+          />
+        ))}
+      </div>
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+      />
+    </>
   );
 };
 

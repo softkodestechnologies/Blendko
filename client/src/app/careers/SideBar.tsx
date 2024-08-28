@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 import styles from './career.module.css';
 
@@ -8,13 +9,19 @@ import { careerNavLinks } from '@/utils/data/dummy';
 import { ChevronDown } from '../../../public/svg/icon';
 import Accordion from '@/components/ui/accordion/Accordion';
 
-function SideBar({ className }: { className?: string }) {
+function SideBar({
+  className,
+  ...props
+}: {
+  className?: string;
+  [key: string]: any;
+}) {
   const [showAlert, setShowAlert] = useState(false);
 
   const formatText = (text: string) => text.toLowerCase().split(' ').join('-');
 
   return (
-    <aside className={`${styles.filter} ${className}`}>
+    <motion.aside className={`${styles.filter} ${className}`} {...props}>
       <h2>THERE ARE 30 OPEN POSITIONS</h2>
 
       <SearchBar className={`${styles.filter_search}`} />
@@ -65,7 +72,7 @@ function SideBar({ className }: { className?: string }) {
       </button>
 
       {showAlert && <JobAlertForm onCancel={() => setShowAlert(false)} />}
-    </aside>
+    </motion.aside>
   );
 }
 
