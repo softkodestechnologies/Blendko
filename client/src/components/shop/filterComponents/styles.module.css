@@ -15,14 +15,31 @@
   font-weight: 400;
   color: #00000099;
   font-size: inherit;
-  padding: 2px 0 !important;
+  padding: 2px 8px !important;
 }
 
 .price_filter {
-  padding-block: 16px 32px;
+  position: relative;
+  padding-inline: 10px;
+  padding-block: 16px 48px;
 }
 
-.sidebar_filter {
+.price_labels {
+  margin-top: 10px;
+  position: relative;
+}
+
+.price_labels span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  position: absolute;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  font-family: var(--font-poppins);
+}
+
+.sidebar_filter:not(:last-of-type) {
   border-bottom: 1px solid #0000001a !important;
 }
 
@@ -57,7 +74,7 @@
 }
 
 .applied_filters {
-  padding-bottom: 16px;
+  padding-bottom: 24px;
 }
 
 .applied_filters h3 {
@@ -94,7 +111,7 @@
 .color_pallete {
   gap: 16px;
   flex-wrap: wrap;
-  padding-bottom: 16px;
+  padding-bottom: 24px;
 }
 
 .color_pallete button {
