@@ -8,14 +8,19 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onRequestClose, title, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onRequestClose,
+  title,
+  children,
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
     } else {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
     }
   }, [isOpen]);
 
