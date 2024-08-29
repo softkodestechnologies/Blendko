@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, color } from 'framer-motion';
 
 import styles from './styles.module.css';
 
@@ -9,19 +9,23 @@ import Accordion from '@/components/ui/accordion/Accordion';
 import { ChevronIcon, CheckMark } from '../../../../public/svg/icon';
 
 const colors = [
-  '#00C12B',
-  '#F50606',
-  '#F5DD06',
-  '#F57906',
-  '#06CAF5',
-  '#063AF5',
-  '#7D06F5',
-  '#F506A4',
-  '#ffffff',
-  '#000000',
+  { color: 'green', hex: '#00C12B' },
+  { color: 'red', hex: '#F50606' },
+  { color: 'yellow', hex: '#F5DD06' },
+  { color: 'orange', hex: '#F57906' },
+  { color: 'lilac', hex: '#06CAF5' },
+  { color: 'blue', hex: '#063AF5' },
+  { color: 'purple', hex: '#7D06F5' },
+  { color: 'pink', hex: '#F506A4' },
+  { color: 'white', hex: '#ffffff' },
+  { color: 'black', hex: '#000000' },
 ];
 
-function ColorSelection() {
+function ColorSelection({
+  handleCheckboxChange,
+}: {
+  handleCheckboxChange: (key: string, value: string[]) => void;
+}) {
   const [expanded, setExpanded] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string[]>([]);
 
@@ -32,6 +36,8 @@ function ColorSelection() {
       );
 
     setSelectedColor([...selectedColor, color]);
+
+    handleCheckboxChange('color', [...selectedColor, color]);
   };
 
   return (
@@ -52,15 +58,15 @@ function ColorSelection() {
             <li key={index}>
               <button
                 className={`flex center`}
-                style={{ backgroundColor: color }}
-                onClick={() => handleSelect(color)}
+                style={{ backgroundColor: color.hex }}
+                onClick={() => handleSelect(color.color)}
               >
-                {selectedColor.includes(color) && (
+                {selectedColor.includes(color.color) && (
                   <CheckMark
                     className={`${
-                      color === '#fff' ||
-                      color === '#ffffff' ||
-                      color === 'white'
+                      color.color === '#fff' ||
+                      color.color === '#ffffff' ||
+                      color.color === 'white'
                         ? styles.pallete_white
                         : ''
                     }`}
@@ -68,14 +74,14 @@ function ColorSelection() {
                 )}
 
                 <AnimatePresence mode="wait">
-                  {selectedColor.includes(color) && (
+                  {selectedColor.includes(color.hex) && (
                     <motion.span
                       initial={{ x: '0' }}
                       exit={{ x: '0' }}
                       animate={{ x: '100%' }}
                       className={`${styles.animation}`}
                       transition={{ duration: 0.5 }}
-                      style={{ backgroundColor: color }}
+                      style={{ backgroundColor: color.hex }}
                     />
                   )}
                 </AnimatePresence>
