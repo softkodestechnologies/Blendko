@@ -40,6 +40,16 @@ const Header = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    if (navOpen) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
+    }
+  }, [navOpen]);
+
   const toggleCart = () => {
     handleStorageChange();
     setCartOpen(!cartOpen);
@@ -183,7 +193,7 @@ const Header = () => {
           {navOpen && (
             <BackDrop
               onClick={() => setNavOpen(false)}
-              style={{ height: 'calc(100% - 84px)', zIndex: '100' }}
+              style={{ height: 'calc(100% - 145px)', zIndex: '100' }}
             />
           )}
         </AnimatePresence>

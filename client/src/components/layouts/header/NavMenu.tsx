@@ -77,7 +77,9 @@ function NavMenu({
                   <ul className={`flex flex-col ${styles.sub_menu}`}>
                     {link.subMenu.map((subLink, index) => (
                       <li key={index}>
-                        <Link href={`${subLink.url}`}>{subLink.title}</Link>
+                        <Link href={`${subLink.url}`} onClick={onClose}>
+                          {subLink.title}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -86,7 +88,11 @@ function NavMenu({
             )}
 
             {link.title !== 'Categories' && (
-              <Link href={`${link.url}`} className={`flex align-y`}>
+              <Link
+                href={`${link.url}`}
+                className={`flex align-y`}
+                onClick={onClose}
+              >
                 {link.title}
               </Link>
             )}
