@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 import Accordion from '@/components/ui/accordion/Accordion';
 import { ChevronIcon } from '../../../../public/svg/icon';
 
-function PriceSlider() {
+function PriceSlider({}) {
   const [expanded, setExpanded] = useState(true);
   const [priceRange, setPriceRange] = useState([200, 800]);
 

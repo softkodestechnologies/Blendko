@@ -42,7 +42,11 @@ function Filter({
       initial={{ x: '-100%', opacity: 0 }}
       className={`${styles.sidebar} ${className}`}
       transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-      exit={{ x: '-100%', opacity: 0, transition: { duration: 0.3, delay: 0.2 } }}
+      exit={{
+        x: '-100%',
+        opacity: 0,
+        transition: { duration: 0.3, delay: 0.2 },
+      }}
     >
       <div className={`flex space-between align-y ${styles.header}`}>
         <h2>Filters</h2>
@@ -52,8 +56,8 @@ function Filter({
 
       <SelectedList />
       <PriceSlider />
-      <ColorSelection />
-      <SizeFilter />
+      <ColorSelection handleCheckboxChange={handleCheckboxChange} />
+      <SizeFilter handleCheckboxChange={handleCheckboxChange} />
       <CollectionFilter />
     </motion.aside>
   );

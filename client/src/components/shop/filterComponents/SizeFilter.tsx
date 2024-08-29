@@ -10,7 +10,11 @@ import { ChevronIcon } from '../../../../public/svg/icon';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
-function SizeFilter() {
+function SizeFilter({
+  handleCheckboxChange,
+}: {
+  handleCheckboxChange: (key: string, value: string[]) => void;
+}) {
   const [expanded, setExpanded] = useState(true);
   const { handleSelect, selectedOptions } = useSelectOption();
 
