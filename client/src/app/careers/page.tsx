@@ -16,7 +16,8 @@ import { ShareIcon, ChevronDown } from '../../../public/svg/icon';
 import careerImage from '../../../public/career.jpeg';
 import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
 
-function page() {
+
+function Page() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -115,9 +116,11 @@ function page() {
             </div>
           </section>
         </div>
+
       </section>
     </>
   );
 }
 
-export default page;
+Page.displayName = 'CareerPage';
+export default Page;
