@@ -30,7 +30,9 @@ function Filter({
   onSubcategoryChange,
 }: FilterProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({
+    fashion_collection: []
+  });
   const [selectedSubcategories, setSelectedSubcategories] = useState<Record<string, string[]>>({});
 
   const handleCheckboxChange = useCallback(
@@ -114,7 +116,7 @@ function Filter({
       <ColorSelection  handleCheckboxChange={handleCheckboxChange}
         selectedColors={selectedOptions.colors || []} />
       <SizeFilter handleCheckboxChange={handleCheckboxChange} selectedSizes={selectedOptions.sizes || []}  />
-      <CollectionFilter handleCheckboxChange={handleCheckboxChange} selectedCollections={selectedOptions.collections || []}/>
+      <CollectionFilter handleCheckboxChange={handleCheckboxChange} selectedCollections={selectedOptions.fashion_collection || []}/>
     </motion.aside>
   );
 }
