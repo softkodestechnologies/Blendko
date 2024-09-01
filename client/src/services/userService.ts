@@ -12,6 +12,8 @@ type QueryType = {
   order?: string;
   gender?: string;
   colors?: string
+  subcategory?: string;
+  [key: string]: string | number | undefined | string[];
 };
 const getToken = () => {
   if (typeof localStorage !== 'undefined') {
