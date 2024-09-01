@@ -53,7 +53,9 @@ class ApiFeatures {
           query[key] = {
             $in: value.split(',').map((color) => new RegExp(color, 'i')),
           };
-        } else if (key === 'sizes') {
+        } else if (key === 'fashion_collection') {
+          query[key] = { $in: value.split(',') };
+        }  else if (key === 'sizes') {
           query[key] = { $in: value.split(',') };
         } else if (key.startsWith('price')) {
           for (const operator in queryCopy[key]) {
