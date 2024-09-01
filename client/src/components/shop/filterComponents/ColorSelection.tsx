@@ -21,23 +21,22 @@ const colors = [
   { color: 'black', hex: '#000000' },
 ];
 
+interface ColorSelectionProps {
+  handleCheckboxChange: (key: string, value: string[]) => void;
+  selectedColors: string[];
+}
+
 function ColorSelection({
   handleCheckboxChange,
-}: {
-  handleCheckboxChange: (key: string, value: string[]) => void;
-}) {
+  selectedColors
+}: ColorSelectionProps) {
   const [expanded, setExpanded] = useState(true);
-  const [selectedColor, setSelectedColor] = useState<string[]>([]);
 
   const handleSelect = (color: string) => {
-    if (selectedColor.includes(color))
-      return setSelectedColor(
-        selectedColor.filter((option) => option !== color)
-      );
-
-    setSelectedColor([...selectedColor, color]);
-
-    handleCheckboxChange('color', [...selectedColor, color]);
+    const updatedColors = selectedColors.includes(color)
+      ? selectedColors.filter((c) => c !== color)
+      : [...selectedColors, color];
+    handleCheckboxChange('colors', updatedColors);
   };
 
   return (
@@ -61,7 +60,7 @@ function ColorSelection({
                 style={{ backgroundColor: color.hex }}
                 onClick={() => handleSelect(color.color)}
               >
-                {selectedColor.includes(color.color) && (
+                {selectedColors.includes(color.color) && (
                   <CheckMark
                     className={`${
                       color.color === '#fff' ||
@@ -74,7 +73,7 @@ function ColorSelection({
                 )}
 
                 <AnimatePresence mode="wait">
-                  {selectedColor.includes(color.hex) && (
+                  {selectedColors.includes(color.hex) && (
                     <motion.span
                       initial={{ x: '0' }}
                       exit={{ x: '0' }}

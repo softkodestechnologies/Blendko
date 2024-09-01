@@ -11,8 +11,18 @@ const collection = [
   'Fall Collection',
 ];
 
-function CollectionFilter() {
-  const { handleSelect, selectedOptions } = useSelectOption();
+interface CollectionFilterProps {
+  handleCheckboxChange: (key: string, value: string[]) => void;
+  selectedCollections: string[];
+}
+
+function CollectionFilter({ handleCheckboxChange, selectedCollections }: CollectionFilterProps) {
+  const handleSelect = (item: string) => {
+    const updatedCollections = selectedCollections.includes(item)
+      ? selectedCollections.filter((i) => i !== item)
+      : [...selectedCollections, item];
+    handleCheckboxChange('fashion_collection', updatedCollections);
+  };
 
   return (
     <Accordion
@@ -31,9 +41,7 @@ function CollectionFilter() {
               <button
                 type="button"
                 onClick={() => handleSelect(item)}
-                className={`${
-                  selectedOptions.includes(item) ? styles.selected : ''
-                }`}
+                className={`${selectedCollections.includes(item) ? styles.selected : ''}`}
               >
                 {item}
               </button>

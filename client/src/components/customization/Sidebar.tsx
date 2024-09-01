@@ -3,13 +3,22 @@ import styles from './customize.module.css';
 import SlidingPanel from './SlidingPanel';
 import MobileSlidingPanel from './MobileSlidingPanel';
 import { FaTshirt, FaPalette, FaRuler, FaPaintBrush, FaChevronRight } from 'react-icons/fa';
+import {
+ ProductIcon,
+ FilesIcon,
+ StylesIcon,
+ SizesIcon,
+ BackgroundColorIcon,
+ SavedTemplateIcon
+} from './../../../public/svg/icon';
 
 interface SidebarProps {
   onToggleCanvasWidth: () => void;
   onFileUpload: (file: File) => void;
+  onColorChange: (color: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, onColorChange }) => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -41,12 +50,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) 
         <div className={styles.mobileSidebar}>
           {isExpanded && (
             <div className={styles.mobileExpandedMenu}>
-              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><FaRuler /> Styles</div>
-              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><FaPaintBrush /> Colour</div>
+              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><StylesIcon /> Styles</div>
+              <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><BackgroundColorIcon /> Background Colour</div>
             </div>
           )}
           <div className={styles.mobileBottomBar}>
-            <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><FaTshirt /> Product</div>
+            <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><ProductIcon/> Product</div>
             <div className={styles.sidebarItem} onClick={() => handleTogglePanel('design')}><FaPalette /> Design</div>
             <button title="right-arrow" className={styles.expandButton} onClick={toggleExpand}>
               <FaChevronRight />
@@ -54,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) 
           </div>
         </div>
         {activePanel && (
-          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload}/>
+          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload} onColorChange={onColorChange}/>
         )}
       </>
     );
@@ -62,14 +71,39 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload }) 
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('product')}><FaTshirt /> Product</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('files')}>Files</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('styles')}><FaRuler /> Styles</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('sizes')}>Sizes</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('colour')}><FaPaintBrush /> Colour</div>
-      <div className={styles.sidebarItem} onClick={() => handleTogglePanel('savedTemplate')}>Saved Template</div>
+      <div className={styles.sidebarItemContainer}>
+        <div 
+          className={`${styles.sidebarItem} ${activePanel === 'product' ? styles.activePanel : ''}`} 
+          onClick={() => handleTogglePanel('product')}
+        > <ProductIcon /> Product</div>
+
+        <div
+        className={`${styles.sidebarItem} ${activePanel === 'files' ? styles.activePanel : ''}`}
+        onClick={() => handleTogglePanel('files')}
+        > <FilesIcon /> Files</div>
+
+        <div 
+        className={`${styles.sidebarItem} ${activePanel === 'styles' ? styles.activePanel : ''}`}
+        onClick={() => handleTogglePanel('styles')}>
+          <StylesIcon /> Fabric</div>
+
+        <div 
+      className={`${styles.sidebarItem} ${activePanel === 'sizes' ? styles.activePanel : ''}`}
+        onClick={() => handleTogglePanel('sizes')}>
+          <SizesIcon /> Sizes</div>
+
+        <div 
+        className={`${styles.sidebarItem} ${activePanel === 'colour' ? styles.activePanel : ''}`}
+        onClick={() => handleTogglePanel('colour')}>
+          <BackgroundColorIcon /> Colour</div>
+      <div 
+      className={`${styles.sidebarItem} ${activePanel === 'savedTemplate' ? styles.activePanel : ''}`} 
+      onClick={() => handleTogglePanel('savedTemplate')}><SavedTemplateIcon /> Saved Template</div>
+      </div>
+ 
+
       {activePanel && (
-        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload}/>
+        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload} onColorChange={onColorChange}/>
       )}
     </div>
   );

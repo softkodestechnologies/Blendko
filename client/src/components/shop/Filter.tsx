@@ -18,6 +18,7 @@ interface FilterProps {
   onPriceRangeChange: (value: [number, number]) => void;
   onSortChange: (value: string) => void;
   onCheckboxChange: (key: string, value: string[]) => void;
+  onSubcategoryChange: (subcategory: string, attribute: string) => void;
 }
 
 function Filter({
@@ -26,14 +27,63 @@ function Filter({
   onPriceRangeChange,
   onSortChange,
   onCheckboxChange,
+  onSubcategoryChange,
 }: FilterProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [selectedSubcategories, setSelectedSubcategories] = useState<Record<string, string[]>>({});
 
   const handleCheckboxChange = useCallback(
     (key: string, value: string[]) => {
+      setSelectedOptions((prev) => ({ ...prev, [key]: value }));
       onCheckboxChange(key, value);
     },
     [onCheckboxChange]
+  );
+
+  const handleSubcategoryChange = useCallback(
+    (subcategory: string, attribute: string) => {
+      setSelectedSubcategories((prev) => {
+        const updatedSubcategory = prev[subcategory] ? 
+          prev[subcategory].includes(attribute) ?
+            prev[subcategory].filter(attr => attr !== attribute) :
+            [...prev[subcategory], attribute] :
+          [attribute];
+        
+        return { ...prev, [subcategory]: updatedSubcategory };
+      });
+      onSubcategoryChange(subcategory, attribute);
+    },
+    [onSubcategoryChange]
+  );
+
+  const handlePriceRange = useCallback(
+    (value: [number, number]) => {
+      setPriceRange(value);
+      onPriceRangeChange(value);
+    },
+    [onPriceRangeChange]
+  );
+
+  const handleAttributeChange = useCallback(
+    (key: string, value: string) => {
+      setSelectedOptions((prev) => {
+        if (prev[key]) {
+          if (prev[key].includes(value)) {
+            return {
+              ...prev,
+              [key]: prev[key].filter((item) => item !== value),
+            };
+          } else {
+            return { ...prev, [key]: [...prev[key], value] };
+          }
+        } else {
+          return { ...prev, [key]: [value] };
+        }
+      });
+      onSearch(key, value);
+    },
+    [onSearch]
   );
 
   return (
@@ -54,11 +104,17 @@ function Filter({
         <FilterIcon />
       </div>
 
-      <SelectedList />
-      <PriceSlider />
-      <ColorSelection handleCheckboxChange={handleCheckboxChange} />
-      <SizeFilter handleCheckboxChange={handleCheckboxChange} />
-      <CollectionFilter />
+      <SelectedList 
+        handleCheckboxChange={handleCheckboxChange}
+        handleSubcategoryChange={handleSubcategoryChange}
+        selectedOptions={selectedOptions}
+        selectedSubcategories={selectedSubcategories}
+      />
+      <PriceSlider handlePriceRange={handlePriceRange} priceRange={priceRange}/>
+      <ColorSelection  handleCheckboxChange={handleCheckboxChange}
+        selectedColors={selectedOptions.colors || []} />
+      <SizeFilter handleCheckboxChange={handleCheckboxChange} selectedSizes={selectedOptions.sizes || []}  />
+      <CollectionFilter handleCheckboxChange={handleCheckboxChange} selectedCollections={selectedOptions.collections || []}/>
     </motion.aside>
   );
 }

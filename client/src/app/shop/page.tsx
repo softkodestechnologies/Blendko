@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState, Suspense } from 'react';
+import {  useState, Suspense } from 'react';
 
 import useFilterOptions from '@/utils/hooks/useFilterOptions';
 import usePagination from '@/utils/hooks/usePagination';
@@ -35,9 +35,11 @@ const Shop = () => {
     handleSort,
     handleDropdownSelect,
     handleCheckboxChange,
+    handleSubcategoryChange, 
   } = useFilterOptions();
   const [activeIndex, setActiveIndex] = useState(0);
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [sortBy, setSortBy] = useState('Newest');
   const [openSidebarXl, setOpenSidebarXl] = useState(true);
   const { totalPages, currentPage, handlePageChange } = usePagination({
     productCount: products?.productsCount || 0,
@@ -55,26 +57,12 @@ const Shop = () => {
     setActiveIndex(index);
   };
 
-  useEffect(() => {
-    // setIsMounted(true);
-  }, []);
 
-  // if (!isMounted) {
-  //   return (
-  //     <section>
-  //       <div className={`grid section_container ${styles.main}`}>
-  //         <Filter
-  //           onSearch={handleSearch}
-  //           onPriceRangeChange={handlePriceRange}
-  //           onSortChange={handleSort}
-  //           onCheckboxChange={handleCheckboxChange}
-  //         />
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    handleSort(value);
+  };
 
-  //         <LoadingSkeleton />
-  //       </div>
-  //     </section>
-  //   );
-  // }
 
   return (
     <section>
@@ -92,6 +80,7 @@ const Shop = () => {
               className={`${styles.mobile_filter}`}
               onPriceRangeChange={handlePriceRange}
               onCheckboxChange={handleCheckboxChange}
+              onSubcategoryChange={handleSubcategoryChange}
             />
           )}
         </AnimatePresence>
@@ -115,6 +104,7 @@ const Shop = () => {
               onPriceRangeChange={handlePriceRange}
               className={`${styles.desktop_filter}`}
               onCheckboxChange={handleCheckboxChange}
+              onSubcategoryChange={handleSubcategoryChange}
             />
           )}
         </AnimatePresence>
@@ -124,8 +114,10 @@ const Shop = () => {
             setIndex={setIndex}
             menuItems={menuItems}
             onSearch={handleSearch}
+            onSort={handleSortChange}
             activeIndex={activeIndex}
             onOpenSidebar={() => setOpenSidebarXl(!openSidebarXl)}
+            sortBy={sortBy}
           />
 
           <div
@@ -154,15 +146,7 @@ const Shop = () => {
             products={products?.products || []}
           />
 
-          {/* {isLoading ? (
-            ''
-          ) : (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          )} */}
+
         </section>
       </motion.div>
     </section>
