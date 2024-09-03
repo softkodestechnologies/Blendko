@@ -13,6 +13,10 @@
   padding-inline: 8px;
 }
 
+.accordion:has(button:focus-visible) {
+  outline: 1px solid #000;
+}
+
 .active svg {
   transform: rotate(-90deg);
 }
