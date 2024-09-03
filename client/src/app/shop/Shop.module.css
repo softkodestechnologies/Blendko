@@ -1,5 +1,5 @@
 .main {
-  grid-template-columns: 295px 1fr;
+  grid-template-columns: 0.4px 1fr;
 }
 
 .main_pane {
@@ -10,6 +10,12 @@
 .mobile_filter,
 .mobile_sub_nav {
   display: none;
+}
+
+@media (min-width: 1440px) {
+  .main_pane {
+    padding-left: 40px;
+  }
 }
 
 @media (max-width: 1024px) {
