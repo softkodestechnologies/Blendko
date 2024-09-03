@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from './about-us.module.css';
 
 import { Logo } from '../../../public/svg/icon';
-import ladyImg from '../../../public/Lady-in-trad.png';
+import ladyImg from '../../../public/Lady-in-trad.jpg';
 import Resource from '@/components/layouts/resource_links/Resource';
 import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
 
@@ -37,9 +37,9 @@ export default function About() {
 
         <p>
           Founded in Florence, Italy, in 1921, Gucci is one of the world&apos;s
-          leading luxury brands. Following the House&apos;s centenary, Gucci forges
-          ahead continuing to redefine luxury while celebrating creativity,
-          Italian craftsmanship, and innovation.
+          leading luxury brands. Following the House&apos;s centenary, Gucci
+          forges ahead continuing to redefine luxury while celebrating
+          creativity, Italian craftsmanship, and innovation.
         </p>
 
         <p>
