@@ -1,0 +1,31 @@
+.image_preview {
+  height: 578px;
+  overflow: hidden;
+  background: #f0eeed;
+}
+
+.image_tiles {
+  gap: 6px;
+  margin-top: 32px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.image_tile {
+  border: none;
+  height: 150px;
+  background: #f0eeed;
+}
+
+.selected {
+  border: 1.22px solid #000;
+}
+
+@media (max-width: 1024px) {
+  .image_preview {
+    height: 389.13px;
+  }
+
+  .image_tile {
+    height: 116px;
+  }
+}
