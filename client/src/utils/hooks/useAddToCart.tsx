@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
@@ -8,7 +8,8 @@ import useAsyncSubmission from './asyncSubmission';
 
 function useAddToCart() {
   const { user } = useSelector((state: any) => state.user);
-  const [addToCartMutation, { isLoading, isError: error }] = useAddToCartMutation();
+  const [addToCartMutation, { isLoading, isError: error }] =
+    useAddToCartMutation();
   const { isError, handleSubmission } = useAsyncSubmission({
     callback: addToCartMutation,
   });
@@ -21,16 +22,23 @@ function useAddToCart() {
   }, [isLoading, error]);
 
   const addItemToCart = (product: any) => {
-    console.log("Adding item to cart:", product);
-
-    const offLineCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    console.log("Offline cart items before:", offLineCartItems);
+    const offLineCartItems = JSON.parse(
+      localStorage.getItem('cartItems') || '[]'
+    );
 
     if (user) {
       const items = offLineCartItems.map((item: any) => item._id);
 
       handleSubmission(
-        [...items, product._id],
+        [
+          ...items,
+          {
+            _id: product._id,
+            quantity: product.quantity,
+            size: product.selectedSize,
+            color: product.selectedColor,
+          },
+        ],
         () => {},
         '',
         () => {
@@ -49,15 +57,15 @@ function useAddToCart() {
           );
 
           if (foundItem) {
-            foundItem.quantity += 1;
+            foundItem.quantity += product.quantity;
             dispatch(incrementQuantity(foundItem));
           } else {
-            const newCartItem = { ...product, quantity: 1 };
+            const newCartItem = { ...product };
+
             offLineCartItems.push(newCartItem);
           }
 
           localStorage.setItem('cartItems', JSON.stringify(offLineCartItems));
-          console.log("Offline cart items after error handling:", offLineCartItems);
 
           dispatch(logOut());
           router.push('/signin');
@@ -67,22 +75,23 @@ function useAddToCart() {
         return;
       }
     } else {
-      console.log("User not logged in, adding to local storage.");
-      const item = offLineCartItems?.find((item: any) => item._id === product._id);
+      const item = offLineCartItems?.find(
+        (item: any) => item._id === product._id
+      );
 
       if (item) {
-        item.quantity += 1;
+        item.quantity = product.quantity;
+
         dispatch(incrementQuantity(item));
-        console.log("Incremented quantity of existing item:", item);
       } else {
-        const newCartItem = { ...product, quantity: 1 };
+        const newCartItem = { ...product, quantity: product.quantity };
+
         offLineCartItems.push(newCartItem);
+
         dispatch(addToCart(newCartItem) as any);
-        console.log("Added new item to cart:", newCartItem);
       }
 
       localStorage.setItem('cartItems', JSON.stringify(offLineCartItems));
-      console.log("Offline cart items after addition:", offLineCartItems);
     }
   };
 
