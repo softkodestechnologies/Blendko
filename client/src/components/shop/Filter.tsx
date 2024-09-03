@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import styles from './Filter.module.css';
 
@@ -27,8 +27,6 @@ function Filter({
   onSortChange,
   onCheckboxChange,
 }: FilterProps) {
-  const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
-
   const handleCheckboxChange = useCallback(
     (key: string, value: string[]) => {
       onCheckboxChange(key, value);
