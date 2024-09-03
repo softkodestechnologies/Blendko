@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+
 import './Modal.css';
 
 interface ModalProps {
@@ -6,6 +7,7 @@ interface ModalProps {
   onRequestClose: () => void;
   title: string;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -13,22 +15,26 @@ const Modal: React.FC<ModalProps> = ({
   onRequestClose,
   title,
   children,
+  className = '',
 }) => {
   useEffect(() => {
     if (isOpen) {
-      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
-      document.documentElement.style.overflow = 'auto';
       document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className={`modal-overlay`}>
+      <div
+        className={`modal-content ${className}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="modal-title">{title}</h2>
         <div>{children}</div>
       </div>
