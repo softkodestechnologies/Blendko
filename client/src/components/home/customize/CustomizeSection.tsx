@@ -6,8 +6,8 @@ import Customize from './Customize';
 
 function CustomizeSection() {
   return (
-    <section className={`section_container`}>
-      <div className={`${styles.customize_wrapper}`}>
+    <section>
+      <div className={`section_container ${styles.customize_wrapper}`}>
         <div className={`flex flex-col center ${styles.mobile_customize}`}>
           <h2>Customize Your Style</h2>
 
