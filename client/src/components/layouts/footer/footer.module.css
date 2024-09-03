@@ -1,3 +1,8 @@
+.footer *:focus-visible {
+  outline-offset: 4px;
+  outline: 1px solid #fff !important;
+}
+
 .footer {
   background: #000;
 }

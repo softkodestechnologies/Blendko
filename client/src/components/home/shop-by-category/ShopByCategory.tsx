@@ -8,8 +8,8 @@ import { LinkArrow } from '../../../../public/svg/icon';
 
 function ShopByCategory() {
   return (
-    <section className={`section_container`}>
-      <div className={`${styles.category_wrapper}`}>
+    <section>
+      <div className={`section_container ${styles.category_wrapper}`}>
         <h2>SHOP BY CATEGORY</h2>
 
         <ul className={`grid ${styles.category_cards}`}>
