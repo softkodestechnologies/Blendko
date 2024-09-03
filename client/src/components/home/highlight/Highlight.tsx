@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { StaticImageData } from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -46,6 +47,10 @@ function Highlight({
               <div>
                 <h3>{slide.title}</h3>
                 <p>${slide.price}</p>
+
+                <Link href={'/shop'} className="flex center">
+                  SHOP NOW
+                </Link>
               </div>
             </motion.div>
           </motion.li>
