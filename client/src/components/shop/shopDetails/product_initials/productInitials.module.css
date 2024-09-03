@@ -1,0 +1,80 @@
+.product_initials {
+  font-family: var(--font-poppins);
+}
+
+.product_initials h1 {
+  font-weight: 700;
+  font-size: 49.96px;
+  line-height: 74.94px;
+}
+
+.ratings {
+  gap: 19px;
+}
+
+.ratings span {
+  color: #00000099;
+}
+
+.ratings p {
+  font-size: 19.98px;
+  line-height: 26.98px;
+}
+
+.rating {
+  gap: 8.87px;
+  margin-block: 4px 18px;
+}
+
+.price {
+  gap: 14.99px;
+  margin-bottom: 8px;
+}
+
+.currentPrice,
+.originalPrice {
+  color: #000;
+  font-weight: 700;
+  font-size: 39.97px;
+  line-height: 59.95px;
+}
+
+.originalPrice {
+  color: #0000004d;
+  text-decoration: line-through;
+}
+
+@media (max-width: 1024px) {
+  .product_initials h1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36px;
+    margin-bottom: 8px;
+  }
+
+  .ratings {
+    gap: 19px;
+  }
+
+  .ratings p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .rating {
+    gap: 4px;
+    margin-bottom: 0;
+  }
+
+  .rating svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .currentPrice,
+  .originalPrice {
+    font-size: 16px;
+    font-weight: 500;
+    font-size: 24px;
+  }
+}
