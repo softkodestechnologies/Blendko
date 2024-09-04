@@ -54,6 +54,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
         name: productData.product.name,
         image: productData.product.images[0]?.url,
       };
+
       localStorage.setItem('productData', JSON.stringify(productToSave));
       router.push('/customize');
     }
@@ -77,7 +78,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
             details={productData.product || {}}
           />
 
-          <ProductDetailsAction details={productData.product || {}} />
+          <ProductDetailsAction details={productData.product || {}} handleCustomize={handleCustomize} />
 
           <ProductHighligtedInfo details={productData.product || {}} />
         </div>
