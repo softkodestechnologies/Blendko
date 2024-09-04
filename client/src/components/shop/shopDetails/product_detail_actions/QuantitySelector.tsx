@@ -7,8 +7,10 @@ import styles from './productDetailsActions.module.css';
 import { AddIcon, MinusIcon } from '../../../../../public/svg/icon';
 
 function QuantitySelector({
+  className,
   handleQuantitySelection,
 }: {
+  className?: string;
   handleQuantitySelection: (
     quantity: number,
     type: 'increment' | 'decrement' | 'input'
@@ -60,7 +62,11 @@ function QuantitySelector({
   };
 
   return (
-    <div className={`grid align-y ${styles.quantity_selector}`}>
+    <div
+      className={`grid align-y ${styles.quantity_selector} ${
+        className ? className : ''
+      }`}
+    >
       <button
         type="button"
         onClick={decreaseQuantity}
