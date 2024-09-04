@@ -28,22 +28,28 @@ type CartItem = {
   selectedSize: string;
 } & ProductDetailsProps;
 
-function ProductDetailsAction({ details }: { details: ProductDetailsProps }) {
+function ProductDetailsAction({
+  details,
+  handleCustomize,
+}: {
+  details: ProductDetailsProps;
+  handleCustomize: () => void;
+}) {
   const { addItemToCart } = useAddToCart();
   const { reduceCartItem } = useReduceCartItems();
   const [cartItem, setCartItem] = useState<CartItem | null>(null);
 
   useEffect(() => {
     setCartItem({
-      selectedSize: '',
-      selectedColor: '',
       quantity: 1,
       _id: details._id,
       name: details.name,
-      images: details.images,
       price: details.price,
       sizes: details.sizes,
+      images: details.images,
       colors: details.colors,
+      selectedSize: details.sizes[0],
+      selectedColor: details.colors[0],
       description: details.description,
     });
   }, [details]);
@@ -119,7 +125,10 @@ function ProductDetailsAction({ details }: { details: ProductDetailsProps }) {
 
       <hr className={styles.hr} />
 
-      <button className={`full-width flex center ${styles.customizeBtn}`}>
+      <button
+        onClick={handleCustomize}
+        className={`full-width flex center ${styles.customizeBtn}`}
+      >
         Customize <CustomizeIcon />
       </button>
 
