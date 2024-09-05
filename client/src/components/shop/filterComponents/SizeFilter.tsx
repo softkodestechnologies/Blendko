@@ -10,13 +10,20 @@ import { ChevronIcon } from '../../../../public/svg/icon';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
-function SizeFilter({
-  handleCheckboxChange,
-}: {
+interface SizeFilterProps {
   handleCheckboxChange: (key: string, value: string[]) => void;
-}) {
+  selectedSizes: string[];
+}
+
+function SizeFilter({ handleCheckboxChange, selectedSizes }: SizeFilterProps) {
   const [expanded, setExpanded] = useState(true);
-  const { handleSelect, selectedOptions } = useSelectOption();
+
+  const handleSelect = (size: string) => {
+    const updatedSizes = selectedSizes.includes(size)
+      ? selectedSizes.filter((s) => s !== size)
+      : [...selectedSizes, size];
+    handleCheckboxChange('sizes', updatedSizes);
+  };
 
   return (
     <Accordion
@@ -37,10 +44,8 @@ function SizeFilter({
               <button
                 type="button"
                 onClick={() => handleSelect(size)}
-                className={`${
-                  selectedOptions.includes(size) ? styles.selected : ''
-                }`}
-              >
+                className={`${selectedSizes.includes(size) ? styles.selected : ''}`}
+                >
                 {size}
               </button>
             </li>

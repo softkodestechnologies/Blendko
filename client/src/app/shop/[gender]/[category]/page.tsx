@@ -20,6 +20,7 @@ interface ShopCategoryProps {
 const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
   const { gender, category } = params;
   const [isMounted, setIsMounted] = useState(false);
+  const [openSidebarXl, setOpenSidebarXl] = useState(true);
 
 
   const { data: categoryData, isLoading: isLoadingCategory } = useGetCategoryByNameQuery(category);
@@ -31,7 +32,7 @@ const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
     { categoryId, gender },
     { skip: !categoryId } 
   );
-  const { data: products, isLoading, handlePriceRange, handleSearch, handleSort, handleDropdownSelect, handleCheckboxChange, } = useFilterOptions();
+  const { data: products, isLoading, handlePriceRange, handleSearch, handleSort, handleDropdownSelect, handleCheckboxChange, handleSubcategoryChange } = useFilterOptions();
   const { totalPages, currentPage, handlePageChange } = usePagination({ productCount: productsData?.products.productsCount || 0 });
 
   useEffect(() => {
@@ -56,8 +57,12 @@ const ShopCategory: React.FC<ShopCategoryProps> = ({ params }) => {
         onPriceRangeChange={handlePriceRange}
         onSortChange={handleSort}
         onCheckboxChange={handleCheckboxChange}
+        onSubcategoryChange={handleSubcategoryChange}
       />
-      {isLoadingProducts ? <LoadingSkeleton /> : <ProductList products={productsData?.products || []} />}
+      {isLoadingProducts ? <LoadingSkeleton /> : <ProductList  totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            isSideBarVisible={openSidebarXl} products={productsData?.products || []} />}
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );

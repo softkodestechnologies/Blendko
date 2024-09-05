@@ -48,9 +48,19 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (payload: FetchProductsPayload, { rejectWithValue }) => {
     try {
-      const res = await fetch(
-        `${baseUrl}/product?${new URLSearchParams(payload).toString()}`
-      );
+      const queryParams = new URLSearchParams();
+      
+      for (const [key, value] of Object.entries(payload)) {
+        if (key === 't-shirt' || key === 'pants' || key === 'shoes' || key === 'accessories') {
+          // This is a subcategory
+          queryParams.append('subcategory', key);
+          queryParams.append('attributes', value);
+        } else {
+          queryParams.append(key, value);
+        }
+      }
+
+      const res = await fetch(`${baseUrl}/product?${queryParams.toString()}`);
       const data = await res.json();
       return data;
     } catch (err: unknown) {
