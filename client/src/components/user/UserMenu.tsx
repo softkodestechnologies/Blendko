@@ -1,10 +1,15 @@
 'use client';
+
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '@/services/userSlice';
-import './UserMenu.css';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/services/store';
+import { useDispatch, useSelector } from 'react-redux';
+
+import './UserMenu.css';
+
+import { logOut } from '@/services/userSlice';
+import AnimatedText from '../ui/AnimateOnHover';
+import { userMenuLinks } from '@/utils/data/dummy';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
@@ -17,41 +22,27 @@ const UserMenu = () => {
   };
 
   if (!user) {
-    return (
-      <div className="user-menu">
-        <Link
-          className="menu-icons"
-          href="/login"
-          onClick={() => console.log('i am good')}
-        >
-          Login
-        </Link>
-        <Link className="menu-icons" href="/register">
-          Sign Up
-        </Link>
-      </div>
-    );
+    router.push('/login');
+    return null;
   }
 
   return (
-    <div className="user-menu">
+    <div className="flex flex-col user-menu">
       <h2>Account</h2>
-      <Link className="menu-icons" href="/user/account">
-        Profile
-      </Link>
-      <Link className="menu-icons" href="/user/orders">
-        Orders
-      </Link>
-      <Link className="menu-icons" href="/user/favorites">
-        Favorites
-      </Link>
-      <Link className="menu-icons" href="/user/favorites">
-        Account Settings
-      </Link>
-      <Link className="menu-icons" href="/user/favorites">
-        Customize Templates
-      </Link>
-      <span onClick={handleLogout}>Log Out</span>
+
+      <ul className="flex flex-col user-menu-links">
+        {userMenuLinks.map((link, index) => (
+          <li key={index}>
+            <Link href={link.url} className="menu-icons">
+              <AnimatedText text={link.title} />
+            </Link>
+          </li>
+        ))}
+
+        <button onClick={handleLogout}>
+          <AnimatedText text="Logout" />
+        </button>
+      </ul>
     </div>
   );
 };

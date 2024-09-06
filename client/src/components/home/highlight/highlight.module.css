@@ -37,6 +37,17 @@
   font-family: var(--font-poppins);
 }
 
+.card a {
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 16px;
+  background: transparent;
+  border: 1.5px solid #195650;
+  font-family: var(--font-poppins);
+}
+
 .slide_container {
   display: none;
 }

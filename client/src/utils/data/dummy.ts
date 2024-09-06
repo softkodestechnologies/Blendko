@@ -104,7 +104,7 @@ export const footerLinks = {
     { title: 'Reviews', url: '/reviews' },
   ],
   customer_services: [
-    { title: 'Contact Us', url: '/contact' },
+    { title: 'Contact Us', url: '/contact-us' },
     { title: 'Returns', url: '/returns' },
     { title: 'FAQs', url: '/faq' },
   ],
@@ -260,6 +260,14 @@ export const policy = [
       },
     ],
   },
+];
+
+export const userMenuLinks = [
+  { title: 'Profile', url: '/user/account' },
+  { title: 'Orders', url: '/user/orders' },
+  { title: 'Favorites', url: '/user/favorites' },
+  { title: 'Account Settings', url: '/user/account-settings' },
+  { title: 'Customize Templates', url: '/user/customize-templates' },
 ];
 
 import {

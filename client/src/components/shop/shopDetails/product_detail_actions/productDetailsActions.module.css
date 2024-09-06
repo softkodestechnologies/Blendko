@@ -1,0 +1,156 @@
+.size h2,
+.color h2,
+.details p {
+  color: #00000099;
+  font-size: 19.98px;
+  margin-bottom: 12px;
+  line-height: 27.48px;
+  font-family: var(--font-poppins);
+}
+
+.hr {
+  border: 1.25px solid #0000001a;
+}
+
+.size h2,
+.color h2 {
+  font-weight: 500;
+  margin-block: 12px 6px;
+}
+
+.color_pallete {
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+}
+
+.color_pallete button {
+  width: 46.22px;
+  height: 46.22px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 50%;
+  border: 1px solid #00000033 !important;
+}
+
+.pallete_white path {
+  fill: #000;
+}
+
+.animation {
+  inset: 0;
+  position: absolute;
+}
+
+.size h2 {
+  margin-block: 16px 12px;
+}
+
+.size_list {
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.size_list button {
+  border: none;
+  font-weight: 300;
+  padding: 14.99px;
+  font-size: 16px;
+  color: #00000099;
+  transition: all 0.9s;
+  background: #f0f0f0;
+  font-family: var(--font-inter);
+}
+
+.active,
+.addToCartButton {
+  border: none;
+  color: #fff !important;
+  background: #000 !important;
+}
+
+.customizeBtn {
+  gap: 8px;
+  height: 65px;
+  font-size: 20px;
+  background: none;
+  font-weight: 500;
+  margin-top: 18px;
+  border: 1px solid #000;
+}
+
+.quantity_selector {
+  height: 65px;
+  width: 187px;
+  background: #f0f0f0;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.quantity_selector svg {
+  width: 20px;
+  height: 20px;
+}
+
+.quantity_selector input,
+.quantity_selector button {
+  border: none;
+  text-align: center;
+  background: transparent;
+}
+
+
+
+.quantity_selector input:focus {
+  outline: none;
+}
+
+.add_to_cart {
+  gap: 22px;
+  margin-block: 16px 32px;
+}
+
+@media (max-width: 1024px) {
+  .size h2,
+  .color h2,
+  .details p {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
+
+  .color_pallete {
+    gap: 10.5px;
+  }
+
+  .color_pallete button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .size_list button {
+    border: none;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 10px 14.99px;
+  }
+
+  .customizeBtn {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .quantity_selector {
+    height: 50px;
+    width: 120px;
+  }
+
+  .quantity_selector svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .add_to_cart {
+    gap: 10px;
+    margin-block: 16px 48px;
+  }
+}

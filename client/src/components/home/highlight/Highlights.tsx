@@ -53,8 +53,8 @@ function Highlights() {
   };
 
   return (
-    <section className={`section_container`}>
-      <div className={`${styles.customize_wrapper}`}>
+    <section>
+      <div className={`section_container ${styles.customize_wrapper}`}>
         <h2>Highlights</h2>
 
         <div className={`${styles.slide_container}`}>

@@ -1,24 +1,50 @@
 .user-menu {
-  position: absolute;
-  top: 70px;
-  right: 10%;
-  width: 250px;
+  right: 0;
+  top: 120%;
+  padding: 16px;
+  width: 224px;
   height: auto;
-  font-family: var(--font-poppins), sans-serif;
-  background: #fff;
   padding: 10px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  transition: right 0.3s;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #cccccc;
+  font-family: var(--font-poppins), sans-serif;
+}
+
+.user-menu h2 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  margin-bottom: 16px;
+}
+
+.menu-icons,
+.user-menu span {
+  font-size: 15px;
+  color: #767677;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.user-menu-links {
+  gap: 10px;
+}
+
+.user-menu li,
+.user-menu button {
+  height: 26px;
+  overflow: hidden !important;
+  width: fit-content;
 }
 
 .menu-icons:hover,
-.user-menu span:hover {
-  color: #767677;
+.user-menu button:hover {
+  color: #000;
 }
 
-.user-menu span {
-  cursor: pointer;
+.user-menu button {
+  border: none;
+  background: none;
+  font-weight: 400;
 }

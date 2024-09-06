@@ -26,43 +26,47 @@ function Resource({
     .map((str) => str[0].toUpperCase() + str.slice(1));
 
   return (
-    <div>
+    <>
       {hero && hero}
 
-      <div className={`full-width section_container grid ${styles.wrapper}`}>
-        <AnimatePresence mode="wait">
-          {width && width < 1024 && isSidebarOpen && (
-            <ResourceSideBar
-              isSidebarOpen={isSidebarOpen}
-              setIsSidebarOpen={() => setIsSidebarOpen(false)}
-            />
-          )}
-        </AnimatePresence>
+      <section>
+        <div className={`full-width section_container grid ${styles.wrapper}`}>
+          <AnimatePresence mode="wait">
+            {width && width < 1024 && isSidebarOpen && (
+              <ResourceSideBar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={() => setIsSidebarOpen(false)}
+              />
+            )}
+          </AnimatePresence>
 
-        <AnimatePresence mode="wait">
-          {isSidebarOpen && (
-            <BackDrop onClick={() => {}} style={{ zIndex: 50 }} />
-          )}
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {isSidebarOpen && (
+              <BackDrop onClick={() => {}} style={{ zIndex: 50 }} />
+            )}
+          </AnimatePresence>
 
-        {width && width >= 1024 && <ResourceSideBar />}
+          {width && width >= 1024 && <ResourceSideBar />}
 
-        <main>
-          <header className={`flex align-y space-between ${styles.mobileNav}`}>
-            <button
-              aria-label="Open sidebar"
-              onClick={() => setIsSidebarOpen(true)}
+          <main>
+            <header
+              className={`flex align-y space-between ${styles.mobileNav}`}
             >
-              Explore
-            </button>
+              <button
+                aria-label="Open sidebar"
+                onClick={() => setIsSidebarOpen(true)}
+              >
+                Explore
+              </button>
 
-            <span>{strings.join(' ')}</span>
-          </header>
+              <span>{strings.join(' ')}</span>
+            </header>
 
-          {children}
-        </main>
-      </div>
-    </div>
+            {children}
+          </main>
+        </div>
+      </section>
+    </>
   );
 }
 

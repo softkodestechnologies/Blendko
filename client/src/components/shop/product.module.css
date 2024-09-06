@@ -43,6 +43,12 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
+@media (min-width: 1440px) {
+  .with_sidebar {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .product_list {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

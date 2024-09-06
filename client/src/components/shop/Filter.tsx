@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import styles from './Filter.module.css';
 
@@ -29,6 +29,7 @@ function Filter({
   onCheckboxChange,
   onSubcategoryChange,
 }: FilterProps) {
+
   const [priceRange, setPriceRange] = useState<[number, number]>([50, 200]);
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({
     fashion_collection: []

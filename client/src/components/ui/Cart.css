@@ -19,7 +19,7 @@
 .cart-modal {
   position: absolute;
   top: 0;
-  right: -100%;
+  right: 0;
   width: 450px;
   height: auto;
   font-family: 'Poppins', sans-serif;
@@ -28,6 +28,7 @@
   transition: right 0.3s;
   z-index: 60;
   display: none;
+  border: 2px solid red;
 }
 
 .cart-modal.open {

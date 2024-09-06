@@ -1,14 +1,36 @@
-.consent-title,
+.consent-modal {
+  max-width: 940px !important;
+}
+
+.consent-title {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 22.5px !important;
+  margin-bottom: 16px !important;
+}
+
 .consent-p-one,
 .consent-p-two {
-    margin-bottom: 20px;
+  color: #000 !important;
+  margin-bottom: 16px !important;
+  line-height: 24px !important;
+}
+
+.consent-p-two {
+  margin-bottom: 24px !important;
+}
+
+.consent-p-one {
+  margin-bottom: 8px;
 }
 
 .link {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .consent-button {
-    padding: 0.8em 2.5em;
+  height: 44px;
+  width: 139px;
+  font-size: 16px;
+  font-weight: 600;
 }
-

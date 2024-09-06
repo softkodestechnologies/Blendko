@@ -18,8 +18,6 @@ if (process.env.NODE_ENV === 'development') {
   baseUrl = 'https://blendko.onrender.com/api/v1';
 }
 
-
-
 let user;
 
 if (typeof localStorage !== 'undefined' && localStorage.getItem('user')) {
@@ -100,15 +98,18 @@ const userSlice = createSlice({
       );
 
       if (productExists) {
-        productExists.quantity++;
+        productExists.quantity = action.payload.quantity;
       } else {
-        state.cart.push({ ...action.payload, quantity: 1 });
+        state.cart.push({
+          ...action.payload,
+          quantity: action.payload.quantity,
+        });
       }
     },
     incrementQuantity: (state: UserState, action: PayloadAction<any>) => {
       const item = state.cart.find((x) => x._id === action.payload._id);
       if (item) {
-        item.quantity++;
+        item.quantity = action.payload.quantity;
       }
     },
     decrementQuantity: (state: UserState, action: PayloadAction<any>) => {
@@ -162,4 +163,5 @@ export const {
   deleteItem,
   checkout,
 } = userSlice.actions;
+
 export default userSlice.reducer;

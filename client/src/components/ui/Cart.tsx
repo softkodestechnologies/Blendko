@@ -19,30 +19,31 @@ interface CartProps {
 
 const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
   return (
-    <div className='cart-over'>
+    <div className="cart-over">
       {cartOpen && <div className="overlay" onClick={toggleCart}></div>}
       <div className="cart-container">
         <div className={`cart-modal ${cartOpen ? 'open' : ''}`}>
           <div className="cart-header">
-            <div className="flex align-y cart-header-title">
-              {/**<IoCheckmarkCircle style={{ color: "green" }} />
-              <h3>Added to Bag</h3>**/}
-            </div>
-            <button className="close-button" title="close" onClick={toggleCart}><IoClose /></button>
+            <div className="flex align-y cart-header-title"></div>
+            <button className="close-button" title="close" onClick={toggleCart}>
+              <IoClose />
+            </button>
           </div>
           <div className="cart-items">
-            {cartItems.length === 0 ? 
-            <div>
-              <p>No Cart Item(s)</p>
-            </div>: ''  
-          }
-            {cartItems.map(item => (
+            {cartItems.length === 0 ? (
+              <div>
+                <p>No Cart Item(s)</p>
+              </div>
+            ) : (
+              ''
+            )}
+            {cartItems.map((item) => (
               <div key={item._id} className="cart-item">
                 <Image
-                  src={item.images[0].url} 
-                  alt={item.name} 
-                  width={80} 
-                  height={80} 
+                  src={item.images[0].url}
+                  alt={item.name}
+                  width={80}
+                  height={80}
                   objectFit="cover"
                 />
                 <div>
@@ -55,8 +56,12 @@ const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
             ))}
           </div>
           <div className="cart-actions">
-            <button className="view-bag-button" onClick={toggleCart}><Link href="/view-bag">View Bag ({cartItems.length})</Link></button>
-            <Link href="/checkout/auth"><button className="checkout-button">Checkout</button></Link>
+            <button className="view-bag-button" onClick={toggleCart}>
+              <Link href="/view-bag">View Bag ({cartItems.length})</Link>
+            </button>
+            <Link href="/checkout/auth">
+              <button className="checkout-button">Checkout</button>
+            </Link>
           </div>
         </div>
       </div>

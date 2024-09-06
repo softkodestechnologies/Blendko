@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import HamburgerMenu from '../../ui/HamburgerMenu';
 import { useSelector } from 'react-redux';
@@ -14,9 +14,7 @@ import styles from './header.module.css';
 import { RootState } from '@/services/store';
 
 import NavMenu from './NavMenu';
-import Dropdown from './Dropdown';
 import TopBanner from './TopBanner';
-import BackDrop from '@/components/ui/BackDrop';
 import {
   Logo,
   UserIcon,
@@ -27,7 +25,11 @@ import {
 } from '../../../../public/svg/icon';
 import { navLinks } from '@/utils/data/dummy';
 
+const Dropdown = dynamic(() => import('./Dropdown'), { ssr: false });
 const UserMenu = dynamic(() => import('../../user/UserMenu'), { ssr: false });
+const BackDrop = dynamic(() => import('@/components/ui/BackDrop'), {
+  ssr: false,
+});
 
 const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -36,9 +38,7 @@ const Header = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLButtonElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const user = useSelector((state: RootState) => state.user.user);
-  const [isClient, setIsClient] = useState(false);
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     if (navOpen) {
@@ -50,16 +50,6 @@ const Header = () => {
     }
   }, [navOpen]);
 
-  const toggleCart = () => {
-    handleStorageChange();
-    setCartOpen(!cartOpen);
-  };
-
-  useEffect(() => {
-    handleStorageChange();
-    setIsClient(true);
-  }, []);
-
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (
@@ -70,35 +60,34 @@ const Header = () => {
       }
     };
 
+    const handleEscape = (event: any) => {
+      if (event.key === 'Escape') {
+        setUserMenuOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      if (userMenuOpen) {
+        setUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('scroll', handleScroll);
+    document.addEventListener('keydown', handleEscape);
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
+      document.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [userMenuOpen]);
 
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
-
-  const handleStorageChange = () => {
-    if (typeof window !== 'undefined') {
-      const storedCartItems = JSON.parse(
-        localStorage.getItem('cartItems') || '[]'
-      );
-      setCartItems(storedCartItems);
+    if (user) {
+      setCartItems(user.cart);
     }
-  };
-
-  const handleUserIconHover = () => {
-    setUserMenuOpen(true);
-  };
+  }, [user]);
 
   return (
     <>
@@ -133,6 +122,7 @@ const Header = () => {
                       {showSubMenu && (
                         <Dropdown
                           isOpen={showSubMenu}
+                          setIsOpen={setShowSubMenu}
                           data={navLinks[2].subMenu}
                         />
                       )}
@@ -156,10 +146,12 @@ const Header = () => {
               </button>
             </li>
 
-            <li className={`flex align-y`}>
-              <button onMouseEnter={handleUserIconHover}>
+            <li className={`flex align-y`} style={{ position: 'relative' }}>
+              <button onClick={() => setUserMenuOpen(true)}>
                 <UserIcon />
               </button>
+
+              {userMenuOpen && <UserMenu />}
             </li>
 
             <li className={`flex align-y`}>
@@ -169,7 +161,7 @@ const Header = () => {
             </li>
 
             <li className={`flex align-y`}>
-              <button onClick={toggleCart}>
+              <button onClick={() => setCartOpen(!cartOpen)}>
                 <CartIcon />
                 {cartItems.length > 0 && (
                   <span className={`cart-badge`}>{cartItems.length}</span>
@@ -201,10 +193,8 @@ const Header = () => {
         <Cart
           cartOpen={cartOpen}
           cartItems={cartItems}
-          toggleCart={toggleCart}
+          toggleCart={() => setCartOpen(!cartOpen)}
         />
-
-        {userMenuOpen && isClient && <UserMenu />}
       </header>
     </>
   );
