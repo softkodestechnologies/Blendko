@@ -3,6 +3,7 @@
   font-size: 1em;
   text-wrap: nowrap;
   padding: 20px 10px;
+  margin-top: 30px;
 }
 
 .sidebar ul {
@@ -20,6 +21,15 @@
 
 .sidebar li svg {
   margin-right: 0.5rem;
+  width: 16px;
+  height: 20px;
+}
+
+.sidebar li a {
+  font-size: 16px;
+  font-family: var(---font-Poppins);
+  display: flex;
+  align-items: center;
 }
 
 .sidebar li.active {

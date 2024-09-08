@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
+import { useWishlist } from '@/utils/hooks/useWishlist';
+import { useSelector } from 'react-redux';
 import styles from './product.module.css';
 
 import { Product as P } from '@/utils/types';
+import { RootState } from '@/services/store'; 
 
-function Product({ product, slug }: { product: P; slug: string }) {
+function Product({ product, slug }: { product: P; slug: string; }) {
+  const user = useSelector((state: RootState) => state.user.user);
+  const isAuthenticated = !!user;
+  const { isWishlisted, toggleWishlist } = useWishlist(product._id, isAuthenticated);
+
   return (
     <article className={`full-width grid ${styles.product_item}`}>
       <Link href={slug}>
@@ -32,6 +38,9 @@ function Product({ product, slug }: { product: P; slug: string }) {
           <span aria-label="product price">${product.price}</span>
         </div>
       </Link>
+      <button onClick={toggleWishlist} className={styles.wishlist_button}>
+        {isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+      </button>
     </article>
   );
 }
