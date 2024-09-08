@@ -485,3 +485,56 @@ exports.deleteCartItem = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.getWishlist = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).populate('wishlist.product');
+
+  res.status(200).json({
+    success: true,
+    wishlist: user.wishlist,
+  });
+});
+
+
+exports.addToWishlist = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.body.productId);
+
+  if(!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const user = await User.findById(req.user.id);
+  const isProductInWishlist = user.wishlist.some(item => item.product.toString() === product._id.toString());
+
+  if (isProductInWishlist) {
+    return res.status(400).json({
+      success: false,
+      message: 'Product already in wishlist'
+    });
+  }
+
+  user.wishlist.push({ product: product._id });
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Product added to wishlist'
+  });
+});
+
+exports.removeFromWishlist = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.body.productId);
+
+  if(!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const user = await User.findById(req.user.id);
+  user.wishlist = user.wishlist.filter(item => item.product.toString() !== product._id.toString());
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Product removed from wishlist'
+  });
+});

@@ -98,6 +98,16 @@ const orderSchema = new Schema({
     required: true,
     default: 0,
   },
+  paymentInfo: {
+    id: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+  },
   orderStatus: {
     type: String,
     required: true,
