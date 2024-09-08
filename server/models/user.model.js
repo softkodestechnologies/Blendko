@@ -61,6 +61,19 @@ const userSchema = new Schema({
       size: String,
     },
   ],
+  wishlist: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+      addedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   activityLog: [
     {
       action: String,

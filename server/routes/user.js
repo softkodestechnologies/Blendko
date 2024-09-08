@@ -18,6 +18,9 @@ const {
   addToCart,
   removeFromCart,
   deleteCartItem,
+  getWishlist,
+  addToWishlist,
+  removeFromWishlist,
   googleLogin,
   googleRegister,
 } = require('../controllers/user.controller');
@@ -38,10 +41,15 @@ router.route('/password/reset/:token').put(resetPassword);
 router.route('/me').get(isAuthenticatedUser, getUserProfile);
 router.route('/password/update').put(isAuthenticatedUser, updatePassword);
 router.route('/me/update').put(isAuthenticatedUser, updateProfile);
-router.route('/cart').post(isAuthenticatedUser, addToCart)
-router.route('/cart').get(isAuthenticatedUser, getCartItems)
-router.route('/cart/:id').patch(isAuthenticatedUser, removeFromCart)
-router.route('/cart/:id').delete(isAuthenticatedUser, deleteCartItem)
+router.route('/cart').post(isAuthenticatedUser, addToCart);
+router.route('/cart').get(isAuthenticatedUser, getCartItems);
+router.route('/cart/:id').patch(isAuthenticatedUser, removeFromCart);
+router.route('/cart/:id').delete(isAuthenticatedUser, deleteCartItem);
+
+
+router.route('/wishlist').get(isAuthenticatedUser, getWishlist);
+router.route('/wishlist/add').post(isAuthenticatedUser, addToWishlist);
+router.route('/wishlist/remove').post(isAuthenticatedUser, removeFromWishlist);
 
 
 
