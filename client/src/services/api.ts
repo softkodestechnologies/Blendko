@@ -22,6 +22,7 @@ export const blendkoApi = createApi({
     'Cart',
     'Order',
     'News',
+    'Wishlist',
   ],
   endpoints: () => ({}),
 });

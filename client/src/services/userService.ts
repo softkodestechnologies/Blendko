@@ -17,7 +17,6 @@ type QueryType = {
 };
 const getToken = () => {
   if (typeof localStorage !== 'undefined') {
-    console.log('TOKEN', localStorage.getItem('token'))
     return localStorage.getItem('token');
   }
   return null;
@@ -55,6 +54,38 @@ export const adminService = blendkoApi.injectEndpoints({
           Authorization: `Bearer ${getToken()}`,
         },
       }),
+    }),
+    getWishlist: builder.query<{ success: boolean, wishlist: Array<{ product: any, _id: string, addedAt: string }> }, {}>({
+      query: () => ({
+        url: '/wishlist',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Wishlist'],
+    }),
+    addToWishlist: builder.mutation({
+      query: (productId) => ({
+        url: '/wishlist/add',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { productId },
+      }),
+      invalidatesTags: ['Wishlist'],
+    }),
+    removeFromWishlist: builder.mutation({
+      query: (productId) => ({
+        url: '/wishlist/remove',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { productId },
+      }),
+      invalidatesTags: ['Wishlist'],
     }),
 
     getUsers: builder.query({
@@ -196,6 +227,9 @@ export const {
   useGetProductQuery,
   useGetProductsQuery,
   useDeleteProductMutation,
+  useGetWishlistQuery,
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
   useGetUsersQuery,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,
