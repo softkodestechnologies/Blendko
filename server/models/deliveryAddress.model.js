@@ -5,7 +5,15 @@ const deliveryAddressSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-    unique: true 
+    unique: true
+  },
+  firstName: {
+    type: String,
+    required: [true, 'Please enter your first name']
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Please enter your last name']
   },
   street: {
     type: String,

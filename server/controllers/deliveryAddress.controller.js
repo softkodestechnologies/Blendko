@@ -2,9 +2,11 @@ const DeliveryAddress = require('../models/deliveryAddress.model');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 
-//Create or Update deliveryAddress
-exports.createOrUpdateDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
+
+exports.createDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const {
+    firstName,
+    lastName,
     street,
     aptBuildingSuite,
     postcode,
@@ -16,6 +18,8 @@ exports.createOrUpdateDeliveryAddress = catchAsyncErrors(async (req, res, next) 
 
   const addressData = {
     user: req.user.id,
+    firstName,
+    lastName,
     street,
     aptBuildingSuite,
     postcode,
@@ -43,7 +47,7 @@ exports.createOrUpdateDeliveryAddress = catchAsyncErrors(async (req, res, next) 
   });
 });
 
-// Get delivery address
+ 
 exports.getDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const deliveryAddress = await DeliveryAddress.findOne({ user: req.user.id });
 
@@ -57,7 +61,49 @@ exports.getDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Delete delivery address
+ 
+exports.updateDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    street,
+    aptBuildingSuite,
+    postcode,
+    city,
+    province,
+    country,
+    phoneNumber
+  } = req.body;
+
+  const addressData = {
+    firstName,
+    lastName,
+    street,
+    aptBuildingSuite,
+    postcode,
+    city,
+    province,
+    country,
+    phoneNumber
+  };
+
+  const deliveryAddress = await DeliveryAddress.findOneAndUpdate(
+    { user: req.user.id },
+    addressData,
+    { new: true, runValidators: true, useFindAndModify: false }
+  );
+
+  if (!deliveryAddress) {
+    return next(new ErrorHandler('Delivery address not found', 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    deliveryAddress
+  });
+});
+
+ 
 exports.deleteDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const deliveryAddress = await DeliveryAddress.findOne({ user: req.user.id });
 
