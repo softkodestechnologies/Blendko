@@ -51,6 +51,19 @@ const CustomizePage: React.FC = () => {
     canvasRef.current?.redo();
   }, []);
 
+  const handleReset = useCallback(() => {
+    // Remember: Implement reset logic
+  }, []);
+
+  const handleColorChange = useCallback((color: string) => {
+    // Implement logic to handle color change
+  }, []);
+  
+  const handleAddNew = useCallback(() => {
+    // Remember: Implement add new item logic
+  }, []);
+  
+
   const handleSaveAsTemplate = useCallback(() => {
     //Remember: Implement save as template logic
   }, []);
@@ -68,11 +81,17 @@ const CustomizePage: React.FC = () => {
       <Toolbar 
         undo={handleUndo} 
         redo={handleRedo} 
+        reset={handleReset} 
+        onAddNew={handleAddNew}
         saveAsTemplate={handleSaveAsTemplate} 
         addToCart={handleAddToCart}
       />
       <div className={styles.customizePage}>
-        <Sidebar onToggleCanvasWidth={toggleCanvasWidth} onFileUpload={handleFileUpload} />
+        <Sidebar 
+          onToggleCanvasWidth={toggleCanvasWidth}  
+          onFileUpload={handleFileUpload} 
+          onColorChange={handleColorChange} />
+          
         <div className={styles.canvasWrapper} style={{ width: isMobile ? '100%' : (isExpanded ? '80%' : '60%') }}>
           <Canvas 
             ref={canvasRef}
