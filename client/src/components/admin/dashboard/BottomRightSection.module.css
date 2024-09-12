@@ -1,0 +1,64 @@
+.bottomRight {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px;
+    padding: 20px;
+    height: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.userSection {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.userChart {
+    flex: 1;
+    min-height: 0;
+}
+
+.countryChart {
+    margin-top: 5px;
+}
+
+.countryPanel {
+    margin: 2px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.countryFlag {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.loaderContainer {
+    width: 100px;
+    height: 5px;
+    border-radius: 8px;
+    background-color: #E9E7FD;
+    margin: 0 8px;
+}
+
+.loader {
+    background-color: #0F60FF;
+    width: 80%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .bottomRight {
+      height: 100%;
+    }
+  }

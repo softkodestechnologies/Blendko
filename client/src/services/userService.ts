@@ -87,6 +87,48 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Wishlist'],
     }),
+    getDeliveryAddress: builder.query({
+      query: () => ({
+        url: '/delivery-address',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['DeliveryAddress'],
+    }),
+    createDeliveryAddress: builder.mutation({
+      query: (addressData) => ({
+        url: '/delivery-address',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: addressData,
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
+    updateDeliveryAddress: builder.mutation({
+      query: (addressData) => ({
+        url: '/delivery-address',
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: addressData,
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
+    deleteDeliveryAddress: builder.mutation({
+      query: () => ({
+        url: '/delivery-address',
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
 
     getUsers: builder.query({
       query: (params: QueryType) => ({
@@ -230,6 +272,10 @@ export const {
   useGetWishlistQuery,
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
+  useGetDeliveryAddressQuery,
+  useCreateDeliveryAddressMutation,
+  useUpdateDeliveryAddressMutation,
+  useDeleteDeliveryAddressMutation,
   useGetUsersQuery,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,

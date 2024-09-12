@@ -52,12 +52,7 @@ function Dropdown({
     <div className={`full-width ${styles.dropdownBox} ${className}`}>
       <button
         type="button"
-        role="combobox"
         id="toggle-dropdown"
-        aria-controls="options"
-        aria-haspopup="listbox"
-        aria-expanded={isOptionsOpen}
-        aria-label={`${caption} dropdown`}
         onClick={() => setIsOptionsOpen((prev) => !prev)}
         className={`full-width full-height flex center`}
       >
@@ -83,8 +78,6 @@ function Dropdown({
               <li
                 id={option}
                 key={option}
-                role="option"
-                aria-selected={value == option}
                 tabIndex={0}
                 onKeyDown={handleKeyDown(option)}
                 onClick={() => {

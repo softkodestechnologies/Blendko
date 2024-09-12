@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Chart } from "react-google-charts";
 import styles from './Dashboard.module.css';
+import BottomRightSection from './BottomRightSection';
 
 enum ReportType {
   Customers = 'customers',
@@ -98,12 +99,15 @@ const Dashboard: React.FC = () => {
     <div className={styles.dashboard}>
      <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <h2>Total Sales & Costs</h2>
-          <div className={styles.statValue}>
-            <span className={styles.mainValue}>$350K</span>
-            <span className={styles.subValue}>$235K</span>
+          <div>
+            <h2>Total Sales & Costs</h2>
+            <p>Last 7 days</p>
+            <div className={styles.statValue}>
+              <span className={styles.mainValue}>$350K</span>
+              <span className={styles.subValue}>$235K</span>
+            </div>
+            <p><span className={styles.statChange}>↑ 8.56K </span>vs last 7 days</p>
           </div>
-          <span className={styles.statChange}>↑ 8.56K vs last 7 days</span>
           <Chart
             chartType="LineChart"
             width="100%"
@@ -120,18 +124,21 @@ const Dashboard: React.FC = () => {
                 baselineColor: 'transparent', 
                 gridlines: { count: 0 },
                 textPosition: 'none',
-              },
-              colors: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)'],
+              },  
+              colors: ['rgb(15, 96, 255)', 'rgb(15, 183, 255)'],
             }}
           />
         </div>
 
         <div className={styles.statCard}>
-          <h2>Sessions</h2>
-          <div className={styles.statValue}>
-            <span className={styles.mainValue}>16.5K</span>
+          <div>
+            <h2>Sessions</h2>
+            <p>Last 7 days</p>
+            <div className={styles.statValue}>
+              <span className={styles.mainValue}>16.5K</span>
+            </div>
+            <p><span className={styles.statChange}>↓ 3% </span>vs last 7 days</p>
           </div>
-          <span className={styles.statChange}>↓ 3% vs last 7 days</span>
           <Chart
             chartType="LineChart"
             width="100%"
@@ -150,7 +157,7 @@ const Dashboard: React.FC = () => {
                 gridlines: { count: 0 },
                 textPosition: 'none',
               },
-              colors: ['rgb(255, 64, 64)'],
+              colors: ['rgb(208, 38, 38)'],
             }}
           />
         </div>
@@ -158,11 +165,13 @@ const Dashboard: React.FC = () => {
 
       <div className={styles.statsGridThree}>
         <div className={styles.statCard}>
-          <h2>Total Orders</h2>
-          <div className={styles.statValue}>
-            <span className={styles.mainValue}>25.7K</span>
+          <div>
+            <h2>Total Orders</h2>
+            <div className={styles.statValue}>
+              <span className={styles.mainValue}>25.7K</span>
+            </div>
+            <p><span className={styles.statChange}>↑ 6% </span> vs last 7 days</p>
           </div>
-          <span className={styles.statChange}>↑ 6% vs last 7 days</span>
           <Chart
             chartType="LineChart"
             width="100%"
@@ -187,11 +196,13 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className={styles.statCard}>
-          <h2>Total Profit</h2>
-          <div className={styles.statValue}>
-            <span className={styles.mainValue}>50K</span>
+          <div>
+            <h2>Total Profit</h2>
+            <div className={styles.statValue}>
+              <span className={styles.mainValue}>50K</span>
+            </div>
+            <p><span className={styles.statChange}>↑ 12% </span> vs last 7 days</p>
           </div>
-          <span className={styles.statChange}>↑ 12% vs last 7 days</span>
           <Chart
             chartType="LineChart"
             width="100%"
@@ -216,11 +227,13 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className={styles.statCard}>
-          <h2>Discounted Amount</h2>
-          <div className={styles.statValue}>
-            <span className={styles.mainValue}>12K</span>
+          <div>
+            <h2>Discounted Amount</h2>
+            <div className={styles.statValue}>
+              <span className={styles.mainValue}>12K</span>
+            </div>
+            <p><span className={styles.statChange}>↑ 2% </span> vs last 7 days</p>
           </div>
-          <span className={styles.statChange}>↑ 2% vs last 7 days</span>
           <Chart
             chartType="LineChart"
             width="100%"
@@ -239,7 +252,7 @@ const Dashboard: React.FC = () => {
                 gridlines: { count: 0 },
                 textPosition: 'none',
               },
-              colors: ['rgb(255, 64, 64)'],
+              colors: ['rgb(208, 38, 38)'],
             }}
           />
         </div>
@@ -247,8 +260,8 @@ const Dashboard: React.FC = () => {
 
       <div className={styles.bottomSection}>
         <div className={styles.reportsSection}>
-          <h2>Reports</h2>
-          <p>Last 7 days</p>
+          <p className={styles.reportsTitle}>Reports</p>
+          <p className={styles.reportsTag}>Last 7 days</p>
           <div className={styles.reportsGrid}>
             {reportTabs.map(tab => (
               <div
@@ -282,62 +295,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.bottomRight}>
-          <div className={styles.usersSection}>
-            <h2>Users in last 30 minutes</h2>
-            <div className={styles.usersValue}>16.5K</div>
-            <p>Users per minute</p>
-            <div className={styles.userChart}>
-              <Chart
-                chartType="ColumnChart"
-                width="100%"
-                height="200px"
-                data={[
-                  ['Minute', 'Users'],
-                  ...Array(30).fill(0).map((_, i) => [`${i + 1}`, Math.random() * 20]),
-                ]}
-                options={{
-                  legend: { position: 'none' },
-                  bar: { groupWidth: '95%' },
-                  hAxis: {
-                    baselineColor: 'transparent', 
-                    gridlines: { count: 0 }, 
-                    textPosition: 'none',
-                  },
-                  vAxis: {
-                    baselineColor: 'transparent', 
-                    gridlines: { count: 0 },
-                    textPosition: 'none',
-                  },
-                  colors: ['#0F60FF'],
-                }}
-              />
-            </div>
-          </div>
-
-          <div className={styles.salesByCountry}>
-            <h2>Sales by Country</h2>
-            <Chart
-              chartType="BarChart"
-              width="100%"
-              height="300px"
-              data={salesByCountry}
-              options={{
-                legend: { position: 'none' },
-                hAxis: {
-                  baselineColor: 'transparent', 
-                  gridlines: { count: 0 }, 
-                  textPosition: 'none',
-                },
-                vAxis: {
-                  baselineColor: 'transparent', 
-                  gridlines: { count: 0 },
-                },
-                colors: ['rgb(70, 178, 178)', 'rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(54, 162, 235)'],
-              }}
-            />
-          </div>
-        </div>
+        <BottomRightSection />
       </div>
     </div>
   );
