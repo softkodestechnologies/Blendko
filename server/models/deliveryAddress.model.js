@@ -8,12 +8,10 @@ const deliveryAddressSchema = new mongoose.Schema({
     unique: true
   },
   firstName: {
-    type: String,
-    required: [true, 'Please enter your first name']
+    type: String, 
   },
   lastName: {
-    type: String,
-    required: [true, 'Please enter your last name']
+    type: String, 
   },
   street: {
     type: String,
@@ -41,7 +39,11 @@ const deliveryAddressSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, 'Please enter the phone number']
-  }
+  },
+  isDefaultAddress: {
+    type: Boolean,
+    default: false
+  },
 }, {
   timestamps: true
 });
