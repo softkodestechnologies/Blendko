@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import styles from './Filter.module.css';
 
