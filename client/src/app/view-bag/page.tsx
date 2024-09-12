@@ -67,7 +67,7 @@ const ViewBagPage: React.FC = () => {
                 <h2>Cart</h2>
 
                 {cartItems.map((item: any) => (
-                  <Product product={item} />
+                  <Product key={item} product={item} />
                 ))}
               </div>
             </div>
