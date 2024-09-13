@@ -8,6 +8,7 @@ const discountRoutes = require('./discount');
 const dashboardRoutes = require('./dashboard');
 const deliveryAddressRoutes = require('./deliveryAddress');
 const newsRoutes = require('./news');
+const inboxRoutes = require('./inbox');
 const router = Router();
 
 

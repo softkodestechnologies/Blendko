@@ -1,6 +1,8 @@
 const Order = require('../models/order.model');
 const Product = require('../models/product.model');
 const User = require('../models/user.model');
+const Inbox = require('../models/inbox.model');
+const sendEmail = require('../utils/sendEmail');
 
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
@@ -34,6 +36,19 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
   });
 
   await order.save();
+
+  await Inbox.create({
+    user: req.user.id,
+    title: 'Order Placed',
+    content: `Your order no.${order._id} has been placed successfully. We will notify you once it is shipped.`,
+    orderId: order._id
+  });
+
+  await sendEmail({
+    email: foundUser.email,
+    subject: 'Order Confirmation',
+    message: `Your order no.${order._id} has been placed successfully. We will notify you once it is shipped.`
+  });
 
   foundUser.cart = [];
   foundUser.order.push(order._id);
@@ -137,6 +152,21 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   order.deliveredAt = Date.now();
 
   await order.save();
+
+  if (order.orderStatus === 'Delivered') {
+    await Inbox.create({
+      user: order.user,
+      title: 'Order Delivered',
+      content: `Your order no.${order._id} has been delivered. Thank you for shopping with us!`,
+      orderId: order._id
+    });
+
+    await sendEmail({
+      email: order.user.email,
+      subject: 'Order Delivered',
+      message: `Your order no.${order._id} has been delivered. Thank you for shopping with us!`
+    });
+  }
 
   res.status(200).json({
     success: true,
