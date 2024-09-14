@@ -21,5 +21,6 @@ router.use('/discounts', discountRoutes);
 router.use('/dashboard', dashboardRoutes);
 router.use('/delivery-address', deliveryAddressRoutes);
 router.use('/news', newsRoutes);
+router.use('/inbox', inboxRoutes);
 
 module.exports = router;
