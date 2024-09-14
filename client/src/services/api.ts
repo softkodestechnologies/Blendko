@@ -20,6 +20,7 @@ export const blendkoApi = createApi({
     'Categories',
     'GetCategoriesByName',
     'Cart',
+    'Inbox',
     'Order',
     'News',
     'Wishlist',

@@ -217,7 +217,26 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
-
+    getInboxMessages: builder.query({
+      query: () => ({
+        url: '/inbox/messages',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+      providesTags: ['Inbox'],
+    }),
+    markMessageAsRead: builder.mutation({
+      query: (messageId) => ({
+        url: `/inbox/messages/${messageId}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Inbox'],
+    }),
     createOrder: builder.mutation({
       query: (body) => ({
         url: `order/new`,
@@ -288,6 +307,8 @@ export const {
   useRemoveFromCartMutation,
   useReduceCartItemMutation,
   useCreateOrderMutation,
+  useGetInboxMessagesQuery, 
+  useMarkMessageAsReadMutation,
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
   useDeleteOrderMutation,
