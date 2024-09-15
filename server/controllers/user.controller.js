@@ -308,7 +308,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 });
 
 // ADMIN: Get all users => /api/v1/admin/users
-// ADMIN: Get all users => /api/v1/admin/users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   try {
     const resPerPage = parseInt(req.query.pp) || 5;
