@@ -6,7 +6,7 @@ const { createHash } = require('node:crypto');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const cloudinary = require('cloudinary');
-
+const ApiFeatures = require('../utils/apiFeatures');
 
 // Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -308,32 +308,38 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 });
 
 // ADMIN: Get all users => /api/v1/admin/users
+// ADMIN: Get all users => /api/v1/admin/users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = req.query.pp || 5;
+  try {
+    const resPerPage = parseInt(req.query.pp) || 5;
+    const page = parseInt(req.query.page) || 1;
 
-  const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
 
-  const usersCount = await User.countDocuments();
-  const usersCountLast30Days = await User.countDocuments({
-    createdAt: { $gte: last30Days },
-  });
+    const usersCount = await User.countDocuments();
+    const usersCountLast30Days = await User.countDocuments({
+      createdAt: { $gte: last30Days },
+    });
 
-  const apiFeatures = new ApiFeatures(
-    User.find().sort({ createdAt: -1 }).populate('order'),
-    req.query
-  )
-    .search()
-    .filter()
-    .pagination(resPerPage);
+    const skip = resPerPage * (page - 1);
 
-  const users = await apiFeatures.query;
+    const users = await User.find()
+      .sort({ createdAt: -1 })
+      .select('name email role createdAt status')
+      .skip(skip)
+      .limit(resPerPage);
 
-  res.status(200).json({
-    success: true,
-    users,
-    usersCount,
-    new_customers: usersCountLast30Days,
-  });
+    res.status(200).json({
+      success: true,
+      users,
+      usersCount,
+      resPerPage,
+      new_customers: usersCountLast30Days,
+    });
+  } catch (error) {
+    console.error('Error in getAllUsers:', error);
+    return next(new ErrorHandler('Error fetching users', 500));
+  }
 });
 
 // ADMIN: Get user details => /api/v1/admin/user/:id
