@@ -113,7 +113,9 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   ]);
 
   const apiFeatures = new ApiFeatures(
-    Order.find().sort({ createdAt: -1 }),
+    Order.find()
+      .populate('user', 'name') 
+      .sort({ createdAt: -1 }),
     req.query
   )
     .search()

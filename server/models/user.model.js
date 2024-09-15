@@ -80,6 +80,11 @@ const userSchema = new Schema({
       timestamp: { type: Date, default: Date.now },
     },
   ],
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive'],
+    default: 'Active'
+  },
   notificationPreferences: [String],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
