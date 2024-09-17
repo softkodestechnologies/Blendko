@@ -97,6 +97,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Invalid Email or Password', 401));
   }
 
+  user.lastLoginAt = Date.now();
+  await user.save({ validateBeforeSave: false });
+
   sendToken(user, 201, res);
 });
 
@@ -121,6 +124,9 @@ exports.googleLogin = catchAsyncErrors(async (req, res, next) => {
   const isExisting = await User.findOne({ email });
 
   if (!isExisting) return next(new ErrorHandler('User not found', 404));
+
+  isExisting.lastLoginAt = Date.now();
+  await isExisting.save({ validateBeforeSave: false });
 
   sendToken(isExisting, 200, res);
 });
@@ -310,21 +316,32 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 // ADMIN: Get all users => /api/v1/admin/users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   try {
-    const resPerPage = parseInt(req.query.pp) || 5;
+    const resPerPage = parseInt(req.query.pp) || 10;
     const page = parseInt(req.query.page) || 1;
+    const search = req.query.search || '';
 
     const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
 
-    const usersCount = await User.countDocuments();
+    const searchQuery = search
+      ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {};
+
+    const usersCount = await User.countDocuments(searchQuery);
     const usersCountLast30Days = await User.countDocuments({
+      ...searchQuery,
       createdAt: { $gte: last30Days },
     });
 
     const skip = resPerPage * (page - 1);
 
-    const users = await User.find()
+    const users = await User.find(searchQuery)
       .sort({ createdAt: -1 })
-      .select('name email role createdAt status')
+      .select('name email phone createdAt status')
       .skip(skip)
       .limit(resPerPage);
 
@@ -340,6 +357,22 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Error fetching users', 500));
   }
 });
+
+// ADMIN: Get all admins => /api/v1/admin/admins
+exports.getAllAdmins = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const admins = await User.find({ "role.0": "admin" }).select('name email role createdAt status');
+
+    res.status(200).json({
+      success: true,
+      admins,
+    });
+  } catch (error) {
+    console.error('Error in getAllAdmins:', error);
+    return next(new ErrorHandler('Error fetching admins', 500));
+  }
+});
+
 
 // ADMIN: Get user details => /api/v1/admin/user/:id
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {

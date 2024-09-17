@@ -98,6 +98,14 @@ const orderSchema = new Schema({
     required: true,
     default: 0,
   },
+  cost: {
+    type: Number,
+    default: 0,  
+  },
+  discountAmount: {
+    type: Number,
+    default: 0, 
+  },
   paymentInfo: {
     id: {
       type: String,
