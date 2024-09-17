@@ -21,24 +21,9 @@ const CustomersPage: React.FC = () => {
           <button type="button" title="bars" className={styles.menuButton} onClick={toggleSidebar}>
             <FaBars />
           </button>
-          <div className={styles.headerRight}>
-            <FaSearch className={styles.headerIcon} />
-            <FaBell className={styles.headerIcon} />
-            <FaUser className={styles.headerIcon} />
-          </div>
         </header>
         <main className={styles.main}>
           <h1 className={styles.title}>Customers</h1>
-          <div className={styles.searchContainer}>
-            <input
-              type="text"
-              placeholder="Search..."
-              className={styles.searchInput}
-            />
-            <button title="search" className={styles.searchButton}>
-              <FaSearch />
-            </button>
-          </div>
           <CustomerTable />
         </main>
       </div>

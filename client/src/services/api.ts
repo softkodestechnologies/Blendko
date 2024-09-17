@@ -16,6 +16,7 @@ export const blendkoApi = createApi({
     'LogIn',
     'User',
     'Users',
+    'Admins',
     'Product',
     'Categories',
     'GetCategoriesByName',
@@ -25,6 +26,7 @@ export const blendkoApi = createApi({
     'News',
     'Wishlist',
     'DeliveryAddress',
+    'Dashboard',
   ],
   endpoints: () => ({}),
 });
