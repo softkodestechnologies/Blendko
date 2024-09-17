@@ -74,6 +74,10 @@ const userSchema = new Schema({
       }
     }
   ],
+  lastLoginAt: {
+    type: Date,
+    default: null,
+  },
   activityLog: [
     {
       action: String,

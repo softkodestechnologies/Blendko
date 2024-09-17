@@ -11,6 +11,7 @@ const {
   updatePassword,
   updateProfile,
   getAllUsers,
+  getAllAdmins,
   getUserDetails,
   updateUserRole,
   deleteUser,
@@ -61,6 +62,10 @@ router.delete('/messages/:id', isAuthenticatedUser, deleteMessage);
 router
   .route('/admin/users')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getAllUsers);
+
+router
+  .route('/admin/admins')
+  .get(isAuthenticatedUser, authorizeRoles('admin'), getAllAdmins);
 
 router
   .route('/admin/user/:id')

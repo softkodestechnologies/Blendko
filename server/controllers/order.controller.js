@@ -18,6 +18,8 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    cost, 
+    discountAmount
   } = req.body;
 
   const foundUser = await User.findById(req.user.id).populate('cart.product');
@@ -31,6 +33,8 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    cost, 
+    discountAmount,
     user: req.user.id,
     paidAt: Date.now(),
   });
