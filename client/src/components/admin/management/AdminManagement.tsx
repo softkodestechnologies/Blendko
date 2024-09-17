@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import styles from './AdminManagement.module.css';
-import { useGetUsersQuery } from '@/services/userService';
+import { useGetAdminsQuery } from '@/services/userService';
 
 interface Admin {
   _id: string;
@@ -13,12 +13,12 @@ interface Admin {
 }
 
 const AdminManagement: React.FC = () => {
-  const { data: usersData, isLoading, isError } = useGetUsersQuery({});
+  const { data: adminData, isLoading, isError } = useGetAdminsQuery({});
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading users</div>;
+  if (isError) return <div>Error loading admins</div>;
 
-  const admins: Admin[] = usersData?.users || [];
+  const admins: Admin[] = adminData?.admins || [];
 
   return (
     <div className={styles.adminManagement}>
@@ -34,16 +34,16 @@ const AdminManagement: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin) => (
+          {admins.map((admin, index) => (
             <tr key={admin._id}>
-              <td>{admin._id}</td>
+              <td>{index + 1}</td> {/* Sequential numbering */}
               <td>{admin.email}</td>
               <td>{admin.role.join(', ')}</td>
               <td>{admin.name}</td>
               <td>{new Date(admin.createdAt).toLocaleDateString()}</td>
               <td>
                 <span className={`${styles.status} ${styles[admin.status.toLowerCase()]}`}>
-                   {admin.status}
+                  {admin.status}
                 </span>
               </td>
             </tr>

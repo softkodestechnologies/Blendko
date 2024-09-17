@@ -87,6 +87,16 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Wishlist'],
     }),
+    getDashboardData: builder.query({
+      query: () => ({
+        url: '/dashboard/data',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Dashboard'],
+    }),
     getDeliveryAddress: builder.query({
       query: () => ({
         url: '/delivery-address',
@@ -141,6 +151,17 @@ export const adminService = blendkoApi.injectEndpoints({
         },
       }),
       providesTags: ['Users'],
+    }),
+
+    getAdmins: builder.query({
+      query: () => ({
+        url: '/admin/admins',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Admins'],
     }),
 
     updateUserDetails: builder.mutation({
@@ -291,11 +312,13 @@ export const {
   useGetWishlistQuery,
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
+  useGetDashboardDataQuery,
   useGetDeliveryAddressQuery,
   useCreateDeliveryAddressMutation,
   useUpdateDeliveryAddressMutation,
   useDeleteDeliveryAddressMutation,
   useGetUsersQuery,
+  useGetAdminsQuery,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,
   useGetCategoryByNameQuery,
