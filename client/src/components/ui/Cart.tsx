@@ -1,8 +1,12 @@
 import { FC } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { IoClose, IoCheckmarkCircle } from 'react-icons/io5';
+import Image from 'next/image';
+
 import './Cart.css';
+import styles from './cart.module.css';
+
+import BackDrop from './BackDrop';
+import { CloseIcon, SuccessIcon } from '../../../public/svg/icon';
 
 interface CartProps {
   cartOpen: boolean;
@@ -13,60 +17,82 @@ interface CartProps {
     category: string;
     quantity: number;
     price: number;
+    selectedColor: string;
+    selectedSize: string;
     images: Array<{ url: string }>;
   }>;
 }
 
-const Cart: FC<CartProps> = ({ cartOpen, toggleCart, cartItems }) => {
+function Cart({ cartOpen, toggleCart, cartItems }: CartProps) {
+  console.log(cartItems, 'neeeew');
+
   return (
-    <div className="cart-over">
-      {cartOpen && <div className="overlay" onClick={toggleCart}></div>}
-      <div className="cart-container">
-        <div className={`cart-modal ${cartOpen ? 'open' : ''}`}>
-          <div className="cart-header">
-            <div className="flex align-y cart-header-title"></div>
-            <button className="close-button" title="close" onClick={toggleCart}>
-              <IoClose />
+    <>
+      {cartOpen && <BackDrop onClick={toggleCart} style={{ zIndex: 59 }} />}
+
+      {cartOpen && (
+        <div
+          aria-label="Cart"
+          aria-modal="true"
+          aria-hidden={!cartOpen}
+          className={`${styles.cart}`}
+        >
+          <div className={`flex align-y space-between ${styles.cart_header}`}>
+            <h2 className={`flex align-y`}>
+              <SuccessIcon /> Added to Bag
+            </h2>
+
+            <button
+              onClick={toggleCart}
+              aria-label="Close cart"
+              className={`${styles.cart_close}`}
+            >
+              <CloseIcon style={{ width: '14px', height: '14px' }} />
             </button>
           </div>
-          <div className="cart-items">
-            {cartItems.length === 0 ? (
-              <div>
-                <p>No Cart Item(s)</p>
-              </div>
-            ) : (
-              ''
-            )}
+
+          <ul className={`flex flex-col ${styles.cart_items}`}>
             {cartItems.map((item) => (
-              <div key={item._id} className="cart-item">
-                <Image
-                  src={item.images[0].url}
-                  alt={item.name}
-                  width={80}
-                  height={80}
-                  objectFit="cover"
-                />
-                <div>
-                  <h4>{item.name}</h4>
-                  <p>{item.category}</p>
-                  <p>Quantity {item.quantity}</p>
-                  <h5>${item.price}</h5>
+              <li key={item._id} className={`grid ${styles.cart_item}`}>
+                <div className={`flex center ${styles.img}`}>
+                  <Image
+                    width={70}
+                    height={70}
+                    alt={item.name}
+                    objectFit="cover"
+                    src={item.images[0].url}
+                  />
                 </div>
-              </div>
+
+                <div>
+                  <h3>{item.name}</h3>
+                  <p>
+                    {item.selectedColor}, {item.selectedSize}
+                  </p>
+                  <p>Quantity {item.quantity}</p>
+                  <b>${item.price}</b>
+                </div>
+              </li>
             ))}
-          </div>
-          <div className="cart-actions">
-            <button className="view-bag-button" onClick={toggleCart}>
-              <Link href="/view-bag">View Bag ({cartItems.length})</Link>
-            </button>
-            <Link href="/checkout/auth">
-              <button className="checkout-button">Checkout</button>
+          </ul>
+
+          <div className={`flex ${styles.cart_actions}`}>
+            <Link
+              href="/view-bag"
+              onClick={toggleCart}
+              className={`full-width flex center`}
+            >
+              View Bag ({cartItems.length})
+            </Link>
+
+            <Link href="/checkout/auth" className={`full-width flex center`}>
+              Checkout
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
-};
+}
 
 export default Cart;
