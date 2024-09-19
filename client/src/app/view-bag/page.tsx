@@ -43,7 +43,7 @@ const ViewBagPage: React.FC = () => {
   const isLoading = false;
 
   return (
-    <section>
+    <section style={{ marginBottom: '64px' }}>
       <div className={`section_container grid ${styles.cart_grid}`}>
         <>
           {isLoading &&
