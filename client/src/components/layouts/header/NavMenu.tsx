@@ -45,13 +45,8 @@ function NavMenu({
             initial={{ height: 19.33 }}
             animate={
               showSubMenu && link.title === 'Categories'
-                ? {
-                    height: 'auto',
-                    opacity: 1,
-                  }
-                : {
-                    height: 19.33,
-                  }
+                ? { height: 'auto', opacity: 1 }
+                : { height: 19.33 }
             }
             exit={{ height: 19.33 }}
             transition={{ duration: 0.3 }}
