@@ -16,6 +16,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     description,
     price,
     category,
+    subcategory,
     quantity,
     discount,
     features,
@@ -28,6 +29,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     fashion_collection,
     technology,
     brand,
+    attributes,
     isCustomizable,
     weight,
     width,
@@ -62,6 +64,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     description,
     price: Number(price),
     category,
+    subcategory,
     quantity,
     discount,
     features,
@@ -75,6 +78,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     fashion_collection,
     technology,
     brand,
+    attributes,
     isCustomizable,
     weight,
     width,
@@ -112,21 +116,16 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
 exports.getProducts = catchAsyncErrors(async (req, res) => {
-
-  console.log("Product routes requested")
-
+  console.log("Product routes requested");
 
   const resPerPage = req.query.pp || 10;
-  let sort;
-
-  if (req.query.sort && req.query.sort === '-1') {
-    sort = { price: -1 };
-  } else {
-    sort = { price: 1 };
-  }
 
   const sumAvailableQuantity = await Product.aggregate([
+    {
+      $match: { available_quantity: { $gt: 0 } },
+    },
     {
       $group: {
         _id: null,
@@ -135,13 +134,10 @@ exports.getProducts = catchAsyncErrors(async (req, res) => {
     },
   ]);
 
-  const apiFeatures = new ApiFeatures(
-    Product.find().sort(sort || { createdAt: -1 }),
-    req.query,
-    Product
-  )
+  const apiFeatures = new ApiFeatures(Product.find(), req.query, Product)
     .search()
     .filter()
+    .sort()
     .pagination(resPerPage);
 
   const products = await apiFeatures.query;

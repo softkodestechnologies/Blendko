@@ -10,16 +10,20 @@ interface FilterNavProps {
   menuItems: string[];
   onOpenSidebar: () => void;
   onSearch: (key: string, value: string) => void;
+  onSort: (value: string) => void;
   activeIndex: React.SetStateAction<number>;
   setIndex: (index: React.SetStateAction<number>) => void;
+  sortBy: string;
 }
 
 function FilterNav({
   onSearch,
+  onSort,
   setIndex,
   menuItems,
   activeIndex,
   onOpenSidebar,
+  sortBy,
 }: FilterNavProps) {
   const [activeTab, setActiveTab] = useState(0);
   const clickedSearch = (index: React.SetStateAction<number>, item: string) => {
@@ -31,6 +35,10 @@ function FilterNav({
 
     setActiveTab(index);
     onSearch('keyword', item);
+  };
+
+  const handleSort = (value: string) => {
+    onSort(value.toLowerCase());
   };
 
   return (
@@ -67,9 +75,9 @@ function FilterNav({
 
         <Dropdown
           className={styles.dropdown}
-          value={'Newest'}
+          value={sortBy}
           caption="Sort By"
-          onSelect={(value) => console.log(value)}
+          onSelect={handleSort}
           optionsList={['Newest', 'Cheapest', 'Popular', 'Expensive']}
         />
       </div>

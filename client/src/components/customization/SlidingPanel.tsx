@@ -8,13 +8,11 @@ interface SlidingPanelProps {
   onClose: () => void;
   setActivePanel: (panel: string | null) => void;
   onFileUpload: (file: File) => void;
+  onColorChange: (color: string) => void;
 }
 
-const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload  }) => {
-  const handleColorChange: ColorChangeHandler = (color) => {
-    //Remember: Handle color change here
-    console.log(color);
-  };
+const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange  }) => {
+  
 
   const renderPanelContent = () => {
     switch (activePanel) {
@@ -27,7 +25,7 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setAc
       case 'sizes':
         return <div>Sizes Content</div>;
       case 'colour':
-        return <ColorPalette onChange={handleColorChange} setActivePanel={setActivePanel} />;
+        return <ColorPalette setActivePanel={setActivePanel} onColorSelect={onColorChange} />;
       case 'savedTemplate':
         return <div>Saved Templates Content</div>;
       default:
@@ -36,7 +34,7 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setAc
   };
 
   return (
-    <div className={`${styles.slidingPanel}`} style={{ left: activePanel ? '30%' : '-300px' }}>
+    <div className={`${styles.slidingPanel} ${activePanel ? styles.active : ''}`}>
       <button className={styles.closeButton} onClick={onClose}>X</button>
       {renderPanelContent()}
     </div>
@@ -44,5 +42,7 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({ activePanel, onClose, setAc
 };
 
 export default SlidingPanel;
+
+
 
 

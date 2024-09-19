@@ -37,7 +37,7 @@ export const navLinks = [
   },
   {
     title: 'Customization',
-    url: '/shop',
+    url: '/customize',
     subMenu: [],
   },
 ];

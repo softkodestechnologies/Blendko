@@ -6,8 +6,8 @@ class ApiFeatures {
   }
 
   search() {
-    if(this.queryStr.keyword === "All Sale") {
-      this.queryStr.keyword = ''
+    if (this.queryStr.keyword === "All Sale") {
+      this.queryStr.keyword = '';
     }
     const keyword = this.queryStr.keyword
       ? {
@@ -19,52 +19,76 @@ class ApiFeatures {
       : {};
 
     this.query = this.query.find({ ...keyword });
-
     this.document = this.document.countDocuments({ ...keyword });
 
     return this;
   }
 
   filter() {
-    const queryCopy = {...this.queryStr };
-
-    const removeFields = ['keyword', 'limit', 'page', 'pp', 'ort'];
+    const queryCopy = { ...this.queryStr };
+    const removeFields = ['keyword', 'limit', 'page', 'pp', 'sort'];
     removeFields.forEach((el) => delete queryCopy[el]);
 
-    // Split colors into an array if it's a comma-separated string
-    if (queryCopy.colors) {
-      queryCopy.colors = queryCopy.colors.split(',');
-    }
+    let query = {};
 
-    const query = {};
+    const subcategoryMapping = {
+      'T-shirt': 'gender',
+      'Pants': 'style',
+      'Shoes': 'type',
+      'Accessories': 'type',
+      '40% or More Off': 'subcategory'
+    };
 
     for (const key in queryCopy) {
       if (queryCopy.hasOwnProperty(key)) {
-        if (key === 'colors') {
-          query[key] = { $in: queryCopy[key] };
-        } else if (key === 'sizes') {
-          query[key] = { $in: queryCopy[key].split(',') };
-        } else if (key === 'dress_style') {
-          query[key] = { $in: queryCopy[key].split(',') };
+        const value = queryCopy[key];
+
+        if (subcategoryMapping[key]) {
+          const attribute = subcategoryMapping[key];
+          query.subcategory = key;
+          query[`attributes.${attribute}`] = {
+            $in: value.split(','),
+          };
+        } else if (key === 'colors') {
+          query[key] = {
+            $in: value.split(',').map((color) => new RegExp(color, 'i')),
+          };
         } else if (key === 'fashion_collection') {
-          query[key] = { $in: queryCopy[key].split(',') };
-        } else if (key === 'technology') {
-          query[key] = { $in: queryCopy[key].split(',') };
-        }   else {
+          query[key] = { $in: value.split(',') };
+        }  else if (key === 'sizes') {
+          query[key] = { $in: value.split(',') };
+        } else if (key.startsWith('price')) {
           for (const operator in queryCopy[key]) {
             if (queryCopy[key].hasOwnProperty(operator)) {
               query[key] = { [`$${operator}`]: queryCopy[key][operator] };
             }
           }
+        } else if (key === 'category') {
+          query.category = value;
+        } else {
+          query[`attributes.${key}`] = value;
         }
+      }
     }
-}
 
-this.query = this.query.find(query);
-this.document = this.document && this.document.countDocuments(query);
+    console.log(query);
 
-return this;
-}
+    this.query = this.query.find(query);
+    this.document = this.document && this.document.countDocuments(query);
+
+    return this;
+  }
+
+  sort() {
+    if (this.queryStr.sort) {
+      const sortBy = this.queryStr.sort.split(',').join(' ');
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort('-createdAt');
+    }
+
+    return this;
+  }
 
   pagination(resPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;

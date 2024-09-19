@@ -10,9 +10,10 @@ interface MobileSlidingPanelProps {
   onClose: () => void;
   setActivePanel: (panel: string | null) => void;
   onFileUpload: (file: File) => void;
+  onColorChange: (color: string) => void;
 }
 
-const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload }) => {
+const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange }) => {
   const handleColorChange: ColorChangeHandler = (color) => {
     // Handle color change here
     console.log(color);
@@ -29,7 +30,7 @@ const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, on
       case 'styles':
         return <div>Styles Content</div>;
       case 'colour':
-        return <ColorPalette onChange={handleColorChange} setActivePanel={setActivePanel} />;
+        return <ColorPalette onColorSelect={onColorChange} setActivePanel={setActivePanel} />;
       default:
         return null;
     }
