@@ -1,13 +1,14 @@
-import Register from '@/components/ui/register/Register';
+import Register from '@/components/ui/auth/Register';
 
 export default function Page() {
   return (
-    <div className="flex center login-page mb-10">
-      <div>
-          <div>
-            <Register />
-          </div>
+    <section style={{ background: '#F5F5F5' }}>
+      <div
+        className={`section_container flex center`}
+        style={{ minHeight: '100vh' }}
+      >
+        <Register />
       </div>
-    </div>
+    </section>
   );
 }
