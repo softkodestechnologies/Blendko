@@ -296,6 +296,7 @@
 .customerTable td,
 .discountTable td {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .actionButtons {

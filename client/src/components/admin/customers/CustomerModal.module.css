@@ -1,0 +1,107 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+  }
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .closeButton {
+    background: #F5F5F5;
+    padding: 10px;
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .customerInfo {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 30px;
+  }
+
+  .customerInfo h4 {
+    margin-bottom: 5px;
+  }
+
+  .divider {
+    margin: 20px 0;
+    color: #ccc;
+  }
+  
+  .avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #6c5ce7;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+
+  .bottomSection {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .verticalRule {
+    border-left: 1px solid #ccc;
+  }
+
+  .infoSection {
+    margin-bottom: 20px;
+  }
+
+  .infoTitle {
+    margin-bottom: 10px;;
+  }
+  
+  .infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .infoGrid > div {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .orderStats {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    gap: 8px;
+    margin-top: 5px;
+  }
+  
+  .clickableRow {
+    cursor: pointer;
+  }
+  
+  .clickableRow:hover {
+    background-color: #f0f0f0;
+  }

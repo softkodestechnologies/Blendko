@@ -1,173 +1,132 @@
-import React from 'react';
-import { useTable, useExpanded, usePagination, Column, Row, HeaderGroup, Cell, TableInstance } from 'react-table';
-import styles from '../Admin.module.css';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaPen, FaTrash } from 'react-icons/fa';
+import styles from '../Admin.module.css';
 
 interface Discount {
+  _id: string;
   name: string;
   code: string;
   status: string;
-  date: string;
+  startsOn: string;
+  expiresOn: string;
   type: string;
-  usage: string;
+  value: number;
+  usageLimit: number;
 }
 
-const dummyData: Discount[] = [
-  {
-    name: 'Summer discount 10% off Summer2020',
-    code: 'XQQSL74HY9AH',
-    status: 'Active',
-    date: 'May 5, 2020 - May 15, 2020',
-    type: 'Free shipping',
-    usage: '1/200',
-  },
-  {
-    name: 'Summer discount 10% off Summer2020',
-    code: 'XQQSL74HY9AH',
-    status: 'Active',
-    date: 'May 5, 2020 - May 15, 2020',
-    type: 'Free shipping',
-    usage: '1/200',
-  },
-  {
-    name: 'Summer discount 10% off Summer2020',
-    code: 'XQQSL74HY9AH',
-    status: 'Active',
-    date: 'May 5, 2020 - May 15, 2020',
-    type: 'Free shipping',
-    usage: '1/200',
-  },
-  {
-    name: 'Summer discount 10% off Summer2020',
-    code: 'XQQSL74HY9AH',
-    status: 'Active',
-    date: 'May 5, 2020 - May 15, 2020',
-    type: 'Free shipping',
-    usage: '1/200',
-  },
-  {
-    name: 'Summer discount 10% off Summer2020',
-    code: 'XQQSL74HY9AH',
-    status: 'Active',
-    date: 'May 5, 2020 - May 15, 2020',
-    type: 'Free shipping',
-    usage: '1/200',
-  },
-];
+interface DiscountTableProps {
+  discounts: Discount[];
+  selectedDiscounts: string[];
+  setSelectedDiscounts: React.Dispatch<React.SetStateAction<string[]>>;
+  onEdit: (discount: Discount) => void;
+  onDelete: (ids: string[]) => void;
+  activeTab: 'all' | 'active' | 'expired';
+}
 
-const DiscountTable: React.FC = () => {
-  const columns: Column<Discount>[] = React.useMemo(
-    () => [
-      { Header: 'Coupon Name', accessor: 'name' },
-      { Header: 'Code', accessor: 'code' },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Cell: ({ value }: { value: string }) => (
-          <span className={`${styles.status} ${styles[value.toLowerCase()]}`}>
-            {value}
-          </span>
-        )
-      },
-      { Header: 'Date', accessor: 'date' },
-      { Header: 'Type', accessor: 'type' },
-      { Header: 'Usage', accessor: 'usage' },
-      {
-        Header: 'Action',
-        id: 'actions',
-        Cell: () => (
-          <div className={styles.actionButtons}>
-            <button title="Edit" className={styles.actionButton}><FaPen /></button>
-            <button title="Delete" className={styles.actionButton}><FaTrash /></button>
-          </div>
-        )
-      },
-    ],
-    []
-  );
+const DiscountTable: React.FC<DiscountTableProps> = ({
+  discounts,
+  selectedDiscounts,
+  setSelectedDiscounts,
+  onEdit,
+  onDelete,
+  activeTab
+}) => {
+  const [filteredDiscounts, setFilteredDiscounts] = useState(discounts);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable<Discount>(
-    {
-      columns,
-      data: dummyData,
-      initialState: { pageIndex: 0, pageSize: 10 },
-    },
-    usePagination
-  );
+  useEffect(() => {
+    switch (activeTab) {
+      case 'active':
+        setFilteredDiscounts(discounts.filter(d => d.status === 'active'));
+        break;
+      case 'expired':
+        setFilteredDiscounts(discounts.filter(d => d.status === 'expired'));
+        break;
+      default:
+        setFilteredDiscounts(discounts);
+    }
+  }, [activeTab, discounts]);
+
+  const toggleRowSelected = useCallback((id: string) => {
+    setSelectedDiscounts(prev => {
+      const isSelected = prev.includes(id);
+      if (isSelected) {
+        return prev.filter(item => item !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  }, [setSelectedDiscounts]);
+
+  const handleDelete = useCallback(() => {
+    if (selectedDiscounts.length > 0) {
+      onDelete(selectedDiscounts);
+    }
+  }, [selectedDiscounts, onDelete]);
 
   return (
     <div className={styles.tableContainer}>
-      <table {...getTableProps()} className={styles.discountTable}>
+      <div className={styles.tableActions}>
+        <button
+          onClick={() => {
+            const selectedDiscount = discounts.find(d => d._id === selectedDiscounts[0]);
+            if (selectedDiscount) {
+              onEdit(selectedDiscount);
+            }
+          }}
+          disabled={selectedDiscounts.length !== 1}
+          className={styles.editButton}
+        >
+          <FaPen /> Edit
+        </button>
+        <button
+          onClick={handleDelete}
+          disabled={selectedDiscounts.length === 0}
+          className={styles.deleteButton}
+        >
+          <FaTrash /> Delete
+        </button>
+      </div>
+      <table className={styles.discountTable}>
         <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} key={column.id}>{column.render('Header')}</th>
-              ))}
+          <tr>
+            <th>Select</th>
+            <th>Coupon Name</th>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>Expiry Date</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Usage Limit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredDiscounts.map((discount) => (
+            <tr key={discount._id}>
+              <td>
+                <input
+                  title="selectedDiscounts"
+                  type="checkbox"
+                  checked={selectedDiscounts.includes(discount._id)}
+                  onChange={() => toggleRowSelected(discount._id)}
+                />
+              </td>
+              <td>{discount.name}</td>
+              <td>{discount.code}</td>
+              <td>
+                <span className={`${styles.status} ${styles[discount.status.toLowerCase()]}`}>
+                  {discount.status}
+                </span>
+              </td>
+              <td>{discount.startsOn}</td>
+              <td>{discount.expiresOn}</td>
+              <td>{discount.type}</td>
+              <td>{discount.value}</td>
+              <td>{discount.usageLimit}</td>
             </tr>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
         </tbody>
       </table>
-      <div className={styles.pagination}>
-        <div>
-          <span>
-            Show{' '}
-            <select
-              title="pageSize"
-              value={pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value));
-              }}
-            >
-              {[10, 20, 30, 40, 50].map(size => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-            {' '}entries
-          </span>
-        </div>
-        <div>
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-            Previous
-          </button>{' '}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-          </span>
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
-            Next
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

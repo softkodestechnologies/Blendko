@@ -1,171 +1,250 @@
 "use client";
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { FaImage, FaPlus } from 'react-icons/fa';
-import styles from './AddNewProduct.module.css';
+import React, { useState, useRef } from 'react';
+import { FaImage } from 'react-icons/fa';
 import Image from 'next/image';
-
-const AddNewProductSchema = Yup.object().shape({
-  productName: Yup.string().required('Product name is required'),
-  description: Yup.string().required('Description is required'),
-  category: Yup.string().required('Category is required'),
-  price: Yup.number().positive('Price must be positive').required('Price is required'),
-  discountPercentage: Yup.number().min(0).max(100, 'Discount must be between 0 and 100'),
-  inventory: Yup.number().integer('Quantity must be an integer').min(0, 'Quantity must be positive'),
-  weight: Yup.number().positive('Weight must be positive'),
-  width: Yup.number().positive('Width must be positive'),
-  height: Yup.number().positive('Height must be positive'),
-  length: Yup.number().positive('Length must be positive'),
-});
+import styles from './AddNewProduct.module.css';
+import { useCreateProductMutation, useGetCategoriesQuery } from '@/services/userService';
+import Alert from '@/components/ui/alert/Alert';
 
 const AddNewProduct: React.FC = () => {
-  const [images, setImages] = useState<string[]>([]);
-  const [trackInventory, setTrackInventory] = useState(true);
-  const [requiresShipping, setRequiresShipping] = useState(true);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const formRef = useRef<HTMLFormElement>(null);
+  const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery({});
+  const [createProduct] = useCreateProductMutation();
+  
+  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+    show: false,
+    type: 'success',
+    message: '',
+  });
+  const handleSizeGuideUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('size_guide', file);
+      // Handle the size guide upload separately
+    }
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
+  
     if (files) {
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file));
-      setImages([...images, ...newImages]);
+      const fileArray = Array.from(files);
+      console.log("New files selected:", fileArray.length);
+      console.log("Current imageFiles:", imageFiles.length);
+  
+      if (fileArray.length + imageFiles.length > 6) {
+        console.log("Too many files selected. Total would be:", fileArray.length + imageFiles.length);
+        setAlert({ show: true, type: 'error', message: 'You can only upload up to 6 images in total.' });
+        return;
+      }
+  
+      const newImagePreviews = fileArray.map((file) => URL.createObjectURL(file));
+      setImageFiles((prevFiles) => {
+        const updatedFiles = [...prevFiles, ...fileArray];
+        console.log("Updated imageFiles:", updatedFiles.length);
+        return updatedFiles;
+      });
+      setImagePreviews((prevPreviews) => [...prevPreviews, ...newImagePreviews]);
+    }
+  };
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+  
+    console.log("Number of imageFiles before submission:", imageFiles.length);
+  
+    // Remove any existing 'images' fields from the formData
+    formData.delete('images');
+  
+    imageFiles.forEach((file, index) => {
+      console.log(`Appending file ${index + 1} to formData`);
+      formData.append('images', file);
+    });
+  
+    console.log("Number of images in formData after appending:", formData.getAll('images').length);
+  
+    try {
+      console.log("Submitting form with", formData.getAll('images').length, "images");
+      await createProduct(formData).unwrap();
+  
+      setAlert({ show: true, type: 'success', message: 'Product created successfully!' });
+      formRef.current?.reset();
+      setImagePreviews([]); 
+      setImageFiles([]); 
+    } catch (error) {
+      console.error("Error creating product:", error);
+      setAlert({ show: true, type: 'error', message: 'Error creating product. Please try again.' });
     }
   };
 
   return (
     <div className={styles.container}>
-      <Formik
-        initialValues={{
-          productName: '',
-          description: '',
-          category: '',
-          price: '',
-          discountPercentage: '',
-          inventory: '',
-          weight: '',
-          width: '',
-          height: '',
-          length: '',
-        }}
-        validationSchema={AddNewProductSchema}
-        onSubmit={(values) => {
-          console.log(values);
-          // Handle form submission
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form className={styles.form}>
-            <div className={styles.formGroup}>
-              <Field name="productName" placeholder="Product Name" className={styles.input} />
-              {errors.productName && touched.productName && <div className={styles.error}>{errors.productName}</div>}
+      <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
+        {/* Product Name */}
+        <div className={styles.formGroup}>
+          <input name="name" type="text" placeholder="Product Name" required className={styles.input} />
+        </div>
+
+        {/* Description */}
+        <div className={styles.formGroup}>
+          <textarea name="description" placeholder="Description" required className={styles.textarea}></textarea>
+        </div>
+
+        {/* Image Upload */}
+        <div className={styles.imageUpload}>
+          {imagePreviews.map((image, index) => (
+            <div key={index} className={styles.imagePreview}>
+              <Image src={image} alt={`Product ${index + 1}`} width={80} height={80} objectFit="cover" />
             </div>
+          ))}
+          <label className={styles.uploadButton}>
+            <FaImage />
+            <span>Add Image</span>
+            <input type="file" name="images" accept="image/*" multiple onChange={handleImageUpload} hidden />
+          </label>
+        </div>
 
-            <div className={styles.formGroup}>
-              <Field as="textarea" name="description" placeholder="Description" className={styles.textarea} />
-              {errors.description && touched.description && <div className={styles.error}>{errors.description}</div>}
-            </div>
+        {/* Price */}
+        <div className={styles.formGroup}>
+          <input name="price" type="number" step="0.01" placeholder="Price" required className={styles.input} />
+        </div>
 
-            <div className={styles.imageUpload}>
-              {images.map((image, index) => (
-                <div key={index} className={styles.imagePreview}>
-                  <Image src={image} alt={`Product ${index + 1}`} layout="fill" />
-                </div>
-              ))}
-              <label className={styles.uploadButton}>
-                <FaImage />
-                <span>Add Image</span>
-                <input type="file" accept="image/*" multiple onChange={handleImageUpload} hidden />
-              </label>
-            </div>
+        {/* Categories */}
+        <div className={styles.formGroup}>
+          <select title="category" name="category" required className={styles.select}>
+            <option value="">Select Category</option>
+            {categoriesData?.categories.map((category: any) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-            <div className={styles.formGroup}>
-              <Field as="select" name="category" className={styles.select}>
-                <option value="">Select Category</option>
-                <option value="shorts">Shorts</option>
-              </Field>
-              {errors.category && touched.category && <div className={styles.error}>{errors.category}</div>}
-            </div>
+        {/* Subcategory */}
+        <div className={styles.formGroup}>
+          <input name="subcategory" type="text" placeholder="Subcategory" required className={styles.input} />
+        </div>
 
-            <div className={styles.formGroup}>
-              <Field name="price" type="number" placeholder="Price" className={styles.input} />
-              {errors.price && touched.price && <div className={styles.error}>{errors.price}</div>}
-            </div>
+        {/* Brand */}
+        <div className={styles.formGroup}>
+          <input name="brand" type="text" placeholder="Brand" required className={styles.input} />
+        </div>
 
-            <div className={styles.formGroup}>
-              <Field name="discountPercentage" type="number" placeholder="Discount Percentage" className={styles.input} />
-              {errors.discountPercentage && touched.discountPercentage && <div className={styles.error}>{errors.discountPercentage}</div>}
-            </div>
+        {/* Measurement */}
+        <div className={styles.formGroup}>
+          <input name="measurement" type="text" placeholder="Measurement" required className={styles.input} />
+        </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={trackInventory}
-                  onChange={() => setTrackInventory(!trackInventory)}
-                  className={styles.checkbox}
-                />
-                Track inventory
-              </label>
-            </div>
+        {/* Quantity */}
+        <div className={styles.formGroup}>
+          <input name="quantity" type="number" placeholder="Quantity" required className={styles.input} />
+        </div>
 
-            {trackInventory && (
-              <div className={styles.formGroup}>
-                <Field name="inventory" type="number" placeholder="Quantity" className={styles.input} />
-                {errors.inventory && touched.inventory && <div className={styles.error}>{errors.inventory}</div>}
-              </div>
-            )}
+        {/* Available Quantity */}
+        <div className={styles.formGroup}>
+          <input name="available_quantity" type="number" placeholder="Available Quantity" required className={styles.input} />
+        </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={requiresShipping}
-                  onChange={() => setRequiresShipping(!requiresShipping)}
-                  className={styles.checkbox}
-                />
-                Requires shipping
-              </label>
-            </div>
+        {/* Discount */}
+        <div className={styles.formGroup}>
+          <input name="discount" type="number" step="0.01" placeholder="Discount" className={styles.input} />
+        </div>
 
-            {requiresShipping && (
-              <div className={styles.shippingInfo}>
-                <div className={styles.formGroup}>
-                  <Field name="weight" type="number" placeholder="Weight (kg)" className={styles.input} />
-                  {errors.weight && touched.weight && <div className={styles.error}>{errors.weight}</div>}
-                </div>
-                <div className={styles.formGroup}>
-                  <Field name="width" type="number" placeholder="Width (cm)" className={styles.input} />
-                  {errors.width && touched.width && <div className={styles.error}>{errors.width}</div>}
-                </div>
-                <div className={styles.formGroup}>
-                  <Field name="height" type="number" placeholder="Height (cm)" className={styles.input} />
-                  {errors.height && touched.height && <div className={styles.error}>{errors.height}</div>}
-                </div>
-                <div className={styles.formGroup}>
-                  <Field name="length" type="number" placeholder="Length (cm)" className={styles.input} />
-                  {errors.length && touched.length && <div className={styles.error}>{errors.length}</div>}
-                </div>
-              </div>
-            )}
+        {/* Features */}
+        <div className={styles.formGroup}>
+          <input name="features" type="text" placeholder="Features (comma-separated)" className={styles.input} />
+        </div>
 
-            <div className={styles.sizeGuide}>
-              <h3>Size guide/chart</h3>
-              <label className={styles.uploadButton}>
-                <FaImage />
-                <span>Drag your image or Choose to browse the file</span>
-                <input type="file" accept="image/*" onChange={handleImageUpload} hidden />
-              </label>
-            </div>
+        {/* Gender */}
+        <div className={styles.formGroup}>
+          <select title="gender-select" name="gender" required className={styles.select}>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+        </div>
 
-            <div className={styles.buttonGroup}>
-              <button type="submit" className={styles.saveButton}>Save</button>
-              <button type="button" className={styles.cancelButton}>Cancel</button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        {/* Colors */}
+        <div className={styles.formGroup}>
+          <input name="colors" type="text" placeholder="Colors (comma-separated)" className={styles.input} />
+        </div>
+
+        {/* Dress Style */}
+        <div className={styles.formGroup}>
+          <input name="dress_style" type="text" placeholder="Dress Style (comma-separated)" className={styles.input} />
+        </div>
+
+        {/* Sizes */}
+        <div className={styles.formGroup}>
+          <input name="sizes" type="text" placeholder="Sizes (comma-separated)" className={styles.input} />
+        </div>
+
+        {/* Fashion Collection */}
+        <div className={styles.formGroup}>
+          <input name="fashion_collection" type="text" placeholder="Fashion Collection (comma-separated)" className={styles.input} />
+        </div>
+
+        {/* Technology */}
+        <div className={styles.formGroup}>
+          <input name="technology" type="text" placeholder="Technology (comma-separated)" className={styles.input} />
+        </div>
+
+        {/* Is Customizable */}
+        <div className={styles.formGroup}>
+          <label className={styles.checkboxLabel}>
+            <input name="isCustomizable" type="checkbox" className={styles.checkbox} />
+            Is Customizable
+          </label>
+        </div>
+
+        {/* Weight */}
+        <div className={styles.formGroup}>
+          <input name="weight" type="number" step="0.01" placeholder="Weight" required className={styles.input} />
+        </div>
+
+        {/* Width */}
+        <div className={styles.formGroup}>
+          <input name="width" type="number" step="0.01" placeholder="Width" required className={styles.input} />
+        </div>
+
+        {/* Height */}
+        <div className={styles.formGroup}>
+          <input name="height" type="number" step="0.01" placeholder="Height" required className={styles.input} />
+        </div>
+
+        {/* Size Guide */}
+        <div className={styles.sizeGuide}>
+          <h3>Size guide/chart</h3>
+          <label className={styles.uploadButton}>
+            <FaImage />
+            <span>Drag your image or Choose to browse the file</span>
+            <input type="file" name="size_guide" accept="image/*" onChange={handleSizeGuideUpload} hidden />
+          </label>
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button type="submit" className={styles.saveButton}>Save</button>
+          <button type="button" className={styles.cancelButton}>Cancel</button>
+        </div>
+      </form>
+
+      {alert.show && (
+        <Alert
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert({ ...alert, show: false })}
+          duration={5000}
+        />
+      )}
     </div>
   );
 };
 
 export default AddNewProduct;
+

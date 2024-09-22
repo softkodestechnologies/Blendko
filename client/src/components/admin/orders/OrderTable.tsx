@@ -1,119 +1,69 @@
-import React, { useState } from 'react';
-import { useTable, useExpanded, usePagination, Column, Row, HeaderGroup, Cell, TableInstance } from 'react-table';
+import React, { useState, useEffect } from 'react';
+import { useTable, useExpanded, Column, usePagination, Row, HeaderGroup, Cell } from 'react-table';
 import styles from '../Admin.module.css';
 import { FaEllipsisV, FaPrint, FaChevronDown, FaChevronRight } from 'react-icons/fa';
+import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from '../../../services/userService';
+import useCustomerFilter from '@/utils/hooks/useCustomerFilter';
 
-interface Order {
-  id: string;
-  created: string;
-  customer: string;
-  total: string;
-  profit: string;
-  status: string;
-  details: {
-    sku: string;
-    name: string;
-    price: string;
-    qty: number;
-    disc: string;
-    total: string;
-  }[];
+interface OrderItem {
+  product: string;
+  sku: string;
+  name: string;
+  price: number;
+  quantity: number;
+  discount: number;
+  total: number;
 }
 
-const dummyData: Order[] = [
-  {
-    id: '#6548',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-  {
-    id: '#6549',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-  {
-    id: '#6550',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-  {
-    id: '#6551',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-  {
-    id: '#6552',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-  {
-    id: '#6553',
-    created: '2 min ago',
-    customer: 'Joseph Wheeler',
-    total: '$654',
-    profit: '$154',
-    status: 'Pending',
-    details: [
-      { sku: 'SKU001', name: 'Product 1', price: '$100', qty: 2, disc: '10%', total: '$180' },
-      { sku: 'SKU002', name: 'Product 2', price: '$200', qty: 1, disc: '5%', total: '$190' },
-    ],
-  },
-];
+interface Order {
+  _id: string;
+  createdAt: string;
+  user: {
+    name: string;
+  };
+  totalPrice: number;
+  profit: number;
+  orderStatus: string;
+  orderItems: OrderItem[];
+}
 
 const OrderTable: React.FC = () => {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const { filters, handleSearch } = useCustomerFilter();
+  const { data: ordersData, isLoading, refetch } = useGetAllOrdersQuery(filters);
+  const [updateOrderStatus] = useUpdateOrderStatusMutation();
+
+  useEffect(() => {
+    if (ordersData && ordersData.orders) {
+      setOrders(ordersData.orders);
+    }
+  }, [ordersData]);
 
   const columns: Column<Order>[] = React.useMemo(
     () => [
-      { Header: 'Order id', accessor: 'id' },
-      { Header: 'Created', accessor: 'created' },
-      { Header: 'Customer', accessor: 'customer' },
-      { Header: 'Total', accessor: 'total' },
+      { Header: 'Order id', accessor: '_id' },
+      { Header: 'Created', accessor: 'createdAt' },
+      { Header: 'Customer', accessor: (row) => row.user.name },
+      { Header: 'Total', accessor: 'totalPrice' },
       { Header: 'Profit', accessor: 'profit' },
       {
         Header: 'Status',
-        accessor: 'status',
-        Cell: ({ value }: { value: string }) => (
-          <span className={`${styles.status} ${styles[value.toLowerCase()]}`}>
-            {value}
-          </span>
-        )
+        accessor: 'orderStatus',
+        Cell: ({ value, row }: { value: string; row: Row<Order> }) => (
+          <select
+            title="status"
+            value={value}
+            onChange={(e) => handleStatusChange(row.original._id, e.target.value)}
+            className={`${styles.status} ${styles[value.toLowerCase()]}`}
+          >
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        ),
       },
       {
         Header: '',
@@ -139,20 +89,31 @@ const OrderTable: React.FC = () => {
     pageOptions,
     nextPage,
     previousPage,
-    setPageSize: setReactTablePageSize,
-    state: { pageIndex: statePageIndex, pageSize: statePageSize },
+    setPageSize,
+    state: { pageIndex, pageSize },
   } = useTable<Order>(
     {
       columns,
-      data: dummyData,
-      initialState: { pageIndex, pageSize } as any,
+      data: orders,
+      initialState: { pageIndex: 0, pageSize: 10 }, 
+      manualPagination: true, 
+      pageCount: ordersData?.total_pages || 0, 
     },
     useExpanded,
     usePagination
   );
 
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      await updateOrderStatus({ body: { status: newStatus }, id: orderId }).unwrap();
+      refetch();
+    } catch (error) {
+      console.error('Failed to update order status:', error);
+    }
+  };
+
   const renderRowSubComponent = (row: Row<Order>) => {
-    const { details } = row.original;
+    const { orderItems } = row.original;
     return (
       <div className={styles.expandedRow}>
         <table className={styles.detailsTable}>
@@ -168,15 +129,14 @@ const OrderTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {details.map((item, index) => (
+            {orderItems.map((item, index) => (
               <tr key={index}>
                 <td>{item.sku}</td>
                 <td>{item.name}</td>
-                <td>{item.price}</td>
-
-                <td>{item.qty}</td>
-                <td>{item.disc}</td>
-                <td>{item.total}</td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>{item.quantity}</td>
+                <td>{item.discount}%</td>
+                <td>${item.total.toFixed(2)}</td>
                 <td>
                   <button type="button" title="button" className={styles.actionButton}>
                     <FaEllipsisV />
@@ -186,19 +146,32 @@ const OrderTable: React.FC = () => {
             ))}
           </tbody>
         </table>
-        
       </div>
     );
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles.tableContainer}>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search orders..."
+          onChange={(e) => handleSearch('keyword', e.target.value)}
+          className={styles.searchInput}
+        />
+      </div>
       <table {...getTableProps()} className={styles.orderTable}>
         <thead>
           {headerGroups.map((headerGroup: HeaderGroup<Order>) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} key={column.id}>{column.render('Header')}</th>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()} key={column.id}>
+                  {column.render('Header')}
+                </th>
               ))}
             </tr>
           ))}
@@ -210,10 +183,12 @@ const OrderTable: React.FC = () => {
               <React.Fragment key={row.id}>
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell: Cell<Order>) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
+                    <td {...cell.getCellProps()} key={cell.column.id}>
+                      {cell.render('Cell')}
+                    </td>
                   ))}
                 </tr>
-                {(row as any).isExpanded && (
+                {row.isExpanded && (
                   <tr>
                     <td colSpan={columns.length}>
                       {renderRowSubComponent(row)}
@@ -225,25 +200,26 @@ const OrderTable: React.FC = () => {
           })}
         </tbody>
       </table>
+
       <div className={styles.pagination}>
         <div>
           <span>
             Show{' '}
             <select
               title="pageSize"
-              value={statePageSize}
-              onChange={e => {
+              value={pageSize}
+              onChange={(e) => {
                 setPageSize(Number(e.target.value));
-                setReactTablePageSize(Number(e.target.value));
+                handleSearch('pp', e.target.value);
               }}
             >
-              {[10, 20, 30, 40, 50].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize}
+              {[10, 20, 30, 40, 50].map((size) => (
+                <option key={size} value={size}>
+                  {size}
                 </option>
               ))}
-            </select>
-            {' '}entries
+            </select>{' '}
+            entries
           </span>
         </div>
         <div>
@@ -253,7 +229,7 @@ const OrderTable: React.FC = () => {
           <span>
             Page{' '}
             <strong>
-              {statePageIndex + 1} of {pageOptions.length}
+              {pageIndex + 1} of {pageOptions.length}
             </strong>{' '}
           </span>
           <button onClick={() => nextPage()} disabled={!canNextPage}>

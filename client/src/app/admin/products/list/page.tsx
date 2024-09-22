@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import AdminRoles from '@/components/admin/roles/AdminRoles';
+import ProductList from '@/components/admin/products/ProductList';
 import styles from '@/components/admin/Admin.module.css';
 
 
 const OrdersPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Pending');
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -18,8 +17,8 @@ const OrdersPage: React.FC = () => {
     <div className={styles.container}>
       <AdminSidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
       <div className={`${styles.content} container`}>
-        <h1>Roles & Permissions</h1>
-        <AdminRoles />
+        <h1>Products</h1>
+        <ProductList />
       </div>
     </div>
   );
