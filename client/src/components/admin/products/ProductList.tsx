@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaSearch, FaFilter, FaFileExport, FaFileImport, FaPlus } from 'react-icons/fa';
-import styles from './Categories.module.css';
-import { useCategoryList } from '@/utils/hooks/useCategoryList';
+import styles from './ProductList.module.css';
+import { useProductList } from '@/utils/hooks/useProductList';
 
-const Categories: React.FC = () => {
+const ProductList: React.FC = () => {
   const {
-    categories,
+    products,
     loading,
     error,
     searchTerm,
@@ -13,7 +13,7 @@ const Categories: React.FC = () => {
     currentPage,
     setCurrentPage,
     totalPages,
-  } = useCategoryList(10);
+  } = useProductList(10);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -29,7 +29,7 @@ const Categories: React.FC = () => {
           <FaSearch className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search categories..."
+            placeholder="Search products..."
             value={searchTerm}
             onChange={handleSearch}
             className={styles.searchInput}
@@ -38,32 +38,34 @@ const Categories: React.FC = () => {
         <button className={styles.actionButton}><FaFilter /> Filter</button>
         <button className={styles.actionButton}><FaFileExport /> Export</button>
         <button className={styles.actionButton}><FaFileImport /> Import</button>
-        <button className={styles.newCategoryButton}><FaPlus /> New Category</button>
+        <button className={styles.newProductButton}><FaPlus /> New Product</button>
       </div>
-      <table className={styles.categoriesTable}>
+      <table className={styles.productsTable}>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>SKU</th>
             <th>Name</th>
             <th>Status</th>
-            <th>Products</th>
+            <th>Price</th>
+            <th>Quantity</th>
             <th>Modified</th>
-            <th>Created</th>
+            <th>Published</th>
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
-            <tr key={category._id}>
-              <td>{category._id}</td>
-              <td>{category.name}</td>
+          {products.map((product) => (
+            <tr key={product.sku}>
+              <td>{product.sku}</td>
+              <td>{product.name}</td>
               <td>
-                <span className={`${styles.status} ${styles[category.status.toLowerCase()]}`}>
-                  {category.status}
+                <span className={`${styles.status} ${styles[product.status.toLowerCase()]}`}>
+                  {product.status}
                 </span>
               </td>
-              <td>{category.products.length}</td>
-              <td>{category.updatedAt}</td>
-              <td>{category.createdAt}</td>
+              <td>${product.price.toFixed(2)}</td>
+              <td>{product.quantity}</td>
+              <td>{product.modified}</td>
+              <td>{product.published}</td>
             </tr>
           ))}
         </tbody>
@@ -87,4 +89,4 @@ const Categories: React.FC = () => {
   );
 };
 
-export default Categories;
+export default ProductList;

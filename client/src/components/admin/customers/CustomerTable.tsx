@@ -1,21 +1,31 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable, usePagination, Column } from 'react-table';
 import styles from '../Admin.module.css';
 import { useGetUsersQuery } from '@/services/userService';
 import { formatDate } from '@/utils/helpers/dateUtils';
 import useCustomerFilter from '@/utils/hooks/useCustomerFilter';
-import {  FaSearch } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
+import CustomerModal from './CustomerModal';
+
 interface Customer {
   _id: string;
   name: string;
   email: string;
   phone: string;
   createdAt: string;
+  gender: string;
+  dateOfBirth: string;
+  memberSince: string;
+  address: string;
+  totalOrders: number;
+  completedOrders: number;
+  canceledOrders: number;
 }
 
 const CustomerTable: React.FC = () => {
   const { filters, handleSearch } = useCustomerFilter();
   const { data: usersData, isLoading, isError } = useGetUsersQuery(filters);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   const customers: Customer[] = useMemo(() => usersData?.users || [], [usersData]);
 
@@ -55,20 +65,28 @@ const CustomerTable: React.FC = () => {
     usePagination
   );
 
+  const handleRowClick = (customer: Customer) => {
+    setSelectedCustomer(customer);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCustomer(null);
+  };
+
   return (
     <div className={styles.tableContainer}>
       <div className={styles.searchContainer}>
-            <input
-              type="text"
-              placeholder="Search..."
-              className={styles.searchInput}
-              value={filters.search || ''}
-              onChange={(e) => handleSearch('search', e.target.value)}
-            />
-            <div>
-              <FaSearch />
-            </div>
-          </div>
+        <input
+          type="text"
+          placeholder="Search..."
+          className={styles.searchInput}
+          value={filters.search || ''}
+          onChange={(e) => handleSearch('search', e.target.value)}
+        />
+        <div>
+          <FaSearch />
+        </div>
+      </div>
       {isLoading ? (
         <p>Loading...</p>
       ) : isError ? (
@@ -91,7 +109,12 @@ const CustomerTable: React.FC = () => {
               {page.map((row) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()} key={row.id}>
+                  <tr
+                    {...row.getRowProps()}
+                    key={row.id}
+                    onClick={() => handleRowClick(row.original)}
+                    className={styles.clickableRow}
+                  >
                     {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} key={cell.column.id}>
                         {cell.render('Cell')}
@@ -128,6 +151,9 @@ const CustomerTable: React.FC = () => {
             </select>
           </div>
         </>
+      )}
+      {selectedCustomer && (
+        <CustomerModal customer={selectedCustomer} onClose={handleCloseModal} />
       )}
     </div>
   );
