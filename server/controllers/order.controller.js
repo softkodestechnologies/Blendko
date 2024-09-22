@@ -44,14 +44,14 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
   await Inbox.create({
     user: req.user.id,
     title: 'Order Placed',
-    content: `Your order no.${order._id} has been placed successfully. We will notify you once it is shipped.`,
+    content: `Your order no. #${order.orderNumber} has been placed successfully. We will notify you once it is shipped.`,
     orderId: order._id
   });
 
   await sendEmail({
     email: foundUser.email,
     subject: 'Order Confirmation',
-    message: `Your order no.${order._id} has been placed successfully. We will notify you once it is shipped.`
+    message: `Your order no. #${order.orderNumber} has been placed successfully. We will notify you once it is shipped.`
   });
 
   foundUser.cart = [];
@@ -92,21 +92,18 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = req.query.pp || 5;
+  const status = req.query.status || 'all';
+
+  let query = {};
+  if (status !== 'all') {
+    query.orderStatus = status;
+  }
+
+  const ordersCount = await Order.countDocuments(query);
+  const deliveredOrdersCount = await Order.countDocuments({ orderStatus: 'Delivered' });
+  const pendingOrdersCount = await Order.countDocuments({ orderStatus: 'Processing' });
   const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
-
-  const ordersCount = await Order.countDocuments();
-
-  const ordersCountLast30Days = await Order.countDocuments({
-    createdAt: { $gte: last30Days },
-  });
-
-  const deliveredOrdersCount = await Order.countDocuments({
-    orderStatus: 'Delivered',
-  });
-  const pendingOrdersCount = await Order.countDocuments({
-    orderStatus: 'Processing',
-  });
-
+  const ordersCountLast30Days = await Order.countDocuments({ ...query, createdAt: { $gte: last30Days } });
   const sumOfAllOrders = await Order.aggregate([
     {
       $group: {
@@ -117,8 +114,8 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   ]);
 
   const apiFeatures = new ApiFeatures(
-    Order.find()
-      .populate('user', 'name') 
+    Order.find(query)
+      .populate('user', 'name')
       .sort({ createdAt: -1 }),
     req.query
   )
@@ -142,8 +139,8 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
-  if (order.orderStatus === 'Delivered') {
-    return next(new ErrorHandler('You have already delivered this order', 400));
+  if (order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled') {
+    return next(new ErrorHandler('You cannot update this order', 400));
   }
 
   for (let i = 0; i < order.orderItems.length; i++) {
@@ -163,14 +160,14 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     await Inbox.create({
       user: order.user,
       title: 'Order Delivered',
-      content: `Your order no.${order._id} has been delivered. Thank you for shopping with us!`,
+      content: `Your order no. #${order.orderNumber} has been delivered. Thank you for shopping with us!`,
       orderId: order._id
     });
 
     await sendEmail({
       email: order.user.email,
       subject: 'Order Delivered',
-      message: `Your order no.${order._id} has been delivered. Thank you for shopping with us!`
+      message: `Your order no. #${order.orderNumber} has been delivered. Thank you for shopping with us!`
     });
   }
 

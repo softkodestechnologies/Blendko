@@ -27,7 +27,11 @@ exports.updateDiscount = catchAsyncErrors(async (req, res, next) => {
 
 exports.deleteDiscount = catchAsyncErrors(async (req, res, next) => {
   const discount = await Discount.findById(req.params.id);
-  if (!discount) return next(new ErrorHandler('Discount not found', 404));
-  await discount.remove();
+  if (!discount) {
+    return next(new ErrorHandler('Discount not found', 404));
+  }
+
+  await discount.deleteOne();
+
   res.status(200).json({ success: true, message: 'Discount deleted successfully' });
 });

@@ -341,7 +341,6 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 
     const users = await User.find(searchQuery)
       .sort({ createdAt: -1 })
-      .select('name email phone createdAt status')
       .skip(skip)
       .limit(resPerPage);
 
