@@ -1,0 +1,239 @@
+/* /styles/Career.module.css */
+.adminLayout {
+    display: flex;
+  }
+  
+  .mainContent {
+    flex-grow: 1;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+  }
+  
+  .menuButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .searchBar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    padding: 0.5rem;
+  }
+  
+  .searchBar input {
+    border: none;
+    margin-left: 0.5rem;
+  }
+  
+  .headerIcons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .content {
+    padding: 2rem;
+  }
+  
+  .pageTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .careerContainer,
+  .applicationsContainer {
+    padding: 1rem;
+  }
+  
+  .headerActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .createButton {
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .statCard {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .statTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statValue {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .filterContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .searchInput,
+  .filterSelect {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .searchInput {
+    width: 300px;
+  }
+  
+  .jobTable,
+  .applicationTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .jobTable th,
+  .jobTable td,
+  .applicationTable th,
+  .applicationTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .jobTable th,
+  .applicationTable th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  
+  .statusBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+  
+  .published {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
+  .draft {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .closed {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .accepted {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+  
+  .rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .pending {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .actionButton {
+    background-color: #f3f4f6;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .actionButton:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .chartContainer {
+    margin-bottom: 2rem;
+  }
+  
+  /* Styles for modals */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .modalBody {
+    margin-bottom: 1rem;
+  }
+  
+  .modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }

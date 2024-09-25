@@ -185,7 +185,63 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['DeliveryAddress'],
     }),
-
+    getJobs: builder.query({
+      query: () => '/jobs',
+      providesTags: ['Job'],
+    }),
+    createJob: builder.mutation({
+      query: (jobData) => ({
+        url: '/jobs',
+        method: 'POST',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+        body: jobData,
+      }),
+      invalidatesTags: ['Job'],
+    }),
+    updateJob: builder.mutation({
+      query: ({ id, ...jobData }) => ({
+        url: `/jobs/${id}`,
+        method: 'PUT',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+        body: jobData,
+            }),
+      invalidatesTags: ['Job'],
+    }),
+    deleteJob: builder.mutation({
+      query: (id) => ({
+        url: `/jobs/${id}`,
+        method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+      }),
+      invalidatesTags: ['Job'],
+    }),
+    getApplications: builder.query({
+    query: (id) => ({
+        url: `/jobs/admin/applications/${id}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        }),
+      providesTags: ['Application'],
+    }),
+    updateApplicationStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/jobs/applications/${id}`,
+        method: 'PUT',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+              body: { status },
+            }),
+      invalidatesTags: ['Application'],
+    }),
     getUsers: builder.query({
       query: (params: QueryType) => ({
         url: `/admin/users?${new URLSearchParams(
@@ -402,6 +458,12 @@ export const {
   useCreateDeliveryAddressMutation,
   useUpdateDeliveryAddressMutation,
   useDeleteDeliveryAddressMutation,
+  useGetJobsQuery,
+  useCreateJobMutation,
+  useUpdateJobMutation,
+  useDeleteJobMutation,
+  useGetApplicationsQuery,
+  useUpdateApplicationStatusMutation,
   useGetUsersQuery,
   useGetAdminsQuery,
   useUpdateUserDetailsMutation,
