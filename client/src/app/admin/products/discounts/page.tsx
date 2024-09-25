@@ -9,7 +9,7 @@ import { FaBars, FaUser, FaBell, FaSearch, FaPlus } from 'react-icons/fa';
 import { useGetDiscountsQuery, useCreateDiscountMutation, useUpdateDiscountMutation, useDeleteDiscountMutation } from '@/services/userService';
 
 interface Discount {
-  id: string;
+  _id: string;
   name: string;
   code: string;
   type: string;
@@ -46,15 +46,16 @@ const DiscountsPage: React.FC = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredDiscounts = data?.discounts.filter(discount =>
+  const filteredDiscounts = data?.discounts.filter((discount: Discount) =>
     discount.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     discount.code.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSubmitDiscount = async (formData: Omit<Discount, 'id'>) => {
+  const handleSubmitDiscount = async (formData: Omit<Discount, '_id'> & { _id?: string }) => {
+    console.log("Editing Discount", editingDiscount)
     try {
-      if (editingDiscount) {
-        await updateDiscount({ id: editingDiscount.id, ...formData }).unwrap();
+      if (editingDiscount && editingDiscount._id) {
+        await updateDiscount({ id: editingDiscount._id, ...formData }).unwrap();
       } else {
         await createDiscount(formData).unwrap();
       }
@@ -65,12 +66,12 @@ const DiscountsPage: React.FC = () => {
       console.error('Failed to submit discount:', error);
     }
   };
-
+  
   const handleEditDiscount = (discount: Discount) => {
     setEditingDiscount(discount);
     setShowForm(true);
   };
-
+  
   const handleDeleteDiscounts = async (ids: string[]) => {
     if (!ids.length) {
       console.error('No discounts selected for deletion');
@@ -155,7 +156,7 @@ const DiscountsPage: React.FC = () => {
             <CreateDiscountForm
               onSubmit={handleSubmitDiscount}
               onCancel={() => { setShowForm(false); setEditingDiscount(null); }}
-              initialData={editingDiscount}
+              initialData={editingDiscount ?? undefined} 
             />
           ) : (
             <DiscountTable

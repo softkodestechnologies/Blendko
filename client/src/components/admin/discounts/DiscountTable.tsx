@@ -29,7 +29,7 @@ const DiscountTable: React.FC<DiscountTableProps> = ({
   setSelectedDiscounts,
   onEdit,
   onDelete,
-  activeTab
+  activeTab,
 }) => {
   const [filteredDiscounts, setFilteredDiscounts] = useState(discounts);
 
@@ -130,5 +130,4 @@ const DiscountTable: React.FC<DiscountTableProps> = ({
     </div>
   );
 };
-
 export default DiscountTable;

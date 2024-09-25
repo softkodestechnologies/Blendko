@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../Admin.module.css';
+import styles from './DiscountForm.module.css';
 
 interface DiscountFormData {
-  name: string;
-  code: string;
-  type: string;
-  value: number;
-  startsOn: string;
-  expiresOn: string;
-  usageLimit: number;
-  status: string;
+    _id?: string;
+    name: string;
+    code: string;
+    type: string;
+    value: number;
+    startsOn: string;
+    expiresOn: string;
+    usageLimit: number;
+    status: string;
 }
 
 interface CreateDiscountFormProps {

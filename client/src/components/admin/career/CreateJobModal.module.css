@@ -1,0 +1,79 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(31, 41, 55, 0.75); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+  
+  .modal {
+    background-color: white;
+    width: 34rem; 
+    padding: 1.5rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalTitle {
+    font-size: 1.25rem;
+    font-weight: 600; 
+  }
+  
+  .closeButton {
+    color: #6b7280; 
+    transition: color 0.2s ease;
+  }
+  
+  .closeButton:hover {
+    color: #374151; 
+  }
+  
+  .form {
+    margin-top: 1rem; 
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem; 
+  }
+  
+  .label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500; 
+    color: #4b5563; 
+  }
+  
+  .input {
+    margin-top: 0.25rem; 
+    width: 100%;
+    padding: 0.5rem; 
+    border: 1px solid #d1d5db;
+  }
+
+  .btnGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .previewButton {
+    background-color: #fff; 
+    color:#000;
+    padding: 0.5rem; 
+    text-align: center;
+  }
+
+  .submitButton {
+    background-color: #000; 
+    color: #fff;
+    padding: 0.5rem; 
+    text-align: center;
+  }
+  
