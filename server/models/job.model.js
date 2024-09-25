@@ -19,42 +19,52 @@ const jobSchema = new mongoose.Schema({
     trim: true,
     maxLength: [100, 'Job title cannot exceed 100 characters']
   },
-  positionType: {
+  jobType: {
     type: String,
-    required: [true, 'Please specify position type'],
-    enum: {
-      values: ['Full Time', 'Part Time'],
-      message: 'Please select correct position type'
-    }
+    enum:  ['Full-time', 'Part-time', 'Internship'],
+    default: 'Full-time'
   },
   brand: {
     type: String,
-    required: [true, 'Please enter brand name'],
     trim: true
   },
   careerArea: {
     type: String,
-    required: [true, 'Please specify career area'],
     trim: true
+  },
+  category: {
+    type: String,
+    enum: ['Design', 'Marketing', 'Retail'],
+    default: 'Retail'
   },
   location: {
     type: String,
-    required: [true, 'Please enter job location'],
-    trim: true
+    enum: ['Onsite', 'Remote', 'Hybrid'],
+    default: 'Onsite'
   },
   description: {
     type: String,
     required: [true, 'Please enter job description']
   },
-  requirements: [String],
+  requirements: {
+    type: String,
+    trim: true
+  },
+  salary: {
+    type: Number,
+  },
   responsibilities: [String],
   postedDate: {
     type: Date,
     default: Date.now
   },
   closingDate: {
-    type: Date,
-    required: [true, 'Please specify closing date for applications']
+    type: Date
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Accepted', 'Rejected'],
+    default: 'Pending'
   },
   isActive: {
     type: Boolean,

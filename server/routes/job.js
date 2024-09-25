@@ -12,6 +12,7 @@ const {
   updateApplicationStatus,
   deleteApplication,
   getAllJobApplications,
+  getJobApplicationsByJobId,
   getSingleJobApplication
 } = require('../controllers/job.controller');
 
@@ -24,6 +25,7 @@ router.route('/').get(getJobs);
 
 router.route('/admin/new').post(isAuthenticatedUser, authorizeRoles('admin'), newJob);
 router.route('/admin/applications').get(isAuthenticatedUser, authorizeRoles('admin'), getAllJobApplications);
+router.route('/admin/applications/:jobId').get(isAuthenticatedUser, authorizeRoles('admin'), getJobApplicationsByJobId);
 router.route('/admin/application/:id')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getSingleJobApplication) 
   .put(isAuthenticatedUser, authorizeRoles('admin'), updateApplicationStatus)
