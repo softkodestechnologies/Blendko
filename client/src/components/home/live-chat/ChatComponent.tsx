@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { useCreateChatMutation, useCreateGuestChatMutation, useSendMessageMutation } from '@/services/chatService';
 import styles from './ChatComponent.module.css';
 
 interface Message {
@@ -15,7 +17,55 @@ const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [chatState, setChatState] = useState<'initial' | 'started'>('initial');
+  const [showPopup, setShowPopup] = useState(false);
+  const [guestInfo, setGuestInfo] = useState({ name: '', email: '', phone: '' });
+  const [isGuest, setIsGuest] = useState(false);
+  const [guestId, setGuestId] = useState<string | null>(null);
+  const [chatId, setChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<Socket | null>(null);
+
+  const [createChat] = useCreateChatMutation();
+  const [createGuestChat] = useCreateGuestChatMutation();
+  const [sendMessage] = useSendMessageMutation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token'); 
+    const existingChatId = localStorage.getItem('chatId');
+    const existingGuestId = localStorage.getItem('guestId');
+
+    if (existingChatId) {
+      setChatId(existingChatId);
+      setShowPopup(true);
+    }
+
+    if (existingGuestId) {
+      setGuestId(existingGuestId);
+      setIsGuest(true);
+    }
+
+    socketRef.current = io('http://localhost:8080', {
+      auth: {
+        token: token || undefined,
+      },
+    });
+
+    socketRef.current.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    socketRef.current.on('newMessage', (data: { chatId: string, message: Message }) => {
+      if (data.chatId === chatId) {
+        setMessages((prevMessages) => [...prevMessages, data.message]);
+      }
+    });
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, [chatId]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -31,25 +81,85 @@ const ChatComponent: React.FC = () => {
     setIsOpen(!isOpen);
     togglePanel();
   };
-
-  const startNewChat = () => {
+  const startNewChat = async () => {
     setChatState('started');
-    // Here you would typically initialize a new chat session with your backend
-  };
-
-  const sendMessage = () => {
-    if (inputMessage.trim()) {
-      const newMessage: Message = {
-        id: Date.now().toString(),
-        sender: 'user',
-        content: inputMessage,
-        timestamp: new Date(),
-      };
-      setMessages([...messages, newMessage]);
-      setInputMessage('');
-      // Here you would typically send the message to your backend
+    setShowPopup(false);
+    try {
+      if (isGuest) {
+        const result = await createGuestChat({ message: inputMessage || 'Hello!', ...guestInfo }).unwrap();
+        setGuestId(result.guestId);
+        setChatId(result.chat._id);
+        localStorage.setItem('guestId', result.guestId);
+        localStorage.setItem('chatId', result.chat._id);
+      } else {
+        const result = await createChat(inputMessage || 'Hello!').unwrap();
+        setChatId(result.chat._id);
+        localStorage.setItem('chatId', result.chat._id);
+      }
+      if (socketRef.current) {
+        socketRef.current.emit('join chat', chatId);
+      }
+    } catch (error) {
+      console.error('Failed to start new chat:', error);
     }
   };
+  
+
+  const continueExistingChat = () => {
+    setChatState('started');
+    setShowPopup(false);
+    if (socketRef.current && chatId) {
+      socketRef.current.emit('join chat', chatId);
+    }
+    // Here you would typically fetch the existing chat messages
+  };
+
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() && chatId) {
+      try {
+        const sender = isGuest ? guestId : 'user'; // Or whatever logic you're using to determine the sender
+        await sendMessage({ chatId, message: inputMessage, guestId, sender }).unwrap();
+        setInputMessage('');
+      } catch (error) {
+        console.error('Failed to send message:', error);
+      }
+    }
+  };
+  
+
+  const renderGuestForm = () => (
+    <div className={styles.guestForm}>
+      <input
+        type="text"
+        placeholder="Name (optional)"
+        value={guestInfo.name}
+        onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
+      />
+      <input
+        type="email"
+        placeholder="Email (optional)"
+        value={guestInfo.email}
+        onChange={(e) => setGuestInfo({ ...guestInfo, email: e.target.value })}
+      />
+      <input
+        type="tel"
+        placeholder="Phone (optional)"
+        value={guestInfo.phone}
+        onChange={(e) => setGuestInfo({ ...guestInfo, phone: e.target.value })}
+      />
+      <button onClick={startNewChat}>Start Chat</button>
+    </div>
+  );
+
+  const renderChatPopup = () => (
+    <div className={styles.chatPopup}>
+      <h3>Already have an ongoing chat</h3>
+      <p>Leaving the same questions multiple times may delay responses</p>
+      <button onClick={startNewChat}>Start a new conversation</button>
+      <button onClick={continueExistingChat}>Continue existing conversation</button>
+      <button onClick={() => setShowPopup(false)}>Cancel</button>
+    </div>
+  );
 
   return (
     <div className={styles.chatContainer}>
@@ -60,7 +170,7 @@ const ChatComponent: React.FC = () => {
           </svg>
         </button>
       )}
-      
+
       {isChatPanelOpen && (
         <div onClick={toggleChat} className={`${styles.chatPanel} ${styles.chatPanelRight}`}>
           <div className={styles.chatPanelContent}>
@@ -68,22 +178,21 @@ const ChatComponent: React.FC = () => {
           </div>
         </div>
       )}
+
       {isOpen && (
         <div className={styles.chatBox}>
           <div className={styles.chatHeader}>
-            <span>Blendko Support Team</span>
+            <span>Blennko Support Team</span>
           </div>
           <div className={styles.chatBody}>
+            {showPopup && renderChatPopup()}
             {chatState === 'initial' ? (
-              <div className={styles.chatInitial}>
-                <svg className={styles.iconLarge} viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-                <p>Start a conversation</p>
-                <button onClick={startNewChat} className={styles.startChatButton}>
-                  Start new chat
-                </button>
-              </div>
+              isGuest ? renderGuestForm() : (
+                <div className={styles.chatInitial}>
+                  <p>Start a conversation</p>
+                  <button onClick={startNewChat}>Start new chat</button>
+                </div>
+              )
             ) : (
               <>
                 {messages.map((msg) => (
@@ -109,31 +218,21 @@ const ChatComponent: React.FC = () => {
                 placeholder="Type a message..."
                 className={styles.messageInput}
               />
-              <button className={styles.attachButton} title="Attach file">
-                <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                </svg>
-              </button>
-              <button onClick={sendMessage} className={styles.sendButton} title="Send message">
-                <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
+              <button onClick={handleSendMessage} className={styles.sendButton}>Send</button>
             </div>
           )}
         </div>
       )}
 
-    {isOpen && (
+      {isOpen && (
         <button onClick={toggleChat} className={styles.chatButton} title="Close chat">
-            <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+          <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
         </button>
       )}
     </div>
   );
 };
+
 export default ChatComponent;
