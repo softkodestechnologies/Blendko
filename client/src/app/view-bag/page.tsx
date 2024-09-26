@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import styles from './viewBagPage.module.css';
 import { deleteItem } from '@/services/userSlice';
@@ -20,14 +21,14 @@ const ViewBagPage: React.FC = () => {
   const { addItemToCart } = useAddToCart();
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     const updateCartItems = () => {
-      if (typeof window !== 'undefined') {
-        const storedCartItems = JSON.parse(
-          localStorage.getItem('cartItems') || '[]'
-        );
-
+      if (user) {
+        setCartItems(user.cart);
+      } else {
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
         setCartItems(storedCartItems);
       }
     };
@@ -38,7 +39,56 @@ const ViewBagPage: React.FC = () => {
     return () => {
       window.removeEventListener('storage', updateCartItems);
     };
-  }, []);
+  }, [user]);
+
+  const handleAddToCart = (product: any) => {
+    addItemToCart(product);
+    updateCartItems();
+  };
+
+  const handleDeleteFromCart = (productId: string) => {
+    deleteCartItem(productId);
+    updateCartItems();
+  };
+
+  const handleReduceCartItem = (productId: string) => {
+    reduceCartItem(productId);
+    updateCartItems();
+  };
+
+  const updateCartItems = () => {
+    if (user) {
+      setCartItems(user.cart);
+    } else {
+      const updatedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      setCartItems(updatedCartItems);
+    }
+  };
+
+  const handleQuantityChange = (productId: string, newQuantity: number) => {
+    const product = cartItems.find(item => item._id === productId);
+    if (product) {
+      const quantityDiff = newQuantity - product.quantity;
+      if (quantityDiff > 0) {
+        // Increase quantity
+        for (let i = 0; i < quantityDiff; i++) {
+          addItemToCart({ ...product, quantity: 1 });
+        }
+      } else if (quantityDiff < 0) {
+        // Decrease quantity
+        for (let i = 0; i < Math.abs(quantityDiff); i++) {
+          reduceCartItem(productId);
+        }
+      }
+      updateCartItems();
+    }
+  };
+
+  const handleRemoveItem = (productId: string) => {
+    deleteCartItem(productId);
+    updateCartItems();
+  };
+
 
   const isLoading = false;
 
@@ -67,7 +117,12 @@ const ViewBagPage: React.FC = () => {
                 <h2>Cart</h2>
 
                 {cartItems.map((item: any) => (
-                  <Product key={item} product={item} />
+                  <Product 
+                  key={item} 
+                  product={item} 
+                  onQuantityChange={handleQuantityChange}
+                  onRemove={handleRemoveItem}
+                  />
                 ))}
               </div>
             </div>

@@ -4,7 +4,17 @@ import styles from './product_side.module.css';
 
 import QuantitySelector from '@/components/shop/shopDetails/product_detail_actions/QuantitySelector';
 
-function Product({ product }: { product: any }) {
+interface ProductProps {
+  product: any;
+  onQuantityChange: (productId: string, newQuantity: number) => void;
+  onRemove: (productId: string) => void;
+}
+
+function Product({ product, onQuantityChange, onRemove }: ProductProps) {
+
+  const handleQuantitySelection = (quantity: number, type: 'increment' | 'decrement' | 'input') => {
+    onQuantityChange(product._id, quantity);
+  };
   return (
     <article
       aria-labelledby={product.name}
@@ -38,9 +48,10 @@ function Product({ product }: { product: any }) {
             className={`flex align-y ${styles.quantity}`}
           >
             <p>Quantity</p>
-
+            {product.quantity}
             <QuantitySelector
-              handleQuantitySelection={() => {}}
+              handleQuantitySelection={handleQuantitySelection}
+              initialQuantity={product.quantity}
               className={`${styles.quantity_selector}`}
             />
           </div>

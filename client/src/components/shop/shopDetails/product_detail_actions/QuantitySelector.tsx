@@ -1,35 +1,43 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from './productDetailsActions.module.css';
 
 import { AddIcon, MinusIcon } from '../../../../../public/svg/icon';
 
-function QuantitySelector({
-  className,
-  handleQuantitySelection,
-}: {
+interface QuantitySelectorProps {
   className?: string;
   handleQuantitySelection: (
     quantity: number,
     type: 'increment' | 'decrement' | 'input'
   ) => void;
-}) {
-  const [quantity, setQuantity] = useState(1);
+  initialQuantity?: number;
+}
+
+function QuantitySelector({
+  className,
+  handleQuantitySelection,
+  initialQuantity = 1,
+}: QuantitySelectorProps) {
+  const [quantity, setQuantity] = useState(initialQuantity);
+
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [initialQuantity]);
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
-      handleQuantitySelection(quantity, 'decrement');
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      handleQuantitySelection(newQuantity, 'decrement');
     }
-
-    return;
   };
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    handleQuantitySelection(quantity, 'increment');
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    handleQuantitySelection(newQuantity, 'increment');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,11 +70,7 @@ function QuantitySelector({
   };
 
   return (
-    <div
-      className={`grid align-y ${styles.quantity_selector} ${
-        className ? className : ''
-      }`}
-    >
+    <div className={`grid align-y ${styles.quantity_selector} ${className || ''}`}>
       <button
         type="button"
         onClick={decreaseQuantity}
@@ -75,7 +79,6 @@ function QuantitySelector({
       >
         <MinusIcon />
       </button>
-
       <input
         type="text"
         value={quantity}
@@ -84,7 +87,6 @@ function QuantitySelector({
         onBlur={handleInputBlur}
         className="full-width full-height"
       />
-
       <button
         type="button"
         aria-label="Increase quantity"

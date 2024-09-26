@@ -9,6 +9,10 @@ import HamburgerMenu from '../../ui/HamburgerMenu';
 import { useSelector } from 'react-redux';
 import Cart from '../../ui/Cart';
 
+import useAddToCart from '@/utils/hooks/useAddToCart';
+import useDeleteCartItem from '@/utils/hooks/useDeleteCartItem';
+import useReduceCartItems from '@/utils/hooks/useReduceCartItems';
+
 import styles from './header.module.css';
 
 import NavMenu from './NavMenu';
@@ -38,6 +42,9 @@ const Header = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLButtonElement>(null);
   const user = useSelector((state: any) => state.user);
+  const { addItemToCart } = useAddToCart();
+  const { deleteCartItem } = useDeleteCartItem();
+  const { reduceCartItem } = useReduceCartItems();
 
   useEffect(() => {
     if (navOpen) {
@@ -83,10 +90,46 @@ const Header = () => {
   }, [userMenuOpen]);
 
   useEffect(() => {
+    const updateCartItems = () => {
+      if (user) {
+        setCartItems(user.cart);
+      } else {
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        setCartItems(storedCartItems);
+      }
+    };
+
+    updateCartItems();
+    window.addEventListener('storage', updateCartItems);
+
+    return () => {
+      window.removeEventListener('storage', updateCartItems);
+    };
+  }, [user]);
+
+  const handleAddToCart = (product: any) => {
+    addItemToCart(product);
+    updateCartItems();
+  };
+
+  const handleDeleteFromCart = (productId: string) => {
+    deleteCartItem(productId);
+    updateCartItems();
+  };
+
+  const handleReduceCartItem = (productId: string) => {
+    reduceCartItem(productId);
+    updateCartItems();
+  };
+
+  const updateCartItems = () => {
     if (user) {
       setCartItems(user.cart);
+    } else {
+      const updatedCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      setCartItems(updatedCartItems);
     }
-  }, [user]);
+  };
 
   return (
     <>
@@ -169,6 +212,9 @@ const Header = () => {
                 cartOpen={cartOpen}
                 cartItems={cartItems}
                 toggleCart={() => setCartOpen(!cartOpen)}
+                onAddToCart={handleAddToCart}
+                onDeleteFromCart={handleDeleteFromCart}
+                onReduceCartItem={handleReduceCartItem}
               />
             </li>
 

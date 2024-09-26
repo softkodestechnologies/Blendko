@@ -111,13 +111,12 @@ const ChatComponent: React.FC = () => {
     if (socketRef.current && chatId) {
       socketRef.current.emit('join chat', chatId);
     }
-    // Here you would typically fetch the existing chat messages
   };
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() && chatId) {
       try {
-        const sender = isGuest ? guestId : 'user'; // Or whatever logic you're using to determine the sender
+        const sender = isGuest ? guestId : 'user'; 
         await sendMessage({ chatId, message: inputMessage, guestId, sender }).unwrap();
         setInputMessage('');
       } catch (error) {
