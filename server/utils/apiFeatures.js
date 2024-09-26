@@ -71,8 +71,6 @@ class ApiFeatures {
       }
     }
 
-    console.log(query);
-
     this.query = this.query.find(query);
     this.document = this.document && this.document.countDocuments(query);
 
