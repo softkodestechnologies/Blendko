@@ -458,6 +458,8 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
             cart: {
               product: product._id,
               quantity: 1,
+              size: item.size,  
+              color: item.color 
             },
           },
         },

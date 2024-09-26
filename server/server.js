@@ -13,6 +13,7 @@ const connectDatabase = require('./config/db');
 const errorMiddleware = require('./middlewares/errors');
 const corsOptions = require('./config/origin');
 const api = require('./routes/api');
+const allowedOrigins = require('./config/origin');
 
 dotenv.config();
 
@@ -21,14 +22,14 @@ connectDatabase();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())//corsOptions()
+app.use(cors(corsOptions()))//
 
 const server = http.createServer(app);
 
 
 const io = socketIo(server, {
   cors: {
-    origin: '*',
+    origin: allowedOrigins(),
     methods: ["GET", "POST", "PATCH"], 
     allowedHeaders: ['Content-Type', 'Authorization']
   }

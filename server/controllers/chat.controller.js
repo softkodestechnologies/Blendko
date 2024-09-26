@@ -91,10 +91,14 @@ exports.addMessage = catchAsyncErrors(async (req, res, next) => {
   if (!chat) {
     return next(new ErrorHandler('Chat not found', 404));
   }
+  //Not authenticated yet, send user id.
 
   // Determine the sender
   const sender = req.user ? req.user._id : (req.body.guestId || chat.guestId);
-
+  console.log('chat guest id', chat.guestId)
+  console.log('Request body', req.body);
+  console.log('User', req.user)
+  console.log(sender)
   // Check if sender exists
   if (!sender) {
     return next(new ErrorHandler('Sender is required', 400));
@@ -104,7 +108,6 @@ exports.addMessage = catchAsyncErrors(async (req, res, next) => {
   chat.messages.push(newMessage);
   chat.updatedAt = Date.now();
 
-  // If admin sends the message and is not a participant, add admin to the participants
   if (req.user && req.user.role.includes('admin') && !chat.participants.includes(req.user._id)) {
     chat.participants.push(req.user._id);
   }
