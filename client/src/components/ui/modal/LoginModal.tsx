@@ -1,6 +1,6 @@
-"use client";
+'use client';
 import Modal from './Modal';
-import Login from '../login/Login';
+import Login from '../auth/Login';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -11,7 +11,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} title="Log in">
       <Login />
-      <button className="modal-button close" onClick={onRequestClose}>&times;</button>
+      <button className="modal-button close" onClick={onRequestClose}>
+        &times;
+      </button>
     </Modal>
   );
 };

@@ -17,18 +17,18 @@
 }
 
 .cart-modal {
-  position: absolute;
   top: 0;
   right: 0;
-  width: 450px;
-  height: auto;
-  font-family: 'Poppins', sans-serif;
-  background: white;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  transition: right 0.3s;
   z-index: 60;
+  width: 528px;
+  height: auto;
+  padding: 32px;
   display: none;
-  border: 2px solid red;
+  position: absolute;
+  background: white;
+  transition: right 0.3s;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .cart-modal.open {
@@ -39,9 +39,9 @@
 
 .cart-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -55,7 +55,7 @@
   flex-grow: 1;
   overflow-y: auto;
   padding: 1rem;
-  max-height: 180px; 
+  max-height: 180px;
 }
 
 .cart-item {
@@ -70,10 +70,12 @@
 }
 
 .cart-actions {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* padding: 1rem;
   margin-bottom: 2.3em;
+  justify-content: space-between; */
 }
 
 .view-bag-button,
@@ -87,14 +89,14 @@
 }
 
 .view-bag-button {
-  background: #FFF;
+  background: #fff;
   color: #000;
   border: 1px solid black;
 }
 
 .checkout-button {
   background: #000;
-  color: #FFF;
+  color: #fff;
 }
 
 .close-button {
@@ -126,7 +128,9 @@
     margin-right: 0.5rem;
   }
 
-  .cart-item h4, .cart-item p, .cart-item h5 {
+  .cart-item h4,
+  .cart-item p,
+  .cart-item h5 {
     font-size: 0.875rem;
   }
 
@@ -138,7 +142,7 @@
   .view-bag-button,
   .checkout-button {
     padding: 0.8rem 2rem;
-    font-size: 0.875rem; 
+    font-size: 0.875rem;
   }
 
   .close-button {

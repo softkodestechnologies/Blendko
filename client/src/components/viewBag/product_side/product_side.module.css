@@ -172,6 +172,11 @@
   padding-inline: 0 !important;
 }
 
+.promo_code input {
+  margin-left: 8px;
+  margin-bottom: 10px;
+}
+
 .price_breakdown {
   gap: 16px;
   margin-top: 8px;

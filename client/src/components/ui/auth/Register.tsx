@@ -1,17 +1,17 @@
 'use client';
+
+import Link from 'next/link';
 import { useState } from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { FaShoppingCart, FaExchangeAlt, FaUndoAlt } from 'react-icons/fa';
-import Link from 'next/link';
-import './Register.css';
+
+import styles from './auth.module.css';
+
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRegisterMutation } from '@/services/authService';
 import asyncSubmission from '@/utils/hooks/asyncSubmission';
 import Alert from '@/components/ui/alert/Alert';
 import handlePropagation from '@/utils/helpers/handlePropagation';
-import BlendkoIcon from './BlendkoIcon';
-import FaCheckout from './FaCheckout';
 
 const Register = () => {
   const [register] = useRegisterMutation();
@@ -44,30 +44,9 @@ const Register = () => {
   };
 
   return (
-    <div className="reg-form">
+    <div className={`full-width ${styles.auth}`}>
       <h1>Register</h1>
 
-      <div className="benefits">
-        <ul>
-          <li>
-            <BlendkoIcon />
-            Become a loyalty member to earn points and get exclusive offers and
-            rewards
-          </li>
-          <li>
-            <FaShoppingCart />
-            Quick order information and tracking
-          </li>
-          <li>
-            <FaExchangeAlt />
-            Easier returns and exchanges
-          </li>
-          <li>
-            <FaCheckout />
-            Faster checkout
-          </li>
-        </ul>
-      </div>
       <Formik
         initialValues={{
           name: '',
@@ -75,7 +54,8 @@ const Register = () => {
           password: '',
         }}
         validationSchema={Yup.object({
-          name: Yup.string().required('Required'),
+          firstName: Yup.string().required('Required'),
+          lastName: Yup.string().required('Required'),
           email: Yup.string()
             .email('Invalid email address')
             .required('Required'),
@@ -90,51 +70,83 @@ const Register = () => {
       >
         {({ handleSubmit }) => (
           <form
+            className={`full-width ${styles.form}`}
             onSubmit={(e) => handlePropagation(e, handleSubmit)}
-            className="full-width"
           >
-            <div className="form-group">
-              <Field type="text" id="name" name="name" placeholder="Name*" />
-              <ErrorMessage name="name" component="div" className="error" />
+            <div className={`${styles.field}`}>
+              <Field
+                type="text"
+                id="firstName"
+                name="firstName"
+                className={`full-width`}
+                placeholder="First Name"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="error"
+              />
             </div>
-            <div className="form-group">
+
+            <div className={`${styles.field}`}>
+              <Field
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Last Name"
+                className={`full-width`}
+              />
+              <ErrorMessage name="lastName" component="div" className="error" />
+            </div>
+
+            <div className={`${styles.field}`}>
               <Field
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Email Address*"
+                className={`full-width`}
+                placeholder="Email"
               />
               <ErrorMessage name="email" component="div" className="error" />
             </div>
-            <div className="form-group">
+
+            <div className={`${styles.field} ${styles.last}`}>
               <label className="password-label" htmlFor="password">
                 <Field
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
-                  placeholder="Password*"
+                  placeholder="Create a Password"
+                  className={`full-width`}
                 />
-                <span
-                  className="show-password"
+
+                <button
+                  type="button"
+                  className={`${styles.password_visibility}`}
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <MdVisibility /> : <MdVisibilityOff />}
-                </span>
+                  {showPassword ? 'Hide' : 'Show'}
+                </button>
               </label>
+
               <ErrorMessage name="password" component="div" className="error" />
             </div>
-            <button className="submit-btn mb-10" type="submit">
+
+            <button
+              type="submit"
+              className={`full-width ${styles.submit_button}`}
+            >
               Create Account
             </button>
-            <div className="flex flex-col center">
-              <p className="mb-10">
-                By logging in, you agree to the Terms & Conditions and Privacy
-                Policy
-              </p>
-              <p className="login-tag">
-                Already have an Account? <Link href="/login">Login</Link>
-              </p>
-            </div>
+
+            <p className={`${styles.sub_content}`}>
+              By creating an account, you agree to the Terms & Conditions and{' '}
+              <Link href="/privacy">Privacy Policy</Link>
+            </p>
+
+            <p className={`${styles.cta}`}>
+              Don’t have an Account? <Link href="/register">Register</Link>
+            </p>
           </form>
         )}
       </Formik>

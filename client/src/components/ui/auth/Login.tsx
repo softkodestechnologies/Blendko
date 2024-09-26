@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import './Login.css';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+
+import styles from './auth.module.css';
+
 import Link from 'next/link';
 import { useLogInMutation } from '@/services/authService';
 import asyncSubmission from '@/utils/hooks/asyncSubmission';
@@ -15,21 +16,20 @@ const Login: React.FC = () => {
   const { isError, handleSubmission } = asyncSubmission({
     callback: login,
   });
-  const [alert, setAlert] = useState<{ show: boolean; type: 'success' | 'error'; message: string }>({
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    type: 'success' | 'error';
+    message: string;
+  }>({
     show: false,
     type: 'success',
     message: '',
   });
 
   const handleFormSubmission = async (values: any, resetForm: () => void) => {
-    await handleSubmission(
-      values,
-      resetForm,
-      '/',
-      () => {
-        setAlert({ show: true, type: 'success', message: 'Login successful!' });
-      }
-    );
+    await handleSubmission(values, resetForm, '/', () => {
+      setAlert({ show: true, type: 'success', message: 'Login successful!' });
+    });
 
     if (isError.error) {
       setAlert({ show: true, type: 'error', message: isError.message });
@@ -37,7 +37,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-form">
+    <div className={`full-width ${styles.auth}`}>
+      <h1>Log In</h1>
+
       <Formik
         initialValues={{
           email: '',
@@ -57,44 +59,69 @@ const Login: React.FC = () => {
         }}
       >
         {({ handleSubmit }) => (
-          <form onSubmit={(e) => handlePropagation(e, handleSubmit)} className="full-width">
-            <div className="form-group">
-              <Field name="email" type="email" placeholder="Email Address*" />
-              <ErrorMessage name="email" component="div" className="error" />
+          <form
+            onSubmit={(e) => handlePropagation(e, handleSubmit)}
+            className={`full-width ${styles.form}`}
+          >
+            <div className={`${styles.field}`}>
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email"
+                className={`full-width`}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={`${styles.error}`}
+              />
             </div>
-            <div className="form-group">
+
+            <div className={`${styles.field} ${styles.last}`}>
               <label className="password-label" htmlFor="password">
                 <Field
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password*"
+                  className={`full-width`}
                   id="password"
                 />
-                <span className="show-password" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <MdVisibility /> : <MdVisibilityOff />}
-                </span>
-                <ErrorMessage name="password" component="div" className="error" />
+
+                <button
+                  type="button"
+                  className={`${styles.password_visibility}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? 'Hide' : 'Show'}
+                </button>
               </label>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={`${styles.error}`}
+              />
             </div>
-            <div className="flex space-between mb-10">
-              <div className="checkbox">
-                <input type="checkbox" id="rememberMe" />
-                <label htmlFor="rememberMe">Remember me</label>
-              </div>
-              <Link className="forgot" href="/forgot">Forgot Your Password?</Link>
+
+            <div className={`flex full-width ${styles.forgot_pass}`}>
+              <Link className="forgot" href="/forgot">
+                Forgot Your Password?
+              </Link>
             </div>
-            <button className="submit-btn mb-10" type="submit">Log In</button>
-            <div className="flex flex-col center">
-              <p className="mb-10">
-                By logging in, you agree to the Terms & Conditions and Privacy Policy
-              </p>
-              <p className="register-tag">
-                New to Blendko? <Link href="/register">Register</Link>
-              </p>
-            </div>
+
+            <button
+              className={`full-width ${styles.submit_button}`}
+              type="submit"
+            >
+              Log In
+            </button>
+
+            <p className={`${styles.cta}`}>
+              Don’t have an Account? <Link href="/register">Register</Link>
+            </p>
           </form>
         )}
       </Formik>
+
       {alert.show && (
         <Alert
           type={alert.type}

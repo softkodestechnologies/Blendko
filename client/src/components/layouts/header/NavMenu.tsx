@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import styles from './header.module.css';
 
 import { navLinks } from '@/utils/data/dummy';
-import { ChevronIcon, CloseIcon } from '../../../../public/svg/icon';
+import {
+  CloseIcon,
+  UserIcon,
+  AccordionPlusIcon,
+} from '../../../../public/svg/icon';
 
 function NavMenu({
   onClose,
@@ -20,21 +24,18 @@ function NavMenu({
     <motion.div
       aria-hidden={!navOpen}
       aria-label="Main menu"
-      className={`${styles.menu}`}
-      initial={{ x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: '100%', opacity: 0 }}
-      transition={{
-        duration: 1,
-        ease: [0.76, 0, 0.24, 1],
-      }}
+      initial={{ x: '100%', opacity: 0 }}
+      className={`flex flex-col full-height full-width ${styles.menu}`}
+      transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
     >
       <button
         onClick={onClose}
         aria-label="Close menu"
         className={`${styles.menu_close}`}
       >
-        <CloseIcon style={{ width: '18px', height: '18px' }} />
+        <CloseIcon />
       </button>
 
       <ul className={`flex flex-col ${styles.menu_items}`}>
@@ -44,13 +45,8 @@ function NavMenu({
             initial={{ height: 19.33 }}
             animate={
               showSubMenu && link.title === 'Categories'
-                ? {
-                    height: 'auto',
-                    opacity: 1,
-                  }
-                : {
-                    height: 19.33,
-                  }
+                ? { height: 'auto', opacity: 1 }
+                : { height: 19.33 }
             }
             exit={{ height: 19.33 }}
             transition={{ duration: 0.3 }}
@@ -58,19 +54,12 @@ function NavMenu({
             {link.title === 'Categories' && (
               <>
                 <button
-                  className={`flex align-y space-between`}
+                  className={`flex align-y space-between full-width`}
                   onClick={() => setShowSubMenu(!showSubMenu)}
                 >
                   {link.title}
 
-                  <ChevronIcon
-                    style={{
-                      marginLeft: '7px',
-                      transform: showSubMenu
-                        ? 'rotate(-90deg)'
-                        : 'rotate(0deg)',
-                    }}
-                  />
+                  <AccordionPlusIcon />
                 </button>
 
                 {showSubMenu && link.subMenu.length > 0 && (
@@ -99,6 +88,12 @@ function NavMenu({
           </motion.li>
         ))}
       </ul>
+
+      <button className={`flex align-y ${styles.user_auth}`}>
+        <UserIcon style={{ height: '36px', width: '36px' }} />
+
+        <span>Login</span>
+      </button>
     </motion.div>
   );
 }

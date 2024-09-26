@@ -11,8 +11,6 @@ import Cart from '../../ui/Cart';
 
 import styles from './header.module.css';
 
-import { RootState } from '@/services/store';
-
 import NavMenu from './NavMenu';
 import TopBanner from './TopBanner';
 import {
@@ -22,6 +20,7 @@ import {
   SearchIcon,
   ChevronIcon,
   WishlistIcon,
+  NotificationIcon,
 } from '../../../../public/svg/icon';
 import { navLinks } from '@/utils/data/dummy';
 
@@ -141,32 +140,50 @@ const Header = () => {
 
           <ul className={`flex ${styles.actions}`}>
             <li className={`flex align-y`}>
-              <button>
+              <button aria-label="notifications">
+                <NotificationIcon />
+              </button>
+            </li>
+
+            <li className={`flex align-y`}>
+              <button aria-label="search field">
                 <SearchIcon />
               </button>
             </li>
 
-            <li className={`flex align-y`} style={{ position: 'relative' }}>
-              <button onClick={() => setUserMenuOpen(true)}>
-                <UserIcon />
-              </button>
-
-              {userMenuOpen && <UserMenu />}
-            </li>
-
             <li className={`flex align-y`}>
-              <button>
+              <button aria-label="wishlist">
                 <WishlistIcon />
               </button>
             </li>
 
             <li className={`flex align-y`}>
-              <button onClick={() => setCartOpen(!cartOpen)}>
+              <button onClick={() => setCartOpen(!cartOpen)} aria-label="cart">
                 <CartIcon />
                 {cartItems.length > 0 && (
                   <span className={`cart-badge`}>{cartItems.length}</span>
                 )}
               </button>
+
+              <Cart
+                cartOpen={cartOpen}
+                cartItems={cartItems}
+                toggleCart={() => setCartOpen(!cartOpen)}
+              />
+            </li>
+
+            <li
+              className={`flex align-y ${styles.user_action}`}
+              style={{ position: 'relative' }}
+            >
+              <button
+                onClick={() => setUserMenuOpen(true)}
+                aria-label="user menu"
+              >
+                <UserIcon style={{ width: '27px', height: '27px' }} />
+              </button>
+
+              {userMenuOpen && <UserMenu />}
             </li>
 
             <li className={`flex align-y ${styles.hamburger}`}>
@@ -180,21 +197,6 @@ const Header = () => {
             <NavMenu onClose={() => setNavOpen(false)} navOpen={navOpen} />
           )}
         </AnimatePresence>
-
-        <AnimatePresence mode="wait">
-          {navOpen && (
-            <BackDrop
-              onClick={() => setNavOpen(false)}
-              style={{ height: 'calc(100% - 145px)', zIndex: '100' }}
-            />
-          )}
-        </AnimatePresence>
-
-        <Cart
-          cartOpen={cartOpen}
-          cartItems={cartItems}
-          toggleCart={() => setCartOpen(!cartOpen)}
-        />
       </header>
     </>
   );
