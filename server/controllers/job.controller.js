@@ -168,7 +168,6 @@ exports.setJobAlert = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.getAllJobApplications = catchAsyncErrors(async (req, res, next) => {
-    console.log('this is the requested route', req.params.id)
     const Applications = await JobApplication.find()
       .populate('job', 'title');
   
@@ -180,11 +179,8 @@ exports.getAllJobApplications = catchAsyncErrors(async (req, res, next) => {
 
 exports.getJobApplicationsByJobId = catchAsyncErrors(async (req, res, next) => {
     const jobId = req.params.jobId;
-    console.log('Job Id', jobId)
 
     const applications = await JobApplication.find({ job: jobId })
-
-    console.log('application should not be empty', applications)
 
     if (!applications) {
         return next(new ErrorHandler('No applications found for this job', 404));
@@ -205,7 +201,6 @@ exports.getJobApplicationsByJobId = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.getSingleJobApplication = catchAsyncErrors(async (req, res, next) => {
-    console.log('this is id', req.params.id)
 
   const application = await JobApplication.findById(req.params.id)
     .populate('job', 'title');

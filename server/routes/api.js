@@ -10,6 +10,7 @@ const deliveryAddressRoutes = require('./deliveryAddress');
 const newsRoutes = require('./news');
 const inboxRoutes = require('./inbox');
 const jobRoutes = require('./job');
+const chatRoutes = require('./chat');
 const router = Router();
 
 
@@ -24,5 +25,6 @@ router.use('/delivery-address', deliveryAddressRoutes);
 router.use('/news', newsRoutes);
 router.use('/inbox', inboxRoutes);
 router.use('/jobs', jobRoutes);
+router.use('/chat', chatRoutes);
 
 module.exports = router;
