@@ -23,7 +23,6 @@ const AddNewProduct: React.FC = () => {
     if (file) {
       const formData = new FormData();
       formData.append('size_guide', file);
-      // Handle the size guide upload separately
     }
   };
 
@@ -51,35 +50,56 @@ const AddNewProduct: React.FC = () => {
     }
   };
   
+  const handleImageRemove = (index: number) => {
+    setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+  };
+  
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
   
-    console.log("Number of imageFiles before submission:", imageFiles.length);
+    // Example for handling arrays (comma-separated inputs)
+    const features = formData.get('features')?.toString().split(',').map(feature => feature.trim());
+    const colors = formData.get('colors')?.toString().split(',').map(color => color.trim());
+    const sizes = formData.get('sizes')?.toString().split(',').map(size => size.trim());
+    const fashionCollection = formData.get('fashion_collection')?.toString().split(',').map(fashion => fashion.trim());
+    const technology = formData.get('technology')?.toString().split(',').map(tech => tech.trim());
+    const dressStyle = formData.get('dress_style')?.toString().split(',').map(style => style.trim());
   
-    // Remove any existing 'images' fields from the formData
+    // Remove the string versions from formData
+    formData.delete('features');
+    formData.delete('colors');
+    formData.delete('sizes');
+    formData.delete('fashion_collection');
+    formData.delete('technology');
+    formData.delete('dress_style');
+
+    features?.forEach((feature) => formData.append('features[]', feature));
+    colors?.forEach((color) => formData.append('colors[]', color));
+    sizes?.forEach((size) => formData.append('sizes[]', size));
+    fashionCollection?.forEach((fashion) => formData.append('fashion_collection[]', fashion));
+    technology?.forEach((tech) => formData.append('technology[]', tech));
+    dressStyle?.forEach((dress) => formData.append('dress_style[]', dress));
+
     formData.delete('images');
   
     imageFiles.forEach((file, index) => {
-      console.log(`Appending file ${index + 1} to formData`);
       formData.append('images', file);
     });
   
-    console.log("Number of images in formData after appending:", formData.getAll('images').length);
-  
     try {
-      console.log("Submitting form with", formData.getAll('images').length, "images");
       await createProduct(formData).unwrap();
-  
       setAlert({ show: true, type: 'success', message: 'Product created successfully!' });
       formRef.current?.reset();
-      setImagePreviews([]); 
-      setImageFiles([]); 
+      setImagePreviews([]);
+      setImageFiles([]);
     } catch (error) {
-      console.error("Error creating product:", error);
       setAlert({ show: true, type: 'error', message: 'Error creating product. Please try again.' });
     }
   };
+  
 
   return (
     <div className={styles.container}>
@@ -95,11 +115,14 @@ const AddNewProduct: React.FC = () => {
         </div>
 
         {/* Image Upload */}
+        <label>Please upload 5 images or less</label>
         <div className={styles.imageUpload}>
           {imagePreviews.map((image, index) => (
-            <div key={index} className={styles.imagePreview}>
-              <Image src={image} alt={`Product ${index + 1}`} width={80} height={80} objectFit="cover" />
-            </div>
+              <div key={index} className={styles.imagePreview}>
+                <Image src={image} alt={`Product ${index + 1}`} width={80} height={80} objectFit="cover" />
+                <button className={styles.imgRemoveBtn} type="button" onClick={() => handleImageRemove(index)}>X</button>
+                <span className={styles.imageText}>image {index + 1}</span>
+              </div>
           ))}
           <label className={styles.uploadButton}>
             <FaImage />
@@ -143,11 +166,6 @@ const AddNewProduct: React.FC = () => {
         {/* Quantity */}
         <div className={styles.formGroup}>
           <input name="quantity" type="number" placeholder="Quantity" required className={styles.input} />
-        </div>
-
-        {/* Available Quantity */}
-        <div className={styles.formGroup}>
-          <input name="available_quantity" type="number" placeholder="Available Quantity" required className={styles.input} />
         </div>
 
         {/* Discount */}
