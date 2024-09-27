@@ -19,10 +19,12 @@ dotenv.config();
 
 connectDatabase();
 
+app.use(cors())//corsOptions()
+app.use('/api/v1/webhook', express.raw({type: 'application/json'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsOptions()))//
+
 
 const server = http.createServer(app);
 

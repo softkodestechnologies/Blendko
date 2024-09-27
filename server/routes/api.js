@@ -12,11 +12,12 @@ const inboxRoutes = require('./inbox');
 const jobRoutes = require('./job');
 const chatRoutes = require('./chat');
 const paymentRoutes = require('./payment');
+const stripeRoutes = require('./stripe');
 
 const router = Router();
 
 
-
+router.use('/webhook', stripeRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/order', orderRoutes);
 router.use('/product', productRoutes);
