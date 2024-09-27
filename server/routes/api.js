@@ -11,6 +11,8 @@ const newsRoutes = require('./news');
 const inboxRoutes = require('./inbox');
 const jobRoutes = require('./job');
 const chatRoutes = require('./chat');
+const paymentRoutes = require('./payment');
+
 const router = Router();
 
 
@@ -26,5 +28,6 @@ router.use('/news', newsRoutes);
 router.use('/inbox', inboxRoutes);
 router.use('/jobs', jobRoutes);
 router.use('/chat', chatRoutes);
+router.use('/payment', paymentRoutes);
 
 module.exports = router;
