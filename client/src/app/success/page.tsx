@@ -1,14 +1,34 @@
-
-import React from 'react';
+"use client";
+import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '@/services/userSlice';
+import { useGetUserProfileQuery } from '@/services/userService'; // Assume this query exists to fetch current user data
 
 const SuccessPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const { data: userData, refetch } = useGetUserProfileQuery({});
+
+  useEffect(() => {
+    const refreshUserData = async () => {
+      await refetch();
+      if (userData) {
+        localStorage.setItem('cartItems',userData?.user.cart )
+        dispatch(updateUser(userData?.user));
+      }
+      
+      console.log(userData?.user)
+    };
+
+    refreshUserData();
+  }, [dispatch, refetch, userData]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className=" center">
-        <h1 className="text-3xl font-bold text-green-600 mb-4">Payment Successful!</h1>
-        <p className="text-gray-700 mb-6">Thank you for your purchase. Your order has been processed successfully.</p>
-        <Link href="/" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+    <div className="flex flex-col center">
+      <div className="flex flex-col center not-found">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your purchase. Your order has been processed successfully.</p>
+        <Link href="/">
           Return to Home
         </Link>
       </div>

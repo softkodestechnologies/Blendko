@@ -140,6 +140,15 @@ const userSlice = createSlice({
       }
     },
 
+    clearCart: (state: UserState) => {
+      state.cart = [];
+      localStorage.setItem('cartItems', JSON.stringify([]));
+      if (state.user) {
+        state.user.cart = [];
+        localStorage.setItem('user', JSON.stringify(state.user));
+      }
+    },
+
     deleteItem: (state: UserState, action: PayloadAction<string>) => {
       state.cart = state.cart.filter((x) => x._id !== action.payload);
       localStorage.setItem('cartItems', JSON.stringify(state.cart));
@@ -187,6 +196,7 @@ export const {
   incrementQuantity,
   decrementQuantity,
   deleteItem,
+  clearCart,
   checkout,
 } = userSlice.actions;
 

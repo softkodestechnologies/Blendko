@@ -1,43 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import styles from './DeliveryForm.module.css';
+import {
+    useGetDeliveryAddressQuery,
+    useCreateDeliveryAddressMutation,
+    useUpdateDeliveryAddressMutation,
+  } from '@/services/userService';
 
-const DeliveryForm: React.FC<{ user: any }> = ({ user }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    addressLine: '',
-    aptBuildingSuite: '',
-    townCity: '',
-    postcode: '',
-    country: 'United Kingdom',
-    email: '',
-    phoneNumber: '',
-  });
-
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        firstName: user.name || '',
-        lastName: user.lastName || '',
-        addressLine: user.street || '',
-        aptBuildingSuite: user?.aptBuildingSuite || '',
-        townCity: user?.city || '',
-        postcode: user?.postcode || '',
-        country: user?.country || 'United Kingdom',
-        email: user.email || '',
-        phoneNumber: user.phone || '',
-      });
-    }
-  }, [user]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-  };
+  const DeliveryForm: React.FC<{ user: any }> = ({ user }) => {
+    const { data: deliveryData, isLoading } = useGetDeliveryAddressQuery(user?._id);
+    const [createDeliveryAddress] = useCreateDeliveryAddressMutation();
+    const [updateDeliveryAddress] = useUpdateDeliveryAddressMutation();
+    const [formData, setFormData] = useState({
+      firstName: '',
+      lastName: '',
+      addressLine: '',
+      aptBuildingSuite: '',
+      townCity: '',
+      postcode: '',
+      country: 'United Kingdom',
+      email: '',
+      phoneNumber: '',
+    });
+  
+    useEffect(() => {
+      if (deliveryData && deliveryData.deliveryAddress) {
+        setFormData({
+          firstName: deliveryData.deliveryAddress.firstName || '',
+          lastName: deliveryData.deliveryAddress.lastName || '',
+          addressLine: deliveryData.deliveryAddress.addressLine || '',
+          aptBuildingSuite: deliveryData.deliveryAddress.aptBuildingSuite || '',
+          townCity: deliveryData.deliveryAddress.townCity || '',
+          postcode: deliveryData.deliveryAddress.postcode || '',
+          country: deliveryData.deliveryAddress.country || 'United Kingdom',
+          email: deliveryData.deliveryAddress.email || '',
+          phoneNumber: deliveryData.deliveryAddress.phoneNumber || '',
+        });
+      } else if (user) {
+        setFormData({
+          firstName: user.firstName || '',
+          lastName: user.lastName || '',
+          addressLine: user.street || '',
+          aptBuildingSuite: user?.aptBuildingSuite || '',
+          townCity: user?.city || '',
+          postcode: user?.postcode || '',
+          country: user?.country || 'United Kingdom',
+          email: user.email || '',
+          phoneNumber: user.phone || '',
+        });
+      }
+    }, [deliveryData, user]);
+  
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+  
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (deliveryData && deliveryData.deliveryAddress) {
+        await updateDeliveryAddress(formData);
+      } else {
+        await createDeliveryAddress(formData);
+      }
+    };  
 
   return (
     <form onSubmit={handleSubmit} className={styles.deliveryForm}>

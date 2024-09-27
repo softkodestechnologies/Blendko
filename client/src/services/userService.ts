@@ -24,6 +24,16 @@ const getToken = () => {
 
 export const adminService = blendkoApi.injectEndpoints({
   endpoints: (builder) => ({
+    getUserProfile: builder.query({
+      query: () => ({
+        url: '/me',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['User'],
+    }),
     createProduct: builder.mutation({
       query: (product) => ({
         method: 'POST',
@@ -452,6 +462,7 @@ export const adminService = blendkoApi.injectEndpoints({
 } as const);
 
 export const {
+  useGetUserProfileQuery,
   useCreateProductMutation,
   useGetProductQuery,
   useGetProductsQuery,

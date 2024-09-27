@@ -36,3 +36,10 @@
   .saveButton:hover {
     background-color: #ccc;
   }
+
+  .payButton {
+    background-color: #000;
+    color: #fff;
+    padding: 6px 12px;
+    margin: 12px 8px 8px 0;
+  }

@@ -16,6 +16,8 @@ const PayButton: React.FC<PayButtonProps> = ({ cartItems, userId }) => {
   const [makePayment] = useMakePaymentMutation();
   const [loading, setLoading] = useState(false);
 
+  console.log('UserId, ', userId)
+
   const handlePayment = async () => {
     setLoading(true);
     if (!stripe || !elements) {
@@ -35,10 +37,14 @@ const PayButton: React.FC<PayButtonProps> = ({ cartItems, userId }) => {
       const paymentData = {
         items: cartItems,
         amount: calculateTotal(cartItems),
+        userId,
         currency: 'usd',
         metadata: {
           userId: userId,
-          cartItems: JSON.stringify(cartItems[0]._id),
+          cartItems: JSON.stringify(cartItems.map(item => ({
+            id: item._id,
+            quantity: item.quantity
+          })))
         },
       };
 
