@@ -95,10 +95,10 @@ const OrderTable: React.FC = () => {
     {
       columns,
       data: orders,
-      initialState: { pageIndex: 0, pageSize: 10 }, 
-      manualPagination: true, 
-      pageCount: ordersData?.total_pages || 0, 
-    },
+      initialState: { pageIndex: 0, pageSize: 10 },
+      manualPagination: true,
+      pageCount: ordersData?.total_pages || 0,
+    } as any,
     useExpanded,
     usePagination
   );
