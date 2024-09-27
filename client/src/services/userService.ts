@@ -462,7 +462,6 @@ export const {
   useMakePaymentMutation,
   useGetDashboardDataQuery,
   useGetDiscountsQuery,
-  useGetDiscountQuery,
   useCreateDiscountMutation,
   useUpdateDiscountMutation,
   useDeleteDiscountMutation,

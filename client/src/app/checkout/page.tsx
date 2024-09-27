@@ -101,11 +101,10 @@ const CheckoutPage: React.FC = () => {
       <div className={styles.paymentSection}>
         <h3>Payment</h3>
         <Elements stripe={stripePromise}>
-          <PayButton cartItems={cartItems} />
+          <PayButton cartItems={cartItems} userId={user?.id} />
         </Elements>
       </div>
     </div>
   );
 };
-
 export default CheckoutPage;
