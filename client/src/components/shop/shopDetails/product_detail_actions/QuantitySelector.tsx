@@ -12,7 +12,7 @@ interface QuantitySelectorProps {
   className?: string;
 }
 
-function QuantitySelector({ productId, className }: QuantitySelectorProps) {
+function QuantitySelector({ productId, className, onChange }: QuantitySelectorProps) {
   const dispatch = useDispatch();
   const cartItem = useSelector((state: RootState) => 
     state.user.cart.find(item => item._id === productId)
@@ -28,6 +28,7 @@ function QuantitySelector({ productId, className }: QuantitySelectorProps) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
       dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
+      onChange && onChange(newQuantity, "decrement");
     }
   };
 
@@ -35,6 +36,7 @@ function QuantitySelector({ productId, className }: QuantitySelectorProps) {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
+    onChange && onChange(newQuantity, "increment");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +59,7 @@ function QuantitySelector({ productId, className }: QuantitySelectorProps) {
 
     setQuantity(newQuantity);
     dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
+    onChange && onChange(newQuantity, "input");
   };
 
   const handleInputBlur = () => {
