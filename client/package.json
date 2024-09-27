@@ -15,6 +15,8 @@
     "@emotion/styled": "^11.11.5",
     "@next/font": "^14.2.3",
     "@reduxjs/toolkit": "^2.2.5",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.5.0",
     "@types/socket.io-client": "^3.0.0",
     "fabric": "^5.3.0",
     "formik": "^2.4.6",

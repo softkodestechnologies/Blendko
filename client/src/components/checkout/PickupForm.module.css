@@ -1,0 +1,38 @@
+.pickupForm {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .formTitle {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .searchContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .searchInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .saveButton {
+    background-color: #E5E5E5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 30%;
+    align-self: flex-end;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .saveButton:hover {
+    background-color: #ccc;
+  }

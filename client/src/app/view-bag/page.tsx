@@ -70,12 +70,10 @@ const ViewBagPage: React.FC = () => {
     if (product) {
       const quantityDiff = newQuantity - product.quantity;
       if (quantityDiff > 0) {
-        // Increase quantity
         for (let i = 0; i < quantityDiff; i++) {
           addItemToCart({ ...product, quantity: 1 });
         }
       } else if (quantityDiff < 0) {
-        // Decrease quantity
         for (let i = 0; i < Math.abs(quantityDiff); i++) {
           reduceCartItem(productId);
         }
@@ -84,9 +82,11 @@ const ViewBagPage: React.FC = () => {
     }
   };
 
+
   const handleRemoveItem = (productId: string) => {
-    deleteCartItem(productId);
-    updateCartItems();
+    dispatch(deleteItem(productId));
+    updateCartItems();  
+    console.log('Should remove Cart Item', productId)
   };
 
 

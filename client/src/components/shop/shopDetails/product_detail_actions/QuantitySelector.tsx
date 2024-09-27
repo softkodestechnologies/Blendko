@@ -1,43 +1,40 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
+import { updateCartItemQuantity } from '@/services/userSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './productDetailsActions.module.css';
-
+import { RootState } from '@/services/store';
 import { AddIcon, MinusIcon } from '../../../../../public/svg/icon';
 
 interface QuantitySelectorProps {
+  productId: string;
   className?: string;
-  handleQuantitySelection: (
-    quantity: number,
-    type: 'increment' | 'decrement' | 'input'
-  ) => void;
-  initialQuantity?: number;
 }
 
-function QuantitySelector({
-  className,
-  handleQuantitySelection,
-  initialQuantity = 1,
-}: QuantitySelectorProps) {
-  const [quantity, setQuantity] = useState(initialQuantity);
+function QuantitySelector({ productId, className }: QuantitySelectorProps) {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state: RootState) => 
+    state.user.cart.find(item => item._id === productId)
+  );
+  const [quantity, setQuantity] = useState(cartItem?.quantity || 1);
 
   useEffect(() => {
-    setQuantity(initialQuantity);
-  }, [initialQuantity]);
+    setQuantity(cartItem?.quantity || 1);
+  }, [cartItem]);
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
-      handleQuantitySelection(newQuantity, 'decrement');
+      dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
     }
   };
 
   const increaseQuantity = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
-    handleQuantitySelection(newQuantity, 'increment');
+    dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,20 +49,20 @@ function QuantitySelector({
 
     if (isNaN(parsedValue)) {
       setQuantity(1);
-      handleQuantitySelection(1, 'input');
+      dispatch(updateCartItemQuantity({ productId, quantity: 1 }));
       return;
     }
 
     const newQuantity = parsedValue < 1 ? 1 : parsedValue;
 
     setQuantity(newQuantity);
-    handleQuantitySelection(newQuantity, 'input');
+    dispatch(updateCartItemQuantity({ productId, quantity: newQuantity }));
   };
 
   const handleInputBlur = () => {
     if (quantity < 1) {
       setQuantity(1);
-      handleQuantitySelection(1, 'input');
+      dispatch(updateCartItemQuantity({ productId, quantity: 1 }));
     }
   };
 

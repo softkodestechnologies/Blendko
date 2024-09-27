@@ -87,6 +87,17 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Wishlist'],
     }),
+    makePayment: builder.mutation({
+      query: (paymentData) => ({
+        url: '/payment',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: paymentData,
+      }),
+      invalidatesTags: ['Payment'],
+    }),
     getDashboardData: builder.query({
       query: () => ({
         url: '/dashboard/data',
@@ -448,6 +459,7 @@ export const {
   useGetWishlistQuery,
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
+  useMakePaymentMutation,
   useGetDashboardDataQuery,
   useGetDiscountsQuery,
   useGetDiscountQuery,

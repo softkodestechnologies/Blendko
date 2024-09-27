@@ -1,0 +1,55 @@
+.deliveryForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 97%;
+    margin: 20px auto;
+  }
+  
+  .formRow {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .formRow > * {
+    flex: 1;
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .addCompanyLink {
+    display: block;
+    margin-top: 5px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .countrySelect {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: white;
+  }
+  
+  .saveButton {
+    background-color: #E5E5E5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 30%;
+    align-self: flex-end;
+  }
+  
+  .saveButton:hover {
+    background-color: #ccc;
+  }

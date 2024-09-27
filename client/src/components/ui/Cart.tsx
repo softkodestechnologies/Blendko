@@ -29,7 +29,6 @@ interface CartProps {
     function Cart({ cartOpen, toggleCart, cartItems, onAddToCart, 
       onDeleteFromCart, 
       onReduceCartItem  }: CartProps) {
-  console.log(cartItems, 'neeeew');
 
   return (
     <>
@@ -39,7 +38,7 @@ interface CartProps {
         <div
           aria-label="Cart"
           role="dialog"
-          aria-hidden={false}
+          aria-hidden="false"
           className={`${styles.cart}`}
         >
           <div className={`flex align-y space-between ${styles.cart_header}`}>
