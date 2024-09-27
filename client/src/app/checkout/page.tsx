@@ -14,6 +14,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+console.log("Stripe API Key:", process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
 
 const CheckoutPage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);

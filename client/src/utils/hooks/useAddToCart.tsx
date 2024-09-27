@@ -43,7 +43,7 @@ function useAddToCart() {
         '',
         () => {
           dispatch(addToCart(product) as any);
-          localStorage.removeItem('cartItems');
+          //localStorage.removeItem('cartItems');
         }
       );
 
