@@ -12,7 +12,7 @@ interface QuantitySelectorProps {
   className?: string;
 }
 
-function QuantitySelector({ productId, className, onChange }: QuantitySelectorProps) {
+function QuantitySelector({ productId, className, onChange }: QuantitySelectorProps & { onChange?: (quantity: number, action: "decrement" | "increment" | "input") => void }) {
   const dispatch = useDispatch();
   const cartItem = useSelector((state: RootState) => 
     state.user.cart.find(item => item._id === productId)

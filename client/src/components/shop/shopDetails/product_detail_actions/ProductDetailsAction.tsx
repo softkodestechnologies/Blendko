@@ -133,7 +133,7 @@ function ProductDetailsAction({
       </button>
 
       <div className={`flex ${styles.add_to_cart}`}>
-        <QuantitySelector onChange={handleQuantitySelection} />
+        <QuantitySelector onChange={handleQuantitySelection} productId={details._id} />
 
         <button
           className={`full-width ${styles.addToCartButton}`}
@@ -144,4 +144,6 @@ function ProductDetailsAction({
       </div>
     </div>
   );
-}export default ProductDetailsAction;
+}
+
+export default ProductDetailsAction;
