@@ -21,10 +21,14 @@ interface CartProps {
     selectedSize: string;
     images: Array<{ url: string }>;
   }>;
+  onAddToCart: (product: any) => void;
+  onDeleteFromCart: (productId: string) => void;
+  onReduceCartItem: (productId: string) => void;
 }
 
-function Cart({ cartOpen, toggleCart, cartItems }: CartProps) {
-  console.log(cartItems, 'neeeew');
+    function Cart({ cartOpen, toggleCart, cartItems, onAddToCart, 
+      onDeleteFromCart, 
+      onReduceCartItem  }: CartProps) {
 
   return (
     <>
@@ -33,8 +37,8 @@ function Cart({ cartOpen, toggleCart, cartItems }: CartProps) {
       {cartOpen && (
         <div
           aria-label="Cart"
-          aria-modal="true"
-          aria-hidden={!cartOpen}
+          role="dialog"
+          aria-hidden="false"
           className={`${styles.cart}`}
         >
           <div className={`flex align-y space-between ${styles.cart_header}`}>

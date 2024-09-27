@@ -39,12 +39,11 @@ const UserMenu = () => {
           </li>
         ))}
 
-        <button onClick={handleLogout}>
+        <button onClick={handleLogout} title="Logout">
           <AnimatedText text="Logout" />
         </button>
       </ul>
     </div>
   );
 };
-
 export default UserMenu;

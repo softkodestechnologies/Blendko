@@ -1,63 +1,41 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import { useGetWishlistQuery, useRemoveFromWishlistMutation } from '@/services/userService';
+import WishlistItem from './WishlistItem';
 import styles from './User.module.css';
-import Image from 'next/image';
 
 const SavedItems: React.FC = () => {
-  const savedItems = [
-    {
-      src: '/people.png',
-      alt: 'Polo with Contrast Trims',
-      name: 'Polo with Contrast Trims',
-      rating: '★★★★☆ 4.0/5',
-      salePrice: '$212',
-      originalPrice: '$242',
-      discount: '-12%',
-    },
-    {
-      src: '/people.png',
-      alt: 'Polo with Contrast Trims',
-      name: 'Polo with Contrast Trims',
-      rating: '★★★★☆ 4.0/5',
-      salePrice: '$212',
-      originalPrice: '$242',
-      discount: '-12%',
-    },
-    {
-      src: '/people.png',
-      alt: 'Polo with Contrast Trims',
-      name: 'Polo with Contrast Trims',
-      rating: '★★★★☆ 4.0/5',
-      salePrice: '$212',
-      originalPrice: '$242',
-      discount: '-12%',
-    },
-    {
-      src: '/people.png',
-      alt: 'Polo with Contrast Trims',
-      name: 'Polo with Contrast Trims',
-      rating: '★★★★☆ 4.0/5',
-      salePrice: '$212',
-      originalPrice: '$242',
-      discount: '-12%',
-    },
-  ];
+  const [isEditing, setIsEditing] = useState(false);
+  const { data: wishlistData, isLoading, error, refetch } = useGetWishlistQuery({});
+  const [removeFromWishlist] = useRemoveFromWishlistMutation();
+
+  const toggleEdit = () => setIsEditing(!isEditing);
+
+  const handleRemoveFromWishlist = async (productId: string) => {
+    try {
+      await removeFromWishlist(productId).unwrap();
+      refetch();
+    } catch (error) {
+      console.error('Failed to remove from wishlist', error);
+    }
+  };
 
   return (
     <section className={styles.savedItems}>
-      <h2>Saved Items</h2>
-      <div className={styles.editLink}>Edit</div>
+      <div className={styles.header}>
+        <h2>Saved Items</h2>
+        {wishlistData?.wishlist.length !== 0? <div onClick={toggleEdit} className={styles.editLink}>
+          {isEditing ? 'Done' : 'Edit'}
+        </div>: ''}
+      </div>
       <div className={styles.itemsGrid}>
-        {savedItems.map((item, index) => (
-          <div key={index} className={styles.item}>
-            <Image src={item.src} alt={item.alt} width={200} height={200} />
-            <h3>{item.name}</h3>
-            <div className={styles.rating}>{item.rating}</div>
-            <p className={styles.price}>
-              <span className={styles.salePrice}>{item.salePrice}</span>
-              <span className={styles.originalPrice}>{item.originalPrice}</span>
-              <span className={styles.discount}>{item.discount}</span>
-            </p>
-          </div>
+        {wishlistData?.wishlist.map((item) => (
+          <WishlistItem
+            key={item._id}
+            item={item}
+            isEditing={isEditing}
+            onRemove={handleRemoveFromWishlist}
+          />
         ))}
       </div>
     </section>

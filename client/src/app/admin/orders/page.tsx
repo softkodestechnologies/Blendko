@@ -24,11 +24,6 @@ const OrdersPage: React.FC = () => {
           <button type="button" title="bars" className={styles.menuButton} onClick={toggleSidebar}>
             <FaBars />
           </button>
-          <div className={styles.headerRight}>
-            <FaSearch className={styles.headerIcon} />
-            <FaBell className={styles.headerIcon} />
-            <FaUser className={styles.headerIcon} />
-          </div>
         </header>
         <main className={styles.main}>
           <h1 className={styles.title}>Order Management</h1>

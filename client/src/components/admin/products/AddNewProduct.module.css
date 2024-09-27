@@ -56,12 +56,40 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     overflow: hidden;
+    position: relative;
   }
   
   .imagePreview img {
     width: 100%;
-    height: 100%;
+    height: 80%;
     object-fit: cover;
+  }
+
+  .imageText {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    padding: 2px;
+  }
+
+
+  .imgRemoveBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background-color: tomato;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
   
   .uploadButton {

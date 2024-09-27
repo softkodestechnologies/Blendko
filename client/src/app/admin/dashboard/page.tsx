@@ -15,7 +15,6 @@ const DashboardPage: React.FC = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const tabs = ['Pending', 'Confirmed', 'Processing', 'Picked', 'Shipped', 'Delivered', 'Cancelled', 'View All'];
 
   return (
     <div className={styles.container}>

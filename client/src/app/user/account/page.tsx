@@ -48,35 +48,35 @@ const CustomerPage = () => {
                 </div>
 
                 <div className={styles.statsContainer}>
-                <div className={styles.stat}>
-                    <h3>Points</h3>
+                  <div className={styles.stat}>
+                      <h3>Points</h3>
 
-                    <div className={styles.statPad}>
-                        <div className={styles.statCircle}>
-                            <p>{user?.points || 0}</p>
-                            <p>Points</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.stat}>
-                    <h3>Wishlist</h3>
-                    <div className={styles.statPad}>
-                        <div className={styles.statCircle}>
-                            <p>{user?.wishlistCount || 0}</p>
-                            <p>Items</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.stat}>
-                    <h3>Saved Addresses</h3>
+                      <div className={styles.statPad}>
+                          <div className={styles.statCircle}>
+                              <p>{user?.points || 0}</p>
+                              <p>Points</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div className={styles.stat}>
+                      <h3>Wishlist</h3>
+                      <div className={styles.statPad}>
+                          <div className={styles.statCircle}>
+                              <p>{user?.wishlistCount || 0}</p>
+                              <p>Items</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div className={styles.stat}>
+                      <h3>Saved Addresses</h3>
 
-                    <div className={styles.statPad}>
-                        <div className={styles.statCircle}>
-                            <p>{user?.addressCount || 0}</p>
-                            <p>Addresses</p>
-                        </div>
-                    </div>
-                </div>
+                      <div className={styles.statPad}>
+                          <div className={styles.statCircle}>
+                              <p>{user?.addressCount || 0}</p>
+                              <p>Addresses</p>
+                          </div>
+                      </div>
+                  </div>
                 </div>
             </main>
         </div>

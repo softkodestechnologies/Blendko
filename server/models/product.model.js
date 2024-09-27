@@ -82,38 +82,38 @@ quantity: {
 available_quantity: {
   type: Number,required: [true, 'Please enter product available quantity'],
   default: 0,
-  },
-  discount: { type: Number },
-  features: [
-    {
-      type: String,
-      required: [true, 'Please enter product features'],
-    },
-  ],
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  colors: [
-    {
-      type: String
-    }
-  ],
-  dress_style: [
-    {
-      type: String
-    }
-  ],
-  gender: {
+},
+discount: { type: Number },
+features: [
+  {
     type: String,
-    enum: ['Male', 'Female', 'Unisex'],
-    required: true
+    required: [true, 'Please enter product features'],
   },
-  sizes: [
-    {
-      type: String
+],
+user: {
+  type: Schema.Types.ObjectId,
+  ref: 'User',
+  required: true,
+},
+colors: [
+  {
+    type: String
   }
+],
+dress_style: [
+  {
+    type: String
+  }
+],
+gender: {
+  type: String,
+  enum: ['Male', 'Female', 'Unisex'],
+  required: true
+},
+sizes: [
+  {
+    type: String
+}
 ], 
 fashion_collection: [
   {
@@ -145,9 +145,16 @@ height: {
   type: Number,
   required: true,
 },
+sku: {
+  type: String,
+  unique: true,
+  required: true,
+},
 }, {
   timestamps: true,
 });
+
+
 
 const Product = model('Product', productSchema);
 module.exports = Product;

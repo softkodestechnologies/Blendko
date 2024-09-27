@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(require('mongoose'));
 
 const orderSchema = new Schema({
   type: {
@@ -51,26 +52,37 @@ const orderSchema = new Schema({
   },
   orderItems: [
     {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
+      sku: {
+        type: String,
+        required: true,
+      },
       name: {
         type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
         required: true,
       },
       quantity: {
         type: Number,
         required: true,
       },
-      image: {
-        public_id: String,
-        url: String,
+      discount: {
+        type: Number,
+        default: 0,  
       },
-      price: {
+      total: {
         type: Number,
         required: true,
-      },
-      product: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product',
+        default: function() {
+          return this.price * this.quantity * (1 - this.discount / 100);
+        },
       },
     },
   ],
@@ -98,20 +110,42 @@ const orderSchema = new Schema({
     required: true,
     default: 0,
   },
+  cost: {
+    type: Number,
+    default: 0,  
+  },
+  discountAmount: {
+    type: Number,
+    default: 0, 
+  },
+  paymentInfo: {
+    id: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+  },
   orderStatus: {
     type: String,
     required: true,
-    default: 'Processing',
+    default: 'Pending',
     enum: {
-      values: ['Processing', 'Delivered'],
+      values: ['Pending', 'Confirmed', 'Processing', 'Picked', 'Shipped', 'Delivered', 'Cancelled'],
       message: 'Please select correct order status',
     },
   },
   deliveredAt: Date,
   paidAt: Date,
-}, {
-  timestamps: true,
-});
+  orderNumber: {
+    type: Number,
+  },
+  }, {
+    timestamps: true,
+  });
 
+orderSchema.plugin(AutoIncrement, { inc_field: 'orderNumber', start_seq: 1001 });
 const Order = model('Order', orderSchema);
 module.exports = Order;

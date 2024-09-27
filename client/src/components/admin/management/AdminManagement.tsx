@@ -1,26 +1,24 @@
 "use client";
-
 import React from 'react';
 import styles from './AdminManagement.module.css';
+import { useGetAdminsQuery } from '@/services/userService';
 
 interface Admin {
-  id: number;
+  _id: string;
   email: string;
-  role: string;
+  role: string[];
   name: string;
-  createdDate: string;
+  createdAt: string;
   status: 'Active' | 'Inactive';
 }
 
 const AdminManagement: React.FC = () => {
-  const admins: Admin[] = [
-    { id: 1, email: 'femas1234@sbox.com', role: 'Admin User', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Active' },
-    { id: 2, email: 'femas1234@sbox.com', role: 'Manager', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Active' },
-    { id: 3, email: 'femas1234@sbox.com', role: 'Admin 2', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Inactive' },
-    { id: 4, email: 'femas1234@sbox.com', role: 'Employee 1', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Active' },
-    { id: 5, email: 'femas1234@sbox.com', role: 'Super Admin', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Inactive' },
-    { id: 6, email: 'femas1234@sbox.com', role: 'Admin 3', name: 'Udah Isaiah', createdDate: '02/09/2024', status: 'Inactive' },
-  ];
+  const { data: adminData, isLoading, isError } = useGetAdminsQuery({});
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading admins</div>;
+
+  const admins: Admin[] = adminData?.admins || [];
 
   return (
     <div className={styles.adminManagement}>
@@ -36,16 +34,16 @@ const AdminManagement: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin) => (
-            <tr key={admin.id}>
-              <td>{admin.id}</td>
+          {admins.map((admin, index) => (
+            <tr key={admin._id}>
+              <td>{index + 1}</td> {/* Sequential numbering */}
               <td>{admin.email}</td>
-              <td>{admin.role}</td>
+              <td>{admin.role.join(', ')}</td>
               <td>{admin.name}</td>
-              <td>{admin.createdDate}</td>
+              <td>{new Date(admin.createdAt).toLocaleDateString()}</td>
               <td>
                 <span className={`${styles.status} ${styles[admin.status.toLowerCase()]}`}>
-                   {admin.status}
+                  {admin.status}
                 </span>
               </td>
             </tr>

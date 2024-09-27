@@ -6,7 +6,7 @@ import AdminManagement from '@/components/admin/management/AdminManagement';
 import styles from '@/components/admin/Admin.module.css';
 
 
-const OrdersPage: React.FC = () => {
+const ManagePage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -24,4 +24,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default ManagePage;

@@ -9,6 +9,7 @@ class ApiFeatures {
     if (this.queryStr.keyword === "All Sale") {
       this.queryStr.keyword = '';
     }
+  
     const keyword = this.queryStr.keyword
       ? {
           features: {
@@ -17,11 +18,10 @@ class ApiFeatures {
           },
         }
       : {};
-
+  
     this.query = this.query.find({ ...keyword });
-    this.document = this.document.countDocuments({ ...keyword });
-
-    return this;
+     
+    return this;  
   }
 
   filter() {
@@ -70,8 +70,6 @@ class ApiFeatures {
         }
       }
     }
-
-    console.log(query);
 
     this.query = this.query.find(query);
     this.document = this.document && this.document.countDocuments(query);

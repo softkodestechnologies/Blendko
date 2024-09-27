@@ -265,8 +265,8 @@ export const policy = [
 export const userMenuLinks = [
   { title: 'Profile', url: '/user/account' },
   { title: 'Orders', url: '/user/orders' },
-  { title: 'Favorites', url: '/user/favorites' },
-  { title: 'Account Settings', url: '/user/account-settings' },
+  { title: 'Favorites', url: '/user/favourites' },
+  { title: 'Account Settings', url: '/user/settings/account' },
   { title: 'Customize Templates', url: '/user/customize-templates' },
 ];
 

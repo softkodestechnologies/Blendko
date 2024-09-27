@@ -6,7 +6,7 @@ const { createHash } = require('node:crypto');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const cloudinary = require('cloudinary');
-
+const ApiFeatures = require('../utils/apiFeatures');
 
 // Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -97,6 +97,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Invalid Email or Password', 401));
   }
 
+  user.lastLoginAt = Date.now();
+  await user.save({ validateBeforeSave: false });
+
   sendToken(user, 201, res);
 });
 
@@ -121,6 +124,9 @@ exports.googleLogin = catchAsyncErrors(async (req, res, next) => {
   const isExisting = await User.findOne({ email });
 
   if (!isExisting) return next(new ErrorHandler('User not found', 404));
+
+  isExisting.lastLoginAt = Date.now();
+  await isExisting.save({ validateBeforeSave: false });
 
   sendToken(isExisting, 200, res);
 });
@@ -309,32 +315,63 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // ADMIN: Get all users => /api/v1/admin/users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = req.query.pp || 5;
+  try {
+    const resPerPage = parseInt(req.query.pp) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const search = req.query.search || '';
 
-  const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const last30Days = Date.now() - 30 * 24 * 60 * 60 * 1000;
 
-  const usersCount = await User.countDocuments();
-  const usersCountLast30Days = await User.countDocuments({
-    createdAt: { $gte: last30Days },
-  });
+    const searchQuery = search
+      ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {};
 
-  const apiFeatures = new ApiFeatures(
-    User.find().sort({ createdAt: -1 }).populate('order'),
-    req.query
-  )
-    .search()
-    .filter()
-    .pagination(resPerPage);
+    const usersCount = await User.countDocuments(searchQuery);
+    const usersCountLast30Days = await User.countDocuments({
+      ...searchQuery,
+      createdAt: { $gte: last30Days },
+    });
 
-  const users = await apiFeatures.query;
+    const skip = resPerPage * (page - 1);
 
-  res.status(200).json({
-    success: true,
-    users,
-    usersCount,
-    new_customers: usersCountLast30Days,
-  });
+    const users = await User.find(searchQuery)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(resPerPage);
+
+    res.status(200).json({
+      success: true,
+      users,
+      usersCount,
+      resPerPage,
+      new_customers: usersCountLast30Days,
+    });
+  } catch (error) {
+    console.error('Error in getAllUsers:', error);
+    return next(new ErrorHandler('Error fetching users', 500));
+  }
 });
+
+// ADMIN: Get all admins => /api/v1/admin/admins
+exports.getAllAdmins = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const admins = await User.find({ "role.0": "admin" }).select('name email role createdAt status');
+
+    res.status(200).json({
+      success: true,
+      admins,
+    });
+  } catch (error) {
+    console.error('Error in getAllAdmins:', error);
+    return next(new ErrorHandler('Error fetching admins', 500));
+  }
+});
+
 
 // ADMIN: Get user details => /api/v1/admin/user/:id
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
@@ -421,6 +458,8 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
             cart: {
               product: product._id,
               quantity: 1,
+              size: item.size,  
+              color: item.color 
             },
           },
         },
@@ -483,5 +522,58 @@ exports.deleteCartItem = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+  });
+});
+
+exports.getWishlist = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).populate('wishlist.product');
+
+  res.status(200).json({
+    success: true,
+    wishlist: user.wishlist,
+  });
+});
+
+
+exports.addToWishlist = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.body.productId);
+
+  if(!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const user = await User.findById(req.user.id);
+  const isProductInWishlist = user.wishlist.some(item => item.product.toString() === product._id.toString());
+
+  if (isProductInWishlist) {
+    return res.status(400).json({
+      success: false,
+      message: 'Product already in wishlist'
+    });
+  }
+
+  user.wishlist.push({ product: product._id });
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Product added to wishlist'
+  });
+});
+
+exports.removeFromWishlist = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.body.productId);
+
+  if(!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const user = await User.findById(req.user.id);
+  user.wishlist = user.wishlist.filter(item => item.product.toString() !== product._id.toString());
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Product removed from wishlist'
   });
 });

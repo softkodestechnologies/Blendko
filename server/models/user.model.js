@@ -61,12 +61,34 @@ const userSchema = new Schema({
       size: String,
     },
   ],
+  wishlist: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+      addedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  lastLoginAt: {
+    type: Date,
+    default: null,
+  },
   activityLog: [
     {
       action: String,
       timestamp: { type: Date, default: Date.now },
     },
   ],
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive'],
+    default: 'Active'
+  },
   notificationPreferences: [String],
   resetPasswordToken: String,
   resetPasswordExpire: Date,

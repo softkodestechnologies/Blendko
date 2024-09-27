@@ -22,6 +22,10 @@
   text-decoration: underline;
 }
 
+.lineThrough  {
+  text-decoration: line-through;
+}
+
 @media (width >= 1024px) {
   .header h1 {
     font-size: 20px;
@@ -34,7 +38,10 @@
   gap: 10px;
   grid-template-columns: auto 1fr;
   font-family: var(--font-poppins);
+  margin-bottom: 5px;
 }
+
+
 
 .img {
   padding: 16px 8px;

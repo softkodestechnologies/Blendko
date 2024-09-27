@@ -6,7 +6,7 @@ import AnalyticsReports from '@/components/admin/analytics/Analytics';
 import styles from '@/components/admin/Admin.module.css';
 
 
-const OrdersPage: React.FC = () => {
+const AnalyticsPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -24,4 +24,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default AnalyticsPage;

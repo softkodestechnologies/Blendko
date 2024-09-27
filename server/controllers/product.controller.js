@@ -7,6 +7,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const ApiFeatures = require('../utils/apiFeatures');
 
+
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
   const files = req.files;
@@ -30,25 +31,25 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     technology,
     brand,
     attributes,
-    isCustomizable,
     weight,
     width,
     height
   } = req.body;
+  let { isCustomizable } = req.body
 
-  if (!files) return next(new ErrorHandler('Please upload images', 400));
+  if (!files) {
+    return next(new ErrorHandler('Please upload images', 400));
+  }
 
-  if (files.length > 6)
+  if (files.length > 6) {
     return next(new ErrorHandler('Please upload less than 6 images', 400));
-
-  if (files.length < 6)
-    return next(new ErrorHandler('Please upload 6 images', 400));
+  }
 
   const imagesLinks = [];
 
   for (let i = 0; i < files.length; i++) {
     const result = await cloudinary.v2.uploader.upload(files[i].path, {
-      folder: 'blendko/products',
+      folder: 'Blendko/products',
     });
 
     imagesLinks.push({
@@ -56,8 +57,14 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
       url: result.secure_url,
     });
 
-    fs.unlinkSync(files[i].path);
+    fs.unlink(files[i].path, (err) => {
+      if (err) console.error(`Failed to delete local image file: ${err}`);
+    });
   }
+
+  const count = await Product.countDocuments();
+  const sku = `SKU${(count + 1).toString().padStart(6, '0')}`;
+  isCustomizable = isCustomizable === 'on' ? true : false;
 
   const product = new Product({
     name,
@@ -82,7 +89,8 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     isCustomizable,
     weight,
     width,
-    height
+    height,
+    sku
   });
 
   product.available_quantity = quantity;

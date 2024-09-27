@@ -98,14 +98,35 @@ const userSlice = createSlice({
       );
 
       if (productExists) {
-        productExists.quantity = action.payload.quantity;
+        productExists.quantity += action.payload.quantity;
       } else {
         state.cart.push({
           ...action.payload,
           quantity: action.payload.quantity,
         });
       }
+      localStorage.setItem('cartItems', JSON.stringify(state.cart));
+      console.log(JSON.stringify(state.cart))
+      if(state.user) {
+        state.user.cart = state.cart;
+        localStorage.setItem('user', JSON.stringify(state.user));
+      }
     },
+
+    updateCartItemQuantity: (state: UserState, action: PayloadAction<{ productId: string; quantity: number }>) => {
+      const item = state.cart.find((x) => x._id === action.payload.productId);
+      if (item) {
+        item.quantity = action.payload.quantity;
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(state.cart));
+
+      if (state.user) {
+        state.user.cart = state.cart;
+        localStorage.setItem('user', JSON.stringify(state.user));
+      }
+    },
+
     incrementQuantity: (state: UserState, action: PayloadAction<any>) => {
       const item = state.cart.find((x) => x._id === action.payload._id);
       if (item) {
@@ -118,10 +139,14 @@ const userSlice = createSlice({
         item.quantity--;
       }
     },
-    deleteItem: (state: UserState, action: PayloadAction<any>) => {
-      const item = state.cart.find((x) => x._id === action.payload);
-      if (item) {
-        state.cart = state.cart.filter((x) => x._id !== action.payload._id);
+
+    deleteItem: (state: UserState, action: PayloadAction<string>) => {
+      state.cart = state.cart.filter((x) => x._id !== action.payload);
+      localStorage.setItem('cartItems', JSON.stringify(state.cart));
+    
+      if (state.user) {
+        state.user.cart = state.cart;
+        localStorage.setItem('user', JSON.stringify(state.user));
       }
     },
     checkout: (state: UserState) => {
@@ -158,6 +183,7 @@ export const {
   updateUser,
   logOut,
   addToCart,
+  updateCartItemQuantity,
   incrementQuantity,
   decrementQuantity,
   deleteItem,

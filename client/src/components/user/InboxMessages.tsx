@@ -1,57 +1,51 @@
+"use client";
 import React from 'react';
 import styles from './User.module.css';
 import Image from 'next/image';
+import { useGetInboxMessagesQuery, useMarkMessageAsReadMutation } from '@/services/userService';
+import { formatDate } from '@/utils/helpers/dateUtils';
 
 const InboxMessages: React.FC = () => {
-  const messages = [
-    {
-      id: 1,
-      timeAgo: '3 days ago',
-      title: 'Cancelled',
-      content: 'Item(s) in your order no.12349039 have been cancelled. Please check your email for more details. If you need assistance placing a new order, please call Sales Support team at 07811390002013.',
-      productImageSrc: '/people.png',
-      productImageAlt: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-      productDescription: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-    },
-    {
-      id: 2,
-      timeAgo: '1 week ago',
-      title: 'Shipped',
-      content: 'Your order no.12457839 has been shipped. You can track your order using the tracking number sent to your email.',
-      productImageSrc: '/people.png',
-      productImageAlt: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-      productDescription: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-    },
-    {
-      id: 3,
-      timeAgo: '2 weeks ago',
-      title: 'Order Placed',
-      content: 'Your order no.12569043 has been placed successfully. We will notify you once it is shipped.',
-      productImageSrc: '/people.png',
-      productImageAlt: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-      productDescription: 'Quality Rack-Cloth Floor Hanger And Storage (Black Color)',
-    },
-  ];
+  const { data, isLoading, isError } = useGetInboxMessagesQuery({});
+  const [markAsRead] = useMarkMessageAsReadMutation();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading messages</div>;
+
+  const handleMarkAsRead = async (messageId: string) => {
+    try {
+      await markAsRead(messageId).unwrap();
+    } catch (error) {
+      console.error('Failed to mark message as read', error);
+    }
+  };
 
   return (
     <section className={styles.inboxMessages}>
       <h2>Inbox Messages</h2>
-      {messages.map((message) => (
-        <div key={message.id} className={styles.message}>
-          <p>{message.timeAgo}</p>
-          <h3>{message.title}</h3>
-          <p>{message.content}</p>
-          <div className={styles.productInfo}>
-            <Image
-              src={message.productImageSrc}
-              alt={message.productImageAlt}
-              width={200}
-              height={200}
-            />
-            <p>{message.productDescription}</p>
+      {data?.messages && data.messages.length > 0 ? (
+        data.messages.map((message: any) => (
+          <div key={message._id} className={styles.message} onClick={() => handleMarkAsRead(message._id)}>
+            <p>{formatDate(message.createdAt)}</p>
+            <h3>{message.title}</h3>
+            <p>{message.content}</p>
+            {message.orderId && message.orderId.orderItems && (
+              <div className={styles.productInfo}>
+                <Image
+                  src={message.orderId.orderItems[0].image.url}
+                  alt={message.orderId.orderItems[0].name}
+                  width={200}
+                  height={200}
+                />
+                <p>{message.orderId.orderItems[0].name}</p>
+              </div>
+            )}
+            {!message.read && <span className={styles.unreadBadge}>New</span>}
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <div>No messages found.</div>
+      )}
     </section>
   );
 };

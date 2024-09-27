@@ -1,11 +1,11 @@
 .sidebar {
-    width: 250px;
+    min-width: 250px;
     background-color: #ffffff;
     padding: 20px;
     transition: transform 0.3s ease-in-out;
     height: auto;
     overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
   }
   
   .logo {
@@ -13,12 +13,6 @@
     font-weight: bold;
     margin-bottom: 30px;
     color: #333;
-  }
-
-  /*Sidebar */
-
-  .sidebar {
-    min-width: 250px;
   }
   
   .sidebar ul {
@@ -36,10 +30,18 @@
     display: flex;
     align-items: center;
     transition: color 0.3s ease;
+    padding: 9px 16px;
   }
-  
+
   .sidebar a:hover {
     color: #333;
+  }
+
+  .sidebar  .sidebarActive {
+    background-color: #F3F4F8;
+    font-weight: bold;
+    color: #000 !important;
+    border-radius: 8px;
   }
   
   .sidebar svg {
@@ -294,6 +296,7 @@
 .customerTable td,
 .discountTable td {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .actionButtons {
@@ -343,6 +346,14 @@
 .expired {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.chatSupportContent {
+  margin: 20px;
+}
+
+.chatHeader {
+  font-size: 24px;
 }
 
 @media (max-width: 768px) {

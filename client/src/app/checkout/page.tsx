@@ -1,12 +1,31 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { FaTruck, FaMapMarkerAlt, FaUser, FaHeart, FaShoppingBag } from 'react-icons/fa';
+import { FaTruck, FaMapMarkerAlt } from 'react-icons/fa';
 import styles from './CheckoutPage.module.css';
+import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import Link from 'next/link';
+import { RootState } from '@/services/store';
+import { useRouter } from 'next/navigation';
+import PickupForm from '@/components/checkout/PickupForm';
+import DeliveryForm from '@/components/checkout/DeliveryForm';
+import PayButton from '@/components/checkout/PayButton'
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const CheckoutPage: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
+  const router = useRouter();
+  const [deliveryOption, setDeliveryOption] = useState<'delivery' | 'pickup'>('delivery');
   const [cartItems, setCartItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/checkout/auth');
+    }
+  }, [user, router]);
 
   useEffect(() => {
     const updateCartItems = () => {
@@ -30,6 +49,7 @@ const CheckoutPage: React.FC = () => {
   return (
     <div className={styles.checkoutContainer}>
       <h2>Delivery Options</h2>
+      
       <div className={styles.bagSummary}>
         <h3>In Your Bag<span className={styles.edit}><Link href="/view-bag">Edit</Link></span></h3>
         <p>Subtotal:<span className={styles.price}> ${(cartItems.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)).toFixed(2)}</span></p>
@@ -56,23 +76,35 @@ const CheckoutPage: React.FC = () => {
 
 
       </div>
+
       <div className={styles.deliveryOptions}>
-        <button className={styles.deliveryButton}><FaTruck /> Delivery</button>
-        <button className={styles.pickupButton}><FaMapMarkerAlt /> Pick-Up</button>
-        <input 
-          type="text" 
-          placeholder="Start typing address" 
-          className={styles.addressInput}
-        />
-        <p className={styles.hint}>Using a specific location such as a home address or postcode will get the most accurate results.</p>
-        <button className={styles.continueButton}>Save & Continue</button>
+        <button 
+          className={`${styles.deliveryButton} ${deliveryOption === 'delivery' ? styles.active : ''}`}
+          onClick={() => setDeliveryOption('delivery')}
+        >
+          <FaTruck /> Delivery
+        </button>
+        <button 
+          className={`${styles.pickupButton} ${deliveryOption === 'pickup' ? styles.active : ''}`}
+          onClick={() => setDeliveryOption('pickup')}
+        >
+          <FaMapMarkerAlt /> Pick-Up
+        </button>
+
+        {deliveryOption === 'delivery' ? (
+          <DeliveryForm user={user} />
+        ) : (
+          <PickupForm />
+        )}
       </div>
-      <div className={styles.additionalSections}>
+
+      <div className={styles.paymentSection}>
         <h3>Payment</h3>
-        <h3>Order Review</h3>
+        <Elements stripe={stripePromise}>
+          <PayButton cartItems={cartItems} userId={user?.id} />
+        </Elements>
       </div>
     </div>
   );
 };
-
 export default CheckoutPage;

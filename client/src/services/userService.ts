@@ -17,7 +17,6 @@ type QueryType = {
 };
 const getToken = () => {
   if (typeof localStorage !== 'undefined') {
-    console.log('TOKEN', localStorage.getItem('token'))
     return localStorage.getItem('token');
   }
   return null;
@@ -56,7 +55,204 @@ export const adminService = blendkoApi.injectEndpoints({
         },
       }),
     }),
-
+    getWishlist: builder.query<{ success: boolean, wishlist: Array<{ product: any, _id: string, addedAt: string }> }, {}>({
+      query: () => ({
+        url: '/wishlist',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Wishlist'],
+    }),
+    addToWishlist: builder.mutation({
+      query: (productId) => ({
+        url: '/wishlist/add',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { productId },
+      }),
+      invalidatesTags: ['Wishlist'],
+    }),
+    removeFromWishlist: builder.mutation({
+      query: (productId) => ({
+        url: '/wishlist/remove',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { productId },
+      }),
+      invalidatesTags: ['Wishlist'],
+    }),
+    makePayment: builder.mutation({
+      query: (paymentData) => ({
+        url: '/payment',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: paymentData,
+      }),
+      invalidatesTags: ['Payment'],
+    }),
+    getDashboardData: builder.query({
+      query: () => ({
+        url: '/dashboard/data',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Dashboard'],
+    }),
+    getDiscounts: builder.query({
+      query: () => ({
+        url: '/discounts',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Discount'],
+    }),
+    getDiscount: builder.query({
+      query: (id) => `/discounts/${id}`,
+      providesTags: ['Discount'],
+    }),
+    createDiscount: builder.mutation({
+      query: (discount) => ({
+        url: '/discounts/new',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: discount,
+      }),
+      invalidatesTags: ['Discount'],
+    }),
+    updateDiscount: builder.mutation({
+      query: ({ id, ...discount }) => ({
+        url: `/discounts/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: discount,
+      }),
+      invalidatesTags: ['Discount'],
+    }),
+    deleteDiscount: builder.mutation({
+      query: (id) => ({
+        url: `/discounts/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['Discount'],
+    }),
+    getDeliveryAddress: builder.query({
+      query: () => ({
+        url: '/delivery-address',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['DeliveryAddress'],
+    }),
+    createDeliveryAddress: builder.mutation({
+      query: (addressData) => ({
+        url: '/delivery-address',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: addressData,
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
+    updateDeliveryAddress: builder.mutation({
+      query: (addressData) => ({
+        url: '/delivery-address',
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: addressData,
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
+    deleteDeliveryAddress: builder.mutation({
+      query: () => ({
+        url: '/delivery-address',
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['DeliveryAddress'],
+    }),
+    getJobs: builder.query({
+      query: () => '/jobs',
+      providesTags: ['Job'],
+    }),
+    createJob: builder.mutation({
+      query: (jobData) => ({
+        url: '/jobs',
+        method: 'POST',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+        body: jobData,
+      }),
+      invalidatesTags: ['Job'],
+    }),
+    updateJob: builder.mutation({
+      query: ({ id, ...jobData }) => ({
+        url: `/jobs/${id}`,
+        method: 'PUT',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+        body: jobData,
+            }),
+      invalidatesTags: ['Job'],
+    }),
+    deleteJob: builder.mutation({
+      query: (id) => ({
+        url: `/jobs/${id}`,
+        method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+      }),
+      invalidatesTags: ['Job'],
+    }),
+    getApplications: builder.query({
+    query: (id) => ({
+        url: `/jobs/admin/applications/${id}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        }),
+      providesTags: ['Application'],
+    }),
+    updateApplicationStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/jobs/applications/${id}`,
+        method: 'PUT',
+        headers: {
+                Authorization: `Bearer ${getToken()}`,
+              },
+              body: { status },
+            }),
+      invalidatesTags: ['Application'],
+    }),
     getUsers: builder.query({
       query: (params: QueryType) => ({
         url: `/admin/users?${new URLSearchParams(
@@ -68,6 +264,17 @@ export const adminService = blendkoApi.injectEndpoints({
         },
       }),
       providesTags: ['Users'],
+    }),
+
+    getAdmins: builder.query({
+      query: () => ({
+        url: '/admin/admins',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Admins'],
     }),
 
     updateUserDetails: builder.mutation({
@@ -99,10 +306,44 @@ export const adminService = blendkoApi.injectEndpoints({
       providesTags: ['Product']
     }),
     getCategories: builder.query({
-      query: () => 'categories',
+      query: (params: QueryType) =>
+        `categories?${new URLSearchParams(
+          params as Record<string, string>
+        ).toString()}`,
       providesTags: ['Categories'],
     }),
-
+    createCategory: builder.mutation({
+      query: (category) => ({
+        url: 'categories',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: category,
+      }),
+      invalidatesTags: ['Categories'],
+    }),
+    updateCategory: builder.mutation({
+      query: ({ id, ...category }) => ({
+        url: `categories/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: category,
+      }),
+      invalidatesTags: ['Categories'],
+    }),
+    deleteCategory: builder.mutation({
+      query: (id) => ({
+        url: `categories/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['Categories'],
+    }),
     getCart: builder.query({
       query: () => ({
         url: `/cart/`,
@@ -144,7 +385,26 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
-
+    getInboxMessages: builder.query({
+      query: () => ({
+        url: '/inbox/messages',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+      providesTags: ['Inbox'],
+    }),
+    markMessageAsRead: builder.mutation({
+      query: (messageId) => ({
+        url: `/inbox/messages/${messageId}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ['Inbox'],
+    }),
     createOrder: builder.mutation({
       query: (body) => ({
         url: `order/new`,
@@ -196,11 +456,34 @@ export const {
   useGetProductQuery,
   useGetProductsQuery,
   useDeleteProductMutation,
+  useGetWishlistQuery,
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
+  useMakePaymentMutation,
+  useGetDashboardDataQuery,
+  useGetDiscountsQuery,
+  useCreateDiscountMutation,
+  useUpdateDiscountMutation,
+  useDeleteDiscountMutation,
+  useGetDeliveryAddressQuery,
+  useCreateDeliveryAddressMutation,
+  useUpdateDeliveryAddressMutation,
+  useDeleteDeliveryAddressMutation,
+  useGetJobsQuery,
+  useCreateJobMutation,
+  useUpdateJobMutation,
+  useDeleteJobMutation,
+  useGetApplicationsQuery,
+  useUpdateApplicationStatusMutation,
   useGetUsersQuery,
+  useGetAdminsQuery,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,
-  useGetCategoryByNameQuery,
   useGetCategoriesQuery,
+  useGetCategoryByNameQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
   useGetProductsByCategoryIdQuery,
   useGetProductsByCategoryGenderQuery,
   useAddToCartMutation,
@@ -208,6 +491,8 @@ export const {
   useRemoveFromCartMutation,
   useReduceCartItemMutation,
   useCreateOrderMutation,
+  useGetInboxMessagesQuery, 
+  useMarkMessageAsReadMutation,
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
   useDeleteOrderMutation,

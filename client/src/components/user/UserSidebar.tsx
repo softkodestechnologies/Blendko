@@ -2,26 +2,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MdInbox } from "react-icons/md";
-import { BsLayoutTextWindow } from "react-icons/bs";
-import {
-  IoPersonOutline,
-  IoMailOutline,
-  IoSettingsOutline,
-  IoHeartOutline
-} from 'react-icons/io5';
+import {UserIcon, InboxIcon, WishlistIcon, OrderIcon, CustomizeTemplatesIcon, SettingsIcon } from '../../../public/svg/icon';
 import styles from './User.module.css';
 
 const UserSidebar: React.FC = () => {
   const pathname = usePathname();
 
   const menuItems = [
-    { icon: <IoPersonOutline />, text: 'My Blendko Account', path: '/user/account' },
-    { icon: <IoMailOutline />, text: 'Inbox', path: '/user/inbox' },
-    { icon: <MdInbox />, text: 'Orders', path: '/user/orders' },
-    { icon: <IoHeartOutline />, text: 'Favourites', path: '/user/favourites' },
-    { icon: <BsLayoutTextWindow />, text: 'Customise templates', path: '/user/templates' },
-    { icon: <IoSettingsOutline />, text: 'Settings', path: '/user/settings/account' },
+    { icon: <UserIcon />, text: 'My Blendko Account', path: '/user/account' },
+    { icon: <InboxIcon />, text: 'Inbox', path: '/user/inbox' },
+    { icon: <OrderIcon />, text: 'Orders', path: '/user/orders' },
+    { icon: <WishlistIcon />, text: 'Favourites', path: '/user/favourites' },
+    { icon: <CustomizeTemplatesIcon />, text: 'Customise templates', path: '/customize' },
+    { icon: <SettingsIcon />, text: 'Settings', path: '/user/settings/account' },
   ];
 
   return (

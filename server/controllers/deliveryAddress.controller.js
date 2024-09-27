@@ -2,27 +2,32 @@ const DeliveryAddress = require('../models/deliveryAddress.model');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 
-//Create or Update deliveryAddress
-exports.createOrUpdateDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
+exports.createDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const {
+    firstName,
+    lastName,
     street,
     aptBuildingSuite,
     postcode,
     city,
     province,
     country,
-    phoneNumber
+    phoneNumber,
+    isDefaultAddress,
   } = req.body;
 
   const addressData = {
     user: req.user.id,
+    firstName,
+    lastName,
     street,
     aptBuildingSuite,
     postcode,
     city,
     province,
     country,
-    phoneNumber
+    phoneNumber,
+    isDefaultAddress
   };
 
   let deliveryAddress = await DeliveryAddress.findOne({ user: req.user.id });
@@ -43,9 +48,50 @@ exports.createOrUpdateDeliveryAddress = catchAsyncErrors(async (req, res, next) 
   });
 });
 
-// Get delivery address
 exports.getDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const deliveryAddress = await DeliveryAddress.findOne({ user: req.user.id });
+
+  if (!deliveryAddress) {
+    return res.status(404).json({
+      success: false,
+      message: 'Delivery address not found'
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    deliveryAddress
+  });
+});
+
+exports.updateDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
+  const {
+    street,
+    aptBuildingSuite,
+    postcode,
+    city,
+    province,
+    country,
+    phoneNumber,
+    isDefaultAddress
+  } = req.body;
+
+  const addressData = {
+    street,
+    aptBuildingSuite,
+    postcode,
+    city,
+    province,
+    country,
+    phoneNumber,
+    isDefaultAddress
+  };
+
+  const deliveryAddress = await DeliveryAddress.findOneAndUpdate(
+    { user: req.user.id },
+    addressData,
+    { new: true, runValidators: true, useFindAndModify: false }
+  );
 
   if (!deliveryAddress) {
     return next(new ErrorHandler('Delivery address not found', 404));
@@ -57,7 +103,6 @@ exports.getDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Delete delivery address
 exports.deleteDeliveryAddress = catchAsyncErrors(async (req, res, next) => {
   const deliveryAddress = await DeliveryAddress.findOne({ user: req.user.id });
 

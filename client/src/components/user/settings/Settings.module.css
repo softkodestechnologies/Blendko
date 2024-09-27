@@ -263,6 +263,108 @@
   padding: 20px 0;
 }
 
+
+/*deliveryAddress styles*/
+
+.popupForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto; 
+}
+
+.popupForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popupForm input,
+.popupForm select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.formActions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.formActions button[type="submit"] {
+  background-color: #000;
+  color: white;
+}
+
+.formActions button[type="button"] {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.edit {
+  background: none;
+  border: none;
+  color: #000;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.addButton {
+  width: 150px;
+  font-size: 16px;
+  align-self: flex-end;
+  color: #fff;
+  background: #000;
+  padding: 3px 6px;
+  border: 0;
+}
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkboxWrapper label {
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkboxWrapper input {
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.checkboxWrapper span {
+  flex: 5;
+}
   
 @media (max-width: 768px) {
   .settingsContainer {
@@ -299,5 +401,9 @@
 
   .prefBtnParent .saveButton {
     width: 100%;
+  }
+
+  .popupForm {
+    width: 90%; 
   }
 }

@@ -30,7 +30,7 @@ function Summary({ cartItems }: { cartItems: any[] }) {
         <li className={`flex align-y space-between ${styles.subtotal}`}>
           <p className={`flex align-y`}>
             Subtotal
-            <button type="button" className="flex align-y">
+            <button type="button" className="flex align-y" title="Subtotal Information">
               <HintIcon />
             </button>
           </p>
@@ -76,7 +76,8 @@ function Summary({ cartItems }: { cartItems: any[] }) {
 
         <button
           type="button"
-          aria-label="Pay with paypal"
+
+          aria-label="Pay with PayPal"
           className={`full-width flex center`}
         >
           <PayPalIcon />
@@ -84,6 +85,6 @@ function Summary({ cartItems }: { cartItems: any[] }) {
       </div>
     </div>
   );
-}
 
+}
 export default Summary;
