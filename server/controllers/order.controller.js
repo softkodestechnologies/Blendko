@@ -74,21 +74,13 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
-  );
-
+exports.getSingleOrder = async (req, res, next) => {
+  const order = await Order.findById(req.params.id).populate('orderItems.product');
   if (!order) {
-    return next(new ErrorHandler('No Order found with this ID', 404));
+    return res.status(404).json({ success: false, message: 'Order not found' });
   }
-
-  res.status(200).json({
-    success: true,
-    order,
-  });
-});
+  res.status(200).json({ success: true, order });
+};
 
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = req.query.pp || 5;
