@@ -9,10 +9,14 @@ import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
 import UserSidebar from '@/components/user/UserSidebar';
 import MobileNav from '@/components/user/MobileNav';
 import { formatDate } from '@/utils/helpers/dateUtils';
+import { useGetDeliveryAddressQuery } from '@/services/userService';
+import { useGetWishlistQuery } from '@/services/userService';
 
 const CustomerPage = () => {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user.user);
+  const { data: deliveryData , isLoading, isError } = useGetDeliveryAddressQuery({})
+  const { data: wishlistData } = useGetWishlistQuery({})
   const [loading, setLoading] = useState(true);
   const [formattedDate, setFormattedDate] = useState('')
 
@@ -24,7 +28,7 @@ const CustomerPage = () => {
       let date = formatDate(user.createdAt);
       setFormattedDate(date);
     }
-  }, [user, router]);
+  }, [user, router, deliveryData, wishlistData]);
 
   if (loading) {
     return (
@@ -62,7 +66,7 @@ const CustomerPage = () => {
                       <h3>Wishlist</h3>
                       <div className={styles.statPad}>
                           <div className={styles.statCircle}>
-                              <p>{user?.wishlistCount || 0}</p>
+                              <p>{wishlistData?.wishlist.length}</p>
                               <p>Items</p>
                           </div>
                       </div>
@@ -72,7 +76,7 @@ const CustomerPage = () => {
 
                       <div className={styles.statPad}>
                           <div className={styles.statCircle}>
-                              <p>{user?.addressCount || 0}</p>
+                              <p>{deliveryData?.deliveryAddress? 1 : 0}</p>
                               <p>Addresses</p>
                           </div>
                       </div>

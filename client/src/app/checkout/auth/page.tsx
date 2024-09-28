@@ -3,10 +3,10 @@
   import { useState } from 'react';
   import { useRouter } from 'next/navigation';
   import dynamic from 'next/dynamic';
-  import Image from 'next/image';
   import { useSelector } from 'react-redux';
   import { RootState } from '@/services/store';
   import styles from './CheckoutAuth.module.css';
+  import { GoogleIcon } from '../../../../public/svg/icon';
 
   const LoginModal = dynamic(() => import('@/components/ui/modal/LoginModal'), { ssr: false });
   const SignUpModal = dynamic(() => import('@/components/ui/modal/SignUpModal'), { ssr: false });
@@ -27,10 +27,12 @@
 
     const handleLoginClick = () => {
       setShowModal(true);
+      console.log('login check')
     };
 
     const handleSignUpClick = () => {
       setShowSignModal(true);
+      console.log('sign up check')
     }
 
     const handleCloseModal = () => {
@@ -55,23 +57,23 @@
             <button className={styles.signupButton} onClick={handleSignUpClick}>Sign Up</button>
               {showSignModal && <SignUpModal isOpen={showSignModal} onRequestClose ={handleCloseSignModal} />} 
           </div>
-          <div className={styles.guestOption}>
+          {/* <div className={styles.guestOption}>
             <h3>Check out as a Guest</h3>
             <p>You can create a free Nike Member Profile at any point during the checkout process.</p>
             <button className={styles.guestButton}>Guest Checkout</button>
-          </div>
+          </div> */}
         </div>
         <div className={styles.divider}>OR</div>
         <div className={styles.socialLogin}>
           <h3>Sign in with your google / Apple account</h3>
           <button className={styles.googleButton}>
-            <Image src="/google-icon.png" alt="Google" layout="fill" />
+            <GoogleIcon />
             Continue with Google
           </button>
-          <button className={styles.appleButton}>
+          {/* <button className={styles.appleButton}>
             <Image src="/apple-icon.png" alt="Apple" layout="fill"/>
             Continue with Apple
-          </button>
+          </button> */}
         </div>
       </div>
     );

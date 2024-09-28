@@ -9,7 +9,7 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} title="Log in">
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} title="">
       <Login />
       <button className="modal-button close" onClick={onRequestClose}>
         &times;

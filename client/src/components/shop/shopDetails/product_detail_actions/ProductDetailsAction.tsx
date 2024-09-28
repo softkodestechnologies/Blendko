@@ -95,32 +95,26 @@ function ProductDetailsAction({
 
       <hr className={styles.hr} />
 
-      <div
-        role="listbox"
-        className={`${styles.color}`}
-        aria-labelledby="select_color"
-      >
+      <div className={`${styles.color}`}>
         <h2 id="select_color">Select Color</h2>
-
-        <ColorSelection
-          colors={details.colors}
-          handleColorSelection={handleColorSelection}
-        />
+        <div role="listbox" aria-labelledby="select_color">
+          <ColorSelection
+            colors={details.colors}
+            handleColorSelection={handleColorSelection}
+          />
+        </div>
       </div>
 
       <hr className={styles.hr} />
 
-      <div
-        role="listbox"
-        className={`${styles.size}`}
-        aria-labelledby="choose_size"
-      >
+      <div className={`${styles.size}`}>
         <h2 id="choose_size">Choose Size</h2>
-
-        <SizeSelection
-          sizes={details.sizes}
-          hanleSizeSelection={hanleSizeSelection}
-        />
+        <div role="listbox" aria-labelledby="choose_size">
+          <SizeSelection
+            sizes={details.sizes}
+            hanleSizeSelection={hanleSizeSelection}
+          />
+        </div>
       </div>
 
       <hr className={styles.hr} />
@@ -145,5 +139,4 @@ function ProductDetailsAction({
     </div>
   );
 }
-
 export default ProductDetailsAction;

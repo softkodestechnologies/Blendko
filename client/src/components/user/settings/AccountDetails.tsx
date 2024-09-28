@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useUpdateUserDetailsMutation } from "@/services/userService";
 import { updateUser } from "@/services/userSlice";
 import { RootState } from "@/services/store";
+import { BackButtonIcon } from "../../../../public/svg/icon";
+import Link from 'next/link';
 
 const AccountDetails: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -53,22 +55,16 @@ const AccountDetails: React.FC = () => {
     message: '',
   });
 
-  useEffect(() => {
-    console.log("Initial form data:", formData);
-  }, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData(prevData => {
       const newData = { ...prevData, [id]: value };
-      console.log(`Updated ${id}:`, value);
       return newData;
     });
   };
 
   const validateForm = () => {
     const { email, phone, dateOfBirth, country, city, postcode } = formData;
-    console.log("Validating form data:", formData);
     
     if (!email?.trim() || !phone?.trim() || !dateOfBirth?.trim() || !country?.trim() || !city?.trim() || !postcode?.trim()) {
       console.log("Empty fields detected:");
@@ -85,7 +81,6 @@ const AccountDetails: React.FC = () => {
    
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      console.log("Invalid email:", email);
       setAlert({ show: true, type: 'error', message: 'Invalid email address.' });
       return false;
     }
@@ -94,7 +89,6 @@ const AccountDetails: React.FC = () => {
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted. Current form data:", formData);
     if (!validateForm()) return;
 
     try {
@@ -109,6 +103,7 @@ const AccountDetails: React.FC = () => {
 
   return (
     <div className={styles.accountDetails}>
+      <p><BackButtonIcon /><Link href="/user/account"> Back</Link> </p>
       <h2>Account Details</h2>
       <form onSubmit={handleFormSubmission}>
         <div className={styles.formGroup}>

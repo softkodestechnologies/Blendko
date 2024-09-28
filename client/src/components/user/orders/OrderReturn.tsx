@@ -1,27 +1,20 @@
-'use client';
 import React, { useState } from 'react';
 import styles from './Orders.module.css';
 import { FaArrowLeft, FaChevronDown } from 'react-icons/fa';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useGetOrderByIdQuery } from '@/services/userService';
 
 const OrderReturn: React.FC = () => {
-  const order = {
-    id: '124524533',
-    name: 'Shirt Vintage Extra Thick Cotton Material',
-    date: '12-03-24',
-  };
+  const router = useRouter();
+  const { orderid } = router.query;
+  const { data: order, isLoading, isError } = useGetOrderByIdQuery(orderid);
 
   const returnReasons = [
     'Item not as described',
     'Wrong size',
     'Defective item',
     'Changed my mind',
-  ];
-
-  const returnMethods = [
-    { id: 'store-return', label: 'Return to Blendko store', description: 'Free No Return Label or Shipping Box Needed' },
-    { id: 'ups-dropoff', label: 'UPS Dropoff', description: 'Free for Blendko Members' },
-    { id: 'ups-pickup', label: 'Schedule UPS Pickup', description: 'From $6' },
   ];
 
   const [formData, setFormData] = useState({
@@ -79,23 +72,26 @@ const OrderReturn: React.FC = () => {
     }
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading order details</div>;
+
   return (
     <div className={styles.orderReturn}>
       <Link href="/user/orders" className={styles.backLink}>
         <FaArrowLeft />
         <span>Orders / Return</span>
       </Link>
-      <h2>Choose the items you&apos;d like to return.</h2>
+      <h2>Choose the items you'd like to return.</h2>
       <form onSubmit={handleSubmit} className={styles.returnForm}>
         <div>
           <div className={styles.returnItem}>
             <div className={styles.itemImage}></div>
             <div className={styles.itemInfo}>
-              <h3>{order.name}</h3>
-              <p>Order #{order.id}</p>
+              <h3>{order?.orderItems[0].name}</h3>
+              <p>Order #{order?.orderNumber}</p>
               <div className={styles.itemStatus}>
-                <span className={styles.delivered}>DELIVERED</span>
-                <span>On {order.date}</span>
+                <span className={styles[order?.orderStatus.toLowerCase()]}>{order?.orderStatus}</span>
+                <span>On {new Date(order?.createdAt).toLocaleDateString()}</span>
               </div>
             </div>
             <label className={styles.checkbox} htmlFor="itemToReturn">
@@ -152,9 +148,9 @@ const OrderReturn: React.FC = () => {
           </div>
           <hr />
           <h3>Summary</h3>
-          <p className={styles.grayText}><span>Subtotal:</span> $69.97</p>
-          <p className={styles.grayText}><span>Estimated Tax:</span> $6.47</p>
-          <p><span>Refund Total:</span> $76.44</p>
+          <p className={styles.grayText}><span>Subtotal:</span> ${order?.itemsPrice.toFixed(2)}</p>
+          <p className={styles.grayText}><span>Estimated Tax:</span> ${order?.taxPrice.toFixed(2)}</p>
+          <p><span>Refund Total:</span> ${order?.totalPrice.toFixed(2)}</p>
         </div>
       </form>
     </div>

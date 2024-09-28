@@ -62,12 +62,17 @@
   padding: 20px;
 }
 
-.delivered, .cancelled {
+.delivered, .cancelled,
+.pending, .confirmed,
+.processing, .picked,
+.shipped {
   padding: 0.5rem;
   font-weight: bold;
 }
 
-.delivered {
+.delivered, .pending, .confirmed,
+.processing, .picked,
+.shipped {
   background-color: #81BA45;
   color: #FFF;
 }

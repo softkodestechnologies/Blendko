@@ -30,7 +30,7 @@ const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className={`modal-overlay`}>
+    <div className={`modal-overlay`} onClick={onRequestClose}>
       <div
         className={`modal-content ${className}`}
         onClick={(e) => e.stopPropagation()}
@@ -41,5 +41,4 @@ const Modal: React.FC<ModalProps> = ({
     </div>
   );
 };
-
 export default Modal;

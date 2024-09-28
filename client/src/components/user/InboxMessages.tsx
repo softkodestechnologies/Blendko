@@ -31,12 +31,15 @@ const InboxMessages: React.FC = () => {
             <p>{message.content}</p>
             {message.orderId && message.orderId.orderItems && (
               <div className={styles.productInfo}>
-                <Image
-                  src={message.orderId.orderItems[0].image.url}
-                  alt={message.orderId.orderItems[0].name}
-                  width={200}
-                  height={200}
-                />
+                {/* Check if image exists before rendering */}
+                {message.orderId.orderItems[0].image && (
+                  <Image
+                    src={message.orderId.orderItems[0].image.url}
+                    alt={message.orderId.orderItems[0].name}
+                    width={200}
+                    height={200}
+                  />
+                )}
                 <p>{message.orderId.orderItems[0].name}</p>
               </div>
             )}
