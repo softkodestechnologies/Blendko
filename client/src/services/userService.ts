@@ -118,6 +118,16 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       providesTags: ['Dashboard'],
     }),
+    getReports: builder.query({
+      query: () => ({
+        url: '/dashboard/reports',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Dashboard'],
+    }),
     getDiscounts: builder.query({
       query: () => ({
         url: '/discounts',
@@ -492,6 +502,7 @@ export const {
   useRemoveFromWishlistMutation,
   useMakePaymentMutation,
   useGetDashboardDataQuery,
+  useGetReportsQuery,
   useGetDiscountsQuery,
   useCreateDiscountMutation,
   useUpdateDiscountMutation,

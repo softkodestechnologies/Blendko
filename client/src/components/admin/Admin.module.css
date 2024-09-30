@@ -285,6 +285,10 @@
 }
 
 /* ... (DT styles) ... */
+.discountTableActions {
+  display: flex;
+  gap: 5px;
+}
 
 .avatarPlaceholder {
   width: 40px;

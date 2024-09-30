@@ -1,5 +1,4 @@
 import { blendkoApi } from './api';
-
 const getToken = () => {
     if (typeof localStorage !== 'undefined') {
         return localStorage.getItem('token');
@@ -45,16 +44,27 @@ export const chatService = blendkoApi.injectEndpoints({
         },
       }),
     }),
+    getUserChats: builder.query({
+      query: () => ({
+        url: '/chat/user',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+    }),
     sendMessage: builder.mutation({
-        query: ({ chatId, message, guestId, sender }) => ({
+      query: ({ chatId, message, guestId, sender }) => {
+        const token = getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return {
           url: `/chat/${chatId}/message`,
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
+          headers,
           body: { message, guestId, sender },
-        }),
-      }),
+        };
+      },
+    }),
     updateChatStatus: builder.mutation({
       query: ({ chatId, status }) => ({
         url: `/chat/${chatId}/status`,
@@ -82,6 +92,7 @@ export const {
   useCreateGuestChatMutation,
   useGetChatsQuery,
   useGetChatQuery,
+  useGetUserChatsQuery,
   useSendMessageMutation,
   useUpdateChatStatusMutation,
   useCloseChatMutation,

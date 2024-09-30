@@ -43,6 +43,14 @@
   font-family: var(--font-poppins), sans-serif;
 }
 
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
 .accountDetails  h2,
 .deliveryAddresses h2{
   font-size: 20px;

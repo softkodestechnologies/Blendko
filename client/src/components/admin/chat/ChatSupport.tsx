@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useGetChatsQuery, useGetChatQuery, useSendMessageMutation } from '@/services/chatService';
 import styles from './ChatSupport.module.css';
 
 interface Message {
-  id: number;
+  _id: string;
   sender: string;
   content: string;
-  timestamp: string;
+  createdAt: string;
 }
 
 interface Contact {
-  id: number;
+  _id: string;
   name: string;
   lastMessage: string;
   lastActive: string;
@@ -19,90 +19,93 @@ interface Contact {
 const ChatSupport: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, sender: 'Xxuxe Feng', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', timestamp: '21:25' },
-    { id: 2, sender: 'Xxuxe Feng', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', timestamp: '21:26' },
-    { id: 3, sender: 'Jude.femi@gmail.com', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', timestamp: '21:26' },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { data: chats, isLoading: isChatsLoading } = useGetChatsQuery({});
+  const { data: chatData, refetch: refetchChat } = useGetChatQuery(selectedContact?._id, {
+    skip: !selectedContact?._id,
+  });
+  const [sendMessage] = useSendMessageMutation();
 
-  const contacts: Contact[] = [
-    { id: 1, name: 'Xxuxe Feng', lastMessage: 'Hi, I ordered for an item...', lastActive: '2d' },
-    { id: 2, name: 'Ning Lin', lastMessage: 'Hi, I ordered for an item...', lastActive: '1h' },
-  ];
+  useEffect(() => {
+    if (chatData) {
+      setMessages(chatData.messages);
+    }
+  }, [chatData]);
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      const newMessage: Message = {
-        id: messages.length + 1,
-        sender: 'Jude.femi@gmail.com',
-        content: message,
-        timestamp: new Date().toLocaleTimeString(),
-      };
-      setMessages([...messages, newMessage]);
-      setMessage('');
+  const handleContactClick = (contact: Contact) => {
+    setSelectedContact(contact);
+  };
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+    if (!selectedContact) return;
+
+    try {
+      await sendMessage({
+        chatId: selectedContact._id,
+        message,
+        sender: 'admin', 
+      }).unwrap();
+      setMessage(''); 
+      refetchChat(); 
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
   };
 
+  if (isChatsLoading) {
+    return <div>Loading chats...</div>;
+  }
+
   return (
-    <div className={styles.chatSupport}>
-      <div className={styles.sidebar}>
-        <div className={styles.profile}>
-          <Image src="/path-to-profile-image.jpg" alt="Femi Jude" width={50} height={50} />
-          <h2>Femi Jude</h2>
-        </div>
-        <div className={styles.search}>
-          <input type="text" placeholder="Search..." />
-        </div>
-        <div className={styles.contactList}>
-          {contacts.map((contact) => (
-            <div key={contact.id} className={styles.contactItem} onClick={() => setSelectedContact(contact)}>
-              {/* <Image src={`/path-to-${contact.name}-image.jpg`} alt={contact.name} width={40} height={40} /> */}
-              <div>
-                <h3>{contact.name}</h3>
-                <p>{contact.lastMessage}</p>
-              </div>
-              <span>{contact.lastActive}</span>
-            </div>
-          ))}
-        </div>
+    <div className={styles.chatSupportContainer}>
+      <div className={styles.contactsList}>
+        {chats?.map((contact: Contact) => (
+          <div
+            key={contact._id}
+            className={`${styles.contactItem} ${selectedContact?._id === contact._id ? styles.active : ''}`}
+            onClick={() => handleContactClick(contact)}
+          >
+            <div className={styles.contactName}>{contact.name}</div>
+            <div className={styles.contactLastMessage}>{contact.lastMessage}</div>
+            <div className={styles.contactLastActive}>{contact.lastActive}</div>
+          </div>
+        ))}
       </div>
+
       <div className={styles.chatArea}>
         {selectedContact ? (
           <>
             <div className={styles.chatHeader}>
-              <Image src={`/lady-in-trad.png`} alt={selectedContact.name} width={40} height={40} />
-              <div>
-                <h3>{selectedContact.name}</h3>
-                <p>Last active {selectedContact.lastActive} ago</p>
-              </div>
-              <div className={styles.headerIcons}>
-                <button aria-label="Call"><Image src="/path-to-call-icon.svg" alt="Call" width={24} height={24} /></button>
-                <button aria-label="Email"><Image src="/path-to-email-icon.svg" alt="Email" width={24} height={24} /></button>
-              </div>
+              <h3>{selectedContact.name}</h3>
             </div>
-            <div className={styles.messageList}>
+            <div className={styles.chatMessages}>
               {messages.map((msg) => (
-                <div key={msg.id} className={`${styles.message} ${msg.sender === 'Jude.femi@gmail.com' ? styles.sent : styles.received}`}>
-                  <p>{msg.content}</p>
-                  <span>{msg.timestamp}</span>
+                <div
+                  key={msg._id}
+                  className={`${styles.message} ${msg.sender === 'admin' ? styles.adminMessage : styles.userMessage}`}
+                >
+                  <div className={styles.messageSender}>{msg.sender}</div>
+                  <div className={styles.messageContent}>{msg.content}</div>
+                  <div className={styles.messageTimestamp}>{new Date(msg.createdAt).toLocaleTimeString()}</div>
                 </div>
               ))}
             </div>
-            <div className={styles.messageInput}>
+            <div className={styles.messageInputContainer}>
               <input
                 type="text"
-                placeholder="Type a message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message..."
+                className={styles.messageInput}
               />
-              <button className={styles.emojiButton}>😊</button>
-              <button className={styles.sendButton} onClick={handleSendMessage}>Send</button>
+              <button onClick={handleSendMessage} className={styles.sendMessageButton}>
+                Send
+              </button>
             </div>
           </>
         ) : (
-          <div className={styles.noSelection}>
-            <p>Select a contact to start chatting</p>
-          </div>
+          <div className={styles.noContactSelected}>Select a contact to start chatting</div>
         )}
       </div>
     </div>

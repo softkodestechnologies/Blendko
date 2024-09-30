@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Settings.module.css';
 import { useGetDeliveryAddressQuery, useCreateDeliveryAddressMutation, useUpdateDeliveryAddressMutation } from '@/services/userService';
 import Alert from "@/components/ui/alert/Alert";
+import { CountryDropdown } from 'react-country-region-selector';
 
 const DeliveryAddresses: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -62,6 +63,10 @@ const DeliveryAddresses: React.FC = () => {
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value 
     });
     validateField(name, value);
+  };
+
+  const handleCountryChange = (val: string) => {
+    setFormData({ ...formData, country: val });
   };
 
   const validateField = (name: string, value: string) => {
@@ -161,10 +166,11 @@ const DeliveryAddresses: React.FC = () => {
           {formErrors.province && <span className={styles.error}>{formErrors.province}</span>}
         </div>
         <div>
-          <select title="country" name="country" value={formData.country} onChange={handleFormChange} required>
-            <option value="">Select Country</option>
-            <option value="United Kingdom">United Kingdom</option>
-          </select>
+          <CountryDropdown
+            value={formData.country}
+            onChange={handleCountryChange}
+            aria-label="Country"
+          />
           {formErrors.country && <span className={styles.error}>{formErrors.country}</span>}
         </div>
       </div>

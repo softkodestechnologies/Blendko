@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { useCreateChatMutation, useCreateGuestChatMutation, useSendMessageMutation } from '@/services/chatService';
+import { useCreateChatMutation, useCreateGuestChatMutation, useSendMessageMutation, useGetUserChatsQuery, useGetChatQuery } from '@/services/chatService';
 import styles from './ChatComponent.module.css';
 
 interface Message {
@@ -24,24 +24,31 @@ const ChatComponent: React.FC = () => {
   const [chatId, setChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const socketRef = useRef<Socket | null>(null);
-
+  const [userId, setUserId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [createChat] = useCreateChatMutation();
   const [createGuestChat] = useCreateGuestChatMutation();
   const [sendMessage] = useSendMessageMutation();
+  const { data: userChats, isLoading: userChatsLoading } = useGetUserChatsQuery({}, { skip: !userId });
+  const { data: currentChat, isLoading: currentChatLoading } = useGetChatQuery(chatId || '', { skip: !chatId });
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); 
-    const existingChatId = localStorage.getItem('chatId');
-    const existingGuestId = localStorage.getItem('guestId');
+    const storedToken = localStorage.getItem('token');
+    const storedUserId = localStorage.getItem('userId');
+    const storedChatId = localStorage.getItem('chatId');
+    const storedGuestId = localStorage.getItem('guestId');
 
-    if (existingChatId) {
-      setChatId(existingChatId);
-      setShowPopup(true);
+    if (storedToken && storedUserId) {
+      setToken(storedToken);
+      setUserId(storedUserId);
+    } else if (storedGuestId) {
+      setGuestId(storedGuestId);
+      setIsGuest(true);
     }
 
-    if (existingGuestId) {
-      setGuestId(existingGuestId);
-      setIsGuest(true);
+    if (storedChatId) {
+      setChatId(storedChatId);
+      setChatState('started');
     }
 
     socketRef.current = io('http://localhost:8080', {
@@ -68,6 +75,12 @@ const ChatComponent: React.FC = () => {
   }, [chatId]);
 
   useEffect(() => {
+    if (currentChat) {
+      setMessages(currentChat.messages);
+    }
+  }, [currentChat]);
+
+  useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -81,6 +94,15 @@ const ChatComponent: React.FC = () => {
     setIsOpen(!isOpen);
     togglePanel();
   };
+  
+  const continueExistingChat = () => {
+    setChatState('started');
+    setShowPopup(false);
+    if (socketRef.current && chatId) {
+      socketRef.current.emit('join chat', chatId);
+    }
+  };
+
   const startNewChat = async () => {
     setChatState('started');
     setShowPopup(false);
@@ -91,33 +113,36 @@ const ChatComponent: React.FC = () => {
         setChatId(result.chat._id);
         localStorage.setItem('guestId', result.guestId);
         localStorage.setItem('chatId', result.chat._id);
-      } else {
+      } else if (userId && token) {
         const result = await createChat(inputMessage || 'Hello!').unwrap();
         setChatId(result.chat._id);
         localStorage.setItem('chatId', result.chat._id);
+      } else {
+        setIsGuest(true);
+        const result = await createGuestChat({ message: inputMessage || 'Hello!', ...guestInfo }).unwrap();
+        setGuestId(result.guestId);
+        setChatId(result.chat._id);
+        localStorage.setItem('guestId', result.guestId);
+        localStorage.setItem('chatId', result.chat._id);
       }
-      if (socketRef.current) {
+      if (socketRef.current && chatId) {
         socketRef.current.emit('join chat', chatId);
       }
     } catch (error) {
       console.error('Failed to start new chat:', error);
     }
   };
-  
-
-  const continueExistingChat = () => {
-    setChatState('started');
-    setShowPopup(false);
-    if (socketRef.current && chatId) {
-      socketRef.current.emit('join chat', chatId);
-    }
-  };
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() && chatId) {
       try {
-        const sender = isGuest ? guestId : 'user'; 
-        await sendMessage({ chatId, message: inputMessage, guestId, sender }).unwrap();
+        const messageData = {
+          chatId,
+          message: inputMessage,
+          guestId: isGuest ? guestId : undefined,
+          sender: isGuest ? 'guest' : 'user'
+        };
+        await sendMessage(messageData).unwrap();
         setInputMessage('');
       } catch (error) {
         console.error('Failed to send message:', error);

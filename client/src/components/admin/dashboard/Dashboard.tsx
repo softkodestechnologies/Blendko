@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
       });
   
       dashboardData.sessionsData.forEach((day: { _id: string; sessions: number }) => {
-        formattedData.sessions.push([new Date(day._id).toLocaleDateString('en-US'), day.sessions]); // Ensure day.sessions is a number
+        formattedData.sessions.push([new Date(day._id).toLocaleDateString('en-US'), day.sessions]); 
       });
   
       setChartData(formattedData);

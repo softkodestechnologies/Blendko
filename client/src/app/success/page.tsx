@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '@/services/userSlice';
-import { useGetUserProfileQuery } from '@/services/userService'; // Assume this query exists to fetch current user data
+import { useGetUserProfileQuery } from '@/services/userService'; 
 
 const SuccessPage: React.FC = () => {
   const dispatch = useDispatch();

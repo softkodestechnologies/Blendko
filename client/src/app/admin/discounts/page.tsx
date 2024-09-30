@@ -4,7 +4,7 @@ import AdminSidebar from '@/components/admin/AdminSidebar';
 import DiscountTable from '@/components/admin/discounts/DiscountTable';
 import CreateDiscountForm from '@/components/admin/discounts/CreateDiscountForm';
 import styles from '@/components/admin/Admin.module.css';
-import { FaBars, FaUser, FaBell, FaSearch, FaPlus } from 'react-icons/fa';
+import { FaBars, FaSearch, FaPlus } from 'react-icons/fa';
 import { useGetDiscountsQuery, useCreateDiscountMutation, useUpdateDiscountMutation, useDeleteDiscountMutation } from '@/services/userService';
 
 const DiscountsPage: React.FC = () => {
@@ -66,11 +66,6 @@ const DiscountsPage: React.FC = () => {
           <button type="button" title="bars" className={styles.menuButton} onClick={toggleSidebar}>
             <FaBars />
           </button>
-          <div className={styles.headerRight}>
-            <FaSearch className={styles.headerIcon} />
-            <FaBell className={styles.headerIcon} />
-            <FaUser className={styles.headerIcon} />
-          </div>
         </header>
         <main className={styles.main}>
           <div className={styles.titleContainer}>

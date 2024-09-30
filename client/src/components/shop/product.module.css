@@ -6,6 +6,28 @@
   position: relative;
 }
 
+.customizeProductBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  padding: 3px;
+  color: #000;
+  background: #fff;
+  cursor: pointer;
+  fill: #ccc;
+  z-index: 15;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.customizeProductBtn svg {
+  width: 15px;
+  height: 15px;
+}
+
 .wishlist_button {
   position: absolute;
   top: 10px;

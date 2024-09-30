@@ -65,7 +65,7 @@ const DiscountTable: React.FC<DiscountTableProps> = ({
 
   return (
     <div className={styles.tableContainer}>
-      <div className={styles.tableActions}>
+      <div className={styles.discountTableActions}>
         <button
           onClick={() => {
             const selectedDiscount = discounts.find(d => d._id === selectedDiscounts[0]);
@@ -74,14 +74,14 @@ const DiscountTable: React.FC<DiscountTableProps> = ({
             }
           }}
           disabled={selectedDiscounts.length !== 1}
-          className={styles.editButton}
+          className={styles.createButton}
         >
           <FaPen /> Edit
         </button>
         <button
           onClick={handleDelete}
           disabled={selectedDiscounts.length === 0}
-          className={styles.deleteButton}
+          className={styles.createButton}
         >
           <FaTrash /> Delete
         </button>

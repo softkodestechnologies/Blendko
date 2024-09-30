@@ -1,9 +1,9 @@
-"use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chart } from "react-google-charts";
 import styles from './Analytics.module.css';
 import Image from 'next/image';
 import Dashboard from '../dashboard/Dashboard';
+import { useGetDashboardDataQuery, useGetReportsQuery } from '@/services/userService';
 
 enum ReportType {
   Customers = 'customers',
@@ -14,110 +14,38 @@ enum ReportType {
 }
 
 const AnalyticsReports: React.FC = () => {
+  const { data: dashboardData, isLoading: isDashboardLoading } = useGetDashboardDataQuery({});
+  const { data: reportsData, isLoading: isReportsLoading } = useGetReportsQuery({});
 
-  const salesData = [
-    ['Day', 'Sales', 'Cost'],
-    ['Mon', 300, 200],
-    ['Tue', 320, 210],
-    ['Wed', 310, 200],
-    ['Thu', 350, 230],
-    ['Fri', 330, 220],
-    ['Sat', 360, 240],
-    ['Sun', 350, 235],
-  ];
-
-  const sessionsData = [
-    ['Day', 'Sessions'],
-    ['Mon', 15],
-    ['Tue', 16],
-    ['Wed', 14],
-    ['Thu', 18],
-    ['Fri', 17],
-    ['Sat', 19],
-    ['Sun', 16.5],
-  ];
-
-  const ordersData = [
-    ['Day', 'Orders'],
-    ['Mon', 20],
-    ['Tue', 22],
-    ['Wed', 21],
-    ['Thu', 25],
-    ['Fri', 23],
-    ['Sat', 26],
-    ['Sun', 25],
-  ];
-
-  const totalProfitData = [
-    ['Day', 'Profit'],
-    ['Mon', 50],
-    ['Tue', 55],
-    ['Wed', 52],
-    ['Thu', 58],
-    ['Fri', 53],
-    ['Sat', 60],
-    ['Sun', 57],
-  ];
-
-  const discountedAmountData = [
-    ['Day', 'Discounted Amount'],
-    ['Mon', 12],
-    ['Tue', 14],
-    ['Wed', 13],
-    ['Thu', 15],
-    ['Fri', 14],
-    ['Sat', 16],
-    ['Sun', 15],
-  ];
-
-  const salesByCountry = [
-    ['Country', 'Sales'],
-    ['United States', 30],
-    ['Brazil', 26],
-    ['India', 22],
-    ['Australia', 17],
-  ];
+  if (isDashboardLoading || isReportsLoading) {
+    return <div>Loading...</div>;
+  }
 
   const topSellingCategoryData = [
-    ['Category', 'X', 'Y', 'Radius'], 
-    ['Fashion', 30, 107, 100], 
-    ['Electronics', 69, 64, 70], 
-    ['Make-up', 34, 49, 50], 
+    ['Category', 'X', 'Y', 'Radius'],
+    ...dashboardData.topSellingCategories.map((category: any, index: any) => [
+      category.name,
+      30 + index * 20,
+      50 + index * 30,
+      category.sales / 100
+    ])
   ];
 
   const todayOrdersData = [
     ['Time', 'Orders'],
-    ['12am', 5000],
-    ['8am', 15000],
-    ['4pm', 7000],
-    ['11pm', 16500],
+    ...dashboardData.todayOrders.map((order: { _id: string; count: number }) => [
+      order._id,
+      order.count
+    ])
   ];
 
-  const [activeReport, setActiveReport] = useState<ReportType>(ReportType.Customers);
-
-  const reportData: Record<ReportType, any[]> = {
-    customers: salesData,
-    totalProducts: sessionsData,
-    stockProducts: ordersData,
-    outOfStock: totalProfitData,
-    revenue: discountedAmountData,
-  };
-
-  const reportTabs = [
-    { key: ReportType.Customers, label: 'Customers', title: '2.4k' },
-    { key: ReportType.TotalProducts, label: 'Total Products' },
-    { key: ReportType.StockProducts, label: 'Stock Products' },
-    { key: ReportType.OutOfStock, label: 'Out of Stock' },
-    { key: ReportType.Revenue, label: 'Revenue' },
-  ];
 
   return (
     <div className={styles.analyticsReports}>
       <Dashboard />
       <div className={styles.newSection}>
         <div className={styles.topSellingCategory}>
-          <h2>Top Selling Category</h2>
-          <p>Total 10.4k Visitors</p>
+          <h2>Top Selling Category</h2>          <p>Total {dashboardData.totalVisitors} Visitors</p>
           <div className={styles.bubbleChartContainer}>
             <Chart
               chartType="BubbleChart"
@@ -156,17 +84,17 @@ const AnalyticsReports: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {[...Array(6)].map((_, index) => (
+              {dashboardData.lastTransactions.map((transaction: { orderNumber: string; createdAt: string; totalPrice: number; _id: string }, index: number) => (
                 <tr key={index}>
-                  <td>#5089</td>
-                  <td>31 March 2023</td>
-                  <td>$1200</td>
-                  <td><a href="#">View Detail</a></td>
+                  <td>#{transaction.orderNumber}</td>
+                  <td>{new Date(transaction.createdAt).toLocaleDateString()}</td>
+                  <td>${transaction.totalPrice.toFixed(2)}</td>
+                  <td><a href={`/order/${transaction._id}`}>View Detail</a></td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <a href="#" className={styles.viewAll}>View All</a>
+          <a href="/orders" className={styles.viewAll}>View All</a>
         </div>
       </div>
 
@@ -183,52 +111,34 @@ const AnalyticsReports: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Apple iPhone 13</td>
-                <td>506</td>
-                <td><span className={styles.inStock}>Stock</span></td>
-                <td>$999.29</td>
-              </tr>
-              <tr>
-                <td>Nike Air Jordan</td>
-                <td>506</td>
-                <td><span className={styles.inStock}>Stock</span></td>
-                <td>$72.40</td>
-              </tr>
-              <tr>
-                <td>Beats Studio 2</td>
-                <td>506</td>
-                <td><span className={styles.inStock}>Stock</span></td>
-                <td>$99.90</td>
-              </tr>
-              <tr>
-                <td>Apple Watch Series 7</td>
-                <td>506</td>
-                <td><span className={styles.outOfStock}>Out</span></td>
-                <td>$249.99</td>
-              </tr>
-              <tr>
-                <td>Amazon Echo Dot</td>
-                <td>506</td>
-                <td><span className={styles.inStock}>Stock</span></td>
-                <td>$79.40</td>
-              </tr>
+              {dashboardData.bestSellingProducts.map((product: { name: string; totalOrders: number; quantity: number; price: number }, index: number) => (
+                <tr key={index}>
+                  <td>{product.name}</td>
+                  <td>{product.totalOrders}</td>
+                  <td>
+                    <span className={product.quantity > 0 ? styles.inStock : styles.outOfStock}>
+                      {product.quantity > 0 ? 'Stock' : 'Out'}
+                    </span>
+                  </td>
+                  <td>${product.price.toFixed(2)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
 
         <div className={styles.trendingProducts}>
           <h2>Trending Products</h2>
-          <p>Total 10.4k Visitors</p>
+          <p>Total {dashboardData.totalVisitors} Visitors</p>
           <ul className={styles.trendingList}>
-            {[...Array(4)].map((_, index) => (
+            {dashboardData.trendingProducts.map((product: any, index: number) => (
               <li key={index}>
-                <Image src="/people.png" alt="Black Dress - Lupin" width={50} height={50} />
+                <Image src={product.images[0].url} alt={product.name} width={50} height={50} />
                 <div>
-                  <h3>Black Dress - Lupin</h3>
-                  <p>Item: #FXZ-4567</p>
+                  <h3>{product.name}</h3>
+                  <p>Item: #{product.sku}</p>
                 </div>
-                <span>$999.29</span>
+                <span>${product.price.toFixed(2)}</span>
               </li>
             ))}
           </ul>
@@ -239,8 +149,10 @@ const AnalyticsReports: React.FC = () => {
         <div className={styles.todayOrder}>
           <h2>Today Order</h2>
           <div className={styles.orderSummary}>
-            <h3>16.5K</h3>
-            <span className={styles.orderChange}>↑ 6% vs last day</span>
+            <h3>{dashboardData.todayTotalOrders}</h3>
+            <span className={styles.orderChange}>
+              {dashboardData.orderChangePercentage > 0 ? '↑' : '↓'} {Math.abs(dashboardData.orderChangePercentage)}% vs last day
+            </span>
           </div>
           <p>Orders Over Time</p>
           <div className={styles.orderChart}>
@@ -280,12 +192,20 @@ const AnalyticsReports: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {[...Array(5)].map((_, index) => (
+              {dashboardData.recentOrders.map((order: any, index: number) => (
                 <tr key={index}>
-                  <td>#6548</td>
-                  <td>Joseph Wheeler</td>
-                  <td><span className={index % 2 === 0 ? styles.pending : styles.completed}>{index % 2 === 0 ? 'Pending' : 'Completed'}</span></td>
-                  <td>$999.29</td>
+                  <td>#{order.orderNumber}</td>
+                  <td>{order.user.name}</td>
+                  <td>
+                    <span className={
+                      order.orderStatus === 'Completed' ? styles.completed :
+                      order.orderStatus === 'Pending' ? styles.pending :
+                      styles.inProgress
+                    }>
+                      {order.orderStatus}
+                    </span>
+                  </td>
+                  <td>${order.totalPrice.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
@@ -293,7 +213,6 @@ const AnalyticsReports: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  );};
 
 export default AnalyticsReports;

@@ -5,6 +5,7 @@ import {
     useCreateDeliveryAddressMutation,
     useUpdateDeliveryAddressMutation,
   } from '@/services/userService';
+  import { CountryDropdown } from 'react-country-region-selector';
 
   const DeliveryForm: React.FC<{ user: any }> = ({ user }) => {
     const { data: deliveryData, isLoading } = useGetDeliveryAddressQuery(user?._id);
@@ -17,7 +18,7 @@ import {
       aptBuildingSuite: '',
       townCity: '',
       postcode: '',
-      country: 'United Kingdom',
+      country: '',
       email: '',
       phoneNumber: '',
     });
@@ -53,6 +54,10 @@ import {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const handleCountryChange = (val: string) => {
+        setFormData({ ...formData, country: val });
+      };
   
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -114,15 +119,11 @@ import {
           required
           className={styles.formInput}
         />
-        <select
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          className={styles.countrySelect}
-          aria-label="Country"
-        >
-          <option value="United Kingdom">United Kingdom</option>
-        </select>
+        <CountryDropdown
+            name="country"
+            value={formData.country}
+            onChange={handleCountryChange}
+            aria-label="Country" />
       </div>
       <div className={styles.formRow}>
         <input

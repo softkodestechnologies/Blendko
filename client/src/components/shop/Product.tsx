@@ -5,9 +5,11 @@ import { useWishlist } from '@/utils/hooks/useWishlist';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '@/services/userSlice';
 import styles from './product.module.css';
+import { useRouter } from 'next/navigation';
 import { WishlistIconTag } from '../../../public/svg/icon';
 import { Product as P } from '@/utils/types';
-import { RootState } from '@/services/store'; 
+import { RootState } from '@/services/store';
+import { CustomizeProductIcon } from '../../../public/svg/icon';
 // import useAddToCart from '@/utils/hooks/useAddToCart';
 
 function Product({ product, slug }: { product: P; slug: string; }) {
@@ -16,6 +18,7 @@ function Product({ product, slug }: { product: P; slug: string; }) {
   const isAuthenticated = !!user;
   const { isWishlisted, toggleWishlist } = useWishlist(product._id, isAuthenticated);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const router = useRouter();
 
   const handleAddToCart = () => {
     setIsAddingToCart(true);
@@ -26,6 +29,19 @@ function Product({ product, slug }: { product: P; slug: string; }) {
       selectedColor: product.colors[0], 
     }));
     setTimeout(() => setIsAddingToCart(false), 1000); 
+  };
+
+  const handleCustomize = (product: P) => {
+    if (product) {
+      const productToSave = {
+        id: product._id,
+        name: product.name,
+        image: product.images[0]?.url,
+      };
+
+      localStorage.setItem('productData', JSON.stringify(productToSave));
+      router.push('/customize');
+    }
   };
 
   return (
@@ -41,6 +57,10 @@ function Product({ product, slug }: { product: P; slug: string; }) {
                 src={product.images[0].url}
               />
             </Link>
+            {product.isCustomizable?<button onClick={()=>handleCustomize(product)} className={styles.customizeProductBtn}>
+            <CustomizeProductIcon />Customize
+          </button>: ''}
+
           <button
             title="wishlistBtn"
             onClick={toggleWishlist}

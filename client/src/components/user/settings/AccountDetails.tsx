@@ -8,6 +8,7 @@ import { updateUser } from "@/services/userSlice";
 import { RootState } from "@/services/store";
 import { BackButtonIcon } from "../../../../public/svg/icon";
 import Link from 'next/link';
+import { CountryDropdown } from 'react-country-region-selector';
 
 const AccountDetails: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
@@ -63,6 +64,10 @@ const AccountDetails: React.FC = () => {
     });
   };
 
+  const handleCountryChange = (val: string) => {
+    setFormData({ ...formData, country: val });
+  };
+
   const validateForm = () => {
     const { email, phone, dateOfBirth, country, city, postcode } = formData;
     
@@ -103,7 +108,7 @@ const AccountDetails: React.FC = () => {
 
   return (
     <div className={styles.accountDetails}>
-      <p><BackButtonIcon /><Link href="/user/account"> Back</Link> </p>
+      <p className={styles.backButton}><BackButtonIcon /><Link href="/user/account"> Back</Link> </p>
       <h2>Account Details</h2>
       <form onSubmit={handleFormSubmission}>
         <div className={styles.formGroup}>
@@ -162,10 +167,12 @@ const AccountDetails: React.FC = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="country">Country/Region*</label>
-          <select id="country" value={formData.country} onChange={handleChange} required>
-            <option value="United Kingdom">United Kingdom</option>
-          </select>
+          <label htmlFor="country">Country*</label>
+          <CountryDropdown
+            value={formData.country}
+            onChange={handleCountryChange}
+            aria-label="Country"
+          />
         </div>
 
         <div className={styles.formGroup}>

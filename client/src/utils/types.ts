@@ -27,6 +27,7 @@ export interface Product {
   technology: string[];
   updatedAt: string;
   user: string;
+  isCustomizable: boolean;
 }
 
   
