@@ -85,26 +85,29 @@ exports.getChat = catchAsyncErrors(async (req, res, next) => {
 
 // Add message to chat (for both registered and guest users)
 exports.addMessage = catchAsyncErrors(async (req, res, next) => {
-  const { message } = req.body;
+  const { message, guestId, sender } = req.body;
   const chat = await Chat.findById(req.params.id);
 
   if (!chat) {
     return next(new ErrorHandler('Chat not found', 404));
   }
-  //Not authenticated yet, send user id.
 
-  // Determine the sender
-  const sender = req.user ? req.user._id : (req.body.guestId || chat.guestId);
-  console.log('chat guest id', chat.guestId)
-  console.log('Request body', req.body);
-  console.log('User', req.user)
-  console.log(sender)
-  // Check if sender exists
-  if (!sender) {
-    return next(new ErrorHandler('Sender is required', 400));
+  let messageSender;
+
+  if (req.user) {
+    // For authenticated users
+    messageSender = req.user._id;
+  } else if (guestId && chat.guestId === guestId) {
+    // For guest users
+    messageSender = guestId;
+  } else if (sender === 'admin') {
+    // For admin messages (you might want to add additional checks here)
+    messageSender = 'admin';
+  } else {
+    return next(new ErrorHandler('Invalid sender', 400));
   }
 
-  const newMessage = { sender, content: message };
+  const newMessage = { sender: messageSender, content: message };
   chat.messages.push(newMessage);
   chat.updatedAt = Date.now();
 

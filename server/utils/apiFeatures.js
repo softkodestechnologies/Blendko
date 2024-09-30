@@ -57,20 +57,27 @@ class ApiFeatures {
           query[key] = { $in: value.split(',') };
         }  else if (key === 'sizes') {
           query[key] = { $in: value.split(',') };
+         
         } else if (key.startsWith('price')) {
+          query[key] = {}; 
           for (const operator in queryCopy[key]) {
             if (queryCopy[key].hasOwnProperty(operator)) {
-              query[key] = { [`$${operator}`]: queryCopy[key][operator] };
+              const value = Number(queryCopy[key][operator]);
+        
+              if (!isNaN(value)) { 
+                query[key][`$${operator}`] = value;
+              }
             }
           }
-        } else if (key === 'category') {
+        }
+        else if (key === 'category') {
           query.category = value;
         } else {
           query[`attributes.${key}`] = value;
         }
       }
     }
-
+    
     this.query = this.query.find(query);
     this.document = this.document && this.document.countDocuments(query);
 
