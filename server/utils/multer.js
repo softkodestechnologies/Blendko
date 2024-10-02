@@ -1,7 +1,6 @@
 const multer = require('multer');
 const path = require('path');
 
-
 const destination = path.join(__dirname, '..', 'uploads');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,4 +30,12 @@ const upload = multer({
   fileFilter,     
 });
 
-module.exports = upload;
+// Use upload.fields to handle multiple types of uploads in a single form
+const uploadMultiple = upload.fields([
+  { name: 'images', maxCount: 6 }, // product images
+  { name: 'patterns', maxCount: 6 } // pattern images
+]);
+
+module.exports = {
+  uploadMultiple,
+};

@@ -11,7 +11,7 @@ const {
   deleteReview,
 } = require('../controllers/product.controller');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
-const upload = require('../utils/multer');
+const { uploadMultiple } = require('../utils/multer');
 
 const router = Router();
 
@@ -23,7 +23,7 @@ router.delete('/reviews', isAuthenticatedUser, deleteReview);
 
 router.post(
   '/admin/new',
-  upload.array('images'),
+  uploadMultiple,
   isAuthenticatedUser,
   authorizeRoles('admin'),
   createProduct

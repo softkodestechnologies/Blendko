@@ -27,6 +27,18 @@ images: [
     },
   },
 ],
+patterns: [
+  {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
+],
 ratings: {
   type: Number,
   default: 0,

@@ -10,7 +10,9 @@ const ApiFeatures = require('../utils/apiFeatures');
 
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
-  const files = req.files;
+  const productFiles = req.files['images'];
+  const patternFiles = req.files['patterns'];
+
 
   const {
     name,
@@ -37,18 +39,20 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   } = req.body;
   let { isCustomizable } = req.body
 
-  if (!files) {
-    return next(new ErrorHandler('Please upload images', 400));
+  if (!productFiles) {
+    return next(new ErrorHandler('Please upload product images', 400));
   }
 
-  if (files.length > 6) {
-    return next(new ErrorHandler('Please upload less than 6 images', 400));
+  if (productFiles.length > 6) {
+    return next(new ErrorHandler('Please upload less than 6 product images', 400));
   }
 
   const imagesLinks = [];
+  const patternLinks = [];
 
-  for (let i = 0; i < files.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(files[i].path, {
+  // Upload product images
+  for (let i = 0; i < productFiles.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(productFiles[i].path, {
       folder: 'Blendko/products',
     });
 
@@ -57,9 +61,27 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
       url: result.secure_url,
     });
 
-    fs.unlink(files[i].path, (err) => {
+    fs.unlink(productFiles[i].path, (err) => {
       if (err) console.error(`Failed to delete local image file: ${err}`);
     });
+  }
+
+  // Upload pattern images
+  if (patternFiles) {
+    for (let i = 0; i < patternFiles.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(patternFiles[i].path, {
+        folder: 'Blendko/patterns',
+      });
+
+      patternLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+
+      fs.unlink(patternFiles[i].path, (err) => {
+        if (err) console.error(`Failed to delete local pattern file: ${err}`);
+      });
+    }
   }
 
   const count = await Product.countDocuments();
@@ -78,6 +100,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     measurement,
     user,
     images: imagesLinks,
+    patterns: patternLinks,
     colors,
     dress_style,
     gender,
