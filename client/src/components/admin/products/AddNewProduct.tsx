@@ -104,6 +104,13 @@ const AddNewProduct: React.FC = () => {
   return (
     <div className={styles.container}>
       <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
+        <div className="flex center space-between">
+          <h2>Add New Products</h2>
+          <div className={styles.buttonGroup}>
+            <button type="submit" className={styles.saveButton}>Save</button>
+            <button type="button" className={styles.cancelButton}>Cancel</button>
+          </div>
+        </div>
         {/* Product Name */}
         <div className={styles.formGroup}>
           <input name="name" type="text" placeholder="Product Name" required className={styles.input} />
@@ -115,7 +122,7 @@ const AddNewProduct: React.FC = () => {
         </div>
 
         {/* Image Upload */}
-        <label>Please upload 5 images or less</label>
+        <label>Please upload cover images: 5 or less</label>
         <div className={styles.imageUpload}>
           {imagePreviews.map((image, index) => (
               <div key={index} className={styles.imagePreview}>
@@ -237,19 +244,14 @@ const AddNewProduct: React.FC = () => {
         </div>
 
         {/* Size Guide */}
-        <div className={styles.sizeGuide}>
+        {/* <div className={styles.sizeGuide}>
           <h3>Size guide/chart</h3>
           <label className={styles.uploadButton}>
             <FaImage />
             <span>Drag your image or Choose to browse the file</span>
             <input type="file" name="size_guide" accept="image/*" onChange={handleSizeGuideUpload} hidden />
           </label>
-        </div>
-
-        <div className={styles.buttonGroup}>
-          <button type="submit" className={styles.saveButton}>Save</button>
-          <button type="button" className={styles.cancelButton}>Cancel</button>
-        </div>
+        </div>*/}
       </form>
 
       {alert.show && (

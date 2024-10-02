@@ -13,11 +13,11 @@ const SuccessPage: React.FC = () => {
     const refreshUserData = async () => {
       await refetch();
       if (userData) {
-        localStorage.setItem('cartItems',userData?.user.cart )
+        localStorage.setItem('cartItems', JSON.stringify(userData?.user.cart));
         dispatch(updateUser(userData?.user));
       }
       
-      console.log(userData?.user)
+      console.log(userData?.user);
     };
 
     refreshUserData();
@@ -35,5 +35,4 @@ const SuccessPage: React.FC = () => {
     </div>
   );
 };
-
 export default SuccessPage;

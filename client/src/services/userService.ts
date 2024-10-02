@@ -77,7 +77,7 @@ export const adminService = blendkoApi.injectEndpoints({
     }),
     addToWishlist: builder.mutation({
       query: (productId) => ({
-        url: '/wishlist/add',
+        url: 'wishlist/add',
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -88,7 +88,7 @@ export const adminService = blendkoApi.injectEndpoints({
     }),
     removeFromWishlist: builder.mutation({
       query: (productId) => ({
-        url: '/wishlist/remove',
+        url: 'wishlist/remove',
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getToken()}`,

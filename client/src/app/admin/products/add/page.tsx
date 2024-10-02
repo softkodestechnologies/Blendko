@@ -18,7 +18,6 @@ const OrdersPage: React.FC = () => {
     <div className={styles.container}>
       <AdminSidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
       <div className={`${styles.content} container`}>
-        <h1 className={styles.title}>Products / Add new products</h1>
         <AddNewProduct />
       </div>
     </div>
