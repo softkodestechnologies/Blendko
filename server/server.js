@@ -19,8 +19,16 @@ dotenv.config();
 
 connectDatabase();
 
-app.use(cors())//corsOptions()
 app.use('/api/v1/webhook', express.raw({type: 'application/json'}));
+
+
+app.use((req, res, next) => {
+  if (req.path === '/api/v1/webhook') {
+    return next();
+  }
+  cors(allowedOrigins())(req, res, next);
+});
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
