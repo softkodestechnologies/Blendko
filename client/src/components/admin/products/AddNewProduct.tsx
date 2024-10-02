@@ -9,6 +9,8 @@ import Alert from '@/components/ui/alert/Alert';
 const AddNewProduct: React.FC = () => {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [patternFiles, setPatternFiles] = useState<File[]>([]);
+  const [patternPreviews, setPatternPreviews] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const { data: categoriesData, isLoading, isError } = useGetCategoriesQuery({});
   const [createProduct] = useCreateProductMutation();
@@ -26,33 +28,32 @@ const AddNewProduct: React.FC = () => {
     }
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>, isPattern: boolean) => {
     const files = event.target.files;
   
     if (files) {
       const fileArray = Array.from(files);
-      console.log("New files selected:", fileArray.length);
-      console.log("Current imageFiles:", imageFiles.length);
+      const currentFiles = isPattern ? patternFiles : imageFiles;
+      const setFiles = isPattern ? setPatternFiles : setImageFiles;
+      const setPreviews = isPattern ? setPatternPreviews : setImagePreviews;
   
-      if (fileArray.length + imageFiles.length > 6) {
-        console.log("Too many files selected. Total would be:", fileArray.length + imageFiles.length);
-        setAlert({ show: true, type: 'error', message: 'You can only upload up to 6 images in total.' });
+      if (fileArray.length + currentFiles.length > 6) {
+        setAlert({ show: true, type: 'error', message: `You can only upload up to 6 ${isPattern ? 'pattern' : 'product'} images in total.` });
         return;
       }
   
-      const newImagePreviews = fileArray.map((file) => URL.createObjectURL(file));
-      setImageFiles((prevFiles) => {
-        const updatedFiles = [...prevFiles, ...fileArray];
-        console.log("Updated imageFiles:", updatedFiles.length);
-        return updatedFiles;
-      });
-      setImagePreviews((prevPreviews) => [...prevPreviews, ...newImagePreviews]);
+      const newPreviews = fileArray.map((file) => URL.createObjectURL(file));
+      setFiles((prevFiles) => [...prevFiles, ...fileArray]);
+      setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
     }
   };
   
-  const handleImageRemove = (index: number) => {
-    setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    setImagePreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+  const handleImageRemove = (index: number, isPattern: boolean) => {
+    const setFiles = isPattern ? setPatternFiles : setImageFiles;
+    const setPreviews = isPattern ? setPatternPreviews : setImagePreviews;
+
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setPreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
   };
   
 
@@ -84,9 +85,14 @@ const AddNewProduct: React.FC = () => {
     dressStyle?.forEach((dress) => formData.append('dress_style[]', dress));
 
     formData.delete('images');
+    formData.delete('patterns');
   
-    imageFiles.forEach((file, index) => {
+    imageFiles.forEach((file) => {
       formData.append('images', file);
+    });
+
+    patternFiles.forEach((file) => {
+      formData.append('patterns', file);
     });
   
     try {
@@ -95,6 +101,8 @@ const AddNewProduct: React.FC = () => {
       formRef.current?.reset();
       setImagePreviews([]);
       setImageFiles([]);
+      setPatternPreviews([]);
+      setPatternFiles([]);
     } catch (error) {
       setAlert({ show: true, type: 'error', message: 'Error creating product. Please try again.' });
     }
@@ -122,22 +130,39 @@ const AddNewProduct: React.FC = () => {
         </div>
 
         {/* Image Upload */}
-        <label>Please upload cover images: 5 or less</label>
+        <label>Please upload product images: 6 or less</label>
         <div className={styles.imageUpload}>
           {imagePreviews.map((image, index) => (
-              <div key={index} className={styles.imagePreview}>
-                <Image src={image} alt={`Product ${index + 1}`} width={80} height={80} objectFit="cover" />
-                <button className={styles.imgRemoveBtn} type="button" onClick={() => handleImageRemove(index)}>X</button>
-                <span className={styles.imageText}>image {index + 1}</span>
-              </div>
+            <div key={index} className={styles.imagePreview}>
+              <Image src={image} alt={`Product ${index + 1}`} width={80} height={80} objectFit="cover" />
+              <button className={styles.imgRemoveBtn} type="button" onClick={() => handleImageRemove(index, false)}>X</button>
+              <span className={styles.imageText}>image {index + 1}</span>
+            </div>
           ))}
           <label className={styles.uploadButton}>
             <FaImage />
-            <span>Add Image</span>
-            <input type="file" name="images" accept="image/*" multiple onChange={handleImageUpload} hidden />
+            <span>Add Product Image</span>
+            <input type="file" name="images" accept="image/*" multiple onChange={(e) => handleImageUpload(e, false)} hidden />
           </label>
         </div>
 
+        {/* Pattern Image Upload */}
+        <label>Please upload pattern images: 6 or less</label>
+        <div className={styles.imageUpload}>
+          {patternPreviews.map((image, index) => (
+            <div key={index} className={styles.imagePreview}>
+              <Image src={image} alt={`Pattern ${index + 1}`} width={80} height={80} objectFit="cover" />
+              <button className={styles.imgRemoveBtn} type="button" onClick={() => handleImageRemove(index, true)}>X</button>
+              <span className={styles.imageText}>pattern {index + 1}</span>
+            </div>
+          ))}
+          <label className={styles.uploadButton}>
+            <FaImage />
+            <span>Add Pattern Image</span>
+            <input type="file" name="patterns" accept="image/*" multiple onChange={(e) => handleImageUpload(e, true)} hidden />
+          </label>
+        </div>
+        
         {/* Price */}
         <div className={styles.formGroup}>
           <input name="price" type="number" step="0.01" placeholder="Price" required className={styles.input} />
