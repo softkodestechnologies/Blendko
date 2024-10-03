@@ -32,12 +32,19 @@ const ChatComponent: React.FC = () => {
   const { data: userChats, isLoading: userChatsLoading } = useGetUserChatsQuery({}, { skip: !userId });
   const { data: currentChat, isLoading: currentChatLoading } = useGetChatQuery(chatId || '', { skip: !chatId });
 
+  
+
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedUserId = localStorage.getItem('userId');
+    const id = localStorage.getItem('user')
+    const storedUserId = id ? JSON.parse(id)._id : null;
     const storedChatId = localStorage.getItem('chatId');
     const storedGuestId = localStorage.getItem('guestId');
-
+    console.log('storedToken', storedToken)
+    console.log('storedUserId', storedUserId)
+    console.log('storedChatId', storedChatId)
+    console.log('storedGuestId', storedGuestId)
+  
     if (storedToken && storedUserId) {
       setToken(storedToken);
       setUserId(storedUserId);
@@ -45,40 +52,63 @@ const ChatComponent: React.FC = () => {
       setGuestId(storedGuestId);
       setIsGuest(true);
     }
-
+  
     if (storedChatId) {
       setChatId(storedChatId);
       setChatState('started');
     }
+  
+  
+    if (storedToken || storedGuestId) {
+      socketRef.current = io('http://localhost:8080', {
+        auth: {
+          token: storedToken || undefined, 
+          guestId: storedGuestId || undefined 
+        },
+      });
 
-    socketRef.current = io('http://localhost:8080', {
-      auth: {
-        token: token || undefined,
-      },
-    });
-
-    socketRef.current.on('connect', () => {
-      console.log('Connected to socket server');
-    });
-
-    socketRef.current.on('newMessage', (data: { chatId: string, message: Message }) => {
-      if (data.chatId === chatId) {
-        setMessages((prevMessages) => [...prevMessages, data.message]);
-      }
-    });
-
+      socketRef.current.on('connect', () => {
+        console.log('New client connected');
+        console.log(`Socket ID: ${socketRef?.current?.id}`);
+      });
+      
+      socketRef.current.on('disconnect', () => {
+        console.log('Client disconnected');
+      });
+  
+      socketRef.current.on('newMessage', (data: { chatId: string, message: Message }) => {
+        console.log('New message received:', data);
+        if (data.chatId === chatId) {
+          setMessages((prevMessages) => [...prevMessages, data.message]);
+        }
+      });
+  
+      socketRef.current.on('connect_error', (err) => {
+        console.error('Socket connection error:', err.message);
+      });
+    }
+  
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
     };
-  }, [chatId]);
+  }, [chatId]);  
 
   useEffect(() => {
-    if (currentChat) {
-      setMessages(currentChat.messages);
+    if (currentChat && currentChat.messages) {
+      console.log('Current Chat Data:', currentChat);
+      const formattedMessages = currentChat.messages.map((msg: any) => ({
+        id: msg._id,
+        sender: msg.sender,
+        content: msg.content,
+        timestamp: new Date(msg.createdAt),
+      }));
+      setMessages(formattedMessages);
     }
   }, [currentChat]);
+  
+  
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -104,34 +134,39 @@ const ChatComponent: React.FC = () => {
   };
 
   const startNewChat = async () => {
-    setChatState('started');
-    setShowPopup(false);
     try {
+      console.log('Attempting to start new chat');
+      setChatState('started');
+      setShowPopup(false);
+      console.log(isGuest, 'guest')
+      console.log(userId, 'user id')
+      console.log(token, 'token')
+      let result;
+  
       if (isGuest) {
-        const result = await createGuestChat({ message: inputMessage || 'Hello!', ...guestInfo }).unwrap();
+        result = await createGuestChat({ message: inputMessage || 'Hello!', ...guestInfo }).unwrap();
+        console.log('Guest Chat Result:', result);
         setGuestId(result.guestId);
         setChatId(result.chat._id);
         localStorage.setItem('guestId', result.guestId);
         localStorage.setItem('chatId', result.chat._id);
       } else if (userId && token) {
-        const result = await createChat(inputMessage || 'Hello!').unwrap();
+        result = await createChat(inputMessage || 'Hello!').unwrap();
+        console.log('User Chat Result:', result);
         setChatId(result.chat._id);
         localStorage.setItem('chatId', result.chat._id);
-      } else {
-        setIsGuest(true);
-        const result = await createGuestChat({ message: inputMessage || 'Hello!', ...guestInfo }).unwrap();
-        setGuestId(result.guestId);
-        setChatId(result.chat._id);
-        localStorage.setItem('guestId', result.guestId);
-        localStorage.setItem('chatId', result.chat._id);
       }
-      if (socketRef.current && chatId) {
-        socketRef.current.emit('join chat', chatId);
+  
+      if (socketRef.current && result?.chat?._id) {
+        socketRef.current.emit('join chat', result.chat._id);
       }
+  
+      setInputMessage('');
     } catch (error) {
       console.error('Failed to start new chat:', error);
     }
   };
+  
 
   const handleSendMessage = async () => {
     if (inputMessage.trim() && chatId) {
@@ -143,12 +178,18 @@ const ChatComponent: React.FC = () => {
           sender: isGuest ? 'guest' : 'user'
         };
         await sendMessage(messageData).unwrap();
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { id: 'temp', sender: isGuest ? 'guest' : 'user', content: inputMessage, timestamp: new Date() } 
+        ]);
         setInputMessage('');
       } catch (error) {
         console.error('Failed to send message:', error);
       }
     }
   };
+  
+  
   
 
   const renderGuestForm = () => (
@@ -185,6 +226,8 @@ const ChatComponent: React.FC = () => {
     </div>
   );
 
+  console.log('messages', messages)//line 208
+
   return (
     <div className={styles.chatContainer}>
       {!isOpen && (
@@ -219,16 +262,14 @@ const ChatComponent: React.FC = () => {
               )
             ) : (
               <>
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`${styles.message} ${
-                      msg.sender === 'user' ? styles.userMessage : styles.supportMessage
-                    }`}
-                  >
-                    <span>{msg.content}</span>
-                  </div>
-                ))}
+                {messages?.map((msg) => (
+                    <div
+                      key={msg._id}
+                      className={`${styles.message} ${msg.sender === 'user' ? styles.userMessage : styles.supportMessage}`}
+                    >
+                      <span>{msg.content}</span>
+                    </div>
+                  ))}
                 <div ref={messagesEndRef} />
               </>
             )}

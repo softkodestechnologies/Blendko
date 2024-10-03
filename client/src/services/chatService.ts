@@ -6,7 +6,6 @@ const getToken = () => {
     return null;
 };
 
-
 export const chatService = blendkoApi.injectEndpoints({
   endpoints: (builder) => ({
     createChat: builder.mutation({
@@ -56,7 +55,8 @@ export const chatService = blendkoApi.injectEndpoints({
     sendMessage: builder.mutation({
       query: ({ chatId, message, guestId, sender }) => {
         const token = getToken();
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const headers = token && !guestId ? { Authorization: `Bearer ${token}` } : {};
+        
         return {
           url: `/chat/${chatId}/message`,
           method: 'POST',

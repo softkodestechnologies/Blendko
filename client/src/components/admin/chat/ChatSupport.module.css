@@ -1,158 +1,175 @@
-.chatSupport {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .sidebar {
-    width: 300px;
-    border: 1px solid #ccc;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .profile {
-    padding: 20px;
-    display: flex;
-    
-    align-items: center;
-  }
-  
-  .profile h2 {
-    margin-left: 10px;
-  }
-  
-  .search {
-    padding: 10px;
-  }
-  
-  .search input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .contactList {
-    overflow-y: auto;
-    flex-grow: 1;
-    border: 1px solid #ccc;
-  }
-  
-  .contactItem {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .contactItem:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .chatArea {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chatHeader {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
+.chatSupportContainer {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
 
-  .chatHeader img {
-    border-radius: 50%;
-    margin: 10px;
-  }
-  
-  .headerIcons {
-    margin-left: auto;
-  }
-  
-  .messageList {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 20px;
-  }
-  
-  .message {
-    max-width: 70%;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  
-  .received {
-    background-color: #F5F5F5;
-    align-self: flex-start;
-  }
-  
-  .sent {
-    background-color: #767677;
-    color: white;
-    align-self: flex-end;
-  }
-  
-  .messageInput {
-    display: flex;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .messageInput input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .emojiButton, .sendButton {
-    margin-left: 10px;
-    padding: 10px;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
+.chatList {
+  width: 300px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+}
 
-  .emojiButton {
-    background-color: #64758B;
-  }
+.adminInfo {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
 
-  .sendButton {
-    background-color: #000;
-  }
-  
-  .noSelection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 18px;
-    color: #888;
-  }
-  
-  @media (max-width: 768px) {
-    .chatSupport {
-      flex-direction: column;
-    }
-  
-    .sidebar {
-      width: 100%;
-      height: 100px;
-      flex-direction: row;
-      overflow-x: auto;
-    }
-  
-    .profile, .search {
-      display: none;
-    }
-  
-    .contactList {
-      display: flex;
-    }
-  
-    .contactItem {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+.adminAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.adminName {
+  font-weight: bold;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chatItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chatItem:hover {
+  background-color: #f5f5f5;
+}
+
+.chatItem.active {
+  background-color: #e0e0e0;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chatInfo {
+  flex-grow: 1;
+}
+
+.userName {
+  font-weight: bold;
+}
+
+.lastMessage {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: #999;
+}
+
+.chatArea {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.chatActions {
+  display: flex;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.messageList {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.message {
+  max-width: 70%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.userMessage {
+  background-color: #e0e0e0;
+  align-self: flex-start;
+}
+
+.adminMessage {
+  background-color: #0084ff;
+  color: white;
+  align-self: flex-end;
+}
+
+.messageContent {
+  margin-bottom: 5px;
+}
+
+.messageTime {
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.messageInput {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.messageInput input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+}
+
+.sendButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.noChatSelected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.2em;
+  color: #999;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2em;
+}

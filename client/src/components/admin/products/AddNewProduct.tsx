@@ -61,7 +61,6 @@ const AddNewProduct: React.FC = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
   
-    // Example for handling arrays (comma-separated inputs)
     const features = formData.get('features')?.toString().split(',').map(feature => feature.trim());
     const colors = formData.get('colors')?.toString().split(',').map(color => color.trim());
     const sizes = formData.get('sizes')?.toString().split(',').map(size => size.trim());
