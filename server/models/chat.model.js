@@ -16,12 +16,18 @@ const messageSchema = new mongoose.Schema({
 });
 
 const chatSchema = new mongoose.Schema({
-  users: [
+  participants: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'User', 
     },
   ],
+  guestId: String, 
+  guestInfo: {
+    name: String,
+    email: String,
+    phone: String,
+  },
   messages: [messageSchema],
   status: {
     type: String,
@@ -32,6 +38,11 @@ const chatSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Chat', chatSchema);
+
