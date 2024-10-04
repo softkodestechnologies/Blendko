@@ -13,31 +13,28 @@ let nanoid;
 
 // Create a new chat (for registered users)
 exports.createChat = catchAsyncErrors(async (req, res, next) => {
-  console.log('trying to creat chat')
   const { message } = req.body;
   const userId = req.user._id;
-  console.log('user', userId)
 
   let chat = await Chat.findOne({
     participants: { $all: [userId] },
     status: 'open',
   });
-  console.log(chat, 'chat')
 
   if (!chat) {
     chat = await Chat.create({
       participants: [userId],
-      messages: [{ sender: userId, content: message }],
+      messages: [{ sender: userId, content: message, isAdmin: false }],
     });
     req.io.emit('newChat', chat);
   } else {
-    chat.messages.push({ sender: userId, content: message });
+    chat.messages.push({ sender: userId, content: message, isAdmin: false });
     await chat.save();
   }
 
   req.io.to(chat._id.toString()).emit('newMessage', {
     chatId: chat._id,
-    message: { sender: userId, content: message },
+    message: { sender: userId, content: message, isAdmin: false },
   });
 
   console.log('chat after thought', chat)
@@ -52,12 +49,11 @@ exports.createChat = catchAsyncErrors(async (req, res, next) => {
 exports.createGuestChat = catchAsyncErrors(async (req, res, next) => {
   const { message, name, email, phone } = req.body;
   const guestId = nanoid();
-  console.log(guestId)
 
   const chat = await Chat.create({
     guestId,
     guestInfo: { name, email, phone },
-    messages: [{ sender: guestId, content: message }],
+    messages: [{ sender: guestId, content: message, isAdmin: false }],
   });
 
   req.io.emit('newChat', chat);
@@ -89,10 +85,8 @@ exports.getChat = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Add message to chat (for both registered and guest users)
-
 exports.addMessage = catchAsyncErrors(async (req, res, next) => {
-  const { message, guestId, sender } = req.body;
+  const { message, guestId } = req.body;
   const chatId = req.params.id;
 
   const chat = await Chat.findById(chatId);
@@ -101,32 +95,31 @@ exports.addMessage = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Chat not found', 404));
   }
 
-
   let messageSender;
+  let isAdmin = false;
 
   if (req.user) {
     messageSender = req.user._id;
+    isAdmin = req.user.role.includes('admin');
   } else if (guestId && chat.guestId === guestId) {
     messageSender = guestId;
-  } else if (sender === 'admin') {
-    messageSender = 'admin';
   } else {
     return next(new ErrorHandler('Invalid sender', 400));
   }
 
-  const newMessage = { sender: messageSender, content: message };
+  const newMessage = { sender: messageSender, content: message, isAdmin };
   chat.messages.push(newMessage);
   chat.updatedAt = Date.now();
 
-  if (req.user && req.user.role.includes('admin') && !chat.participants.includes(req.user._id)) {
+  if (isAdmin && !chat.participants.includes(req.user._id)) {
     chat.participants.push(req.user._id);
   }
 
   await chat.save();
 
   const populatedChat = await Chat.findById(chatId)
-  .populate('participants', 'name email')
-  .populate('messages.sender', 'name email');
+    .populate('participants', 'name email')
+    .populate('messages.sender', 'name email');
 
   req.io.to(chat._id.toString()).emit('newMessage', {
     chatId: chat._id,
@@ -177,7 +170,7 @@ exports.updateChatStatus = catchAsyncErrors(async (req, res, next) => {
   chat.status = status;
   await chat.save();
 
-  req.io.to(req.params.id).emit('chat status', {
+  req.io.to(req.params.id).emit('chatStatusUpdated', {
     chatId: req.params.id,
     status,
   });
