@@ -161,6 +161,14 @@ const userSlice = createSlice({
     checkout: (state: UserState) => {
       state.cart = [];
     },
+    syncCartWithServer: (state: UserState, action: PayloadAction<any[]>) => {
+      state.cart = action.payload;
+      localStorage.setItem('cartItems', JSON.stringify(action.payload));
+      if (state.user) {
+        state.user.cart = action.payload;
+        localStorage.setItem('user', JSON.stringify(state.user));
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state: UserState) => {
@@ -198,6 +206,7 @@ export const {
   deleteItem,
   clearCart,
   checkout,
+  syncCartWithServer,
 } = userSlice.actions;
 
 export default userSlice.reducer;

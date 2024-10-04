@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import { updateUser } from '@/services/userSlice';
+import { updateUser, syncCartWithServer } from '@/services/userSlice';
 import { useGetUserProfileQuery } from '@/services/userService'; 
 
 const SuccessPage: React.FC = () => {
@@ -13,8 +13,9 @@ const SuccessPage: React.FC = () => {
     const refreshUserData = async () => {
       await refetch();
       if (userData) {
-        localStorage.setItem('cartItems', JSON.stringify(userData?.user.cart));
+        const emptyCart: any[] = [];
         dispatch(updateUser(userData?.user));
+        dispatch(syncCartWithServer(emptyCart)); // Sync the empty cart with the server
       }
       
       console.log(userData?.user);
@@ -35,4 +36,5 @@ const SuccessPage: React.FC = () => {
     </div>
   );
 };
+
 export default SuccessPage;
