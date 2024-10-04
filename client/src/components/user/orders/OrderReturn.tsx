@@ -1,13 +1,15 @@
+"use client"
 import React, { useState } from 'react';
 import styles from './Orders.module.css';
 import { FaArrowLeft, FaChevronDown } from 'react-icons/fa';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useGetOrderByIdQuery } from '@/services/userService';
 
 const OrderReturn: React.FC = () => {
   const router = useRouter();
-  const { orderid } = router.query;
+  const searchParams = new URLSearchParams(window.location.search);
+  const orderid = searchParams.get('orderid');
   const { data: order, isLoading, isError } = useGetOrderByIdQuery(orderid);
 
   const returnReasons = [
@@ -156,5 +158,4 @@ const OrderReturn: React.FC = () => {
     </div>
   );
 };
-
 export default OrderReturn;
