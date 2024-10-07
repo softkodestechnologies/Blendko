@@ -1,4 +1,4 @@
-.chatContainer {
+  .chatContainer {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -192,4 +192,28 @@
     height: 48px;
     margin-bottom: 15px;
     color: #888;
+  }
+
+  .guestForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    gap: 8px;
+    margin: 35% 0;
+  }
+
+  .guestForm input {
+    outline: 1px solid #000;
+  }
+
+  .startChatBtn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
   }

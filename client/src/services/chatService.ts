@@ -35,13 +35,14 @@ export const chatService = blendkoApi.injectEndpoints({
       }),
     }),
     getChat: builder.query({
-      query: (chatId) => ({
-        url: `/chat/${chatId}`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }),
+      query: (chatId) => {
+        const token = getToken();
+        return {
+          url: `/chat/${chatId}`,
+          method: 'GET',
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        };
+      },
     }),
     getUserChats: builder.query({
       query: () => ({
