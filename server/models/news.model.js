@@ -19,6 +19,24 @@ const newsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter author name']
   },
+  category: {
+    type: String,
+    required: [true, 'Please select a category']
+  },
+  email: {
+    type: String,
+    required: [true, 'Please enter an email'],
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
+  },
+  publishDate: {
+    type: Date,
+    required: [true, 'Please enter a publish date']
+  },
+  status: {
+    type: String,
+    enum: ['Draft', 'Published'],
+    default: 'Draft'
+  },
   tags: [String],
   createdAt: {
     type: Date,

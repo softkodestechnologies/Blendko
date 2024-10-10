@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { upload } = require('../utils/multer');
 const {
   getNews,
   getSingleNews,
@@ -14,8 +14,8 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 router.get('/', getNews);
 router.get('/:id', getSingleNews);
 
-router.post('/new', isAuthenticatedUser, authorizeRoles('admin'), createNews);
-router.put('/:id', isAuthenticatedUser, authorizeRoles('admin'), updateNews);
+router.post('/new', isAuthenticatedUser, authorizeRoles('admin'), upload.single('image'),  createNews);
+router.put('/:id', isAuthenticatedUser, authorizeRoles('admin'), upload.single('image'),  updateNews);
 router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteNews);
 
 module.exports = router;

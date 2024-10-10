@@ -32,10 +32,11 @@ const upload = multer({
 
 // Use upload.fields to handle multiple types of uploads in a single form
 const uploadMultiple = upload.fields([
-  { name: 'images', maxCount: 6 }, // product images
-  { name: 'patterns', maxCount: 6 } // pattern images
+  { name: 'images', maxCount: 6 },
+  { name: 'patterns', maxCount: 6 } 
 ]);
 
 module.exports = {
+  upload,
   uploadMultiple,
 };
