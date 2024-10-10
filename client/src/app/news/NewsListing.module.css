@@ -1,0 +1,163 @@
+.newsListingContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Featured News */
+.featuredNews {
+  margin-bottom: 40px;
+}
+
+.featuredNewsCard {
+  position: relative;
+}
+
+.featuredNewsInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+}
+
+.featuredNewsInfo .category {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.featuredNewsInfo .title {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.featuredNewsInfo .author {
+  font-size: 0.9rem;
+}
+
+.featuredNewsInfo .excerpt {
+  margin: 10px 0;
+}
+
+.featuredNewsInfo .readMore {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Fashion Week */
+.fashionWeek {
+  margin-bottom: 40px;
+}
+
+.fashionWeek h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fashionWeekGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.fashionWeekCard {
+  position: relative;
+}
+
+.fashionWeekCard .category {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.fashionWeekCard .title {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Must Read */
+.mustRead {
+  background-color: #f5f5f5;
+  padding-bottom: 20px;
+}
+
+.mustRead h2 {
+  text-align: center;
+  padding: 28px;
+  font-weight: 500;
+}
+
+.mustReadGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.mustReadCard {
+  display: flex;
+  background-color: transparent;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 20px 0;
+}
+
+.mustReadCard img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.mustReadInfo {
+  padding: 10px;
+  flex-grow: 1;
+}
+
+.mustReadInfo .category {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.mustReadInfo .title {
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+.mustReadInfo .author {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.loadMoreButton {
+  display: block;
+  margin: 20px auto 0;
+  padding: 12px 28px;
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #BBBBBB;
+}
+
+@media (max-width: 768px) {
+  .fashionWeekGrid {
+    grid-template-columns: 1fr;
+  }
+}

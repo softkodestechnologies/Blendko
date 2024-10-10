@@ -1188,3 +1188,11 @@ export const CloseXIcon = () => (
     <path d="M38 10.5L10 38.5M10 10.5L38 38.5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 )
+
+export const NewsAdminIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.625 7.33203H16.9583M9.625 10.9987H11.9167M16.9583 10.9987H14.6667M9.625 14.6654H11.9167M16.9583 14.6654H14.6667" stroke="black" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6.41732 6.875H5.50065C3.77217 6.875 2.90792 6.875 2.37096 7.41197C1.83398 7.94894 1.83398 8.81318 1.83398 10.5417V16.5C1.83398 17.7656 2.86 18.7917 4.12565 18.7917C5.3913 18.7917 6.41732 17.7656 6.41732 16.5V6.875Z" stroke="black" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14.6667 3.20703H10.0833C9.23083 3.20703 8.80462 3.20703 8.45491 3.30073C7.50591 3.55502 6.76465 4.29628 6.51037 5.24528C6.41667 5.59498 6.41667 6.02123 6.41667 6.8737V16.4987C6.41667 17.7643 5.39065 18.7904 4.125 18.7904H14.6667C17.2594 18.7904 18.5557 18.7904 19.3612 17.9849C20.1667 17.1794 20.1667 15.8831 20.1667 13.2904V8.70703C20.1667 6.1143 20.1667 4.81794 19.3612 4.01249C18.5557 3.20703 17.2594 3.20703 14.6667 3.20703Z" stroke="black" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+)
