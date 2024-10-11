@@ -297,6 +297,54 @@ export const adminService = blendkoApi.injectEndpoints({
       providesTags: ['Admins'],
     }),
 
+    createAdmin: builder.mutation({
+      query: (adminData) => ({
+        url: '/admin/create',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: adminData,
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+
+    updateAdmin: builder.mutation({
+      query: ({ id, adminData }) => ({
+        url: `/admin/update/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: adminData,
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+
+    updateAdminStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/admin/update/status/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { status },
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+    
+
+    deleteAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/admin/delete/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+
     updateUserDetails: builder.mutation({
       query: (userData) => ({
         url: '/me/update',
@@ -519,6 +567,10 @@ export const {
   useUpdateApplicationStatusMutation,
   useGetUsersQuery,
   useGetAdminsQuery,
+  useCreateAdminMutation,
+  useUpdateAdminMutation,
+  useUpdateAdminStatusMutation,
+  useDeleteAdminMutation,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,
   useGetCategoriesQuery,
