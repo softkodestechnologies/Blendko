@@ -14,8 +14,8 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 router.get('/', getNews);
 router.get('/:id', getSingleNews);
 
-router.post('/new', isAuthenticatedUser, authorizeRoles('admin'), upload.single('image'),  createNews);
-router.put('/:id', isAuthenticatedUser, authorizeRoles('admin'), upload.single('image'),  updateNews);
-router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteNews);
+router.post('/new', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), upload.single('image'),  createNews);
+router.put('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), upload.single('image'),  updateNews);
+router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteNews);
 
 module.exports = router;

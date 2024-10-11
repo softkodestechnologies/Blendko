@@ -24,6 +24,10 @@ const {
   removeFromWishlist,
   googleLogin,
   googleRegister,
+  createAdmin,
+  updateAdmin,
+  updateAdminStatus,
+  deleteAdmin,
 } = require('../controllers/user.controller');
 
 const { getUserMessages, createMessage, deleteMessage } = require('../controllers/message.controller');
@@ -61,16 +65,31 @@ router.delete('/messages/:id', isAuthenticatedUser, deleteMessage);
 
 router
   .route('/admin/users')
-  .get(isAuthenticatedUser, authorizeRoles('admin'), getAllUsers);
+  .get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getAllUsers);
 
 router
   .route('/admin/admins')
-  .get(isAuthenticatedUser, authorizeRoles('admin'), getAllAdmins);
+  .get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getAllAdmins);
 
 router
   .route('/admin/user/:id')
-  .get(isAuthenticatedUser, authorizeRoles('admin'), getUserDetails)
-  .put(isAuthenticatedUser, authorizeRoles('admin'), updateUserRole)
-  .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteUser);
+  .get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getUserDetails)
+  .put(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateUserRole)
+  .delete(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteUser);
+//I added admin to auth roles for testing
+router
+  .route('/admin/create')
+  .post(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), createAdmin);
 
+router
+  .route('/admin/update/:id')
+  .put(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateAdmin);
+
+  router
+  .route('/admin/update/status/:id')
+  .put(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateAdminStatus);
+
+router
+  .route('/admin/delete/:id')
+  .delete(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteAdmin);
 module.exports = router;

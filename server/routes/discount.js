@@ -9,10 +9,10 @@ const {
   deleteDiscount
 } = require('../controllers/discount.controller');
 
-router.post('/new', isAuthenticatedUser, authorizeRoles('admin'), createDiscount);
-router.get('/', isAuthenticatedUser, authorizeRoles('admin'), getAllDiscounts);
-router.get('/:id', isAuthenticatedUser, authorizeRoles('admin'), getDiscount);
-router.put('/:id', isAuthenticatedUser, authorizeRoles('admin'), updateDiscount);
-router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin'), deleteDiscount);
+router.post('/new', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), createDiscount);
+router.get('/', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getAllDiscounts);
+router.get('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getDiscount);
+router.put('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateDiscount);
+router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteDiscount);
 
 module.exports = router;

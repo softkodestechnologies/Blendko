@@ -29,7 +29,7 @@ const userSchema = new Schema({
     type: [String],
     default: ['user'],
     enum: {
-      values: ['user', 'admin'],
+      values: ['user', 'admin', 'super-admin'],
       message: 'Please select correct role',
     },
   },

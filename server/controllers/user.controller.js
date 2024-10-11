@@ -360,7 +360,8 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 // ADMIN: Get all admins => /api/v1/admin/admins
 exports.getAllAdmins = catchAsyncErrors(async (req, res, next) => {
   try {
-    const admins = await User.find({ "role.0": "admin" }).select('name email role createdAt status');
+    const admins = await User.find({ "role.0": { $in: ["admin", "super-admin"] } })
+    .select('name email role createdAt status');
 
     res.status(200).json({
       success: true,
@@ -401,6 +402,102 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   });
   res.status(200).json({
     success: true,
+  });
+});
+
+// ADMIN: Create Admin 
+exports.createAdmin = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password, role } = req.body;
+
+  console.log(req.body, 'Body')
+
+  if (!role[0] || (role[0] !== 'admin' && role[0] !== 'super-admin')) {
+    return next(new ErrorHandler('Invalid role specified', 400));
+  }
+ console.log(role)
+ let newAdminData;
+  try {
+     newAdminData = await User.create({
+      name,
+      email,
+      password,
+      role,
+    });
+  } catch(e) {
+    console.log(e, 'Error happened')
+  }
+
+  res.status(201).json({
+    success: true,
+    newAdminData,
+  });
+});
+
+// Update admin details
+exports.updateAdmin = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const { name, email, role, houseAddress, state, country, phoneNumber } = req.body;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    return next(new ErrorHandler(`User not found with id: ${id}`, 404));
+  }
+
+  user.name = name || user.name;
+  user.email = email || user.email;
+  user.role = role || user.role;
+  user.houseAddress = houseAddress || user.houseAddress;
+  user.state = state || user.state;
+  user.country = country || user.country;
+  user.phoneNumber = phoneNumber || user.phoneNumber;
+
+  await user.save({ validateBeforeSave: true });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// Update admin status
+exports.updateAdminStatus = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    return next(new ErrorHandler(`User not found with id: ${id}`, 404));
+  }
+
+  user.status = status;
+
+  await user.save({ validateBeforeSave: true });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// Delete admin
+exports.deleteAdmin = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ErrorHandler(`User not found with id: ${req.params.id}`, 404));
+  }
+
+  if (!user.role.includes('admin')) {
+    return next(new ErrorHandler('You can only delete admin users', 400));
+  }
+
+  await user.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: 'Admin deleted successfully',
   });
 });
 
