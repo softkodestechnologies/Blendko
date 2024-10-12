@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import NewsList from '@/components/admin/news/NewsList';
+// import NewsList from '@/components/admin/news/NewsList';
 import styles from '@/components/admin/Admin.module.css';
-
+import dynamic from 'next/dynamic';
+const NewsList = dynamic(() => import('@/components/admin/news/NewsList'), { ssr: false });
 
 const NewsPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGetNewsQuery, useDeleteNewsMutation } from '@/services/newsService';
 import styles from './NewsStyles.module.css';
 
@@ -8,17 +8,20 @@ const NewsList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [selectedNews, setSelectedNews] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [isMounted, setIsMounted] = useState(false);
   const { data, error, isLoading } = useGetNewsQuery(page);
   const [deleteNews] = useDeleteNewsMutation();
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const handleDelete = async (id: string) => {
-    if (typeof window !== 'undefined') {
-      if (window.confirm('Are you sure you want to delete this news?')) {
-        await deleteNews(id);
-      }
+    if (isMounted && confirm('Are you sure you want to delete this news?')) {
+      await deleteNews(id);
     }
   };
+
 
   const handleCreate = () => {
     setSelectedNews(null);
@@ -35,6 +38,7 @@ const NewsList: React.FC = () => {
     setSelectedNews(null);
   };
 
+  if (!isMounted) return null;
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.toString()}</div>;
 
