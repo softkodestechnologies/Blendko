@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useGetChatsQuery, useGetChatQuery, useSendMessageMutation } from '@/services/chatService';
 import useSocket from '@/utils/hooks/useSocket';
@@ -17,11 +16,15 @@ interface Chat {
   _id: string;
   participants: Array<{ _id: string; name: string }>;
   messages: Message[];
+  guestInfo: {
+    name: string;
+    email: string;
+    phone: string;
+  };
   status: string;
   createdAt: string;
   updatedAt: string;
 }
-
 
 const ChatSupport: React.FC = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
@@ -29,29 +32,38 @@ const ChatSupport: React.FC = () => {
   const { data: chatsData, isLoading: isChatsLoading, refetch: refetchChats } = useGetChatsQuery({});
   const { data: chatData, refetch: refetchChat } = useGetChatQuery(selectedChat?._id, {
     skip: !selectedChat?._id,
+    refetchOnMountOrArgChange: true, 
   });
   const [sendMessage] = useSendMessageMutation();
   const { isConnected, emit, on, off } = useSocket('http://localhost:8080/');
   const messageListRef = useRef<HTMLDivElement>(null);
 
   const handleNewMessage = useCallback((data: { chatId: string; message: Message }) => {
-    if (selectedChat && data.chatId === selectedChat._id) {
-      setSelectedChat(prevChat => {
-        if (!prevChat) return null;
-        
-        const messageWithTimestamp = {
-          ...data.message,
-          createdAt: data.message.createdAt || new Date().toISOString(), 
-        };
-  
-        return {
-          ...prevChat,
-          messages: [...prevChat.messages, messageWithTimestamp]
-        };
-      });
-    }
-  }, [selectedChat]);
+    setSelectedChat(prevChat => {
+      if (!prevChat || data.chatId !== prevChat._id) return prevChat;
+      
+      const messageWithTimestamp = {
+        ...data.message,
+        createdAt: data.message.createdAt || new Date().toISOString(), 
+      };
 
+      return {
+        ...prevChat,
+        messages: [...prevChat.messages, messageWithTimestamp]
+      };
+    });
+
+    // Update the chat in the chatsData list as well
+    if (chatsData) {
+      const updatedChats = chatsData.chats.map((chat: Chat) => 
+        chat._id === data.chatId 
+          ? { ...chat, messages: [...chat.messages, data.message] }
+          : chat
+      );
+      // Force a re-render of the chat list
+      refetchChats();
+    }
+  }, [chatsData, refetchChats]);
   useEffect(() => {
     if (isConnected) {
       on('newMessage', handleNewMessage);
@@ -67,8 +79,13 @@ const ChatSupport: React.FC = () => {
   }, [isConnected, handleNewMessage, refetchChats, on, off]);
 
   useEffect(() => {
-    if (chatData) {
-      setSelectedChat(chatData.chat);
+    if (chatData?.chat) {
+      setSelectedChat(prevChat => {
+        if (prevChat?._id !== chatData.chat._id) {
+          return chatData.chat;
+        }
+        return prevChat;
+      });
     }
   }, [chatData]);
 
@@ -78,21 +95,33 @@ const ChatSupport: React.FC = () => {
     }
   }, [selectedChat?.messages]);
 
-
   const handleChatClick = (chat: Chat) => {
-    setSelectedChat(chat);
-    emit('join chat', chat._id);
+    setSelectedChat(null);
+    
+    setTimeout(() => {
+      setSelectedChat(chat);
+      emit('join chat', chat._id);
+    }, 0);
   };
 
   const handleSendMessage = async () => {
     if (!message.trim() || !selectedChat) return;
 
     try {
-      await sendMessage({
+      const result = await sendMessage({
         chatId: selectedChat._id,
         message,
         sender: 'admin',
       }).unwrap();
+      
+      // Update the local state with the new message
+      setSelectedChat(prevChat => {
+        if (!prevChat) return null;
+        return {
+          ...prevChat,
+          messages: [...prevChat.messages, result.message]
+        };
+      });
       
       setMessage('');
     } catch (error) {
@@ -100,15 +129,25 @@ const ChatSupport: React.FC = () => {
     }
   };
 
-  function renderMessage(message: Message) {
+  function renderMessage(message: Message | undefined) {
+    if (!message) {
+      console.error('Received undefined message');
+      return null; 
+    }
+  
     const messageClass = message.isAdmin === true ? styles.adminMessage : styles.userMessage;
     const alignClass = message.isAdmin === true ? styles.messageRight : styles.messageLeft;
-     console.log('MESSAGE', message)
-     console.log('MESSAGE DATE', message.createdAt)
-    const messageTime = new Date(Date.parse(message.createdAt)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    let messageTime;
+    try {
+      messageTime = new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (error) {
+      console.error('Error parsing message date:', error);
+      messageTime = 'Invalid Date';
+    }
   
     return (
-      <div className={`${messageClass} ${alignClass}`}>
+      <div key={message._id} className={`${messageClass} ${alignClass}`}>
         <span className={styles.messageContent}>
           {message.content}
           <br />
@@ -117,7 +156,6 @@ const ChatSupport: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className={styles.chatSupportContainer}>
       <div className={styles.chatList}>
@@ -132,7 +170,7 @@ const ChatSupport: React.FC = () => {
             onClick={() => handleChatClick(chat)}
           >
             <div className={styles.chatInfo}>
-              <span className={styles.userName}>{chat.participants[0]?.name || 'Unknown User'}</span>
+              <span className={styles.userName}>{chat.guestInfo?.name || chat.participants[0]?.name || 'Unknown User'}</span>
             </div>
             <span className={styles.timestamp}>
               {new Date(chat.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -146,15 +184,17 @@ const ChatSupport: React.FC = () => {
           <>
             <div className={styles.chatHeader}>
               <div className={styles.userInfo}>
-                <span className={styles.userName}>{selectedChat.participants[0]?.name || 'Unknown User'}</span>
+                <span className={styles.userName}>{selectedChat.guestInfo?.name || selectedChat.participants[0]?.name || 'Unknown User'}</span>
               </div>
               <div className={styles.chatActions}>
+              {selectedChat.guestInfo?.phone && 
                 <button className={styles.actionButton}>
-                  call
-                </button>
+                  call: {selectedChat.guestInfo.phone}
+                </button>}
+                {selectedChat.guestInfo?.email &&
                 <button className={styles.actionButton}>
-                  email
-                </button>
+                  email: {selectedChat.guestInfo.email}
+                </button>}
               </div>
             </div>
             <div className={styles.messageList} ref={messageListRef}>
@@ -176,7 +216,6 @@ const ChatSupport: React.FC = () => {
                 <SendChatIcon /> Send
               </button>
             </div>
-
           </>
         ) : (
           <div className={styles.noChatSelected}>Select a chat to start messaging</div>
@@ -187,5 +226,3 @@ const ChatSupport: React.FC = () => {
 };
 
 export default ChatSupport;
-
-

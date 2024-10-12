@@ -38,16 +38,6 @@ const OrdersPage: React.FC = () => {
               </button>
             ))}
           </div>
-          <div className={styles.searchContainer}>
-            <input
-              type="text"
-              placeholder="Search by order id"
-              className={styles.searchInput}
-            />
-            <button  title="search" className={styles.searchButton}>
-              <FaSearch />
-            </button>
-          </div>
           <OrderTable />
         </main>
       </div>

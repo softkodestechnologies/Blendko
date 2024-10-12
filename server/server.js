@@ -14,6 +14,13 @@ const errorMiddleware = require('./middlewares/errors');
 const corsOptions = require('./config/origin');
 const api = require('./routes/api');
 const allowedOrigins = require('./config/origin');
+let nanoid;
+
+// Initialize nanoid for guest chat IDs
+(async () => {
+  const { customAlphabet } = await import('nanoid');
+  nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
+})();
 
 dotenv.config();
 
@@ -46,17 +53,19 @@ const io = socketIo(server, {
 
 io.use((socket, next) => {
     const token = socket.handshake.auth.token;
-    if (!token) {
-        return next(new Error('Authentication error'));
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if(token) {
+      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             return next(new Error('Authentication error'));
         }
         socket.decoded = decoded;
         next();
-    });
+      });
+    } else {
+      socket.decoded = { id: socket.handshake.auth.guestId || nanoid() };  
+      next();
+    }
+
 }).on('connection', (socket) => {
   console.log('New client connected');
 
@@ -78,6 +87,7 @@ io.use((socket, next) => {
             socket.emit('error', { message: 'Chat not found' });
             return;
         }
+        
         const newMessage = { sender: socket.decoded.id, content: message };
         chat.messages.push(newMessage);
         await chat.save();

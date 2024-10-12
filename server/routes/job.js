@@ -23,16 +23,16 @@ router.route('/alert').post(setJobAlert);
 router.route('/').get(getJobs);
 
 
-router.route('/admin/new').post(isAuthenticatedUser, authorizeRoles('admin'), newJob);
-router.route('/admin/applications').get(isAuthenticatedUser, authorizeRoles('admin'), getAllJobApplications);
-router.route('/admin/applications/:jobId').get(isAuthenticatedUser, authorizeRoles('admin'), getJobApplicationsByJobId);
+router.route('/admin/new').post(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), newJob);
+router.route('/admin/applications').get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getAllJobApplications);
+router.route('/admin/applications/:jobId').get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getJobApplicationsByJobId);
 router.route('/admin/application/:id')
-  .get(isAuthenticatedUser, authorizeRoles('admin'), getSingleJobApplication) 
-  .put(isAuthenticatedUser, authorizeRoles('admin'), updateApplicationStatus)
-  .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteApplication);
+  .get(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getSingleJobApplication) 
+  .put(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateApplicationStatus)
+  .delete(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteApplication);
 router.route('/admin/:id')
-  .put(isAuthenticatedUser, authorizeRoles('admin'), updateJob)
-  .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteJob);
+  .put(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateJob)
+  .delete(isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteJob);
 
 
 router.route('/:id/apply').post(applyForJob);

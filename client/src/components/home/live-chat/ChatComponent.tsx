@@ -56,6 +56,8 @@ const ChatComponent: React.FC = () => {
     } else if (storedGuestId) {
       setGuestId(storedGuestId);
       setIsGuest(true);
+    } else {
+      setIsGuest(true);
     }
 
     if (storedChatId) {
@@ -102,6 +104,10 @@ const ChatComponent: React.FC = () => {
       setMessages(formattedMessages);
     }
   }, [chatData]);
+
+  useEffect(() => {
+    console.log(inputMessage)
+  }, [inputMessage]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -204,7 +210,7 @@ const ChatComponent: React.FC = () => {
         value={guestInfo.phone}
         onChange={(e) => setGuestInfo({ ...guestInfo, phone: e.target.value })}
       />
-      <button onClick={startNewChat}>Start Chat</button>
+      <button className={styles.startChatBtn} onClick={startNewChat}>Start Chat</button>
     </div>
   );
 

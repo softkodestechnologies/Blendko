@@ -1,15 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './viewBagPage.module.css';
 import { deleteItem } from '@/services/userSlice';
 import useDeleteCartItem from '@/utils/hooks/useDeleteCartItem';
 import useReduceCartItems from '@/utils/hooks/useReduceCartItems';
 import useAddToCart from '@/utils/hooks/useAddToCart';
+import { useGetDiscountsQuery, useApplyDiscountMutation } from '@/services/userService';
 
 import Header from '@/components/viewBag/product_side/Header';
 import Product from '@/components/viewBag/product_side/Product';
@@ -21,7 +19,11 @@ const ViewBagPage: React.FC = () => {
   const { addItemToCart } = useAddToCart();
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [appliedDiscount, setAppliedDiscount] = useState<any>(null);
   const user = useSelector((state: any) => state.user);
+
+  const { data: discounts } = useGetDiscountsQuery({});
+  const [applyDiscount] = useApplyDiscountMutation();
 
   useEffect(() => {
     const updateCartItems = () => {
@@ -89,6 +91,15 @@ const ViewBagPage: React.FC = () => {
     console.log('Should remove Cart Item', productId)
   };
 
+  const handleApplyDiscount = async (code: string) => {
+    try {
+      const response = await applyDiscount({ code, cartItems }).unwrap();
+      setAppliedDiscount(response.discount);
+    } catch (error) {
+      console.error('Failed to apply discount:', error)
+    }
+  };
+
 
   const isLoading = false;
 
@@ -127,7 +138,11 @@ const ViewBagPage: React.FC = () => {
               </div>
             </div>
 
-            <Summary cartItems={cartItems} />
+            <Summary 
+              cartItems={cartItems} 
+              appliedDiscount={appliedDiscount}
+              onApplyDiscount={handleApplyDiscount}
+            />
           </>
         )}
       </div>

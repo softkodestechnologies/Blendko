@@ -1,6 +1,18 @@
 .adminManagement {
     margin-top: 30px;
   }
+
+  .addAdminBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    color: black;
+    border: 1px solid #000;
+    margin: 0 0 20px 20px;
+  }
   
   .adminTable {
     width: 100%;
@@ -46,6 +58,12 @@
     top: -10%;
     left: 4px;
   }
+
+  .statusButton {
+    padding: 5px;
+    border-radius: 5px;
+    background: transparent;
+  }
   
   .active {
     background-color: #ECFDF3;
@@ -54,6 +72,10 @@
   
   .inactive {
     background-color: #F2F4F7;
-    color: #364254;
+    color: tomato;
   }
 
+  .editBtn {
+    background-color: transparent;
+    border: 0;
+  }

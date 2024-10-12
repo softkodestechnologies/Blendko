@@ -25,19 +25,19 @@ router.post(
   '/admin/new',
   uploadMultiple,
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   createProduct
 );
 router.put(
   '/admin/:id',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   updateProduct
 );
 router.delete(
   '/admin/:id',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   deleteProduct
 );
 

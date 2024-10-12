@@ -39,17 +39,15 @@
   }
 }
 
-::selection {
+/* ::selection {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
-}
+} */
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  user-select: auto !important;
-  -webkit-user-select: auto !important;
 }
 
 *:focus-visible {

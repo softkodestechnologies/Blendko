@@ -19,19 +19,19 @@ router.get('/:id', isAuthenticatedUser, getSingleOrder);
 router.get(
   '/admin/all',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   allOrders
 );
 router.put(
   '/admin/:id',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   updateOrder
 );
 router.delete(
   '/admin/:id',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin', 'super-admin'),
   deleteOrder
 );
 

@@ -142,6 +142,17 @@ export const adminService = blendkoApi.injectEndpoints({
       query: (id) => `/discounts/${id}`,
       providesTags: ['Discount'],
     }),
+    applyDiscount: builder.mutation({
+      query: (data) => ({
+        url: '/discounts/apply',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: data,
+      }),
+      invalidatesTags: ['Discount'],
+    }),
     createDiscount: builder.mutation({
       query: (discount) => ({
         url: '/discounts/new',
@@ -295,6 +306,54 @@ export const adminService = blendkoApi.injectEndpoints({
         },
       }),
       providesTags: ['Admins'],
+    }),
+
+    createAdmin: builder.mutation({
+      query: (adminData) => ({
+        url: '/admin/create',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: adminData,
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+
+    updateAdmin: builder.mutation({
+      query: ({ id, adminData }) => ({
+        url: `/admin/update/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: adminData,
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+
+    updateAdminStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/admin/update/status/${id}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: { status },
+      }),
+      invalidatesTags: ['Admins'],
+    }),
+    
+
+    deleteAdmin: builder.mutation({
+      query: (id) => ({
+        url: `/admin/delete/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['Admins'],
     }),
 
     updateUserDetails: builder.mutation({
@@ -456,16 +515,30 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
+    // getAllOrders: builder.query({
+    //   query: () => ({
+    //     url: `order/admin/all`,
+    //     method: 'GET',
+    //     headers: {
+    //       Authorization: `Bearer ${getToken()}`,
+    //     },
+    //   }),
+    //   providesTags: ['Order'],
+    // }),
     getAllOrders: builder.query({
-      query: () => ({
-        url: `order/admin/all`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }),
+      query: (filters = {}) => {
+        const queryString = new URLSearchParams(filters).toString();  
+        return {
+          url: `order/admin/all?${queryString}`,  
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        };
+      },
       providesTags: ['Order'],
     }),
+    
     updateOrderStatus: builder.mutation({
       query: ({ body, id }) => ({
         url: `order/admin/${id}`,
@@ -504,6 +577,7 @@ export const {
   useGetDashboardDataQuery,
   useGetReportsQuery,
   useGetDiscountsQuery,
+  useApplyDiscountMutation,
   useCreateDiscountMutation,
   useUpdateDiscountMutation,
   useDeleteDiscountMutation,
@@ -519,6 +593,10 @@ export const {
   useUpdateApplicationStatusMutation,
   useGetUsersQuery,
   useGetAdminsQuery,
+  useCreateAdminMutation,
+  useUpdateAdminMutation,
+  useUpdateAdminStatusMutation,
+  useDeleteAdminMutation,
   useUpdateUserDetailsMutation,
   useGetCategoryQuery,
   useGetCategoriesQuery,

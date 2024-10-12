@@ -1,11 +1,37 @@
 import Link from 'next/link';
-
+import React, { useState } from 'react';
 import styles from './product_side.module.css';
 
 import Accordion from '@/components/ui/accordion/Accordion';
 import { ChevronDown, HintIcon, PayPalIcon } from '../../../../public/svg/icon';
 
-function Summary({ cartItems }: { cartItems: any[] }) {
+interface SummaryProps {
+  cartItems: any[];
+  appliedDiscount: any;
+  onApplyDiscount: (count: string) => void;
+}
+function Summary({ cartItems, appliedDiscount, onApplyDiscount }: SummaryProps) {
+
+  const [promoCode, setPromoCode] = useState('');
+
+  const subtotal = cartItems.reduce(
+    (acc: number, item: any) => acc + item.price * item.quantity,
+    0
+  );
+
+  const discountAmount = appliedDiscount
+    ? appliedDiscount.type === 'percentage'
+      ? (subtotal * appliedDiscount.value) / 100
+      : appliedDiscount.value
+    : 0;
+
+  const total = subtotal - discountAmount;
+
+  const handleApplyPromo = () => {
+    onApplyDiscount(promoCode);
+    console.log(cartItems)
+  };
+
   return (
     <div aria-labelledby="summary" className={`${styles.summary}`}>
       <h2 id="summary">Summary</h2>
@@ -21,7 +47,13 @@ function Summary({ cartItems }: { cartItems: any[] }) {
         }
         body={
           <>
-            <input type="text" placeholder="Enter Promo Code" />
+            <input 
+              type="text" 
+              placeholder="Enter Promo Code" 
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+            />
+            <button onClick={handleApplyPromo}>Apply</button>
           </>
         }
       />
@@ -34,17 +66,15 @@ function Summary({ cartItems }: { cartItems: any[] }) {
               <HintIcon />
             </button>
           </p>
-
-          <p>
-            $
-            {cartItems
-              .reduce(
-                (acc: number, item: any) => acc + item.price * item.quantity,
-                0
-              )
-              .toFixed(2)}
-          </p>
+          <p>${subtotal.toFixed(2)}</p>
         </li>
+
+        {appliedDiscount && (
+          <li className={`flex align-y space-between ${styles.discount}`}>
+            <p>Discount ({appliedDiscount.name})</p>
+            <p>-${discountAmount.toFixed(2)}</p>
+          </li>
+        )}
 
         <li className={`flex align-y space-between ${styles.delivery_cost}`}>
           <p>Estimated delivery & Handling</p>

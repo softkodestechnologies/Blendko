@@ -10,12 +10,27 @@ const getToken = () => {
 export const newsService = blendkoApi.injectEndpoints({
     endpoints: (builder) => ({
         getNews: builder.query({
-            query: () => ({
-                url: '/news',
-                method: 'GET',
+            query: (page = 1) => ({
+              url: `/news?page=${page}`,
+              method: 'GET',
             }),
+            serializeQueryArgs: ({ endpointName }) => {
+              return endpointName;
+            },
+            merge: (currentCache, newItems) => {
+              if (currentCache) {
+                return {
+                  ...newItems,
+                  news: [...currentCache.news, ...newItems.news],
+                };
+              }
+              return newItems;
+            },
+            forceRefetch({ currentArg, previousArg }) {
+              return currentArg !== previousArg;
+            },
             providesTags: ['News'],
-        }),
+          }),
 
         getSingleNews: builder.query({
             query: (id: string) => ({
@@ -38,13 +53,14 @@ export const newsService = blendkoApi.injectEndpoints({
         }),
 
         updateNews: builder.mutation({
-            query: ({id, ...newsData }) => ({
+            query: ({id, newsData }) => ({
                 url: `/news/${id}`,
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json',
                 },
-                body: newsData,
+                body: JSON.stringify(newsData),
             }),
             invalidatesTags: ['News'],
         }),

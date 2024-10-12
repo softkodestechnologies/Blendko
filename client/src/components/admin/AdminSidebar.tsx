@@ -2,9 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './Admin.module.css';
 import { usePathname } from 'next/navigation';
-import { FaHome, FaShoppingCart, FaUsers, FaChartBar, FaCog, FaComments, FaPlus, FaList, FaTags, FaPercent, FaUserCog, FaUserShield } from 'react-icons/fa';
-import {adminDashboardIcon, adminOrdersIcon, adminCustomersIcon, adminAnalyticsIcon, adminSettingsIcon, careerIcon, adminChatSupportIcon, adminAddProductsIcon, adminProductListIcon, adminCategoriesIcon, adminDiscountsIcon, manageAdminsIcon, adminRolesIcon } from '../../../public/svg/icon';
-import Sidebar from '@/components/customization/Sidebar';
+import {adminDashboardIcon, adminOrdersIcon, adminCustomersIcon, adminAnalyticsIcon, adminSettingsIcon, careerIcon, NewsAdminIcon, adminChatSupportIcon, adminAddProductsIcon, adminProductListIcon, adminCategoriesIcon, adminDiscountsIcon, manageAdminsIcon, adminRolesIcon } from '../../../public/svg/icon';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,6 +19,7 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     { icon: adminAnalyticsIcon, text: 'Analytics and Reports', path: '/admin/analytics' },
     { icon: adminSettingsIcon, text: 'Customise templates', path: '/admin/settings' },
     { icon: careerIcon, text: 'Career', path: '/admin/career' },
+    { icon: NewsAdminIcon, text: 'News', path: '/admin/news' },
     { icon: adminChatSupportIcon, text: 'Chat Support', path: '/admin/chat' },
   ];
 
