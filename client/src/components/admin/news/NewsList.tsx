@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { useGetNewsQuery, useDeleteNewsMutation } from '@/services/newsService';
 import styles from './NewsStyles.module.css';
@@ -12,8 +13,10 @@ const NewsList: React.FC = () => {
   const [deleteNews] = useDeleteNewsMutation();
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this news?')) {
-      await deleteNews(id);
+    if (typeof window !== 'undefined') {
+      if (window.confirm('Are you sure you want to delete this news?')) {
+        await deleteNews(id);
+      }
     }
   };
 
