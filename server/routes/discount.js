@@ -6,7 +6,8 @@ const {
   getAllDiscounts,
   getDiscount,
   updateDiscount,
-  deleteDiscount
+  deleteDiscount,
+  applyDiscount
 } = require('../controllers/discount.controller');
 
 router.post('/new', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), createDiscount);
@@ -14,5 +15,7 @@ router.get('/', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), get
 router.get('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), getDiscount);
 router.put('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), updateDiscount);
 router.delete('/:id', isAuthenticatedUser, authorizeRoles('admin', 'super-admin'), deleteDiscount);
+
+router.post('/apply', isAuthenticatedUser, applyDiscount);
 
 module.exports = router;
