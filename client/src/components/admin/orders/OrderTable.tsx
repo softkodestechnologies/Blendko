@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, useExpanded, Column, usePagination, Row, HeaderGroup, Cell } from 'react-table';
 import styles from '../Admin.module.css';
 import { FaEllipsisV, FaPrint, FaChevronDown, FaChevronRight } from 'react-icons/fa';
-import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from '../../../services/userService';
+import { useGetAllOrdersQuery, useUpdateOrderStatusMutation } from '@/services/userService';
 import useCustomerFilter from '@/utils/hooks/useCustomerFilter';
 
 interface OrderItem {
@@ -31,6 +31,7 @@ const OrderTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const { filters, handleSearch } = useCustomerFilter();
   const { data: ordersData, isLoading, refetch } = useGetAllOrdersQuery(filters);
+  
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   useEffect(() => {

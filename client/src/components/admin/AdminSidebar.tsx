@@ -2,9 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './Admin.module.css';
 import { usePathname } from 'next/navigation';
-import { FaHome, FaShoppingCart, FaUsers, FaChartBar, FaCog, FaComments, FaPlus, FaList, FaTags, FaPercent, FaUserCog, FaUserShield } from 'react-icons/fa';
 import {adminDashboardIcon, adminOrdersIcon, adminCustomersIcon, adminAnalyticsIcon, adminSettingsIcon, careerIcon, NewsAdminIcon, adminChatSupportIcon, adminAddProductsIcon, adminProductListIcon, adminCategoriesIcon, adminDiscountsIcon, manageAdminsIcon, adminRolesIcon } from '../../../public/svg/icon';
-import Sidebar from '@/components/customization/Sidebar';
 
 interface SidebarProps {
   isOpen: boolean;
