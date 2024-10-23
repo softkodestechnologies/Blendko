@@ -10,17 +10,16 @@ exports.stripeWebhook = async (req, res) => {
   console.log('Webhook body:', JSON.stringify(req.body, null, 2));
   const sig = req.headers['stripe-signature'];
   let event;
-  console.log('stripe controller called')
+
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
-    console.error(err);
+    console.error('Webhook error:', err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   if (event.type === 'payment_intent.succeeded') {
     const paymentIntent = event.data.object;
-    console.log('PaymentIntent:', JSON.stringify(paymentIntent, null, 2));
     
     try {
       if (!paymentIntent.metadata || !paymentIntent.metadata.userId) {
@@ -33,6 +32,25 @@ exports.stripeWebhook = async (req, res) => {
         throw new Error(`User not found for ID: ${paymentIntent.metadata.userId}`);
       }
 
+      if (user.isLoyaltyMember) {
+        const pointsRedeemed = parseInt(paymentIntent.metadata.pointsRedeemed || 0);
+        if (pointsRedeemed > 0) {
+          user.points -= pointsRedeemed;  
+        }
+      }
+
+      const pointsEarned = Math.floor((paymentIntent.amount / 100) * 10);  
+      if (user.referredBy) {
+        const referrer = await User.findById(user.referredBy);
+
+        if (referrer && referrer.isLoyaltyMember) {
+          referrer.points += pointsEarned;
+          await referrer.save();
+        }
+      }
+
+      await user.save({ validateBeforeSave: false });
+      
       if (!paymentIntent.metadata.cartItems) {
         throw new Error('Cart items not found in metadata');
       }

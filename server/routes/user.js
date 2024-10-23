@@ -28,6 +28,10 @@ const {
   updateAdmin,
   updateAdminStatus,
   deleteAdmin,
+  getPoints, 
+  getReferrals, 
+  updateReferralCode, 
+  joinLoyaltyProgram 
 } = require('../controllers/user.controller');
 
 const { getUserMessages, createMessage, deleteMessage } = require('../controllers/message.controller');
@@ -61,6 +65,11 @@ router.route('/wishlist/remove').post(isAuthenticatedUser, removeFromWishlist);
 router.get('/messages', isAuthenticatedUser, getUserMessages);
 router.post('/messages', isAuthenticatedUser, createMessage);
 router.delete('/messages/:id', isAuthenticatedUser, deleteMessage);
+
+router.route('/points').get(isAuthenticatedUser, getPoints);
+router.route('/referrals').get(isAuthenticatedUser, getReferrals);
+router.route('/referral-code').put(isAuthenticatedUser, updateReferralCode);
+router.route('/join-loyalty').post(isAuthenticatedUser, joinLoyaltyProgram);
 
 
 router

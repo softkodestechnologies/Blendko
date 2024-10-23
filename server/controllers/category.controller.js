@@ -8,7 +8,7 @@ exports.getCategories = catchAsyncErrors(async (req, res, next) => {
   const categoryCount = await Category.countDocuments();
 
   const apiFeatures = new ApiFeatures(Category.find(), req.query)
-    .search('name')
+    .searchO((['name']))
     .pagination(resPerPage);
 
   const categories = await apiFeatures.query.populate('products');

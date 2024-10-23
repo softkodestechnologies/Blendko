@@ -74,6 +74,31 @@ const userSchema = new Schema({
       }
     }
   ],
+  points: {
+    type: Number,
+    default: 0,
+  },
+  referralCode: {
+    type: String,
+    unique: true,
+  },
+  referredBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  referrals: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  isLoyaltyMember: {
+    type: Boolean,
+    default: false,
+  },
+  dOB: {
+    day: String,
+    month: String,
+    year: String,
+  },
   lastLoginAt: {
     type: Date,
     default: null,

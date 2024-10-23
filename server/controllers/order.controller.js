@@ -86,6 +86,9 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = req.query.pp || 5;
   const status = req.query.status || 'all';
 
+  console.log(req.body, 'body');
+  console.log(req.query, 'query')
+
   let query = {};
   if (status !== 'all') {
     query.orderStatus = status;
@@ -111,7 +114,7 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
       .sort({ createdAt: -1 }),
     req.query
   )
-    .search()
+    .searchO(['shippingInfo.firstName', 'orderStatus'])
     .filter()
     .pagination(resPerPage);
 

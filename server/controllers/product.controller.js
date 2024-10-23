@@ -165,8 +165,10 @@ exports.getProducts = catchAsyncErrors(async (req, res) => {
     },
   ]);
 
+  console.log(req.query)
+
   const apiFeatures = new ApiFeatures(Product.find(), req.query, Product)
-    .search()
+    .searchO(['name', 'color', 'gender', 'dress_style'])
     .filter()
     .sort()
     .pagination(resPerPage);

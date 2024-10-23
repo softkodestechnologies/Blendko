@@ -24,6 +24,75 @@ class ApiFeatures {
     return this;  
   }
 
+  // searchO() {
+  //   const keyword = this.queryStr.keyword;
+  //   const startDate = this.queryStr.startDate;
+  //   const endDate = this.queryStr.endDate;
+  
+  //   let searchQuery = {};
+  
+  //   if (keyword || startDate || endDate) {
+  //     const queryConditions = [];
+  
+  //     if (keyword) {
+  //       queryConditions.push({
+  //         $or: [
+  //           { 'shippingInfo.firstName': { $regex: keyword, $options: 'i' } },
+  //           { orderStatus: { $regex: keyword, $options: 'i' } },
+  //         ],
+  //       });
+  //     }
+  
+  //     if (startDate && endDate) {
+  //       queryConditions.push({
+  //         createdAt: {
+  //           $gte: new Date(startDate),
+  //           $lte: new Date(endDate),
+  //         },
+  //       });
+  //     }
+  
+  //     searchQuery = { $and: queryConditions };
+  //   }
+  
+  //   this.query = this.query.find(searchQuery);
+  
+  //   return this;
+  // }
+
+  searchO(fields) {
+    const keyword = this.queryStr.keyword;
+    const startDate = this.queryStr.startDate;
+    const endDate = this.queryStr.endDate;
+  
+    let searchQuery = {};
+  
+    if (keyword || startDate || endDate) {
+      const queryConditions = [];
+  
+      if (keyword) {
+        queryConditions.push({
+          $or: fields.map((field) => ({ [field]: { $regex: keyword, $options: 'i' } })),
+        });
+      }
+  
+      if (startDate && endDate) {
+        queryConditions.push({
+          createdAt: {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate),
+          },
+        });
+      }
+  
+      searchQuery = { $and: queryConditions };
+    }
+  
+    this.query = this.query.find(searchQuery);
+  
+    return this;
+  }
+
   
   filter() {
     const queryCopy = { ...this.queryStr };

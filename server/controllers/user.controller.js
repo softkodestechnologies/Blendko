@@ -7,10 +7,15 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const cloudinary = require('cloudinary');
 const ApiFeatures = require('../utils/apiFeatures');
+const { generateUniqueReferralCode } = require('../utils/genCode');
 
 // Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, referralCode } = req.body;
+  console.log(name, 'Name')
+  console.log(email, 'Email')
+  console.log(password, 'Password')
+  console.log(referralCode, 'ReferralCode')
 
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -22,6 +27,19 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
   });
+
+  if(referralCode) {
+
+    const referrer = await User.findOne({ referralCode });
+    if (referrer) {
+      referrer.referrals.push(user._id);
+      user.referredBy = referrer._id;
+
+      await referrer.save();
+      await user.save()
+    }
+
+  }
 
   await sendEmail({
     email: user.email,
@@ -674,3 +692,68 @@ exports.removeFromWishlist = catchAsyncErrors(async (req, res, next) => {
     message: 'Product removed from wishlist'
   });
 });
+
+
+exports.getPoints = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user.points);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching points' });
+  }
+};
+
+// Fetch user referrals
+exports.getReferrals = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('referrals', 'name');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user.referrals);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching referrals' });
+  }
+};
+
+// Update referral code
+exports.updateReferralCode = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.referralCode = await generateUniqueReferralCode();
+    await user.save();
+
+    res.json(user.referralCode);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating referral code' });
+  }
+};
+
+// Join loyalty program
+exports.joinLoyaltyProgram = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.isLoyaltyMember) {
+      return res.status(400).json({ message: 'User is already a loyalty member' });
+    }
+
+    user.isLoyaltyMember = true;
+
+    user.dOB = req.body.dateOfBirth;
+
+    user.points = 0;
+
+    if (!user.referralCode) {
+      user.referralCode = await generateUniqueReferralCode();
+    }
+
+    await user.save();
+
+    res.json({ message: 'Successfully joined loyalty program', referralCode: user.referralCode, user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error joining loyalty program' });
+  } 
+};
