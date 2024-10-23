@@ -122,9 +122,8 @@ export const footerLinks = {
     { title: 'Payment Options', url: '/payment' },
   ],
   bottom: [
-    { title: 'Legal', url: '/legal' },
     { title: 'Terms of Service', url: '/terms' },
-    { title: 'Privacy Policy', url: '/privacy' },
+    { title: 'Privacy Policy', url: '/privacy-policy' },
     { title: 'Cookie Policy', url: '/' },
     { title: 'Accessibility Statement', url: '/accessibility' },
   ],
@@ -261,6 +260,79 @@ export const policy = [
     ],
   },
 ];
+
+
+export const terms = [
+  {
+    heading: `I. IDENTIFICATION`,
+    content: [
+      `This website, www.blendko.com (hereinafter referred to as the “Website”), is published by Blendko, a company established in March 2024. Blendko is a privately held corporation listed under the relevant trade and companies register with a head office located at 85 Holgate Rd Raechester - Telephone number: 079 0501 1733; Email: contact@blendko.com.`,
+      `The Chairperson of the Board of Directors of Blendko and Director of Publication is [Insert Chairperson's Name].`,
+      `The Website is hosted by Render, with a head office headquartered in San Francisco, California.`,
+      `Access to the Website as well as the use of its content are subject to the terms of use provided hereinafter. By accessing and browsing this Website, the Internet user fully and unreservedly agrees to the following stipulations.`,
+    ],
+    subcontent: [],
+  },
+  {
+    heading: `II. INTELLECTUAL PROPERTY`,
+    content: [
+      `Blendko is the owner of the Website's domain name.`,
+      `The entirety of the Website, as well as its components (in particular text, structure, software, animated items, photographs, videos, illustrations, drawings, graphic representations, logos, etc.), are creative works protected by applicable intellectual property laws. They are the sole property of Blendko, and Blendko is the sole entity authorized to use said intellectual property and related personality rights, brands, trademarks, models, creative works, software, databases, interpretations, and image rights, whether through ownership or through a formal authorization or license.`,
+    ],
+    subcontent: [
+      {
+        heading: `2.2 Sanctions`,
+        content: `Use of all or part of the Website, particularly by means of downloading, reproduction, transmission, representation, or circulation, for purposes other than personal and private use with a non-commercial aim by the Internet user, is strictly prohibited. Any infringement of Blendko's rights may be sanctioned according to applicable intellectual property laws.`,
+      },
+    ],
+  },
+  {
+    heading: `III. LIABILITY`,
+    content: [
+      `Blendko shall make every effort to ensure the information provided on the Website is accurate and up to date. However, Blendko does not guarantee that the information is accurate, complete, or up to date.`,
+      `Blendko cannot be held responsible for any material or technical errors, omissions, inaccuracies, or for any indirect damages arising from the use of the Website or the information it contains. Users are encouraged to verify the information independently.`,
+    ],
+    subcontent: [],
+  },
+  {
+    heading: `IV. DATA PROTECTION AND PRIVACY`,
+    content: [
+      `Any personal information collected by Blendko when users browse the Website is processed in accordance with Blendko's Privacy Policy. Users have the right to access, rectify, and delete their personal data by contacting Blendko via the contact details provided on the Website.`,
+    ],
+    subcontent: [],
+  },
+  {
+    heading: `V. MODIFICATIONS`,
+    content: [
+      `Blendko reserves the right to modify these terms at any time. Any changes will be effective immediately upon publication on the Website.`,
+    ],
+    subcontent: [],
+  },
+  {
+    heading: `VI. APPLICABLE LAW`,
+    content: [
+      `These terms are governed by and construed in accordance with the laws of the United Kingdom. Any disputes relating to these terms shall be subject to the exclusive jurisdiction of the courts of the United Kingdom.`,
+    ],
+    subcontent: [],
+  },
+];
+
+export const accessibility = {
+  commitment: {
+    heading: "Blendko Accessibility Commitment",
+    approach: `Blendko is committed to providing the highest levels of satisfaction for all aspects of our customers' online experiences. As part of these efforts, we are dedicated to offering a quality online experience on our website, www.blendko.com (the "Website"), to customers with disabilities that is full and equal to that provided to customers without disabilities. We strive to substantially conform with the Web Content Accessibility Guidelines 2.1 at Levels A and AA (WCAG 2.1).`,
+  },
+  efforts: {
+    heading: "Our Approach",
+    description: `In our efforts to substantially conform with WCAG 2.1, Blendko has subjected the Website to various accessibility auditing and review techniques, including human code review, human review with assistive technology (such as JAWS and NVDA), and automated accessibility software. We acknowledge that accessibility is an ongoing concern and a journey, not a destination. Therefore, we continue to review the Website at regular intervals to assess its conformance with WCAG 2.1 and explore new ways to enhance the online experience for customers with disabilities.`,
+  },
+  feedback: {
+    heading: "Questions and Feedback",
+    description: `If you have any trouble accessing the website, please feel free to contact us at accessibility@blendko.com or call us at 1-877-903-4671. We will be happy to assist you.`,
+  },
+};
+
+
 
 export const userMenuLinks = [
   { title: 'Profile', url: '/user/account' },

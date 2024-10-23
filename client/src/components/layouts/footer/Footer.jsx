@@ -131,6 +131,7 @@ function Footer() {
 
         <div className={`flex ${styles.bottom}`}>
           <ul className={`flex`}>
+            <li>Legal:</li>
             {footerLinks.bottom.map((link, index) => (
               <li key={index}>
                 <Link href={link.url}>{link.title}</Link>

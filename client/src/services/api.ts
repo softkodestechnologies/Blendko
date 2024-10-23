@@ -30,7 +30,8 @@ export const blendkoApi = createApi({
     'Discount',
     'Job',
     'Application',
-    'Payment'
+    'Payment',
+    'Loyalty'
   ],
   endpoints: () => ({}),
 });

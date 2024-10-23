@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 import styles from './auth.module.css';
 
@@ -30,7 +29,12 @@ const Register = () => {
   });
 
   const handleFormSubmission = async (values: any, resetForm: () => void) => {
-    await handleSubmission(values, resetForm, '/', () => {
+    const referralCode = localStorage.getItem('referralCode');
+    const name = `${values.firstName} ${values.lastName}`;
+    const valuesWithName = { ...values, name };
+    const payload = referralCode ? { ...valuesWithName, referralCode } : values;
+
+    await handleSubmission(payload, resetForm, '/', () => {
       setAlert({
         show: true,
         type: 'success',

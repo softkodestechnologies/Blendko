@@ -65,6 +65,34 @@ export const adminService = blendkoApi.injectEndpoints({
         },
       }),
     }),
+    getPoints: builder.query<number, void>({
+      query: () => '/points',
+      providesTags: ['Loyalty'],
+    }),
+    getReferrals: builder.query<string[], void>({
+      query: () => '/referrals',
+      providesTags: ['Loyalty'],
+    }),
+    updateReferralCode: builder.mutation<string, void>({
+      query: () => ({
+        url: '/referral-code',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+    }),
+    joinLoyaltyProgram: builder.mutation<void, { dateOfBirth: { day: string; month: string; year: string } }>({
+      query: (body) => ({
+        url: '/join-loyalty',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body,
+      }),
+      invalidatesTags: ['Loyalty'],
+    }),
     getWishlist: builder.query<{ success: boolean, wishlist: Array<{ product: any, _id: string, addedAt: string }> }, {}>({
       query: () => ({
         url: '/wishlist',
@@ -515,16 +543,6 @@ export const adminService = blendkoApi.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
-    // getAllOrders: builder.query({
-    //   query: () => ({
-    //     url: `order/admin/all`,
-    //     method: 'GET',
-    //     headers: {
-    //       Authorization: `Bearer ${getToken()}`,
-    //     },
-    //   }),
-    //   providesTags: ['Order'],
-    // }),
     getAllOrders: builder.query({
       query: (filters = {}) => {
         const queryString = new URLSearchParams(filters).toString();  
@@ -570,6 +588,10 @@ export const {
   useGetProductQuery,
   useGetProductsQuery,
   useDeleteProductMutation,
+  useGetPointsQuery,
+  useGetReferralsQuery,
+  useUpdateReferralCodeMutation,
+  useJoinLoyaltyProgramMutation,
   useGetWishlistQuery,
   useAddToWishlistMutation,
   useRemoveFromWishlistMutation,
