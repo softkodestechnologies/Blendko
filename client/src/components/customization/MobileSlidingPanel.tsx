@@ -3,7 +3,14 @@ import styles from './customize.module.css';
 import ColorPalette from './ColorPalette';
 import { ColorChangeHandler } from 'react-color';
 import FileInputComponent from './Files';
+import { SizeSelector } from './SizeSelector';
 
+
+interface CustomizedProduct {
+  size: string | null;
+  color: string;
+  texture: string | null;
+}
 
 interface MobileSlidingPanelProps {
   activePanel: string;
@@ -11,9 +18,11 @@ interface MobileSlidingPanelProps {
   setActivePanel: (panel: string | null) => void;
   onFileUpload: (file: File) => void;
   onColorChange: (color: string) => void;
+  onSizeSelect: (size: string) => void;
+  customizedProduct: CustomizedProduct;
 }
 
-const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange }) => {
+const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, onClose, setActivePanel, onFileUpload, onColorChange, onSizeSelect, customizedProduct }) => {
   const handleColorChange: ColorChangeHandler = (color) => {
     // Handle color change here
     console.log(color);
@@ -27,8 +36,13 @@ const MobileSlidingPanel: React.FC<MobileSlidingPanelProps> = ({ activePanel, on
         return <FileInputComponent onFileUpload={onFileUpload}/>;
       case 'design':
         return <div>Design Content</div>;
-      case 'styles':
-        return <div>Styles Content</div>;
+      case 'sizes':
+        return (
+          <SizeSelector
+            onSizeSelect={onSizeSelect}
+            selectedSize={customizedProduct.size}
+          />
+        );
       case 'colour':
         return <ColorPalette onColorSelect={onColorChange} setActivePanel={setActivePanel} />;
       default:

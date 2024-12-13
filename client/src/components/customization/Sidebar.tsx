@@ -12,13 +12,21 @@ import {
  SavedTemplateIcon
 } from './../../../public/svg/icon';
 
+interface CustomizedProduct {
+  size: string | null;
+  color: string;
+  texture: string | null;
+}
+
 interface SidebarProps {
   onToggleCanvasWidth: () => void;
   onFileUpload: (file: File) => void;
   onColorChange: (color: string) => void;
+  onSizeSelect: (size: string) => void;
+  customizedProduct: CustomizedProduct;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, onColorChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, onColorChange, onSizeSelect, customizedProduct }) => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -63,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, on
           </div>
         </div>
         {activePanel && (
-          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload} onColorChange={onColorChange}/>
+          <MobileSlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel} onFileUpload={onFileUpload} onColorChange={onColorChange}  onSizeSelect={onSizeSelect} customizedProduct={customizedProduct}/>
         )}
       </>
     );
@@ -103,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggleCanvasWidth, onFileUpload, on
  
 
       {activePanel && (
-        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload} onColorChange={onColorChange}/>
+        <SlidingPanel activePanel={activePanel} onClose={() => setActivePanel(null)} setActivePanel={setActivePanel}  onFileUpload={onFileUpload} onColorChange={onColorChange} onSizeSelect={onSizeSelect} customizedProduct={customizedProduct}/>
       )}
     </div>
   );
