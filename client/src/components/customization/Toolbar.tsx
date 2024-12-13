@@ -1,6 +1,7 @@
 "use client";
 import React, {useState} from 'react';
 import styles from './customize.module.css';
+import PreviewModal from './PreviewModal';
 
 import {
   UndoIcon,
@@ -16,12 +17,15 @@ interface ToolbarProps {
   saveAsTemplate: () => void;
   addToCart: () => void;
   onAddNew: () => void;
+  canvasRef: React.RefObject<any>;
 }
 
-const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, addToCart,  onAddNew }) => {
+const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, addToCart,  onAddNew, canvasRef }) => {
+
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const handlePreview = async () => {
-
+    setIsPreviewOpen(true);
   };
 
   return (
@@ -45,6 +49,13 @@ const Toolbar: React.FC<ToolbarProps> = ({ undo, redo, reset, saveAsTemplate, ad
           <button title="reset" className={`${styles.toolbarIcons} ${styles.resetBtn}`} onClick={reset}><ResetIcon /></button>
         </div>
         <button title="preview" className={`${styles.toolbarIcons} ${styles.previewIcons}`} onClick={handlePreview}><PreviewIcon />Preview</button>
+        {isPreviewOpen && (
+          <PreviewModal 
+            isOpen={isPreviewOpen}
+            onClose={() => setIsPreviewOpen(false)}
+            canvasRef={canvasRef}
+          />
+        )}
         <button className={styles.addNew} onClick={onAddNew}><span>+</span>Add New</button>
       </div>
     </div>

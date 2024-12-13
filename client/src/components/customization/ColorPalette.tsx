@@ -34,7 +34,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ setActivePanel, onColorSele
 
   const handleColorChange = (color: ColorResult) => {
     setSelectedColor(color.hex);
-    //onColorSelect(color.hex);
+    onColorSelect(color.hex);
   };
 
   const palette = generatePalette();
