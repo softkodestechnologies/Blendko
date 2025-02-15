@@ -3,7 +3,7 @@ import styles from './customize.module.css';
 import ColorPalette from './ColorPalette';
 import { ColorChangeHandler } from 'react-color';
 import FileInputComponent from './Files';
-import { SizeSelector } from './SizeSelector';
+import SizeSelector from './SizeSelector';
 
 
 interface CustomizedProduct {
