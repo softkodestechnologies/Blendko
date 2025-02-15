@@ -62,6 +62,16 @@ export interface Product {
     };
   }
   
+  export interface CustomizationState {
+    color: string;
+    texture: string | null;
+    zoom: number;
+  }
   
+  export interface HistoryManager {
+    past: CustomizationState[];
+    present: CustomizationState;
+    future: CustomizationState[];
+  }
   
   

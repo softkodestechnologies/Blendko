@@ -1,47 +1,26 @@
-"use client";
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Canvas from '@/components/customization/Canvas';
+'use client';
+import React, { useRef, useState, useCallback } from 'react';
+import ThreeCanvas from '@/components/customization/ThreeCanvas';
 import Sidebar from '@/components/customization/Sidebar';
 import Toolbar from '@/components/customization/Toolbar';
 import styles from '@/components/customization/customize.module.css';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import LoadingSpinner from '@/components/ui/loading/LoadingSpinner';
+
+interface CustomizedProduct {
+  size: string | null;
+  color: string;
+  texture: string | null;
+}
 
 const CustomizePage: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [productImage, setProductImage] = useState<string | undefined>(undefined);
-  const canvasRef = useRef<{ undo: () => void; redo: () => void; addImageToCanvas: (file: File) => void } | null>(null);
+  const canvasRef = useRef<any>(null);
+  const [customizedProduct, setCustomizedProduct] = useState<CustomizedProduct>({
+    size: null,
+    color: '#ffffff',
+    texture: null,
+  });
 
-  useEffect(() => {
-    setLoading(true);
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-
-    const storedProductData = localStorage.getItem('productData');
-    if (storedProductData) {
-      const productData = JSON.parse(storedProductData);
-      setProductImage(productData.image);
-    }
-
-    setLoading(false);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const toggleCanvasWidth = useCallback(() => {
-    setIsExpanded(!isExpanded);
-  }, [isExpanded]);
-
-  const handleFileUpload = useCallback((file: File) => {
-    if (canvasRef.current) {
-      canvasRef.current.addImageToCanvas(file);
-    }
-  }, []);
 
   const handleUndo = useCallback(() => {
     canvasRef.current?.undo();
@@ -52,61 +31,81 @@ const CustomizePage: React.FC = () => {
   }, []);
 
   const handleReset = useCallback(() => {
-    // Remember: Implement reset logic
+    canvasRef.current?.reset();
   }, []);
 
-  const handleColorChange = useCallback((color: string) => {
-    // Implement logic to handle color change
+  const handleSizeSelect = useCallback((size: string) => {
+    setCustomizedProduct(prev => ({
+      ...prev,
+      size: size
+    }));
   }, []);
-  
+
+  const handleColorChange = useCallback((hexColor: string) => {
+    canvasRef.current?.changeColor(hexColor);
+  }, []);
+
+  const handleFileUpload = useCallback((file: File) => {
+    canvasRef.current?.addImageToMesh(file);
+  }, []);
+
   const handleAddNew = useCallback(() => {
-    // Remember: Implement add new item logic
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+        handleFileUpload(target.files[0]);
+      }
+    };
+    input.click();
+  }, [handleFileUpload]);
+
+  const handleToggleCanvasWidth = useCallback(() => {
+    setIsExpanded((prev) => !prev);
   }, []);
-  
 
   const handleSaveAsTemplate = useCallback(() => {
-    //Remember: Implement save as template logic
+    // Implement save as template functionality
   }, []);
 
   const handleAddToCart = useCallback(() => {
-    //Remember: Implement add to cart logic
+    // Implement add to cart functionality
   }, []);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div className={styles.pageContainer}>
-      <Toolbar 
-        undo={handleUndo} 
-        redo={handleRedo} 
-        reset={handleReset} 
+      <Toolbar
+        undo={handleUndo}
+        redo={handleRedo}
+        reset={handleReset}
         onAddNew={handleAddNew}
-        saveAsTemplate={handleSaveAsTemplate} 
+        saveAsTemplate={handleSaveAsTemplate}
         addToCart={handleAddToCart}
+        canvasRef={canvasRef}
       />
       <div className={styles.customizePage}>
-        <Sidebar 
-          onToggleCanvasWidth={toggleCanvasWidth}  
-          onFileUpload={handleFileUpload} 
-          onColorChange={handleColorChange} />
-          
-        <div className={styles.canvasWrapper} style={{ width: isMobile ? '100%' : (isExpanded ? '80%' : '60%') }}>
-          <Canvas 
+        <Sidebar
+          onColorChange={handleColorChange}
+          onFileUpload={handleFileUpload}
+          onToggleCanvasWidth={handleToggleCanvasWidth}
+          onSizeSelect={handleSizeSelect}
+          customizedProduct={customizedProduct}
+        />
+        <div
+          className={styles.canvasWrapper}
+          style={{
+            width: isMobile ? '100%' : isExpanded ? '80%' : '60%',
+          }}
+        >
+          <ThreeCanvas
             ref={canvasRef}
-            canvasWidth="100%" 
-            productImage={productImage} 
+            productName="Custom Product"
+            initialColor="#ffffff"
           />
-          {!isMobile && (
-            <button className={styles.toggleCanvasButton} onClick={toggleCanvasWidth}>
-              {isExpanded ? <FaChevronRight /> : <FaChevronLeft />}
-            </button>
-          )}
         </div>
       </div>
     </div>
   );
-};
-
-export default CustomizePage;
+};export default CustomizePage;
