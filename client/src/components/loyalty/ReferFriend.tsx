@@ -37,7 +37,19 @@ const ReferFriend: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
   const [copySuccess, setCopySuccess] = useState('');
-  const [joinLoyaltyProgram] = useJoinLoyaltyProgramMutation();
+  const [joinLoyaltyProgram] = useJoinLoyaltyProgramMutation<{
+    message: string;
+    referralCode: string;
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      referralCode: string;
+      isLoyaltyMember: boolean;
+      points: number;
+      dOB?: { day: string; month: string; year: string };
+    };
+  }>();
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(true);
