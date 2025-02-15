@@ -141,7 +141,7 @@ const ReferFriend: React.FC = () => {
         try {
           const response = await joinLoyaltyProgram({ dateOfBirth }).unwrap();
           console.log(response, 'Response')
-          dispatch(updateUser(response?.user))
+          //dispatch(updateUser(response?.user))
           console.log('Welcome to the Loyalty Programme')
         } catch (error) {
           console.log('Error', error)
