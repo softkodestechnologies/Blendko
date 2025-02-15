@@ -1,29 +1,15 @@
-import Image from 'next/image';
 
-import styles from './about-us.module.css';
+import styles from './mss.module.css';
 
-import { Logo } from '../../../public/svg/icon';
-import ladyImg from '../../../public/Lady-in-trad.jpg';
-import Resource from '@/components/layouts/resource_links/Resource';
-import ResourceHero from '@/components/layouts/resource_links/ResourceHero';
-
-export default function About() {
+export default function MSS() {
   return (
     <div
         className={`flex flex-col align-y full-width ${styles.main_content}`}
       >
-        <h1 className={styles.hero}>About Us</h1>
+        <h1 className={styles.hero}>Modern Slavery Statement</h1>
         <hr />
-        <div className={`full-width ${styles.main_content_img}`}>
-          <Image
-            src={ladyImg}
-            alt="about image"
-            className={`full-width full-height`}
-          />
-        </div>
 
         <span>
-          <Logo />
         </span>
 
         <div className={`flex flex-col ${styles.main_content_text_container}`}>

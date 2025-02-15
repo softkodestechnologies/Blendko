@@ -118,14 +118,13 @@ export const footerLinks = {
   help: [
     { title: 'Get Help', url: '/help' },
     { title: 'Shipping and Delivery', url: '/shipping' },
-    { title: 'Returns', url: '/returns' },
     { title: 'Payment Options', url: '/payment' },
   ],
   bottom: [
     { title: 'Terms of Service', url: '/terms' },
     { title: 'Privacy Policy', url: '/privacy-policy' },
-    { title: 'Cookie Policy', url: '/' },
-    { title: 'Accessibility Statement', url: '/accessibility' },
+    { title: 'Cookie Informatiton', url: '/cookie-info' },
+    { title: 'Modern Slavery Statement', url: '/mss' },
   ],
 };
 

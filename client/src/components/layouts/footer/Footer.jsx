@@ -1,9 +1,9 @@
 import Link from 'next/link';
-
+import PaymentMethods from './PaymentMethods';
 import styles from './footer.module.css';
 
 import {
-  FooterLogo,
+  NewFooterLogo,
   XIcon,
   FacebookIcon,
   YoutubeIcon,
@@ -17,7 +17,7 @@ function Footer() {
       <div className={`${styles.footerContainer}`}>
         <div className={`flex align-y space-between ${styles.footerTop}`}>
           <Link href="/">
-            <FooterLogo className={`full-height full-width`} />
+            <NewFooterLogo className={`full-height full-width`} />
           </Link>
 
           <ul className={`flex align-y ${styles.linkGroup}`}>
@@ -69,7 +69,7 @@ function Footer() {
 
         <div className={`grid space-between ${styles.footerLinks}`}>
           <div>
-            <h3>Explore Bienko</h3>
+            <h3>Explore Blendko</h3>
 
             <ul className={`flex flex-col`}>
               {footerLinks.explore_blenko.map((link, index) => (
@@ -139,6 +139,7 @@ function Footer() {
             ))}
           </ul>
         </div>
+        <PaymentMethods />
       </div>
     </footer>
   );

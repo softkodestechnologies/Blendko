@@ -17,7 +17,7 @@ function page() {
 
           <p>
             These Terms of Service describe the rules and guidelines for using
-            Blendko's services. By accessing and using our services, you agree
+            Blendko&apos;s services. By accessing and using our services, you agree
             to these terms and conditions.
           </p>
         </div>
